@@ -269,7 +269,7 @@
 						</el-form-item>
 						<el-form-item label="提现手续费">
 							<el-table :data="commissionData" style="width: 100%" @cell-click="handleEdit">
-								<template v-for="(item, index) in commissionData">
+								<template v-for="(item, index) in columnData">
 									<el-table-column :label="item.label" :key="index" :prop="item.prop">
 										<template slot-scope="scope">
 											<el-input
@@ -318,7 +318,6 @@
 	        	uploadForm: {:json_encode($upload)},
 	        	themesForm: {:json_encode($theme)},
 				withdrawForm:{},
-					commissionData:[],
 				columData: [
 					{
 						label: "姓名",
@@ -329,8 +328,7 @@
 						label: "地址",
 						prop: "address",
 					},
-				],
-				tableData: [
+				], commissionData: [
 					{
 						index: 0,
 						name: "chen虎",
