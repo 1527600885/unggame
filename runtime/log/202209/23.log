@@ -1,7 +1,0 @@
-{"time":"2022-09-23 11:11:00","type":"error","msg":"[2]unlink(/www/wwwroot/game.uswindltd.com/app/install//controller/Index.php): Permission denied"}
-{"time":"2022-09-23 11:13:49","type":"error","msg":"[2]unlink(/www/wwwroot/game.uswindltd.com/app/install//controller/Index.php): Permission denied"}
-{"time":"2022-09-23 11:16:22","type":"error","msg":"[2]unlink(/www/wwwroot/game.uswindltd.com/app/install//controller/Index.php): Permission denied"}
-{"time":"2022-09-23 11:17:17","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}
-{"time":"2022-09-23 11:35:06","type":"error","msg":"[2]mkdir(): Permission denied"}
-{"time":"2022-09-23 11:35:11","type":"error","msg":"[2]mkdir(): Permission denied"}
-{"time":"2022-09-23 11:36:00","type":"error","msg":"[2]fopen(/www/wwwroot/game.uswindltd.com/public/upload/favicon.ico): failed to open stream: Permission denied"}

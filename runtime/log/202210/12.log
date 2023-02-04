@@ -1,2 +1,0 @@
-{"time":"2022-10-12 16:03:13","type":"error","msg":"[2]ftp_login() expects parameter 1 to be resource, bool given[/www/wwwroot/game.uswindltd.com/app/common/game/FtpGame.php:13]"}
-{"time":"2022-10-12 16:03:13","type":"error","msg":"[2]ftp_login() expects parameter 1 to be resource, bool given[/www/wwwroot/game.uswindltd.com/app/common/game/FtpGame.php:13]"}

@@ -1,8 +1,0 @@
-{"time":"2022-09-26 11:39:32","type":"error","msg":"[8]Undefined variable: res"}
-{"time":"2022-09-26 11:39:34","type":"error","msg":"[8]Undefined variable: res"}
-{"time":"2022-09-26 11:39:35","type":"error","msg":"[8]Undefined variable: res"}
-{"time":"2022-09-26 11:40:07","type":"error","msg":"[8]Undefined variable: res"}
-{"time":"2022-09-26 11:40:14","type":"error","msg":"[8]Undefined variable: res"}
-{"time":"2022-09-26 12:34:38","type":"error","msg":"[8]Undefined variable: type"}
-{"time":"2022-09-26 15:58:33","type":"error","msg":"[0]base64_decode() expects parameter 1 to be string, int given"}
-{"time":"2022-09-26 15:59:13","type":"error","msg":"[0]base64_decode() expects parameter 1 to be string, int given"}

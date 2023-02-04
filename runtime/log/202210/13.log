@@ -1,4 +1,0 @@
-{"time":"2022-10-13 13:56:53","type":"error","msg":"[0]Class 'app\\api\\controller\\Session' not found[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:30]"}
-{"time":"2022-10-13 14:00:21","type":"error","msg":"[0]syntax error, unexpected '$data' (T_VARIABLE)[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:32]"}
-{"time":"2022-10-13 16:20:35","type":"error","msg":"[8]Undefined variable: game_info[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:157]"}
-{"time":"2022-10-13 16:21:52","type":"error","msg":"[8]Undefined variable: balance[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:157]"}

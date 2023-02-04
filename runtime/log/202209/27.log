@@ -1,4 +1,0 @@
-{"time":"2022-09-27 09:05:53","type":"error","msg":"[0]Call to undefined method app\\api\\middleware\\AuthCheck::error()"}
-{"time":"2022-09-27 09:06:12","type":"error","msg":"[0]Call to undefined method app\\api\\middleware\\AuthCheck::error()"}
-{"time":"2022-09-27 09:09:01","type":"error","msg":"[0]Call to undefined method app\\api\\middleware\\AuthCheck::error()"}
-{"time":"2022-09-27 09:10:10","type":"error","msg":"[0]Call to undefined method app\\api\\middleware\\AuthCheck::error()[/www/wwwroot/game.uswindltd.com/app/api/middleware/AuthCheck.php:27]"}

@@ -1,8 +1,0 @@
-{"time":"2023-01-03 00:27:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:865]"}
-{"time":"2023-01-03 09:26:38","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:865]"}
-{"time":"2023-01-03 09:47:08","type":"error","msg":"[2]ftp_fget(): Illegal PORT command.[/www/wwwroot/www.unicgm.com/app/common/game/FtpGame.php:41]"}
-{"time":"2023-01-03 12:48:35","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:865]"}
-{"time":"2023-01-03 16:32:39","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:865]"}
-{"time":"2023-01-03 17:28:17","type":"error","msg":"[0]syntax error, unexpected '.8' (T_DNUMBER), expecting ')'[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:69]"}
-{"time":"2023-01-03 21:08:38","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
-{"time":"2023-01-03 23:50:40","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}

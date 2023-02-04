@@ -1,4 +1,0 @@
-{"time":"2022-12-05 10:54:17","type":"error","msg":"[0]Class 'plugins\\customer\\api\\controller\\BaseController' not found[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:19]"}
-{"time":"2022-12-05 13:39:28","type":"error","msg":"[2]array_merge(): Expected parameter 2 to be an array, string given[/www/wwwroot/www.unicgm.com/app/api/BaseController.php:145]"}
-{"time":"2022-12-05 13:39:39","type":"error","msg":"[2]array_merge(): Expected parameter 2 to be an array, string given[/www/wwwroot/www.unicgm.com/app/api/BaseController.php:145]"}
-{"time":"2022-12-05 13:54:35","type":"error","msg":"[10500]order express error:rand()[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/Builder.php:915]"}
