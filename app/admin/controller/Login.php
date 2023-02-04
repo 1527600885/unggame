@@ -42,12 +42,16 @@ class Login  extends BaseController
                             $userInfo->login_ip     = $this->request->ip();
                             $userInfo->login_time   = date('Y-m-d H:i:s');
                             $userInfo->save();
+                            // session_save_path('/www/wwwroot/www.unicgm.com/runtime/session');
+                            // session_start();
                             // 记录管理员信息
-                            session('admin',$userInfo);
-                            session_start();
-							//$request->userInfo=$userInfo;
+                            $lifeTime = 24 * 3600;
+                            setcookie(session_name(), session_id(), time() + $lifeTime, "/");
+
+                            //$request->userInfo=$userInfo;
                             // 清除登录错误次数
-                            session('admin_error_num', null);
+                            // session('admin_error_num', null);
+                            $_SESSION['admin'] = $userInfo;
                             return json(['status' => 'success', 'message' => '登录成功', 'account'=>$userInfo['account']]);
                         } else {
                             $error = ['status' => 'error', 'message' => '账号正在审核'];
@@ -58,16 +62,19 @@ class Login  extends BaseController
                 } else {
                     $error = ['status' => 'error', 'message' => '账号或密码错误'];
                 }
+
                 // 设置当前ip登录错误次数
                 $error_num  = session('admin_error_num');
                 $error_num  = empty($error_num) ? 1 : $error_num + 1;
                 session('admin_error_num', $error_num);
+                \think\facade\Session::save();
                 return json($error);
             } catch ( ValidateException $e ) {
                 return json(['status' => 'error', 'message' => $e->getError()]);
             }
         } else {
             session('admin', null);
+            \think\facade\Session::save();
             return View::fetch();
         }
     }

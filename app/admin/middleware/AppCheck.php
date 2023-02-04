@@ -1,4 +1,4 @@
-<?php 
+<?php
 // +----------------------------------------------------------------------
 // | OneKeyAdmin [ Believe that you can do better ]
 // +----------------------------------------------------------------------
@@ -36,8 +36,10 @@ class AppCheck
             $request->pluginNamespace = "$request->pluginRoute\controller\\".ucfirst($request->pluginClass); //命名空间
             $request->authorityPath   = $request->pluginPath;
         }
+        session_start();
         // 用户信息
-        $request->userInfo = session('admin');
+        $request->userInfo = isset($_SESSION['admin'])?$_SESSION['admin']:'';
+        // var_dump(session('admin'));die();
         // 绑定事件
         event('AppCheck', $request);
         // 下一步

@@ -75,7 +75,7 @@ class Withdrawal extends BaseController
 			$this->error('Your Payment Password is wrong!');
 		}
 		if((float)$input['amount']<= 200 || (float)$input['amount']>=(float)$userInfo->balance){
-			$this->error('提现金额错误！');
+			$this->error('Withdrawal amount error！');
 		}
 		$rate=$this->CurrencyAllModel->where(['name'=>$input['currency']])->value('rate');
 		$feel=$this->feel($userInfo->id);

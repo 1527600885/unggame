@@ -29,14 +29,15 @@ class sendCode
     {
         $title = lang('system.code');
         $code  = rand(1000,9999);
-        $font_size1 = "style='font-size:12px'";
+        // $body  = $operation . lang('system.code')."<br/>".lang('system.hi') . $email . "!<br/>" . $title . "，".lang('system.code') . $operation . lang('system.page')."。<br/>".lang('system.code')."：" . $code . "";
+        $font_size1 = "style='font-size:12px;font-weight: bolder'";
         $font_size2 = "style='font-size:12px'";
         $body  = "<p><img src='https://game.unicgm.com/upload/reg.png' /></p>
 	<div>
-	<p {$font_size1}>Your unicorn game registration verification code is <span style='font-size:16px;color:green'>{$code}<span> </p>
+	<p {$font_size1}>{$operation}".lang('system.code')." is <span style='font-size:16px;color:green'>{$code}</span> </p>
 	<p {$font_size1}>Leaking the verification code will make the account unsafe. </p>
 	<p {$font_size1}>Please keep the verification code safe.</p>
-	<div style='margin-top:180px'>
+	<div style='margin-top:50px'>
 		<p {$font_size2}>Unicorn is a Web3.0 game that provides global users with fun, interesting and profitable gameproducts. It currently has millions of gamers around the world. Our goal is to bring users to playgames to make money, a new way of consumption and entertainment.</p>
 		<p style='margin-top:25px;font-size:12px'>Our official website:</p>
 		<p><a href='//www.unicgm.com' {$font_size2}>www.unicgm.com</a></p>
@@ -49,7 +50,7 @@ class sendCode
         if ($result['status'] === 'success') {
             $salt  = rand_id(8);
             $code  = password_hash($code.$name.$email.$salt.request()->ip(), PASSWORD_BCRYPT, ['cost' => 12]);
-			$result=['status' => 'success','message' => lang('system.success'), 'code' => $code, 'salt' => $salt];
+            $result=['status' => 'success','message' => lang('system.success'), 'code' => $code, 'salt' => $salt];
         }
         return $result;
     }
