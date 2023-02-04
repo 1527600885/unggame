@@ -1,0 +1,20 @@
+{"time":"2023-01-09 00:57:36","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-09 10:59:31","type":"error","msg":"[2]ftp_login() expects parameter 1 to be resource, bool given[/www/wwwroot/www.unicgm.com/app/common/game/FtpGame.php:10]"}
+{"time":"2023-01-09 12:41:42","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-09 14:04:37","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-09 14:05:14","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-09 14:09:44","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-09 14:40:53","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-09 14:41:09","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-09 14:41:10","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-09 14:41:35","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-09 14:41:45","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-09 16:27:40","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-09 18:07:02","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-09 18:07:11","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-09 18:07:15","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-09 18:07:26","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-09 18:16:41","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-09 19:13:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-09 19:28:08","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-09 19:28:13","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}

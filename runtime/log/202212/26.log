@@ -1,0 +1,7 @@
+{"time":"2022-12-26 04:09:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2022-12-26 06:25:38","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2022-12-26 12:07:46","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:276]"}
+{"time":"2022-12-26 13:31:52","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:298]"}
+{"time":"2022-12-26 16:02:45","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:37]"}
+{"time":"2022-12-26 16:50:07","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2022-12-26 16:56:18","type":"error","msg":"[10500]where express error:'uid'[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/Builder.php:366]"}

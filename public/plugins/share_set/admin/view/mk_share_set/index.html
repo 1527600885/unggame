@@ -1,0 +1,76 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		:search-date="false">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'type',
+						label: '类型',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'language',
+						label: '语言',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-select',
+							placeholder: '',
+							rules: [
+								{required: true, message: '请输入'},
+							],
+							child: {
+								value: [{"title":"美式英语","value":"en-us"},{"title":"印尼语","value":"en-id"},{"title":"马来语","value":"en-my"},{"title":"日语","value":"ja-jp"},{"title":"高棉语","value":"km-km"},{"title":"韩语","value":"ko-kr"},{"title":"泰语","value":"th-th"},{"title":"越南语","value":"vi-vn"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+					{
+						prop: 'content',
+						label: '分享得内容',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+							rules: [
+								{required: true, message: '请输入'},
+							],
+						}
+					},
+					{
+						prop: 'add_time',
+						label: '添加时间',
+						table: {
+						},
+						form: false
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}

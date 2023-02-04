@@ -1,0 +1,113 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: 'id',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'to_id',
+						label: '发送者',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'form_id',
+						label: '接收者',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'room_id',
+						label: '房间号码',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'type',
+						label: '类型',
+						table: false,
+						form: false
+					},
+					{
+						prop: 'content',
+						label: '发送的内容',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'ip',
+						label: '客户IP',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'online_time',
+						label: '上线时间',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'out_time',
+						label: '下线时间',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'add_time',
+						label: '创建时间',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}

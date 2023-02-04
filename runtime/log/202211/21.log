@@ -1,0 +1,12 @@
+{"time":"2022-11-21 10:50:19","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:138]"}
+{"time":"2022-11-21 10:50:59","type":"error","msg":"[8]Trying to get property 'mail' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:138]"}
+{"time":"2022-11-21 10:51:14","type":"error","msg":"[8]Trying to get property 'mail' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:138]"}
+{"time":"2022-11-21 10:51:38","type":"error","msg":"[8]Trying to get property 'mail' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:139]"}
+{"time":"2022-11-21 10:52:15","type":"error","msg":"[8]Trying to get property 'mail' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:138]"}
+{"time":"2022-11-21 11:23:33","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'names' in 'field list'[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:768]"}
+{"time":"2022-11-21 11:45:20","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:252]"}
+{"time":"2022-11-21 17:17:15","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:164]"}
+{"time":"2022-11-21 17:17:20","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:164]"}
+{"time":"2022-11-21 17:17:21","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:164]"}
+{"time":"2022-11-21 17:17:29","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:164]"}
+{"time":"2022-11-21 17:43:21","type":"error","msg":"[2]file_get_contents(http://www.connect6play.com/doBusiness.do): failed to open stream: Connection timed out[/www/wwwroot/www.unicgm.com/app/common/game/ApiGame.php:241]"}

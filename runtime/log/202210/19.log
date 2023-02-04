@@ -1,0 +1,23 @@
+{"time":"2022-10-19 09:32:46","type":"error","msg":"[8]Undefined variable: request[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:19]"}
+{"time":"2022-10-19 09:36:13","type":"error","msg":"[0]Too few arguments to function think\\db\\BaseQuery::where(), 0 passed and at least 1 expected[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/concern/WhereQuery.php:29]"}
+{"time":"2022-10-19 11:20:16","type":"error","msg":"[8]Undefined variable: data[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:43]"}
+{"time":"2022-10-19 11:20:33","type":"error","msg":"[8]Undefined variable: data[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:43]"}
+{"time":"2022-10-19 11:20:33","type":"error","msg":"[8]Undefined variable: data[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:43]"}
+{"time":"2022-10-19 14:13:03","type":"error","msg":"[0]Argument 2 passed to think\\filesystem\\Driver::putFile() must be an instance of think\\File, null given, called in /www/wwwroot/game.uswindltd.com/vendor/topthink/framework/src/think/Manager.php on line 175[/www/wwwroot/game.uswindltd.com/vendor/topthink/framework/src/think/filesystem/Driver.php:113]"}
+{"time":"2022-10-19 14:19:44","type":"error","msg":"[0]Argument 2 passed to think\\filesystem\\Driver::putFile() must be an instance of think\\File, null given, called in /www/wwwroot/game.uswindltd.com/vendor/topthink/framework/src/think/Manager.php on line 175[/www/wwwroot/game.uswindltd.com/vendor/topthink/framework/src/think/filesystem/Driver.php:113]"}
+{"time":"2022-10-19 14:20:04","type":"error","msg":"[0]Argument 2 passed to think\\filesystem\\Driver::putFile() must be an instance of think\\File, null given, called in /www/wwwroot/game.uswindltd.com/vendor/topthink/framework/src/think/Manager.php on line 175[/www/wwwroot/game.uswindltd.com/vendor/topthink/framework/src/think/filesystem/Driver.php:113]"}
+{"time":"2022-10-19 14:22:47","type":"error","msg":"[0]in_array() expects parameter 2 to be array, null given[/www/wwwroot/game.uswindltd.com/vendor/topthink/framework/src/think/Validate.php:964]"}
+{"time":"2022-10-19 14:25:31","type":"error","msg":"[0]syntax error, unexpected 'validate' (T_STRING)[/www/wwwroot/game.uswindltd.com/app/api/controller/User.php:89]"}
+{"time":"2022-10-19 14:29:17","type":"error","msg":"[0]in_array() expects parameter 2 to be array, null given[/www/wwwroot/game.uswindltd.com/vendor/topthink/framework/src/think/Validate.php:964]"}
+{"time":"2022-10-19 14:34:53","type":"error","msg":"[8]Undefined index: api[/www/wwwroot/game.uswindltd.com/app/admin/controller/Config.php:58]"}
+{"time":"2022-10-19 14:35:00","type":"error","msg":"[8]Undefined index: api[/www/wwwroot/game.uswindltd.com/app/admin/controller/Config.php:58]"}
+{"time":"2022-10-19 14:35:45","type":"error","msg":"[8]Undefined index: api[/www/wwwroot/game.uswindltd.com/app/admin/controller/Config.php:58]"}
+{"time":"2022-10-19 14:37:19","type":"error","msg":"[2]file_put_contents(/www/wwwroot/game.uswindltd.com/app/api/config/upload.php): failed to open stream: Permission denied[/www/wwwroot/game.uswindltd.com/app/admin/controller/Config.php:58]"}
+{"time":"2022-10-19 15:08:32","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:54]"}
+{"time":"2022-10-19 15:15:48","type":"error","msg":"[2]A non-numeric value encountered[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:51]"}
+{"time":"2022-10-19 15:19:04","type":"error","msg":"[0]Too few arguments to function think\\db\\BaseQuery::where(), 0 passed and at least 1 expected[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/concern/WhereQuery.php:29]"}
+{"time":"2022-10-19 15:19:06","type":"error","msg":"[0]Too few arguments to function think\\db\\BaseQuery::where(), 0 passed and at least 1 expected[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/concern/WhereQuery.php:29]"}
+{"time":"2022-10-19 16:17:34","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:28]"}
+{"time":"2022-10-19 16:22:26","type":"error","msg":"[0]Class 'app\\common\\pay\\PayService' not found[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:15]"}
+{"time":"2022-10-19 17:32:26","type":"error","msg":"[0]Too few arguments to function app\\common\\pay\\PayService::place(), 1 passed in /www/wwwroot/game.uswindltd.com/app/api/controller/Order.php on line 92 and exactly 2 expected[/www/wwwroot/game.uswindltd.com/app/common/pay/PayService.php:7]"}
+{"time":"2022-10-19 17:32:55","type":"error","msg":"[8]Undefined variable: paymentinfo[/www/wwwroot/game.uswindltd.com/app/common/pay/PayService.php:24]"}

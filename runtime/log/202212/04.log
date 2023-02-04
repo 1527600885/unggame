@@ -1,0 +1,7 @@
+{"time":"2022-12-04 10:35:04","type":"error","msg":"[10501]SQLSTATE[01000]: Warning: 1265 Data truncated for column 'add_time' at row 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-04 10:35:32","type":"error","msg":"[10501]SQLSTATE[01000]: Warning: 1265 Data truncated for column 'add_time' at row 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-04 10:41:28","type":"error","msg":"[10501]SQLSTATE[01000]: Warning: 1265 Data truncated for column 'outline' at row 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-04 10:41:32","type":"error","msg":"[10501]SQLSTATE[01000]: Warning: 1265 Data truncated for column 'outline' at row 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-04 10:41:43","type":"error","msg":"[10501]SQLSTATE[01000]: Warning: 1265 Data truncated for column 'outline' at row 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-04 10:44:39","type":"error","msg":"[8]Trying to get property 'game_account' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:447]"}
+{"time":"2022-12-04 11:00:24","type":"error","msg":"[0]Class 'app\\api\\model\\MkCustomerLog' not found[/www/wwwroot/www.unicgm.com/app/api/controller/Customer.php:13]"}

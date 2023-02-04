@@ -1,0 +1,193 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		:search-date="false">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'name',
+						label: '名称',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'currency_num',
+						label: '数量',
+						table: {
+							sort: true,
+							label: '货币数量',
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'price',
+						label: '单个购买的价格',
+						table: {
+							label: '单价'
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'interest',
+						label: '利率',
+						table: {
+							prop: 'interests'
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'explain',
+						label: '说明',
+						table: false,
+						form: false
+					},
+					{
+						prop: 'title',
+						label: '介绍头部',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'en-us',
+						label: '介绍内容(英语)',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'en-id',
+						label: '介绍内容(印尼)',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'en-my',
+						label: '介绍内容(马来)',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'ja-jp',
+						label: '介绍内容(日语)',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'km-km',
+						label: '介绍内容(柬埔寨)',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'ko-kr',
+						label: '介绍内容(韩语)',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'th-th',
+						label: '介绍内容(泰语)',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'vi-vn',
+						label: '介绍内容(越南语)',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'update_time',
+						label: '修改时间',
+						table: {
+							prop: 'update_times',
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'add_time',
+						label: '创建时间',
+						table: {
+							prop: 'add_times',
+							sort: true,
+						},
+						form: false
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}

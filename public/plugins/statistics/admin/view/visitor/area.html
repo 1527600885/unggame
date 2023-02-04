@@ -1,0 +1,219 @@
+{include file="common/header"}
+<link rel="stylesheet" type="text/css" href="/plugins/statistics/static/admin/css/statistics.css">
+<script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/statistics.js"></script>
+<script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/highmaps.js"></script>
+<script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/china.js"></script>
+<script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/world.js"></script>
+<div id="app" v-cloak>
+    <div class="el-warp">
+        <el-form 
+            :inline="true" 
+            :model="search" 
+            @submit.native.prevent>
+            <el-form-item>
+                <el-button 
+                    type="info"
+                    size="small" 
+                    icon="el-icon-refresh" 
+                    @click="searchData()">
+                    <span class="title">刷新</span>
+                </el-button>
+            </el-form-item>
+            <el-form-item>
+                <el-date-picker
+                    size="small"
+                    v-model="search.date"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="开始"
+                    end-placeholder="结束"
+                    format="yyyy-MM-dd"
+                    value-format="yyyy-MM-dd"
+                    :picker-options="picker"
+                    @change="searchData()">
+                </el-date-picker>
+            </el-form-item>
+        </el-form>
+        <el-statistics-trend-header :count="headerCount"></el-statistics-trend-header>
+        <div class="el-card-tabs" style="margin-top: 20px;">
+            <el-tabs v-model="search.chartType" type="card" @tab-click="chartTypeClick">
+                <el-tab-pane
+                    v-for="(item, index) in chartOption"
+                    :key="index"
+                    :label="item.title"
+                    :name="item.name">
+                </el-tab-pane>
+            </el-tabs>
+        </div>
+        <div class="el-trend-chart">
+            <div class="el-trend-chart-title">流量指标</div>
+            <div style="height: 300px;" v-loading="chartLoading">
+                <el-col :span="12">
+                    <el-statistics-mapchart
+                        v-if="chartLoading === false" 
+                        height="300px" 
+                        :type="search.chartType" 
+                        :data="chartData">
+                    </el-statistics-mapchart>
+                </el-col>
+                <el-col :span="12" style="height: 300px;overflow: auto;">
+                    <el-table :data="chartData">
+                        <el-table-column prop="name" label="地域"></el-table-column>
+                        <el-table-column prop="value" label="浏览量(PV)" width="100px">
+                            <template slot-scope="scope">
+                                {{scope.row.value ? scope.row.value : 0}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="percentage" label="占比" width="100px">
+                            <template slot-scope="scope">
+                                {{scope.row.percentage ? scope.row.percentage + '%' : '0%'}}
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-col>
+            </div>
+        </div>
+        <el-table :data="table" v-loading="loading">
+            <el-table-column prop="name" label="地域"></el-table-column>
+            <el-table-column prop="pv" label="浏览量(PV)" width="100px"></el-table-column>
+            <el-table-column prop="uv" label="访客数(UV)" width="100px"></el-table-column>
+            <el-table-column prop="ip" label="IP数" width="100px"></el-table-column>
+            <el-table-column prop="quit" label="跳出率" width="100px"></el-table-column>
+            <el-table-column prop="duration_avg" label="平均访问时长" width="100px"></el-table-column>
+        </el-table>
+        <el-pagination
+            @size-change="pageSizeChange"
+            @current-change="pageChange"
+            :current-page="search.page"
+            :page-size="search.pageSize"
+            :page-sizes="pageSizes"
+            :total="pageTotal"
+            layout="total, sizes, prev, pager, next, jumper"
+            background
+            hide-on-single-page>
+        </el-pagination>
+    </div>
+</div>
+<script>
+new Vue({
+    el: '#app',
+    data() {
+        return {
+            url: "statistics/visitor/area",
+            chartUrl: "statistics/visitor/areaChart",
+            table: [],
+            headerCount: [],
+            chartOption: [{title: "按省份", name: "province"}, {title: "按国家", name: "country"}],
+            chartData: [],
+            search: {
+                chartType: 'province',
+                date: [],
+                page: 1,
+                pageSize: 20,
+            },
+            pageSizes: [20, 50, 100, 200, 500, 1000, 3000],
+            pageTotal: 0,
+            loading: false,
+            chartLoading: false,
+            picker: {
+                shortcuts: [{
+                    text: '最近一周',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        end.setTime(start.getTime() + 3600 * 1000 * 24 * 1);
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, {
+                    text: '最近一个月',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        end.setTime(start.getTime() + 3600 * 1000 * 24 * 1);
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, {
+                    text: '最近三个月',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        end.setTime(start.getTime() + 3600 * 1000 * 24 * 1);
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }]
+            },
+        }
+    },
+    created() {
+        const end = new Date();
+        const start = new Date();
+        end.setTime(start.getTime() + 3600 * 1000 * 24 * 1);
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+        this.search.date = [common.dateTime(start).split(' ')[0], common.dateTime(end).split(' ')[0]];
+        this.getData();
+        this.getChartData();
+    },
+    methods: {
+        /**
+         * 获取数据
+         */
+        getData() {
+            let self     = this;
+            self.loading = true;
+            request.post(self.url, self.search, function(res) {
+                self.loading    = false;
+                self.table      = res.data;
+                self.pageTotal  = res.count;
+            });
+        },
+        /**
+         * 获取头部图表数据
+         */
+        getChartData(){
+            let self = this;
+            self.chartLoading = true;
+            request.post(self.chartUrl, self.search, function (res) {
+                self.headerCount= res.headerCount;
+                self.chartData = res.chartData;
+                self.chartLoading = false;
+            })
+        },
+        /**
+         * 日期搜索
+         */
+        searchData() {
+            this.search = Object.assign({}, this.search, {page: 1});
+            this.getChartData();
+        },
+        /**
+         * 分页个数改变时
+         * @param  {Number} val 每页数量
+         */
+        pageSizeChange(val) {
+            this.search = Object.assign({}, this.search, {page: 1, pageSize: val});
+        },
+        /**
+         * 分页改变时
+         * @param  {String} val 当前页
+         */
+        pageChange(val) {
+            this.search = Object.assign({}, this.search, {page: val});
+        },
+        chartTypeClick() {
+            this.getData();
+            this.getChartData();
+        }
+    },
+    watch: {
+        search() {
+            this.getData();
+        }
+    }
+})
+</script>
+{include file="common/footer"}

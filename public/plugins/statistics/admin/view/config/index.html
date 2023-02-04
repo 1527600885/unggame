@@ -1,0 +1,60 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+    <div class="el-pane-warp">
+        <el-form :model="config" label-width="150px">
+            <el-form-item>
+                <a href="https://lbs.qq.com/service/webService/webServiceGuide/webServiceIp" target="_blank">腾讯位置服务</a>
+                <span class="tips">（统计用户的地理位置国家、省份、城市）</span>
+            </el-form-item>
+            <el-form-item label="开启统计：">
+                <el-switch
+                    v-model="config.open"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949"
+                    :active-value="1"
+                    :inactive-value="0">
+                </el-switch>
+            </el-form-item>
+            <el-form-item label="KEY：">
+                <el-input v-model="config.tencent_location_key"></el-input>
+                使用域名白名单或IP授权模式，直接<a href="https://lbs.qq.com/dev/console/application/mine" target="_blank">点击获取KEY</a>
+            </el-form-item>
+        </el-form>
+        <div class="el-bottom" style="width: 100%">
+            <el-button 
+                :loading="loading"
+                type="primary" 
+                size="medium" 
+                icon="el-icon-refresh-right"
+                @click="save()">
+                保 存
+            </el-button>
+        </div>
+    </div>
+</div>
+<script>
+new Vue({
+    el: '#app',
+    data() {
+        return {
+            config: {:json_encode($config)},
+            loading: false,
+            updateUrl: "statistics/config/index",
+        }
+    },
+    methods: {
+        /**
+         * 保存数据
+         */
+        save() {
+            let self  = this;
+            self.loading = true;
+            request.post(self.updateUrl, {value: self.config}, function(res){
+                self.loading = false;
+                self.$message({showClose: true, message: res.message, type: res.status});
+            });
+        },
+    },
+})
+</script>
+{include file="common/footer"}

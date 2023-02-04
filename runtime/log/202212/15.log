@@ -1,0 +1,10 @@
+{"time":"2022-12-15 04:27:01","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-15 06:31:39","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-15 09:26:25","type":"error","msg":"[8]Undefined index: content[/www/wwwroot/www.unicgm.com/public/plugins/ung/admin/controller/MkUngSet.php:43]"}
+{"time":"2022-12-15 09:34:12","type":"error","msg":"[0]syntax error, unexpected ''en-us'' (T_CONSTANT_ENCAPSED_STRING), expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'[/www/wwwroot/www.unicgm.com/public/plugins/ung/admin/controller/MkUngSet.php:32]"}
+{"time":"2022-12-15 14:03:40","type":"error","msg":"[0]Class 'app\\api\\controller\\Cache' not found[/www/wwwroot/www.unicgm.com/app/api/controller/Ung.php:69]"}
+{"time":"2022-12-15 14:26:36","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-15 17:10:31","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-15 18:32:34","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-15 20:05:42","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-15 22:35:38","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}

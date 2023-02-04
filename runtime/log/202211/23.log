@@ -1,0 +1,28 @@
+{"time":"2022-11-23 08:52:06","type":"error","msg":"[0]Class 'think\\facade\\Filesystem' not found[/www/wwwroot/www.unicgm.com/app/admin/controller/File.php:76]"}
+{"time":"2022-11-23 08:52:39","type":"error","msg":"[0]Class 'think\\facade\\Filesystem' not found[/www/wwwroot/www.unicgm.com/app/admin/controller/File.php:76]"}
+{"time":"2022-11-23 08:53:09","type":"error","msg":"[0]Class 'think\\facade\\Filesystem' not found[/www/wwwroot/www.unicgm.com/app/admin/controller/File.php:76]"}
+{"time":"2022-11-23 08:54:11","type":"error","msg":"[0]class not exists: filesystem[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/Container.php:378]"}
+{"time":"2022-11-23 08:55:06","type":"error","msg":"[0]class not exists: filesystem[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/Container.php:378]"}
+{"time":"2022-11-23 09:07:22","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:268]"}
+{"time":"2022-11-23 09:13:06","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:252]"}
+{"time":"2022-11-23 09:15:07","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:252]"}
+{"time":"2022-11-23 09:31:50","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:252]"}
+{"time":"2022-11-23 09:52:10","type":"error","msg":"[0]class not exists: filesystem[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/Container.php:378]"}
+{"time":"2022-11-23 09:56:23","type":"error","msg":"[0]class not exists: filesystem[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/Container.php:378]"}
+{"time":"2022-11-23 09:57:26","type":"error","msg":"[0]class not exists: filesystem[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/Container.php:378]"}
+{"time":"2022-11-23 10:11:11","type":"error","msg":"[0]Argument 1 passed to app\\admin\\BaseController::__construct() must be an instance of think\\App, string given, called in /www/wwwroot/www.unicgm.com/app/admin/controller/File.php on line 81[/www/wwwroot/www.unicgm.com/app/admin/BaseController.php:39]"}
+{"time":"2022-11-23 10:22:53","type":"error","msg":"[0]Unable to create the \"/tmp/phpE1EAoG\" directory[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/File.php:124]"}
+{"time":"2022-11-23 10:25:14","type":"error","msg":"[0]Unable to create the \"/tmp/phpA5C7IC\" directory[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/File.php:124]"}
+{"time":"2022-11-23 10:27:23","type":"error","msg":"[0]Unable to create the \"/tmp/phpGp0Qyb\" directory[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/File.php:124]"}
+{"time":"2022-11-23 10:28:16","type":"error","msg":"[0]Unable to create the \"/tmp/phpOkIJ7V\" directory[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/File.php:124]"}
+{"time":"2022-11-23 10:32:05","type":"error","msg":"[0]Unable to create the \"/tmp/phpUI78GJ\" directory[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/File.php:124]"}
+{"time":"2022-11-23 10:33:49","type":"error","msg":"[0]Unable to create the \"/tmp/phph4Kkzw\" directory[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/File.php:124]"}
+{"time":"2022-11-23 10:36:33","type":"error","msg":"[0]Unable to create the \"/tmp/php2cXZMO\" directory[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/think/File.php:124]"}
+{"time":"2022-11-23 11:24:27","type":"error","msg":"[0]Call to a member function getOriginalName() on null[/www/wwwroot/www.unicgm.com/app/admin/controller/File.php:73]"}
+{"time":"2022-11-23 13:43:55","type":"error","msg":"[0]Class 'app\\api\\controller\\Fileupload' not found[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:223]"}
+{"time":"2022-11-23 14:43:58","type":"error","msg":"[0]syntax error, unexpected '->' (T_OBJECT_OPERATOR), expecting ']'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:179]"}
+{"time":"2022-11-23 14:44:03","type":"error","msg":"[0]syntax error, unexpected '->' (T_OBJECT_OPERATOR), expecting ']'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:179]"}
+{"time":"2022-11-23 14:44:07","type":"error","msg":"[0]syntax error, unexpected '->' (T_OBJECT_OPERATOR), expecting ']'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:179]"}
+{"time":"2022-11-23 14:44:12","type":"error","msg":"[0]syntax error, unexpected '->' (T_OBJECT_OPERATOR), expecting ']'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:179]"}
+{"time":"2022-11-23 14:44:12","type":"error","msg":"[0]syntax error, unexpected '->' (T_OBJECT_OPERATOR), expecting ']'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:179]"}
+{"time":"2022-11-23 14:44:22","type":"error","msg":"[0]syntax error, unexpected '->' (T_OBJECT_OPERATOR), expecting ']'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:179]"}

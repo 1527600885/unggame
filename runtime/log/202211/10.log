@@ -1,0 +1,42 @@
+{"time":"2022-11-10 08:40:28","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/game.uswindltd.com/public/plugins/withdrawal/admin/controller/MkWithdrawalSettings.php:35]"}
+{"time":"2022-11-10 08:40:36","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/game.uswindltd.com/public/plugins/withdrawal/admin/controller/MkWithdrawalSettings.php:35]"}
+{"time":"2022-11-10 08:40:53","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/game.uswindltd.com/public/plugins/withdrawal/admin/controller/MkWithdrawalSettings.php:35]"}
+{"time":"2022-11-10 08:41:04","type":"error","msg":"[8]Undefined variable: data[/www/wwwroot/game.uswindltd.com/public/plugins/withdrawal/admin/controller/MkWithdrawalSettings.php:32]"}
+{"time":"2022-11-10 11:30:00","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'uid' in 'where clause'[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/PDOConnection.php:768]"}
+{"time":"2022-11-10 11:33:27","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'uid' in 'where clause'[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/PDOConnection.php:768]"}
+{"time":"2022-11-10 11:34:36","type":"error","msg":"[0]Too few arguments to function think\\db\\Query::group(), 0 passed in /www/wwwroot/game.uswindltd.com/app/api/controller/Withdrawal.php on line 19 and exactly 1 expected[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/Query.php:169]"}
+{"time":"2022-11-10 11:45:09","type":"error","msg":"[0]Too few arguments to function think\\db\\Query::group(), 0 passed in /www/wwwroot/game.uswindltd.com/app/api/controller/Withdrawal.php on line 19 and exactly 1 expected[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/Query.php:169]"}
+{"time":"2022-11-10 11:50:03","type":"error","msg":"[0]Too few arguments to function think\\db\\Query::group(), 0 passed in /www/wwwroot/game.uswindltd.com/app/api/controller/Withdrawal.php on line 19 and exactly 1 expected[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/Query.php:169]"}
+{"time":"2022-11-10 11:50:16","type":"error","msg":"[8]Trying to get property 'userInfo' of non-object[/www/wwwroot/game.uswindltd.com/app/api/model/WithdrawalInfo.php:19]"}
+{"time":"2022-11-10 13:50:23","type":"error","msg":"[10500]method not exist:think\\db\\Query->WithdrawalSettings[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/BaseQuery.php:117]"}
+{"time":"2022-11-10 13:51:29","type":"error","msg":"[0]Call to a member function hasWhere() on null[/www/wwwroot/game.uswindltd.com/app/api/model/WithdrawalInfo.php:19]"}
+{"time":"2022-11-10 13:51:56","type":"error","msg":"[10500]method not exist:think\\db\\Query->WithdrawalSettings[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/BaseQuery.php:117]"}
+{"time":"2022-11-10 13:54:14","type":"error","msg":"[0]Too few arguments to function app\\api\\model\\WithdrawalInfo::group(), 0 passed in /www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/model/concern/RelationShip.php on line 214 and exactly 1 expected[/www/wwwroot/game.uswindltd.com/app/api/model/WithdrawalInfo.php:17]"}
+{"time":"2022-11-10 13:54:32","type":"error","msg":"[8]Undefined variable: uid[/www/wwwroot/game.uswindltd.com/app/api/controller/Withdrawal.php:22]"}
+{"time":"2022-11-10 14:19:53","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'is_shows' in 'where clause'[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/PDOConnection.php:768]"}
+{"time":"2022-11-10 16:20:26","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:20:37","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:20:38","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:29","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:31","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:32","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:32","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:33","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:33","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:33","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:39","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:39","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:39","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:39","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:41:40","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:42:37","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:42:39","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:43:01","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Order.php:38]"}
+{"time":"2022-11-10 16:52:47","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:52]"}
+{"time":"2022-11-10 16:53:05","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:52]"}
+{"time":"2022-11-10 16:53:19","type":"error","msg":"[8]Undefined variable: lang[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:52]"}
+{"time":"2022-11-10 16:54:22","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:52]"}
+{"time":"2022-11-10 17:00:12","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:52]"}
+{"time":"2022-11-10 17:03:22","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:52]"}
+{"time":"2022-11-10 17:09:38","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:52]"}
+{"time":"2022-11-10 17:24:08","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Payment.php:52]"}

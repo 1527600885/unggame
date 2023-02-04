@@ -1,0 +1,42 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'content',
+						label: 'content',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'create_time',
+						label: 'create_time',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-date-picker',
+							type: 'date',
+						}
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}

@@ -1,0 +1,58 @@
+/*统计*/
+.el-statistics .header-table{margin-bottom:20px;}
+.el-statistics .header-table .el-icon-bottom{font-size: 12px;margin-left: 5px;color: #67C23A;font-weight: 600}
+.el-statistics .header-table .el-icon-top{font-size: 12px;margin-left: 5px;color: #F56C6C;font-weight: 600}
+.el-statistics .el-tabs__header{background-color: #FFFFFF;border:0px;}
+.el-statistics .el-tabs__header .el-tabs__nav{border:0px;}
+.el-statistics .el-tabs__header .el-tabs__item{border:0px;}
+.el-statistics .el-tabs__item.is-active{color: #FFFFFF;background-color: #409EFF}
+.el-statistics-main .box-card{margin-bottom: 20px;height: 450px;overflow: hidden;}
+.el-statistics-main .box-card .right-button{padding: 2px;float: right;}
+.el-statistics-main .el-card__header{padding: 10px 20px}
+.el-statistics-main .el-card__body{padding: 10px;}
+.el-statistics-main .el-table td, .el-table th{padding: 5px 0}
+.el-statistics-overview-table .el-table{height: 377px}
+.el-newuser-table .el-table thead{display: none}
+.el-newuser-table .newuser-title{font-size: 16px;color: #5d5d61;margin-bottom: 16px;}
+.el-newuser-table .newuser-unit{font-size: 18px;}
+.el-newuser-table .newuser-percentage{font-size: 30px;color: #48cb6d;}
+.el-newuser-table .olduser-percentage{font-size: 30px;color: #51a8f9;}
+.el-newuser-table .el-table td, .el-table th {padding: 20px 0;}
+.el-trend-overview {padding: 20px 20px 6px;border: 1px solid #e1e3e4;border-radius: 2px; background-color: #fff;}
+.el-trend-overview .el-trend-overview-online {width: 240px;float: left;}
+.el-trend-overview,.el-trend-overview-title-wrapper {margin-bottom: 20px;}
+.el-trend-overview .el-trend-overview-title {margin-right: 20px;font-size: 14px;color: #121315;}
+.el-trend-overview .el-count-down {font-style: normal;color: #f05654;}
+.el-trend-overview .el-trend-overview-number-wrapper {padding-top: 70px;text-align: center;}
+.el-trend-overview .el-trend-overview-number {margin: 20px 0;font-size: 42px;font-weight: 700;color: #323437;}
+.el-trend-overview .el-trend-overview-chart {margin-left: 240px;text-align: center;}
+.el-statistics-trend-header {display: flex;background-color: #FFFFFF;padding: 20px 0;border-bottom: 1px solid #f0f0f0;border-top: 1px solid #f0f0f0;}
+.el-trend-item {width: 20%;display: inline-block;padding: 0 20px;border-right: 1px solid #f0f0f0;}
+.el-trend-item i{color: #3292E0;font-size: 14px;margin-left: 10px}
+.el-trend-item div:first-child{color: #787a7d;}
+.el-trend-item div:last-child{margin-top: 12px;font-size: 20px;color: #121315;height: 36px;}
+.el-trend-chart{background-color: #fff;padding:20px;}
+.el-trend-chart-title{height: 50px;font-size: 16px;}
+.el-newuser {padding-top: 20px;text-align: center;}
+.el-newuser .el-newuser-title {font-weight: 700;margin-bottom: 10px}
+.el-newuser .el-newuser-cover {height: 100px;font-size: 28px;font-weight: bolder;}
+.el-newuser .el-newuser-cover img {vertical-align: middle;margin-right: 5px;}
+.el-newuser .el-newuser-list {font-size: 14px;margin-top: 20px;}
+.el-newuser .el-newuser-item {margin:5px 0;}
+.el-newuser .el-newuser-item span:first-child {color: #999;width: 100px;display: inline-block;text-align: right;margin-right: 10px;}
+.el-newuser .el-newuser-item span:last-child {width: 130px;display: inline-block;text-align: left;}
+.el-newuser-0,.el-newuser-0 .el-card{color: #666;}
+.el-newuser-1,.el-newuser-1 .el-card{color: #01ADDD;}
+.el-newuser-table-title{font-size: 16px;}
+/*控制台头部*/
+.el-floor{background-color: #fff;padding: 20px 0;margin-bottom: 16px;}
+.el-floor dl {border-bottom: 3px solid #edeff0;width: 100%;position: relative;}
+.el-floor dt {display: inline-block;min-width: 8em;margin-bottom: -3px;border-bottom: 3px solid #ab8ce4;padding-bottom: 4px;}
+.el-floor dd {position: absolute;right: 0;top: 0;text-align: right;font-size: 42px;color: #ab8ce4;line-height: 55px;font-family: 'AvantGardeITCbyBT-Book',Arial;letter-spacing: -2px;}
+.el-floor .el-col {padding: 20px 2%;}
+.el-floor .info-item-ico {display: block;width: 30px;height: 30px;background-image: url(../images/icons.png);background-repeat: no-repeat;}
+.el-floor .info-item-txt {display: block;padding: 12px 0 0;line-height: 1.5em;color: #37474f;letter-spacing: 2px;}
+.el-floor .ico-count-pv {background-position: 0 0;}
+.el-floor .ico-count-uv {background-position: 0 -30px;}
+.el-floor .ico-count-num {background-position: 0 -90px;}
+.el-floor .ico-count-other {background-position: 0 -60px;}

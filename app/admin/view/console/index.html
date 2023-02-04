@@ -1,0 +1,40 @@
+{include file="common/header"}
+{empty name="html"}
+<div id="app" v-cloak>
+    <div class="el-console">
+        <el-row :gutter="20">
+            <el-col :sm="16">
+                <el-row :gutter="20">
+                    <el-col :sm="12" :xs="24">
+            			<div class="web" @click="parent.parentVm.clickMenu('plugins/list')">
+            				<div class="title"><i class="el-icon-monitor"></i>控制台</div>
+            				<div class="desc">亲亲，可以安装流量统计插件填充内容~</div>
+            				<div class="btn">
+            				    <el-button size="small" plain>去安装</el-button>
+            				</div>
+            			</div>
+        			</el-col>
+        			<el-col :sm="12" :xs="24">
+                		<a class="domain" href="{$domain}" target="_blank">
+                			<div class="title">我的网站</div>
+                			<div class="bind">{$domain}</div>
+                			<el-button size="small" plain>去看看</el-button>
+                		</a>
+            		</el-col>
+            	</el-row>
+        	</el-col>
+    	</el-row>
+	</div>
+</div>
+<script>
+new Vue({
+    el: '#app',
+    data() {
+        return {}
+    },
+})
+</script>
+{else/}
+{$html|raw}
+{/empty}
+{include file="common/footer"}

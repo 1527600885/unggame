@@ -1,0 +1,56 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+    <el-curd 
+        :field="field" 
+        :search-date="false" 
+        :table-sort="{prop: 'id', order: 'asc'}">
+    </el-curd>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                field: [
+                    {
+                        label: '编号', 
+                        prop: 'id',
+                        table: false,
+                    },
+                    {
+                        label: '名称', 
+                        prop: 'name', 
+                        table: {sort: true},
+                        form:{
+                            rules: [
+                                {required: true,message: '名称不能为空'},
+                            ]
+                        }
+                    },
+                    {
+                        label: '品牌代码', 
+                        prop: 'code', 
+                        table: {sort: true},
+                        form:{
+                            rules: [
+                                {required: true,message: '名称不能为空'},
+                            ]
+                        }
+                    },
+                    {
+                        label: '游戏总数', 
+                        prop: 'totalCount', 
+                        form:{
+                            type: 'number',
+                            default: 0,
+                            rules: [
+                                {required: true,message: '积分不能为空'},
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+    })
+</script>
+{include file="common/footer"}

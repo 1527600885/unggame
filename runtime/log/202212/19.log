@@ -1,0 +1,11 @@
+{"time":"2022-12-19 04:42:40","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-19 12:57:43","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-19 14:17:29","type":"error","msg":"[0]syntax error, unexpected '}', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'[/www/wwwroot/www.unicgm.com/app/api/controller/Payment.php:17]"}
+{"time":"2022-12-19 14:17:29","type":"error","msg":"[0]syntax error, unexpected '}', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'[/www/wwwroot/www.unicgm.com/app/api/controller/Payment.php:17]"}
+{"time":"2022-12-19 17:07:53","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Payment.php:107]"}
+{"time":"2022-12-19 17:08:59","type":"error","msg":"[8]Trying to get property 'rate' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Payment.php:107]"}
+{"time":"2022-12-19 17:11:35","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-19 17:39:39","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-19 19:05:10","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-19 20:47:39","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-19 20:53:38","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}

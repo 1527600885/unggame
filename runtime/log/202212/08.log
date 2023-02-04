@@ -1,0 +1,13 @@
+{"time":"2022-12-08 14:10:59","type":"error","msg":"[10501]SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'channel' at row 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-08 14:59:15","type":"error","msg":"[8]Undefined offset: 0[/www/wwwroot/www.unicgm.com/app/api/controller/Payment.php:83]"}
+{"time":"2022-12-08 15:19:31","type":"error","msg":"[0]Argument 1 passed to think\\db\\Query::getFieldType() must be of the type string, int given, called in /www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/Builder.php on line 154[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/concern/TableFieldInfo.php:67]"}
+{"time":"2022-12-08 15:20:55","type":"error","msg":"[0]Argument 1 passed to think\\db\\Query::getFieldType() must be of the type string, int given, called in /www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/Builder.php on line 154[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/concern/TableFieldInfo.php:67]"}
+{"time":"2022-12-08 15:49:09","type":"error","msg":"[8]Trying to access array offset on value of type float[/www/wwwroot/www.unicgm.com/app/api/controller/Payment.php:51]"}
+{"time":"2022-12-08 15:49:36","type":"error","msg":"[2]Invalid argument supplied for foreach()[/www/wwwroot/www.unicgm.com/app/api/controller/Payment.php:40]"}
+{"time":"2022-12-08 15:51:14","type":"error","msg":"[8]Undefined variable: rate[/www/wwwroot/www.unicgm.com/app/api/controller/Payment.php:51]"}
+{"time":"2022-12-08 16:35:32","type":"error","msg":"[8]Undefined index: data[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:129]"}
+{"time":"2022-12-08 16:37:35","type":"error","msg":"[0]Call to undefined function app\\api\\controller\\int()[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:109]"}
+{"time":"2022-12-08 16:37:44","type":"error","msg":"[0]Call to undefined function app\\api\\controller\\int()[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:109]"}
+{"time":"2022-12-08 16:40:40","type":"error","msg":"[8]Undefined index: data[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:129]"}
+{"time":"2022-12-08 17:15:59","type":"error","msg":"[8]Undefined variable: data[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:73]"}
+{"time":"2022-12-08 17:16:56","type":"error","msg":"[8]Undefined variable: data[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:74]"}

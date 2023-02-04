@@ -1,0 +1,5 @@
+{"time":"2022-12-09 15:07:03","type":"error","msg":"[8]Undefined variable: postdata[/www/wwwroot/www.unicgm.com/app/common/pay/PayService.php:37]"}
+{"time":"2022-12-09 15:08:56","type":"error","msg":"[8]Undefined variable: postdata[/www/wwwroot/www.unicgm.com/app/common/pay/PayService.php:37]"}
+{"time":"2022-12-09 15:10:56","type":"error","msg":"[8]Undefined variable: postdata[/www/wwwroot/www.unicgm.com/app/common/pay/PayService.php:37]"}
+{"time":"2022-12-09 15:15:15","type":"error","msg":"[8192]Non-static method think\\Model::save() should not be called statically[/www/wwwroot/www.unicgm.com/app/common/pay/PayService.php:48]"}
+{"time":"2022-12-09 15:57:39","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:37]"}

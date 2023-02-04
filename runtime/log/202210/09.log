@@ -1,0 +1,12 @@
+{"time":"2022-10-09 11:09:44","type":"error","msg":"[10500]where express error:'gametype'[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/Builder.php:366]"}
+{"time":"2022-10-09 11:16:35","type":"error","msg":"[8]Trying to get property 'code' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:35]"}
+{"time":"2022-10-09 11:59:50","type":"error","msg":"[8]Trying to get property 'name' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:67]"}
+{"time":"2022-10-09 13:46:25","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cod' in 'where clause'[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/PDOConnection.php:768]"}
+{"time":"2022-10-09 13:47:04","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cod' in 'where clause'[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/PDOConnection.php:768]"}
+{"time":"2022-10-09 14:22:02","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'totalCount' in 'where clause'[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/PDOConnection.php:768]"}
+{"time":"2022-10-09 14:39:14","type":"error","msg":"[0]Too few arguments to function app\\common\\game\\ApiGame::getGameList(), 6 passed in /www/wwwroot/game.uswindltd.com/app/api/controller/Game.php on line 35 and exactly 7 expected[/www/wwwroot/game.uswindltd.com/app/common/game/ApiGame.php:136]"}
+{"time":"2022-10-09 15:10:27","type":"error","msg":"[8]Undefined index: games[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:69]"}
+{"time":"2022-10-09 15:13:04","type":"error","msg":"[8]Undefined index: games[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:69]"}
+{"time":"2022-10-09 16:39:17","type":"error","msg":"[8]Trying to get property 'PVP_totalCount' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:152]"}
+{"time":"2022-10-09 17:31:25","type":"error","msg":"[0]Function name must be a string[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:28]"}
+{"time":"2022-10-09 17:34:47","type":"error","msg":"[0]syntax error, unexpected '$this' (T_VARIABLE)[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:34]"}

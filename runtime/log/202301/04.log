@@ -1,0 +1,16 @@
+{"time":"2023-01-04 02:05:33","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 03:45:32","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 11:08:38","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 15:20:33","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 15:23:32","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 15:46:17","type":"error","msg":"[8]Undefined index: code[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:462]"}
+{"time":"2023-01-04 15:47:03","type":"error","msg":"[8]Undefined index: code[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:462]"}
+{"time":"2023-01-04 15:57:39","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 16:10:19","type":"error","msg":"[2]ftp_login() expects parameter 1 to be resource, bool given[/www/wwwroot/www.unicgm.com/app/common/game/FtpGame.php:10]"}
+{"time":"2023-01-04 16:10:45","type":"error","msg":"[8]Undefined index: telegram[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:58]"}
+{"time":"2023-01-04 16:11:17","type":"error","msg":"[10501]SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'mobile' cannot be null[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2023-01-04 17:35:05","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 17:51:40","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 20:36:38","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 21:23:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-04 23:12:05","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}

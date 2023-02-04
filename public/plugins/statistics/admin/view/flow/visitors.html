@@ -1,0 +1,243 @@
+{include file="common/header"}
+<link rel="stylesheet" type="text/css" href="/plugins/statistics/static/admin/css/statistics.css">
+<script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/statistics.js"></script>
+<script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/highmaps.js"></script>
+<script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/china.js"></script>
+<script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/world.js"></script>
+<div id="app" v-cloak>
+	<div class="el-warp">
+		<div class="el-trend-overview">
+            <div class="el-trend-overview-online">
+                <div class="el-trend-overview-title-wrapper">
+                    <span class="el-trend-overview-title">当前在线</span>
+                    <span class="el-trend-overview-warning"><em class="el-count-down">{{time}}</em>&nbsp;秒之后更新数据</span>
+                </div>
+                <div class="el-trend-overview-number-wrapper">
+                    <div class="el-trend-overview-date">{{date}}</div>
+                    <div class="el-trend-overview-number" title="10">{{online}}</div>
+                    <div class="el-trend-overview-info">在线访客数</div>
+                </div>
+            </div>
+            <div class="el-trend-overview-chart">
+                <div class="el-trend-overview-chart-title">最近30分钟访问情况</div>
+                <div style="height: 300px;" v-loading="chartLoading">
+                    <el-statistics-highcharts
+                        v-if="chartLoading === false" 
+                        height="300px" 
+                        type="areaspline" 
+                        :data="chartData" 
+                        :categories="categories"
+                        :tick-interval="5">
+                    </el-statistics-highcharts>
+                </div>
+            </div>
+        </div>
+        <el-form 
+            :inline="true" 
+            :model="search" 
+            @submit.native.prevent>
+            <el-form-item>
+                <el-button 
+                    type="info"
+                    size="small" 
+                    icon="el-icon-refresh" 
+                    @click="searchData()">
+                    <span class="title">刷新</span>
+                </el-button>
+            </el-form-item>
+            <el-form-item>
+                <el-date-picker
+                    size="small"
+                    v-model="search.date"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="开始"
+                    end-placeholder="结束"
+                    format="yyyy-MM-dd"
+                    value-format="yyyy-MM-dd"
+                    :picker-options="picker"
+                    @change="searchData()">
+                </el-date-picker>
+            </el-form-item>
+        </el-form>
+        <el-table
+            :data="table"
+            v-loading="loading"
+            :default-sort="{prop: search.prop, order: search.order}"
+            @sort-change="sortChange">
+            <el-table-column type="expand">
+                <template slot-scope="props">
+                    <el-form label-position="left"  label-width="130px">
+                        <el-form-item label="操作系统：">
+                            <span>{{ props.row.os}}</span>
+                        </el-form-item>
+                        <el-form-item label="浏览器：">
+                            <span>{{ props.row.broswer}}</span>
+                        </el-form-item>
+                        <el-form-item label="访问类型：">
+                            <span>{{ props.row.newuser}}</span>
+                        </el-form-item>
+                        <el-form-item label="本次来路：">
+                            <span>{{ props.row.referrer === '' ? '直接访问' : props.row.referrer}}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
+            </el-table-column>
+            <el-table-column prop="create_time" label="访问时间" sortable="custom"></el-table-column>
+            <el-table-column prop="country" label="国家"></el-table-column>
+            <el-table-column prop="province" label="省份"></el-table-column>
+            <el-table-column prop="keyword_from" label="来源"></el-table-column>
+            <el-table-column prop="entryUrl" label="入口页面"></el-table-column>
+            <el-table-column prop="keyword" label="搜索词"></el-table-column>
+            <el-table-column prop="ip" label="访问IP"></el-table-column>
+            <el-table-column prop="duration" label="访问时长" width="80px"></el-table-column>
+        </el-table>
+        <el-pagination
+            @size-change="pageSizeChange"
+            @current-change="pageChange"
+            :current-page="search.page"
+            :page-size="search.pageSize"
+            :page-sizes="pageSizes"
+            :total="pageTotal"
+            layout="total, sizes, prev, pager, next, jumper"
+            background
+            hide-on-single-page>
+        </el-pagination>
+	</div>
+</div>
+<script>
+	new Vue({
+        el: '#app',
+		data() {
+            return {
+                // 图表
+                time: 60,
+                chartUrl: "statistics/flow/visitorsChart",
+                categories: [],
+                chartData: [],
+                chartLoading: false,
+                online: 0,
+                date: '',
+                // 表格
+                url: "statistics/flow/visitors",
+                table: [],
+                search:{
+                    date: [],
+                    keyword: "",
+                    page: 1,
+                    pageSize: 20,
+                    prop: "create_time", 
+                    order: "descending",
+                },
+                pageSizes: [20, 50, 100, 200, 500, 1000, 3000],
+                pageTotal: 0,
+                loading: false,
+                picker: {
+                    shortcuts: [{
+                        text: '最近一周',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            end.setTime(start.getTime() + 3600 * 1000 * 24 * 1);
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近一个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            end.setTime(start.getTime() + 3600 * 1000 * 24 * 1);
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近三个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            end.setTime(start.getTime() + 3600 * 1000 * 24 * 1);
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
+            }
+		},
+        mounted(){
+            const timer = setInterval(() => {
+                this.time --;
+                if (this.time == 0) {
+                    this.time = 60;
+                    this.getChartData();
+                }
+            }, 1000)
+        },
+        created(){
+            this.getChartData();
+            this.getData();
+        },
+        methods: {
+            /**
+             * 获取头部图表数据
+             */
+            getChartData(){
+                let self = this;
+                self.chartLoading = true;
+                request.post(self.chartUrl, {}, function (res) {
+                    self.chartData    = res.data;
+                    self.categories   = res.categories;
+                    self.online       = res.online;
+                    self.date         = res.date;
+                    self.chartLoading = false;
+                })
+            },
+            /**
+             * 获取表格数据
+             */
+            getData() {
+                let self     = this;
+                self.loading = true;
+                request.post(self.url, self.search, function(res) {
+                    self.loading   = false;
+                    self.table     = res.data;
+                    self.pageTotal = res.count;
+                });
+            },
+            /**
+             * 排序改变
+             */
+            sortChange(v) {
+                this.search = Object.assign({}, this.search, {prop: v.prop , order: v.order});
+            },
+            /**
+             * 关键词/日期搜索
+             */
+            searchData() {
+                this.search = Object.assign({}, this.search, {page: 1});
+            },
+            /**
+             * 分页个数改变时
+             * @param  {Number} val 每页数量
+             */
+            pageSizeChange(val) {
+                this.search = Object.assign({}, this.search, {page: 1, pageSize: val});
+            },
+            /**
+             * 分页改变时
+             * @param  {String} val 当前页
+             */
+            pageChange(val) {
+                this.search = Object.assign({}, this.search, {page: val});
+            },
+        },
+        watch: {
+            search() {
+                this.getData();
+            }
+        }
+	});
+</script>
+{include file="common/footer"}

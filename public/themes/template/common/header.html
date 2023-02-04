@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head> 
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>{$seo_title}</title>
+	<meta name="keywords" content="{$seo_keywords}">
+	<meta name="description" content="{$seo_description}">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="baidu-site-verification" content="code-09qLlhlH1O" />
+	<link rel="shortcut icon" href="/upload/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/themes/template/static/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/themes/template/static/css/onekey.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/themes/template/static/css/animates.css"/>
+	<link rel="stylesheet" type="text/css" href="/themes/template/static/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/themes/template/static/css/jquery.mmenu.all.css"/>
+	<link rel="stylesheet" type="text/css" href="/themes/template/static/css/swiper.min.css"/>
+	<script type="text/javascript" src="/themes/template/static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/themes/template/static/js/jquery.mmenu.all.js"></script>
+	<script type="text/javascript" src="/themes/template/static/js/masonry.pkgd.min.js"></script>
+	<script type="text/javascript" src="/themes/template/static/js/swiper.animate.min.js"></script>
+	<script type="text/javascript" src="/themes/template/static/js/swiper.min.js"></script>
+	<script type="text/javascript" src="/themes/template/static/js/wow.min.js"></script>
+	<script type="text/javascript" src="/themes/template/static/js/common.js"></script>
+</head>
+<body>
+<div id="page">
+<header id="header">
+	<div class="container">
+		<div class="logo"><a href="/"><img src="{$system.logo}" alt="" /></a></div>
+		<div class="tel"><i class="fa fa-phone"></i> <span>{$system.telephone}</span></div>
+		<nav class="nav">
+			<ul>
+				{volist name="catalogHeader" id="item1"}
+				<li>
+					<a href="{$item1.url}">{$item1.title}</a>
+					<ul>
+						{volist name="item1.children" id="item2"}
+						<li><a href="{$item2.url}" >{$item2.title}</a></li>
+						{/volist}
+					</ul>
+				</li>
+				{/volist}
+			</ul>
+		</nav>
+		<a href="#menu" class="mm_btn">
+			<div class="menu_bar">
+				<div class="menu_bar_item top">
+					<div class="rect top"></div>
+				</div>
+				<div class="menu_bar_item mid">
+					<div class="rect mid"></div>
+				</div>
+				<div class="menu_bar_item bottom">
+					<div class="rect bottom"></div>
+				</div>
+			</div>
+		</a> 
+	</div>
+</header>
+<nav id="menu" class="mm-menu_offcanvas">
+	<div id="panel-menu">
+		<ul>
+			{volist name="catalogHeader" id="item1"}
+			<li>
+				<a href="{$item1.url}">{$item1.title}</a>
+				<ul>
+					{volist name="item1.children" id="item2"}
+					<li><a href="{$item2.url}" >{$item2.title}</a></li>
+					{/volist}
+				</ul>
+			</li>
+			{/volist}
+		</ul>
+	</div>
+</nav>	

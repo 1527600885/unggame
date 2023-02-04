@@ -1,0 +1,145 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		:search-catalog='[{"id":"1","title":"数字货币"},{"id":"2","title":"在线支付"}]'
+		:search-status='[{"value":"1","label":"显示"},{"value":"0","label":"隐藏"}]'
+		:search-date="false">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '编号',
+						table: {
+							sort: true,
+							label: '编号',
+						},
+						form: false
+					},
+					{
+						prop: 'name',
+						label: '通道名称',
+						table: {
+							sort: true,
+							label: '名称',
+						},
+						form: {
+							is: 'el-input',
+							placeholder: '通道名称',
+							rules: [
+								{required: true, message: '请输入通道名称'},
+							],
+						}
+					},
+					{
+						prop: 'image',
+						label: '通道图片',
+						table: {
+							is: 'image',
+							width:'80px'
+						},
+						form: {
+							is: 'el-file-select',
+							type: 'image',
+							filterable: 1,
+							multiple: 1,
+						}
+					},
+					{
+						prop: 'type',
+						label: '类型',
+						table: {
+							prop: 'typename',
+						},
+						form: {
+							is: 'el-radio-group',
+							default: '1',
+							child: {
+								value: [{"title":"数字货币","value":"1"},{"title":"在线支付","value":"2"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+					{
+						prop: 'max',
+						label: '提现次数',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input-number',
+							default: '0',
+						}
+					},
+					{
+						prop: 'channelCode',
+						label: '代付通道',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+							default: 1,
+						}
+					},
+					{
+						prop: 'currency',
+						label: '支持的货币',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+							default: 1,
+						}
+					},
+					{
+						prop: 'is_show',
+						label: '是否展示',
+						table: {
+							is: 'el-switch',
+							sort: true,
+						},
+						form: {
+							is: 'el-switch',
+						}
+					},
+					{
+						prop: 'other1',
+						label: '其他',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'country',
+						label: '支持国家',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-select',
+							placeholder: '',
+							default: 'all',
+							child: {
+								value: [{"title":"全部","value":"all"},{"title":"美元","value":"en-us"},{"title":"印度尼西亚盾","value":"en-id"},{"title":"马来西亚令吉","value":"en-my"},{"title":"日元","value":"ja-jp"},{"title":"柬埔寨瑞尔","value":"km-km"},{"title":"韩元","value":"ko-kr"},{"title":"泰国铢","value":"th-th"},{"title":"越南盾","value":"vi-vn"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}

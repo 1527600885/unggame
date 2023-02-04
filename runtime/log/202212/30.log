@@ -1,0 +1,8 @@
+{"time":"2022-12-30 09:03:00","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2022-12-30 09:03:05","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2022-12-30 09:03:09","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2022-12-30 09:03:13","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2022-12-30 13:38:34","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:37]"}
+{"time":"2022-12-30 14:01:02","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:37]"}
+{"time":"2022-12-30 14:06:34","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2022-12-30 23:02:10","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}

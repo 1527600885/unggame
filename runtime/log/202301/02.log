@@ -1,0 +1,29 @@
+{"time":"2023-01-02 04:20:39","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2023-01-02 08:43:07","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2023-01-02 09:37:06","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2023-01-02 11:06:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2023-01-02 14:04:53","type":"error","msg":"[2]ftp_fget(): Illegal PORT command.[/www/wwwroot/www.unicgm.com/app/common/game/FtpGame.php:45]"}
+{"time":"2023-01-02 14:07:08","type":"error","msg":"[2]ftp_fget(): Illegal PORT command.[/www/wwwroot/www.unicgm.com/app/common/game/FtpGame.php:45]"}
+{"time":"2023-01-02 16:36:08","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:864]"}
+{"time":"2023-01-02 17:16:40","type":"error","msg":"[0]syntax error, unexpected ')', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:490]"}
+{"time":"2023-01-02 17:16:46","type":"error","msg":"[0]syntax error, unexpected ')', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:490]"}
+{"time":"2023-01-02 17:16:47","type":"error","msg":"[0]syntax error, unexpected ')', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:490]"}
+{"time":"2023-01-02 17:23:40","type":"error","msg":"[2]preg_match(): Unknown modifier 'F'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:492]"}
+{"time":"2023-01-02 17:24:04","type":"error","msg":"[2]preg_match(): Unknown modifier 'F'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:492]"}
+{"time":"2023-01-02 17:24:12","type":"error","msg":"[2]preg_match(): Unknown modifier 'F'[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:492]"}
+{"time":"2023-01-02 17:27:32","type":"error","msg":"[2]Use of undefined constant content - assumed 'content' (this will throw an Error in a future version of PHP)[/www/wwwroot/www.unicgm.com/app/api/controller/User.php:492]"}
+{"time":"2023-01-02 17:52:43","type":"error","msg":"[0]Argument 1 passed to lang() must be of the type string, array given, called in /www/wwwroot/www.unicgm.com/app/common.php on line 641[/www/wwwroot/www.unicgm.com/vendor/topthink/framework/src/helper.php:338]"}
+{"time":"2023-01-02 18:44:29","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:34","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:37","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:39","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:39","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:39","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:39","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:40","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:40","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:40","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:40","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:40","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 18:44:40","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:145]"}
+{"time":"2023-01-02 21:43:32","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:865]"}

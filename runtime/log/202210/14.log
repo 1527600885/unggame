@@ -1,0 +1,4 @@
+{"time":"2022-10-14 11:15:11","type":"error","msg":"[8]Undefined variable: page[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:256]"}
+{"time":"2022-10-14 11:17:29","type":"error","msg":"[8]Undefined variable: page[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:256]"}
+{"time":"2022-10-14 11:24:42","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:249]"}
+{"time":"2022-10-14 11:24:45","type":"error","msg":"[2]Division by zero[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:249]"}

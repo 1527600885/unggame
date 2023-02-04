@@ -1,0 +1,5 @@
+{"time":"2022-12-16 00:31:34","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-16 01:02:35","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-16 13:53:34","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-16 15:33:02","type":"error","msg":"[8]Undefined variable: game_name[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:218]"}
+{"time":"2022-12-16 19:14:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}

@@ -1,0 +1,66 @@
+{"time":"2023-01-06 00:33:40","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-06 00:58:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-06 04:30:35","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-06 09:32:36","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-06 10:36:17","type":"error","msg":"[2]ftp_login() expects parameter 1 to be resource, bool given[/www/wwwroot/www.unicgm.com/app/common/game/FtpGame.php:10]"}
+{"time":"2023-01-06 10:36:17","type":"error","msg":"[2]ftp_login() expects parameter 1 to be resource, bool given[/www/wwwroot/www.unicgm.com/app/common/game/FtpGame.php:10]"}
+{"time":"2023-01-06 10:36:17","type":"error","msg":"[2]ftp_login() expects parameter 1 to be resource, bool given[/www/wwwroot/www.unicgm.com/app/common/game/FtpGame.php:10]"}
+{"time":"2023-01-06 12:19:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-06 14:19:30","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:19:41","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:19:54","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:19:57","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:19:59","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:20:12","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:20:18","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:20:20","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:20:47","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:21:02","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 14:21:03","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 17:33:16","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:20","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:23","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:28","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:35","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:36","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:38","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:38","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:39","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:40","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:40","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:41","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:41","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:41","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:41","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:42","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:42","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:42","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:42","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:42","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:42","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:42","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:42","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:43","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:43","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:43","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:43","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:43","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:33:48","type":"error","msg":"[8]Trying to get property 'id' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:170]"}
+{"time":"2023-01-06 17:35:23","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2023-01-06 17:35:33","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2023-01-06 17:35:49","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2023-01-06 17:36:44","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:37]"}
+{"time":"2023-01-06 17:37:09","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2023-01-06 17:37:10","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2023-01-06 17:37:16","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2023-01-06 17:37:23","type":"error","msg":"[8]Trying to get property 'time' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Order.php:70]"}
+{"time":"2023-01-06 18:06:00","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 18:06:05","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 18:06:24","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 18:09:10","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 18:13:14","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 18:13:18","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 18:13:30","type":"error","msg":"[8]Undefined index: salt[/www/wwwroot/www.unicgm.com/app/api/controller/Login.php:155]"}
+{"time":"2023-01-06 19:19:45","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:869]"}
+{"time":"2023-01-06 23:53:58","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:37]"}
+{"time":"2023-01-06 23:54:37","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:37]"}

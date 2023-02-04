@@ -1,0 +1,11 @@
+{"time":"2022-11-13 10:08:42","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:224]"}
+{"time":"2022-11-13 10:09:18","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:224]"}
+{"time":"2022-11-13 10:09:52","type":"error","msg":"[8]Undefined offset: 1[/www/wwwroot/game.uswindltd.com/vendor/topthink/think-orm/src/db/Builder.php:493]"}
+{"time":"2022-11-13 10:26:34","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:239]"}
+{"time":"2022-11-13 10:26:48","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:239]"}
+{"time":"2022-11-13 10:26:52","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:239]"}
+{"time":"2022-11-13 10:28:51","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:239]"}
+{"time":"2022-11-13 11:50:28","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:224]"}
+{"time":"2022-11-13 11:52:14","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:224]"}
+{"time":"2022-11-13 11:56:24","type":"error","msg":"[8]Trying to get property 'productType' of non-object[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:224]"}
+{"time":"2022-11-13 14:00:27","type":"error","msg":"[0]Class 'app\\api\\model\\Themes' not found[/www/wwwroot/game.uswindltd.com/app/api/controller/Config.php:41]"}

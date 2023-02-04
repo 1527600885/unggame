@@ -1,0 +1,12 @@
+{"time":"2022-10-10 08:42:33","type":"error","msg":"[0]mb_substr() expects parameter 1 to be string, null given[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:37]"}
+{"time":"2022-10-10 09:52:35","type":"error","msg":"[0]Call to undefined method think\\App::getName()[/www/wwwroot/game.uswindltd.com/app/api/BaseController.php:89]"}
+{"time":"2022-10-10 09:52:35","type":"error","msg":"[0]Call to undefined method think\\App::getName()[/www/wwwroot/game.uswindltd.com/app/api/BaseController.php:89]"}
+{"time":"2022-10-10 09:52:35","type":"error","msg":"[0]Call to undefined method think\\App::getName()[/www/wwwroot/game.uswindltd.com/app/api/BaseController.php:89]"}
+{"time":"2022-10-10 09:54:02","type":"error","msg":"[0]Call to undefined method think\\Request::appName()[/www/wwwroot/game.uswindltd.com/app/api/BaseController.php:90]"}
+{"time":"2022-10-10 09:54:02","type":"error","msg":"[0]Call to undefined method think\\Request::appName()[/www/wwwroot/game.uswindltd.com/app/api/BaseController.php:90]"}
+{"time":"2022-10-10 09:54:02","type":"error","msg":"[0]Call to undefined method think\\Request::appName()[/www/wwwroot/game.uswindltd.com/app/api/BaseController.php:90]"}
+{"time":"2022-10-10 10:01:09","type":"error","msg":"[8]Undefined property: app\\api\\controller\\Game::$GameListModel[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:54]"}
+{"time":"2022-10-10 10:53:51","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:61]"}
+{"time":"2022-10-10 14:19:08","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:110]"}
+{"time":"2022-10-10 14:22:01","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:110]"}
+{"time":"2022-10-10 14:23:46","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/game.uswindltd.com/app/api/controller/Game.php:110]"}

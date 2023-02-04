@@ -1,0 +1,25 @@
+{"time":"2022-12-21 05:43:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-21 08:47:08","type":"error","msg":"[0]syntax error, unexpected '.'[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:25]"}
+{"time":"2022-12-21 08:51:17","type":"error","msg":"[8]Undefined variable: digitalstr[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:27]"}
+{"time":"2022-12-21 08:53:10","type":"error","msg":"[0]syntax error, unexpected '.'[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:37]"}
+{"time":"2022-12-21 08:53:49","type":"error","msg":"[8]Undefined variable: digitalstr[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:27]"}
+{"time":"2022-12-21 08:55:58","type":"error","msg":"[10500]where express error:==[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/Builder.php:533]"}
+{"time":"2022-12-21 09:18:21","type":"error","msg":"[0]syntax error, unexpected 'dd' (T_STRING), expecting ';'[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:34]"}
+{"time":"2022-12-21 09:19:11","type":"error","msg":"[0]syntax error, unexpected ';', expecting :: (T_PAAMAYIM_NEKUDOTAYIM)[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:33]"}
+{"time":"2022-12-21 09:46:08","type":"error","msg":"[8]Trying to get property 'currency' of non-object[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:36]"}
+{"time":"2022-12-21 09:50:12","type":"error","msg":"[8]Array to string conversion[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:35]"}
+{"time":"2022-12-21 10:50:51","type":"error","msg":"[2]Invalid argument supplied for foreach()[/www/wwwroot/www.unicgm.com/public/plugins/withdrawal/admin/controller/MkWithdrawalSettings.php:39]"}
+{"time":"2022-12-21 10:50:58","type":"error","msg":"[2]Invalid argument supplied for foreach()[/www/wwwroot/www.unicgm.com/public/plugins/withdrawal/admin/controller/MkWithdrawalSettings.php:39]"}
+{"time":"2022-12-21 11:19:13","type":"error","msg":"[8]Undefined offset: 9[/www/wwwroot/www.unicgm.com/public/plugins/withdrawal/admin/controller/MkWithdrawalSettings.php:80]"}
+{"time":"2022-12-21 11:20:43","type":"error","msg":"[8]Undefined offset: 9[/www/wwwroot/www.unicgm.com/public/plugins/withdrawal/admin/controller/MkWithdrawalSettings.php:83]"}
+{"time":"2022-12-21 11:36:32","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-21 11:53:01","type":"error","msg":"[8]Undefined index: currency[/www/wwwroot/www.unicgm.com/app/api/controller/Withdrawal.php:43]"}
+{"time":"2022-12-21 11:56:41","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:770]"}
+{"time":"2022-12-21 17:35:01","type":"error","msg":"[10501]SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AND `status` = ? )  OR ( `LOTT_totalCount` > ? AND `logo` <>  AND `status` = ? )' at line 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-21 17:35:04","type":"error","msg":"[10501]SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AND `status` = ? )  OR ( `LOTT_totalCount` > ? AND `logo` <>  AND `status` = ? )' at line 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-21 17:41:02","type":"error","msg":"[0]syntax error, unexpected ';', expecting ')'[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:592]"}
+{"time":"2022-12-21 17:41:02","type":"error","msg":"[0]syntax error, unexpected ';', expecting ')'[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:592]"}
+{"time":"2022-12-21 17:50:36","type":"error","msg":"[10501]SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') and gameType='RNG'' at line 1[/www/wwwroot/www.unicgm.com/vendor/topthink/think-orm/src/db/PDOConnection.php:797]"}
+{"time":"2022-12-21 17:51:55","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:530]"}
+{"time":"2022-12-21 17:51:55","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:530]"}
+{"time":"2022-12-21 17:52:01","type":"error","msg":"[0]syntax error, unexpected '}'[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:530]"}

@@ -1,0 +1,13 @@
+{"time":"2022-12-24 10:58:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2022-12-24 11:33:39","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2022-12-24 14:41:19","type":"error","msg":"[8]Trying to access array offset on value of type null[/www/wwwroot/www.unicgm.com/public/plugins/customer/api/controller/MkCustomerSet.php:37]"}
+{"time":"2022-12-24 15:27:00","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:298]"}
+{"time":"2022-12-24 15:27:20","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:276]"}
+{"time":"2022-12-24 16:14:41","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:276]"}
+{"time":"2022-12-24 16:19:12","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:276]"}
+{"time":"2022-12-24 16:20:57","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:298]"}
+{"time":"2022-12-24 17:43:40","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2022-12-24 17:59:28","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:298]"}
+{"time":"2022-12-24 17:59:55","type":"error","msg":"[8]Undefined index: error_message[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:276]"}
+{"time":"2022-12-24 18:53:37","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
+{"time":"2022-12-24 23:20:31","type":"error","msg":"[8]Undefined index: game_url[/www/wwwroot/www.unicgm.com/app/api/controller/Game.php:856]"}
