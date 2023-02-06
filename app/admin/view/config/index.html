@@ -351,6 +351,7 @@
         },
 	    methods: {
 			add(){
+				console.log(JSON.stringify(this.obj));
 				this.tableData.push(JSON.parse(JSON.stringify(this.obj)))
 			},
 			setCurrent(row) {
