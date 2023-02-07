@@ -30,6 +30,7 @@ class Config extends BaseController
             'theme'  => $theme,
             'email'  => ConfigModel::getVal('email'),
             'system' => ConfigModel::getVal('system'),
+            'withdraw' =>  ConfigModel::getVal('withdraw'),
             'themes' => Themes::select(),
             'upload' => [
                 'admin' => include(root_path().'app/admin/config/upload.php'),
@@ -58,6 +59,9 @@ class Config extends BaseController
 					file_put_contents(root_path().'app/api/config/upload.php', "<?php\nreturn ".var_export($input['value']['index'],true).";");
                     file_put_contents(root_path().'app/admin/config/upload.php', "<?php\nreturn ".var_export($input['value']['admin'],true).";");
                     $msg = ['status' => 'success', 'message' => '修改成功'];
+                    break;
+                case 'withdraw':
+                    $msg = ConfigModel::setVal($input['name'],$input['title'], $input['value']);
                     break;
                 default:
                     Themes::update(['config' => $input['value']], ['name' => $input['name']]);

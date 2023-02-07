@@ -262,44 +262,36 @@
 				<div class="el-pane-warp">
 					<el-form ref="withdrawForm" :model="withdrawForm" label-width="120px">
 						<el-form-item label="最小提现金额">
-							<el-input v-model="withdrawForm.minprice"></el-input>
+							<el-input v-model="withdrawForm.minprice" 	style="width: 40%">></el-input>
 						</el-form-item>
 						<el-form-item label="提现流水倍数">
-							<el-input v-model="withdrawForm.rate"></el-input>
+							<el-input v-model="withdrawForm.rate" 	style="width: 40%">></el-input>
 						</el-form-item>
 						<el-form-item label="提现手续费">
 							<el-table
-
 									ref="singleTable"
-									:data="tableData"
+									:data="withdrawForm.tableData"
 									highlight-current-row
 									@current-change="handleCurrentChange"
-									style="width: 100%">
+									style="width: 40%">
 								<el-table-column
 										type="index"
 										width="50">
 								</el-table-column>
 								<el-table-column
 										property="date"
-										label="日期"
+										label="邀请人数"
 										width="120">
 									<template slot-scope="scope">
-										<el-input clearable v-model="scope.row.date" placeholder="请输入日期"></el-input>
+										<el-input clearable v-model="scope.row.number" placeholder="请输入邀请人数"></el-input>
 									</template>
 								</el-table-column>
 								<el-table-column
 										property="name"
-										label="姓名"
+										label="费率"
 										width="120">
 									<template slot-scope="scope">
-										<el-input clearable v-model="scope.row.name" placeholder="请输入姓名"></el-input>
-									</template>
-								</el-table-column>
-								<el-table-column
-										property="address"
-										label="地址">
-									<template slot-scope="scope">
-										<el-input clearable v-model="scope.row.address" placeholder="请输入地址"></el-input>
+										<el-input clearable v-model="scope.row.rate" placeholder="请输入费率"></el-input>
 									</template>
 								</el-table-column>
 								<el-table-column
@@ -307,11 +299,11 @@
 										label="操作"
 										width="100">
 									<template slot-scope="scope">
-										<el-button @click="handleClick(scope.row.index)" type="text" size="small">删除</el-button>
+										<el-button @click="handleClick(scope.$index)" type="text" size="small">删除</el-button>
 									</template>
 								</el-table-column>
 							</el-table>
-							<el-button style="width:100%;height:50px;background:#fff;color:#000" icon="el-icon-plus" @click="add" type="primary">添加信息</el-button>
+							<el-button style="width:40%;height:50px;background:#fff;color:#000" icon="el-icon-plus" @click="add" type="primary">添加信息</el-button>
 						</el-form-item>
 					</el-form>
 					<div class="el-bottom">
@@ -343,25 +335,7 @@
 	        	systemForm: {:json_encode($system)},
 	        	uploadForm: {:json_encode($upload)},
 	        	themesForm: {:json_encode($theme)},
-				withdrawForm:{},
-				tableData: [{
-					date: '2016-05-02',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1518 弄'
-				}, {
-					date: '2016-05-04',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1517 弄'
-				}, {
-					date: '2016-05-01',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1519 弄'
-				}, {
-					date: '2016-05-03',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1516 弄'
-				}],
-						currentRow: null
+				withdrawForm:{:json_encode($withdraw)},
 	        }
 	    },
         created() {
@@ -375,21 +349,18 @@
 	    methods: {
 			add(){
 				var ob = {
-					date: '',
-					name: '',
-					address: ''
+
 				};
-				this.tableData.push(ob);
+				this.withdrawForm.tableData.push(ob);
 			},
 			setCurrent(row) {
 				this.$refs.singleTable.setCurrentRow(row);
 			},
 			handleCurrentChange(val) {
-				console.log(val);
 				this.currentRow = val;
 			},
 			handleClick(row){
-				console.log(row)
+				this.withdrawForm.tableData.splice(row,1);
 			},
 	        /**
              * 保存基础配置
@@ -397,6 +368,7 @@
 	        saveConfig(title, value) {
 	        	let self = this;
 	        	let row  = JSON.parse(JSON.stringify(value));
+	        	console.log(value);
 	        	if (self.tabs === 'upload') {
 	        		row.index.size.image = row.index.size.image * 1024 * 1024;
 		        	row.admin.size.image = row.admin.size.image * 1024 * 1024;

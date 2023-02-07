@@ -264,73 +264,81 @@ class Game extends BaseController
 		$gameinfo=$this->GameListModel->where('tcgGameCode',$tcgGameCode)->find();
 		$gamename=json_decode($gameinfo->gameName,true)[$this->gamelang];
 		$userInfo=$this->request->userInfo;
-		if($userInfo->balance<=0){
-			//没有资金的情况下，将不进行资金的操作
-			$result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
-			$ret=json_decode($result,true);
-			if($ret['status']==0){
-				$id=$this->GamelogModel->insertGetId(['uid'=>$userInfo->id,'gid'=>$gameinfo->id,'amount'=>$userInfo->balance,'add_time'=>time()]);
-				if($id){
-					$this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
-				}
-			}else{
-				$this->error($ret['error_message']);
-			}
-			// $this->error(lang('game.money_funds'));
-		}else{
-			//将全部资金带入游戏
-			$rechargeno="game_recharge_".$userInfo->game_account.time();
-			// dump($userInfo->game_account);
-			// dump($gameinfo->productType);
-			// dump($userInfo->balance);
-			// dump($rechargeno);
-			// exit;
-			$result=$this->apigame->user_transfer($userInfo->game_account,$gameinfo->productType,1,$userInfo->balance,$rechargeno);
-			$ret=json_decode($result,true);
-			//强制赋予成功返回，方便测试
-			// $ret=['status'=>0,'transaction_status'=>'SUCCESS'];
-			if($ret['status']==0){
-				if($ret['transaction_status']=="SUCCESS"){
-					//转入成功操作
-					$this->UserModel->where('id',$userInfo->id)->update(['balance'=>0]);
-					$id=$this->GamelogModel->insertGetId(['uid'=>$userInfo->id,'gid'=>$gameinfo->id,'amount'=>$userInfo->balance,'add_time'=>time()]);
-					if($id){
-						$result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
-						$ret=json_decode($result,true);
-						if($ret['status']==0){
-							$this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
-						}else{
-							$this->error($ret['error_message']);
-						}
-					}
-				}elseif($ret['transaction_status']=="PENDING"){
-					//延迟转入操作,查询资金情况
-					$result=$this->apigame->check_transfer($gameinfo->productType,$rechargeno);
-					$ret=json_decode($result,true);
-					if($ret['status']==0){
-						//已转入成功，重新启动游戏
-						$this->UserModel->where('id',$userInfo->id)->update(['balance'=>0]);
-						$id=$this->GamelogModel->insertGetId(['uid'=>$userInfo->id,'gid'=>$gameinfo->id,'amount'=>$userInfo->balance,'add_time'=>time()]);
-						if($id){
-							$result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
-							$ret=json_decode($result,true);
-							if($ret['status']==0){
-								$this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
-							}else{
-								$this->error($ret['error_message']);
-							}
-						}
-					}else{
-						$this->error($ret['error_desc']);
-					}
-				}else{
-					//转入失败操作
-					$this->error($ret['error_desc']);
-				}
-			}else{
-				$this->error($ret['error_desc'],null,404);
-			}
-		}
+		try{
+            Db::startTrans();
+            if($userInfo->balance<=0){
+                //没有资金的情况下，将不进行资金的操作
+                $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
+                $ret=json_decode($result,true);
+                if($ret['status']==0){
+                    $id=$this->GamelogModel->insertGetId(['uid'=>$userInfo->id,'gid'=>$gameinfo->id,'amount'=>$userInfo->balance,'add_time'=>time()]);
+                    if($id){
+                        $this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
+                    }
+                }else{
+                    $this->error($ret['error_message']);
+                }
+                // $this->error(lang('game.money_funds'));
+            }else{
+                //将全部资金带入游戏
+                $rechargeno="game_recharge_".$userInfo->game_account.time();
+                // dump($userInfo->game_account);
+                // dump($gameinfo->productType);
+                // dump($userInfo->balance);
+                // dump($rechargeno);
+                // exit;
+                $result=$this->apigame->user_transfer($userInfo->game_account,$gameinfo->productType,1,$userInfo->balance,$rechargeno);
+                $ret=json_decode($result,true);
+                //强制赋予成功返回，方便测试
+                // $ret=['status'=>0,'transaction_status'=>'SUCCESS'];
+                if($ret['status']==0){
+                    if($ret['transaction_status']=="SUCCESS"){
+                        //转入成功操作
+                        $this->UserModel->where('id',$userInfo->id)->update(['balance'=>0]);
+                        $id=$this->GamelogModel->insertGetId(['uid'=>$userInfo->id,'gid'=>$gameinfo->id,'amount'=>$userInfo->balance,'add_time'=>time()]);
+                        if($id){
+                            $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
+                            $ret=json_decode($result,true);
+                            if($ret['status']==0){
+                                $this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
+                            }else{
+                                $this->error($ret['error_message']);
+                            }
+                        }
+                    }elseif($ret['transaction_status']=="PENDING"){
+                        //延迟转入操作,查询资金情况
+                        $result=$this->apigame->check_transfer($gameinfo->productType,$rechargeno);
+                        $ret=json_decode($result,true);
+                        if($ret['status']==0){
+                            //已转入成功，重新启动游戏
+                            $this->UserModel->where('id',$userInfo->id)->update(['balance'=>0]);
+                            $id=$this->GamelogModel->insertGetId(['uid'=>$userInfo->id,'gid'=>$gameinfo->id,'amount'=>$userInfo->balance,'add_time'=>time()]);
+                            if($id){
+                                $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
+                                $ret=json_decode($result,true);
+                                if($ret['status']==0){
+                                    $this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
+                                }else{
+                                    $this->error($ret['error_message']);
+                                }
+                            }
+                        }else{
+                            $this->error($ret['error_desc']);
+                        }
+                    }else{
+                        //转入失败操作
+                        $this->error($ret['error_desc']);
+                    }
+                }else{
+                    $this->error($ret['error_desc'],null,404);
+                }
+            }
+            Db::commit();
+        }catch (\Exception $e){
+            Db::rollback();
+            $this->error($e->getMessage());
+        }
+
 	}
 	
 	/**
