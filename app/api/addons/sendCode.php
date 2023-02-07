@@ -29,6 +29,7 @@ class sendCode
     {
         $title = lang('system.code');
         $code  = rand(1000,9999);
+        $operation ="Your";
         // $body  = $operation . lang('system.code')."<br/>".lang('system.hi') . $email . "!<br/>" . $title . "，".lang('system.code') . $operation . lang('system.page')."。<br/>".lang('system.code')."：" . $code . "";
         $font_size1 = "style='font-size:12px;font-weight: bolder'";
         $font_size2 = "style='font-size:12px'";
@@ -38,11 +39,10 @@ class sendCode
 	<p {$font_size1}>Leaking the verification code will make the account unsafe. </p>
 	<p {$font_size1}>Please keep the verification code safe.</p>
 	<div style='margin-top:50px'>
-		<p {$font_size2}>Unicorn is a Web3.0 game that provides global users with fun, interesting and profitable gameproducts. It currently has millions of gamers around the world. Our goal is to bring users to playgames to make money, a new way of consumption and entertainment.</p>
-		<p style='margin-top:25px;font-size:12px'>Our official website:</p>
-		<p><a href='//www.unicgm.com' {$font_size2}>www.unicgm.com</a></p>
-		<p {$font_size2}>Our App download link:</p>
-		<p><a href='//www.unicgm.com/download' {$font_size2}>www.unicgm.com/download</a></p>
+		<p {$font_size2}>UNG GAME is a Web3.0 game platform, that provides global users with fun, interesting and profitable game products. It currently has millions of gamers around the world. Our goal is to bring happiness to every customer while playing games to make money, explore and practice new ways of entertainment and money.</p>
+		<p style='margin-top:25px;font-size:12px'>UNG GAME official website:</p>
+		<p><a href='//www.unggame.com' {$font_size2}>www.unggame.com</a></p>
+	
 		<p {$font_size2}>Business cooperation:<a href='//business@unicgm.com'> business@unicgm.com</a></p>
 		<p {$font_size2}>Customer service:<a href='//service@unicgm.com'>service@unicgm.com</a></p>
 	</div>";
