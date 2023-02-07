@@ -383,10 +383,10 @@
 			setCurrent(row) {
 				this.$refs.singleTable.setCurrentRow(row);
 			},
-			// handleCurrentChange(val) {
-			// 	console.log(val);
-			// 	this.currentRow = val;
-			// },
+			handleCurrentChange(val) {
+				console.log(val);
+				this.currentRow = val;
+			},
 			handleClick(row){
 				console.log(row)
 			},
