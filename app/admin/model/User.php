@@ -39,7 +39,7 @@ class User extends Model
     public function searchKeywordAttr($query, $value, $array)
     {
         if (! empty($value)) {
-            $query->where("nickname|email|mobile|account",'like', '%' . $value . '%');
+            $query->where("nickname|email|mobile|game_account",'like', '%' . $value . '%');
         }
     }
 

@@ -352,6 +352,8 @@ class Game extends BaseController
             $re = $e->getResponse();
             if($re->getCode()!=200){
                 Db::rollback();
+            }else{
+                Db::commit();
             }
             throw new HttpResponseException($re);
         }catch (\Exception $e){
