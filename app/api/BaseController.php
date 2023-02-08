@@ -18,6 +18,7 @@ use think\Response;
 use think\exception\HttpResponseException;
 use app\api\model\User;
 use app\api\model\UserToken;
+use think\facade\Cache;
 // use GeoIp2\WebService\Client;
 /**
  * 控制器基础类
@@ -220,14 +221,22 @@ abstract class BaseController
 	 * @access protected
 	 * @param mixed  $token   登录凭证
 	 */
-	protected function getuserinfo($token){
-		$time=14*24;
-		$nologuserinfo=null;
-		$id = UserToken::where("token", $token)->whereTime("create_time","-$time hours")->value('user_id');
-		$password = User::where('id', $id)->value('password');
-		if (password_verify($id . $this->request->ip() . $password, $token)) {
-			$nologuserinfo = User::with(['group'])->where('id', $id)->where('status', 1)->find();
-		}
-		return $nologuserinfo;
-	}
+    protected function getuserinfo($token){
+        $time=14*24;
+        $nologuserinfo=null;
+        $id = UserToken::where("token", $token)->whereTime("create_time","-$time hours")->value('user_id');
+        //$password = User::where('id', $id)->value('password');
+        $ip  = Cache::get("user_ip_{$id}");
+        if(!$ip){
+            $ip = $this->request->ip();
+            Cache::set("user_ip_{$id}",$this->request->ip(),14*24*3600);
+        }
+        if($ip == $this->request->ip()){
+            $nologuserinfo = User::with(['group'])->where('id', $id)->where('status', 1)->find();
+        }
+// 		if (password_verify($id . $this->request->ip() . $password, $token)) {
+        //	$nologuserinfo = User::with(['group'])->where('id', $id)->where('status', 1)->find();
+// 		}
+        return $nologuserinfo;
+    }
 }

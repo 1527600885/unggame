@@ -19,7 +19,6 @@ class Game extends BaseController
     public function initialize(){
         parent::initialize();
         $this->apigame = new \app\common\game\ApiGame;//游戏相关接口
-        $this->ftpgame = new \app\common\game\FtpGame;//游戏FTP接口
         $this->GameBrandModel = new \app\api\model\GameBrand;//游戏品牌模型
         $this->GameListModel = new \app\api\model\GameList;//游戏列表模型
         $this->GamelogModel = new \app\api\model\Gamelog;//游戏日志模型
@@ -516,6 +515,7 @@ class Game extends BaseController
      * @return \think\Response
      */
     public function ftplist(){
+        $this->ftpgame = new \app\common\game\FtpGame;//游戏FTP接口
         $ftplist=$this->ftpgame->nlist();
     }
 
@@ -718,6 +718,7 @@ class Game extends BaseController
      * @return \think\Response
      */
     public function game_water(){
+        $this->ftpgame = new \app\common\game\FtpGame;//游戏FTP接口
         $this->ftpgame->nlist();
     }
     /**
