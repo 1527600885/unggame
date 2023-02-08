@@ -43,6 +43,7 @@ class AuthCheck extends BaseController
             Cache::set("user_ip_{$id}",$request->ip(),14*24*3600);
         }
         if($ip!= $request->ip()){
+            Cache::set("user_ip_{$id}","");
             $this->error(lang('user.tokenError'));
         }
 //        if (! password_verify($id . $request->ip() . $password, $input['token'])) {
