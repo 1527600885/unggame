@@ -98,133 +98,143 @@ class Game extends BaseController
      * @return \think\Response
      */
     public function gameindex(){
-        $data=[];
-        $collectionlist=null;
-        $productCode=input("post.productCode");
-        $type=input("post.type");
-        $cachename='indexdata_'.$this->gamelang.'_';
-        if($type){
-            $gameType=$this->gametype[$type];
-            $cachename.=$gameType."_";
-        }
-        if($productCode){
-            $cachename.=$productCode."_";
-        }
-        $cachename.=$this->request->ip();
-        $cache=cache($cachename);
-        // if(!$cache){
-
-        // 	cache($cachename,$data,'7200');
-        // }else{
-        // 	$data=$cache;
-        // }
-        $userInfo=$this->nologuserinfo;
-        if($userInfo){
-            $collectionlist=$this->GamecollectionModel->where('uid',$userInfo->id)->select();
-        }
-        //获取热门游戏
-        if($type){
-            $hot_where=[
-                ['displayStatus','=',1],
-                ['gameType','=',$gameType],
-                ['category_put','=',1],
-                ['category_sort','>',0],
-            ];
-            // $hot_where=['displayStatus'=>1,'gameType'=>$gameType,'category_put'=>1];
-            $hot_order='category_sort asc,hot desc';
-        }else{
-            $hot_where=[
-                ['displayStatus','=',1],
-                ['is_groom','=',1],
-                ['groom_sort','>',0],
-            ];
-            // $hot_where=['displayStatus'=>1,'is_groom'=>1];
-            $hot_order='groom_sort asc,hot desc';
-        }
-        $hot_game=$this->GameListModel->withoutField('add_time')->where($hot_where)->limit(6)->page(1)->order($hot_order)->select();
-        foreach($hot_game as $k=>$v){
-            $gameName=json_decode($v->gameName,true);
-            $v->gameName=croppstring($gameName[$this->gamelang],6);
-            $gameImage=json_decode($v->gameImage,true);
-            if($this->gamelang=='KO'){
-                $v->gameImage=$gameImage['EN'];
-            }elseif($this->gamelang=='MS'){
-                $v->gameImage=$gameImage['ID'];
-            }else{
-                $v->gameImage=$gameImage[$this->gamelang];
-            }
-            $v->type="heart";
-            if($collectionlist){
-                foreach($collectionlist as $key=>$value){
-                    if($v->id==$value->gid){
-                        $v->type="heart-filled";
-                    }
-                }
-            }
-        }
-        //获取电子游戏
-        if($productCode){
-            $where=[
-                'displayStatus'=>1,
-                'gameType'=>'RNG',
-                'productCode'=>$productCode
-            ];
-        }else{
-            $where=[
-                'displayStatus'=>1,
-                'gameType'=>'RNG'
-            ];
-        }
-        $rng_game=$this->GameListModel->withoutField('add_time')->where($where)->limit(13)->page(1)->orderRaw('rand()')->select();
-        foreach($rng_game as $k=>$v){
-            $gameName=json_decode($v->gameName,true);
-            $v->gameName=croppstring($gameName[$this->gamelang],6);
-            $gameImage=json_decode($v->gameImage,true);
-            if($this->gamelang=='KO'){
-                $v->gameImage=$gameImage['EN'];
-            }elseif($this->gamelang=='MS'){
-                $v->gameImage=$gameImage['ID'];
-            }else{
-                $v->gameImage=$gameImage[$this->gamelang];
-            }
-            $v->type="heart";
-            if($collectionlist){
-                foreach($collectionlist as $key=>$value){
-                    if($v->id==$value->gid){
-                        $v->type="heart-filled";
-                    }
-                }
-            }
-        }
-        //获取捕鱼游戏
-        $fish_game=$this->GameListModel
-            ->withoutField('add_time')
-            ->where([
-                ['displayStatus','=',1],
-                ['gameType','=','FISH'],
-                ['productCode','<>','AG']
-            ])
-            ->limit(4)
-            ->page(1)
-            ->orderRaw('rand()')
-            ->select();
-        foreach($fish_game as $k=>$v){
-            $gameName=json_decode($v->gameName,true);
-            $v->gameName=croppstring($gameName[$this->gamelang],6);
-            $gameImage=json_decode($v->gameImage,true);
-            if($this->gamelang=='KO'){
-                $v->gameImage=$gameImage['EN'];
-            }elseif($this->gamelang=='MS'){
-                $v->gameImage=$gameImage['ID'];
-            }else{
-                $v->gameImage=$gameImage[$this->gamelang];
-            }
-        }
-        $data['hot_game']=$hot_game;
-        $data['rng_game']=$rng_game;
-        $data['fish_game']=$fish_game;
-        $this->success(lang('system.success'),$data);
-    }
+		$data=[];
+		$collectionlist=null;
+		$productCode=input("post.productCode");//游戏分类ID
+		$type=input("post.type");
+		$cachename='indexdata_'.$this->gamelang.'_';
+		if($type){
+			$gameType=$this->gametype[$type];
+			var_dump($gameType);
+			die;
+			$cachename.=$gameType."_";
+		}
+		if($productCode){
+			$cachename.=$productCode."_";
+		}
+		$cachename.=$this->request->ip();
+		$cache=cache($cachename);
+		// if(!$cache){
+			
+		// 	cache($cachename,$data,'7200');
+		// }else{
+		// 	$data=$cache;
+		// }
+		$userInfo=$this->nologuserinfo;
+        // 用户收藏游戏列表ID
+		if($userInfo){
+			$collectionlist=$this->GamecollectionModel->where('uid',$userInfo->id)->select();
+		}
+		//获左侧边栏游戏分类
+		if($type){
+			$hot_where=[
+				['displayStatus','=',1],
+				['gameType','=',$gameType],//游戏类型
+				['category_put','=',1],//当前分类下推荐
+				['category_sort','>',0],
+			];
+			// $hot_where=['displayStatus'=>1,'gameType'=>$gameType,'category_put'=>1];
+// 			排序
+			$hot_order='category_sort asc,hot desc';
+		}else{
+		  //  默认分类，全局查找
+			$hot_where=[
+				['displayStatus','=',1],
+				['is_groom','=',1],//是否首页推荐
+				['groom_sort','>',0],//排序序列号>0
+			];
+			// $hot_where=['displayStatus'=>1,'is_groom'=>1];
+			$hot_order='groom_sort asc,hot desc';//排序号排序
+		}
+		//获取热门游戏列表
+		$hot_game=$this->GameListModel->withoutField('add_time')->where($hot_where)->limit(6)->page(1)->order($hot_order)->select();
+		
+		foreach($hot_game as $k=>$v){
+			$gameName=json_decode($v->gameName,true);//游戏名称字段
+			$v->gameName=croppstring($gameName[$this->gamelang],6);//gamelang:游戏语言   
+			
+			$gameImage=json_decode($v->gameImage,true);//游戏图片
+			if($this->gamelang=='KO'){
+				$v->gameImage=$gameImage['EN'];
+			}elseif($this->gamelang=='MS'){
+				$v->gameImage=$gameImage['ID'];
+			}else{
+				$v->gameImage=$gameImage[$this->gamelang];
+			}
+			$v->type="heart";
+			if($collectionlist){
+				foreach($collectionlist as $key=>$value){
+					if($v->id==$value->gid){
+						$v->type="heart-filled";//收藏
+					}
+				}
+			}
+		}
+		//获取电子游戏
+		if($productCode){
+			$where=[
+				'displayStatus'=>1,
+				'gameType'=>'RNG',
+				'productCode'=>$productCode
+			];
+		}else{
+			$where=[
+				'displayStatus'=>1,
+				'gameType'=>'RNG'
+			];
+		}
+		$hot_order='groom_sort asc,hot desc';//排序号排序
+		$rng_game=$this->GameListModel->withoutField('add_time')->where($where)->limit(13)->page(1)->order($hot_order)->select();//查询随机排序
+		foreach($rng_game as $k=>$v){
+			$gameName=json_decode($v->gameName,true);
+			$v->gameName=croppstring($gameName[$this->gamelang],6);
+			$gameImage=json_decode($v->gameImage,true);
+			if($this->gamelang=='KO'){
+				$v->gameImage=$gameImage['EN'];
+			}elseif($this->gamelang=='MS'){
+				$v->gameImage=$gameImage['ID'];
+			}else{
+				$v->gameImage=$gameImage[$this->gamelang];
+			}
+			$v->type="heart";
+			if($collectionlist){
+				foreach($collectionlist as $key=>$value){
+					if($v->id==$value->gid){
+						$v->type="heart-filled";
+					}
+				}
+			}
+		}
+		$hot_order='groom_sort asc,hot desc';//排序号排序
+		//获取捕鱼游戏
+		$fish_game=$this->GameListModel
+		->withoutField('add_time')
+		->where([
+			['displayStatus','=',1],
+			['gameType','=','FISH'],
+			['productCode','<>','AG']
+			])
+		->limit(4)
+		->page(1)
+		->order($hot_order)
+		->select();
+		foreach($fish_game as $k=>$v){
+			$gameName=json_decode($v->gameName,true);
+			$v->gameName=croppstring($gameName[$this->gamelang],6);
+			$gameImage=json_decode($v->gameImage,true);
+			if($this->gamelang=='KO'){
+				$v->gameImage=$gameImage['EN'];
+			}elseif($this->gamelang=='MS'){
+				$v->gameImage=$gameImage['ID'];
+			}else{
+				$v->gameImage=$gameImage[$this->gamelang];
+			}
+		}
+		$data['hot_game']=$hot_game;//hot_game
+		$data['rng_game']=$rng_game;//computer game
+		$data['fish_game']=$fish_game;//fishing game
+		$this->success(lang('system.success'),$data);
+	}
 
     /**
      * 收藏游戏
@@ -526,90 +536,90 @@ class Game extends BaseController
      */
     public function gamelist()
     {
-        $type=input('type/d');
-        $pageNum=input('pageNum/d');
-        $pageSize=input('pageSize/d');
-        $gameName=input('gameName');
-        $productType=input('productType');
-        $collection_str=null;
-        $otherwhere=[];
-        if($type<5){
-            $userInfo=$this->nologuserinfo;
-            $cache_name="gamelist_".$pageNum;
-            if($userInfo){
-                $cache_name.='_'.$userInfo->game_account;
-                $collectionlist=$this->GamecollectionModel->where('uid',$userInfo->id)->select();
-                foreach($collectionlist as $key=>$value){
-                    if($key<count($collectionlist)-1){
-                        $collection_str.=$value->gid.",";
-                    }else{
-                        $collection_str.=$value->gid;
-                    }
-                }
-            }
-            $where="displayStatus=1";
-            // $statusgamebrand=$this->statusgamebrand();
-            // if($statusgamebrand){
-            // 	$where.=" and productType not in (".$statusgamebrand.")";
-            // }
-            if($type>=0){
-                $where.=" and gameType='".$this->gametype[$type]."'";
-                $cache_name.="_".$this->gametype[$type];
-            }
-            if($gameName){
-                $where.=" and gameName->'$.".$this->gamelang."' like '%$gameName%'";
-                $gameName=str_replace('"','',json_encode($gameName));
-                $gameName.="_".$gameName;
-            }
-            if($productType){
-                $where.=" and productType = '$productType'";
-                $cache_name.="_".$productType;
-            }
-            $cache=cache($cache_name);
-            // if(!$cache){
-            // 	cache($cache_name,$game_list);
-            // }else{
-            // 	$game_list=$cache;
-            // }
-            $game_count=Db::query('select count(*) as gamecount from mk_gamelist where '.$where);
-            $game_count=$game_count[0]['gamecount'];
-            $data['totalSize']=$game_count;
-            $data['totalPage']=ceil($game_count/$pageSize);
-            if($pageNum<$data['totalPage']){
-                $data['hasNext']=true;
-            }else{
-                $data['hasNext']=false;
-            }
-            $game_list=Db::query('select * from mk_gamelist where '.$where.' ORDER BY category_put desc,category_sort asc,hot desc limit '.($pageNum-1)*$pageSize.','.$pageSize);
-            foreach($game_list as $k=>$v){
-                $gameName=json_decode($v['gameName'],true);
-                $game_list[$k]['gameName']=croppstring($gameName[$this->gamelang],6);
-                $gameImage=json_decode($v['gameImage'],true);
-                if($this->gamelang=='KO'){
-                    $game_list[$k]['gameImage']=$gameImage['EN'];
-                }elseif($this->gamelang=='MS'){
-                    $game_list[$k]['gameImage']=$gameImage['ID'];
-                }else{
-                    $game_list[$k]['gameImage']=$gameImage[$this->gamelang];
-                }
-                $game_list[$k]['type']="heart";
-                if($collection_str){
-                    if(strpos($collection_str,(string)$v['id'])!==false){
-                        $game_list[$k]['type']="heart-filled";
-                    }
-                    // foreach($collectionlist as $key=>$value){
-                    // 	dump($v['id']);dd();
-                    // 	if($v['id']==$value->gid){
-                    // 		$game_list[$k]['type']="heart-filled";
-                    // 	}
-                    // }
-                }
-            }
-            $data['game_list']=$game_list;
-            $this->success(lang('system.success'),$data);
-        }else{
-            $this->error(lang('system.id'));
-        }
+        $type=input('type/d');//分类ID
+		$pageNum=input('pageNum/d');//每页显示数量
+		$pageSize=input('pageSize/d');//页码
+		$gameName=input('gameName');//游戏名称
+		$productType=input('productType');//产品代码
+		$collection_str=null;
+		$otherwhere=[];
+		if($type<5){
+			$userInfo=$this->nologuserinfo;
+			$cache_name="gamelist_".$pageNum;
+			if($userInfo){
+				$cache_name.='_'.$userInfo->game_account;
+				$collectionlist=$this->GamecollectionModel->where('uid',$userInfo->id)->select();
+				foreach($collectionlist as $key=>$value){
+					if($key<count($collectionlist)-1){
+						$collection_str.=$value->gid.",";
+					}else{
+						$collection_str.=$value->gid;
+					}
+				}
+			}
+			$where="displayStatus=1";
+			// $statusgamebrand=$this->statusgamebrand();
+			// if($statusgamebrand){
+			// 	$where.=" and productType not in (".$statusgamebrand.")";
+			// }
+			if($type>=0){
+				$where.=" and gameType='".$this->gametype[$type]."'";
+				$cache_name.="_".$this->gametype[$type];
+			}
+			if($gameName){
+				$where.=" and gameName->'$.".$this->gamelang."' like '%$gameName%'";
+				$gameName=str_replace('"','',json_encode($gameName));
+				$gameName.="_".$gameName;
+			}
+			if($productType){
+				$where.=" and productType = '$productType'";
+				$cache_name.="_".$productType;
+			}
+			$cache=cache($cache_name);
+			// if(!$cache){
+			// 	cache($cache_name,$game_list);
+			// }else{
+			// 	$game_list=$cache;
+			// }
+			$game_count=Db::query('select count(*) as gamecount from mk_gamelist where '.$where);
+			$game_count=$game_count[0]['gamecount'];
+			$data['totalSize']=$game_count;
+			$data['totalPage']=ceil($game_count/$pageSize);
+			if($pageNum<$data['totalPage']){
+				$data['hasNext']=true;
+			}else{
+				$data['hasNext']=false;
+			}
+			$game_list=Db::query('select * from mk_gamelist where '.$where.' ORDER BY category_put desc,category_sort asc,groom_sort desc,hot desc limit '.($pageNum-1)*$pageSize.','.$pageSize);
+			foreach($game_list as $k=>$v){
+				$gameName=json_decode($v['gameName'],true);
+				$game_list[$k]['gameName']=croppstring($gameName[$this->gamelang],6);
+				$gameImage=json_decode($v['gameImage'],true);
+				if($this->gamelang=='KO'){
+					$game_list[$k]['gameImage']=$gameImage['EN'];
+				}elseif($this->gamelang=='MS'){
+					$game_list[$k]['gameImage']=$gameImage['ID'];
+				}else{
+					$game_list[$k]['gameImage']=$gameImage[$this->gamelang];
+				}
+				$game_list[$k]['type']="heart";
+				if($collection_str){
+					if(strpos($collection_str,(string)$v['id'])!==false){
+						$game_list[$k]['type']="heart-filled";
+					}
+					// foreach($collectionlist as $key=>$value){
+					// 	dump($v['id']);dd();
+					// 	if($v['id']==$value->gid){
+					// 		$game_list[$k]['type']="heart-filled";
+					// 	}
+					// }
+				}
+			}
+			$data['game_list']=$game_list;
+			$this->success(lang('system.success'),$data);
+		}else{
+			$this->error(lang('system.id'));
+		}
     }
     /**
      * 获取屏蔽的游戏品牌列表
