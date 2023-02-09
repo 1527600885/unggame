@@ -12,17 +12,17 @@ use app\admin\model\CapitalFlow as CapitalFlowModel;
 /**
  * 账单管理
  */
-class Capital extends BaseController
+class CapitalFlow extends BaseController
 {
     /**
      * 显示资源列表
      */
     public function index()
     {
-        die();
         if ($this->request->isPost()) {
             $input  = input('post.');
-            $search = ['keyword','date','status'];
+            $input['uid'] = input("param.uid",0);
+            $search = ['keyword','status','catalog','uid'];
             $order  = [$input['prop'] => $input['order']];
             $count  = CapitalFlowModel::withSearch($search, $input)->count();
             $data   = CapitalFlowModel::withSearch($search, $input)->order($order)->page($input['page'], $input['pageSize'])->select();

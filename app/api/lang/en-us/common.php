@@ -105,7 +105,7 @@ return array(
 		'gamecontento'=>'Play games',
 		'gamecontentt'=>'Increase in funds',
 		'gamecontenth'=>'Decrease in funds',
-		'gamecontentf'=>'Capital unchanged',
+		'gamecontentf'=>'CapitalFlow unchanged',
 	],
 	'recharge'=>[
 		'digital'=>'USDT/BTC/ETH recharge',

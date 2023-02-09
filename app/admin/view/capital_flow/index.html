@@ -1,14 +1,19 @@
 {include file="common/header"}
 <div id="app" v-cloak>
     <el-curd
-            index-url="capital_flow/index?uid={:input('param.uid',0)}"
+            index-url="capitalFlow/index?uid={:input('param.uid',0)}"
             :field="field"
             :search-date="false"
-            :table-operation-width="250"
+            :table-operation-width="0"
             :table-sort="{prop: 'add_time', order: 'desc'}"
-            :search-status="[{label: '充值', value: 1}, {label: '提现', value: 2},{label: '游戏', value: 3},{label: '独角币股息', value: 4},{label: '邀请注册奖励', value: 5},{label: '好友充值奖励', value: 6},{label: '管理员后台添加', value: 7}]"
-            variable="userInfo" @get-data="getData($event)"
+            :search-catalog="[{title: '充值', id: 1}, {title: '提现', id: 2},{title: '游戏', id: 3},{title: '独角币股息', id: 4},{title: '邀请注册奖励', id: 5},{title: '好友充值奖励', id: 6},{title: '管理员后台添加', id: 7}]"
+            :search-status='[{"label":"没有变动","value":"0"},{"label":"增加","value":"1"},{"label":"减少","value":"2"}]'
             preview>
+        {if condition="input('param.uid')"}
+            <template v-slot:button>
+                <el-button type="info" icon="el-icon-back" onclick="history.back()">返回</el-button>
+            </template>
+        {/if}
     </el-curd>
 </div>
 <script>
@@ -24,161 +29,34 @@
                         table: false,
                     },
                     {
-                        prop: 'cover',
-                        label: '头像',
-                        table: {label: '资料', is: 'image',width: '70px'},
-                        form: {is: 'el-file-select',type: 'image'},
-                    },
-                    {
-                        prop: 'email',
-                        label: '邮箱',
-                        table: {label: '', bind: ['mobile'], width: '250px'},
-                        form: {
-                            rules: [
-                                {required: true, message: '邮箱不能为空'},
-                            ],
-                            colMd: 12
-                        },
-                    },
-                    {
-                        prop: 'mobile',
-                        label: '手机',
-                        table: false,
-                        form: {colMd: 12}
-                    },
-                    {
-                        prop: 'whatsapp',
-                        label: 'WhatsApp',
-                        table: {sort: false},
-                        form: {colMd: 12}
-                    },
-                    {
-                        prop: 'telegram',
-                        label: 'Telegram',
-                        table: false,
-                        form: {colMd: 12}
-                    },
-                    {
-                        prop: 'line',
-                        label: 'Line',
-                        table:false,
-                        form: {colMd: 12}
-                    },
-                    {
-                        prop: 'nickname',
-                        label: '昵称',
-                        table:  {sort: false},
-                        form: {
-                            rules: [
-                                {required: true, message: '昵称不能为空'},
-                            ],
-                            colMd: 12
-                        },
-                    },
-                    {
-                        prop: 'login_ip',
-                        label: 'IP',
+                        prop: 'type',
+                        label: '类型',
                         table:{sort: false},
-                        form: false,
                     },
                     {
-                        prop: 'login_count',
-                        label: '登录次数',
-                        table:{sort: false},
-                        form: false,
+                        prop: 'money_type',
+                        label: '变化类型',
+                    },
+                    {
+                        prop: 'amount',
+                        label: '变化金额',
                     },
                     {
                         prop: 'balance',
-                        label: '余额',
-                        table:{sort: true},
-                        form: {type: 'number',default: 0.00,colMd: 12}
+                        label: '用户余额',
                     },
                     {
-                        prop: 'invite_log',
-                        label: '邀请记录',
-                        table:{sort: false},
+                        prop: 'admin_content',
+                        label: '详情',
                     },
                     {
-                        prop: 'capital_log',
-                        label: '邀请记录',
-                        table:{sort: false},
-                    },
-                    {
-                        prop: 'password',
-                        label: '密码',
-                        table: false,
-                        form: {
-                            type: 'password',
-                            placeholder: '不修改密码则此处为空',
-                            rules: [
-                                {saveRequired: true, message: '新增用户时，密码不能为空'},
-                                {pattern: /^[^\u4e00-\u9fa5]+$/, message: '不能包含中文字符'}
-                            ],
-                            colMd: 12
-                        },
-                    },
-                    {
-                        prop: 'now_integral',
-                        label: '积分',
-                        table:false,
-                        form: {type: 'number',default: 0,colMd: 12}
-                    },
-                    {
-                        prop: 'group_id',
-                        label: '分组',
-                        table: {prop: 'group_title', sort: true},
-                        form: {
-                            is: 'el-select',
-                            child: {is: 'el-option',value: {:json_encode($group)}, props:{label: 'title', value: 'id'}},
-            rules: [
-                {required: true, message: '请选择组别'},
-            ],
-                colMd: 12
-        },
-        },
-            {
-                prop: 'sex',
-                    label: '性别',
-                table: false,
-                form: {
-                is: 'el-select',
-            default: 0,
-                    child: {is: 'el-option', value:[{label:'男', value:0},{label:'女',value:1}]},
-                colMd: 12
+                        prop: 'add_time',
+                        label: '时间',
+                    }
+                ]
             }
-            },
-            {
-                prop: 'birthday',
-                    label: '生日',
-                table: false,
-                form: {is: 'el-date-picker', type: 'date', format: 'yyyy-MM-dd', valueFormat: 'yyyy-MM-dd',colMd: 12},
-            },
-            {
-                prop: 'describe',
-                    label: '签名',
-                table: false,
-                form: {type: 'textarea'},
-            },
-            {
-                prop: 'status',
-                    label: '状态',
-                table: {is: 'el-switch', sort: true},
-                form: {is: 'el-switch', default: 1},
-            },
-            {
-                prop: 'create_time',
-                    label: '注册时间',
-                table:{label: '注册&登录时间',sort: true, bind: ['login_time'], width: '160px'},
-                form: false,
-            },
-        ],
         }
-        },
-        methods:{
-            getData(res) {
-                this.count = res.count;
-            },
-        },
+
     })
 </script>
 {include file="common/footer"}
