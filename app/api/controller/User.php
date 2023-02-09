@@ -542,6 +542,37 @@ class User  extends BaseController
 			$this->success(lang('system.operation_succeeded'),$data);
 		}
 	}
+	// 	获取资金明细
+    public function getwalletinfo(){
+        $userInfo=$this->request->userInfo;
+        $type = input('post.type');
+        $pageNum=input('pageNum/d');
+		$pageSize=input('pageSize/d');
+        if($type==0){
+            $where =[['uid','=',$userInfo->id],
+			['money_type','<>',0]];
+			$gamelog_count = CapitalFlowmodel::where($where)->order('id desc')->count();
+			
+        }else if($type==6){
+            $where =[['uid','=',$userInfo->id],
+			['money_type','<>',0],
+			['type','in',"6,7"]];
+			$gamelog_count = CapitalFlowmodel::where($where)->order('id desc')->count();
+        }else{
+            $where =[['uid','=',$userInfo->id],
+			['money_type','<>',0],
+			['type','=',$type]];
+			$gamelog_count = CapitalFlowmodel::where($where)->order('id desc')->count();
+        }
+        $data['totalSize']=$gamelog_count;
+		$data['totalPage']=ceil($gamelog_count/$pageSize);
+    	$data['list']=CapitalFlowmodel::where($where)->page($pageNum)->limit($pageSize)->order('id desc')->select();
+		foreach($data['list'] as $k=>$v){
+			$v->add_times=date('Y-m-d',$v->add_time);
+			$v->content=getlang($v->content);
+		}
+		$this->success(lang('system.operation_succeeded'),$data);
+    }
 	public function searchwallet()
     {
         
