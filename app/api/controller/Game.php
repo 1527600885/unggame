@@ -183,8 +183,8 @@ class Game extends BaseController
 				'gameType'=>'RNG'
 			];
 		}
-		$hot_order='groom_sort asc,hot desc';//排序号排序
-		$rng_game=$this->GameListModel->withoutField('add_time')->where($where)->limit(13)->page(1)->order($hot_order)->select();//查询随机排序
+		$hot_order='groom_sorts asc,hot desc';//排序号排序
+		$rng_game=$this->GameListModel->field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->withoutField('add_time')->where($where)->limit(13)->page(1)->order($hot_order)->select();//查询随机排序
 		foreach($rng_game as $k=>$v){
 			$gameName=json_decode($v->gameName,true);
 			$v->gameName=croppstring($gameName[$this->gamelang],6);
@@ -205,9 +205,10 @@ class Game extends BaseController
 				}
 			}
 		}
-		$hot_order='groom_sort asc,hot desc';//排序号排序
+		$hot_order='groom_sorts asc,hot desc';//排序号排序
 		//获取捕鱼游戏
 		$fish_game=$this->GameListModel
+		->field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')
 		->withoutField('add_time')
 		->where([
 			['displayStatus','=',1],
@@ -350,11 +351,7 @@ class Game extends BaseController
             Db::commit();
         }catch (HttpResponseException $e){
             $re = $e->getResponse();
-            if($re->getCode()!=200){
-                Db::rollback();
-            }else{
-                Db::commit();
-            }
+            Db::commit();
             throw new HttpResponseException($re);
         }catch (\Exception $e){
             Db::rollback();
@@ -527,8 +524,8 @@ class Game extends BaseController
      * @return \think\Response
      */
     public function ftplist(){
-        $this->ftpgame = new \app\common\game\FtpGame;//游戏FTP接口
-        $ftplist=$this->ftpgame->nlist();
+        // $this->ftpgame = new \app\common\game\FtpGame;//游戏FTP接口
+        // $ftplist=$this->ftpgame->nlist();
     }
 
     /**
@@ -545,7 +542,7 @@ class Game extends BaseController
 		$productType=input('productType');//产品代码
 		$collection_str=null;
 		$otherwhere=[];
-		if($type<5){
+		if($type<6){
 			$userInfo=$this->nologuserinfo;
 			$cache_name="gamelist_".$pageNum;
 			if($userInfo){
@@ -564,9 +561,9 @@ class Game extends BaseController
 			// if($statusgamebrand){
 			// 	$where.=" and productType not in (".$statusgamebrand.")";
 			// }
-			if($type>=0){
-				$where.=" and gameType='".$this->gametype[$type]."'";
-				$cache_name.="_".$this->gametype[$type];
+			if($type>0){
+				$where.=" and gameType='".$this->gametype[$type-1]."'";
+				$cache_name.="_".$this->gametype[$type-1];
 			}
 			if($gameName){
 				$where.=" and gameName->'$.".$this->gamelang."' like '%$gameName%'";
@@ -592,7 +589,7 @@ class Game extends BaseController
 			}else{
 				$data['hasNext']=false;
 			}
-			$game_list=Db::query('select * from mk_gamelist where '.$where.' ORDER BY category_put desc,category_sort asc,groom_sort desc,hot desc limit '.($pageNum-1)*$pageSize.','.$pageSize);
+			$game_list=Db::query('select *,if(groom_sort is null,2000000,groom_sort) as groom_sorts from mk_gamelist where '.$where.' ORDER BY groom_sorts asc,hot desc limit '.($pageNum-1)*$pageSize.','.$pageSize);
 			foreach($game_list as $k=>$v){
 				$gameName=json_decode($v['gameName'],true);
 				$game_list[$k]['gameName']=croppstring($gameName[$this->gamelang],6);
@@ -730,8 +727,8 @@ class Game extends BaseController
      * @return \think\Response
      */
     public function game_water(){
-        $this->ftpgame = new \app\common\game\FtpGame;//游戏FTP接口
-        $this->ftpgame->nlist();
+        // $this->ftpgame = new \app\common\game\FtpGame;//游戏FTP接口
+        // $this->ftpgame->nlist();
     }
     /**
      * 获取品牌游戏的总数量
