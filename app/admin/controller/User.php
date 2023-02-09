@@ -29,19 +29,22 @@ class User extends BaseController
     {
         if ($this->request->isPost()) {
             $input  = input('post.');
-            $search = ['keyword','date','status'];
+            $input['invite_one_uid'] = input("param.invite_one_uid",0);
+            $search = ['keyword','date','status','invite_one_uid'];
             $append = ['url'];
             $order  = [$input['prop'] => $input['order']];
             $count  = UserModel::withSearch($search, $input)->count();
-            $data   = UserModel::withSearch($search, $input)->append($append)->with(['group'])->order($order)->page($input['page'], $input['pageSize'])->select();
+            $data   = UserModel::withSearch($search, $input)->append($append)->with(['group'])->order($order)->page($input['page'], $input['pageSize'])->select()->each(function($item){
+                $item['invite_log'] = "<a style='color: #00FF00' href='/game_admin/user/index?invite_one_uid={$item['id']}'>邀请记录</a>";
+                $item['capital_log'] = "<a style='color: #0000FF' href='/game_admin/capital/index?uid={$item['id']}'>账单记录</a>";
+            });
 			return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
             $group = UserGroup::where('status', 1)->order('integral', 'asc')->select();
-            View::assign('group', $group);
+            View::assign(['group'=>$group,"invite_one_uid"=>input("param.invite_one_uid",0)]);
             return View::fetch();
         }
     }
-
     /**
      * 保存新建的资源
      */

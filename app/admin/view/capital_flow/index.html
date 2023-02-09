@@ -1,22 +1,14 @@
 {include file="common/header"}
 <div id="app" v-cloak>
     <el-curd
-            index-url="user/index?invite_one_uid={:input('param.invite_one_uid',0)}"
-        :field="field"
-        :search-date="false"
-        :table-operation-width="250"
-        :table-sort="{prop: 'create_time', order: 'desc'}"
-        :search-status="[{label: '正常', value: 1}, {label: '屏蔽', value: 0}]"
-        variable="userInfo" @get-data="getData($event)"
-        preview>
-        {if condition="input('param.invite_one_uid')"}
-            <template v-slot:button>
-                <el-button type="info" icon="el-icon-back" onclick="history.back()">返回</el-button>
-            </template>
-            <template  v-slot:search>
-                <el-button type="text">共邀请<span style="color: red">{{count}}</span>人</el-button>
-            </template>
-        {/if}
+            index-url="capital_flow/index?uid={:input('param.uid',0)}"
+            :field="field"
+            :search-date="false"
+            :table-operation-width="250"
+            :table-sort="{prop: 'add_time', order: 'desc'}"
+            :search-status="[{label: '充值', value: 1}, {label: '提现', value: 2},{label: '游戏', value: 3},{label: '独角币股息', value: 4},{label: '邀请注册奖励', value: 5},{label: '好友充值奖励', value: 6},{label: '管理员后台添加', value: 7}]"
+            variable="userInfo" @get-data="getData($event)"
+            preview>
     </el-curd>
 </div>
 <script>
@@ -54,24 +46,24 @@
                         table: false,
                         form: {colMd: 12}
                     },
-					{
-					    prop: 'whatsapp',
-					    label: 'WhatsApp',
-					    table: {sort: false},
-					    form: {colMd: 12}
-					},
-					{
-					    prop: 'telegram',
-					    label: 'Telegram',
-					    table: false,
-					    form: {colMd: 12}
-					},
-					{
-					    prop: 'line',
-					    label: 'Line',
-					    table:false,
-					    form: {colMd: 12}
-					},
+                    {
+                        prop: 'whatsapp',
+                        label: 'WhatsApp',
+                        table: {sort: false},
+                        form: {colMd: 12}
+                    },
+                    {
+                        prop: 'telegram',
+                        label: 'Telegram',
+                        table: false,
+                        form: {colMd: 12}
+                    },
+                    {
+                        prop: 'line',
+                        label: 'Line',
+                        table:false,
+                        form: {colMd: 12}
+                    },
                     {
                         prop: 'nickname',
                         label: '昵称',
@@ -108,7 +100,7 @@
                     },
                     {
                         prop: 'capital_log',
-                        label: '账单记录',
+                        label: '邀请记录',
                         table:{sort: false},
                     },
                     {
@@ -138,49 +130,49 @@
                         form: {
                             is: 'el-select',
                             child: {is: 'el-option',value: {:json_encode($group)}, props:{label: 'title', value: 'id'}},
-                            rules: [
-                                {required: true, message: '请选择组别'},
-                            ],
-                            colMd: 12
-                        },
-                    },
-                    {
-                        prop: 'sex',
-                        label: '性别',
-                        table: false,
-                        form: {
-                            is: 'el-select',
-                            default: 0,
-                            child: {is: 'el-option', value:[{label:'男', value:0},{label:'女',value:1}]},
-                            colMd: 12
-                        }
-                    },
-                    {
-                        prop: 'birthday',
-                        label: '生日',
-                        table: false,
-                        form: {is: 'el-date-picker', type: 'date', format: 'yyyy-MM-dd', valueFormat: 'yyyy-MM-dd',colMd: 12},
-                    },
-                    {
-                        prop: 'describe',
-                        label: '签名',
-                        table: false,
-                        form: {type: 'textarea'},
-                    },
-                    {
-                        prop: 'status',
-                        label: '状态',
-                        table: {is: 'el-switch', sort: true},
-                        form: {is: 'el-switch', default: 1},
-                    },
-                    {
-                        prop: 'create_time',
-                        label: '注册时间',
-                        table:{label: '注册&登录时间',sort: true, bind: ['login_time'], width: '160px'},
-                        form: false,
-                    },
-                ],
+            rules: [
+                {required: true, message: '请选择组别'},
+            ],
+                colMd: 12
+        },
+        },
+            {
+                prop: 'sex',
+                    label: '性别',
+                table: false,
+                form: {
+                is: 'el-select',
+            default: 0,
+                    child: {is: 'el-option', value:[{label:'男', value:0},{label:'女',value:1}]},
+                colMd: 12
             }
+            },
+            {
+                prop: 'birthday',
+                    label: '生日',
+                table: false,
+                form: {is: 'el-date-picker', type: 'date', format: 'yyyy-MM-dd', valueFormat: 'yyyy-MM-dd',colMd: 12},
+            },
+            {
+                prop: 'describe',
+                    label: '签名',
+                table: false,
+                form: {type: 'textarea'},
+            },
+            {
+                prop: 'status',
+                    label: '状态',
+                table: {is: 'el-switch', sort: true},
+                form: {is: 'el-switch', default: 1},
+            },
+            {
+                prop: 'create_time',
+                    label: '注册时间',
+                table:{label: '注册&登录时间',sort: true, bind: ['login_time'], width: '160px'},
+                form: false,
+            },
+        ],
+        }
         },
         methods:{
             getData(res) {

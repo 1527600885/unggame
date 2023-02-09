@@ -31,6 +31,7 @@ class Order extends BaseController
 		if($paymentinfo->type==2 || $paymentinfo->type==3){
 			if(!$data['currencyvalue']){
 				$this->error(lang('order.currencyvalue'));
+				$this->error(lang('order.currencyvalue'));
 			}
 			if(strpos($paymentinfo->currency_name,$data['currencyvalue']) === false){ 
 				$this->error(lang('order.currencyerror'));
