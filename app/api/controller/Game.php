@@ -389,15 +389,15 @@ class Game extends BaseController
                     if($gamelog->amount>$balance){
                         //用户输的情况
                         $money_type=2;
-                        $amount=$gamelog->amount-$balance;
-                        $userbalance=$gamelog->amount-$amount;
+                        $amount=bcadd($gamelog->amount,-$balance,2);
+                        $userbalance=bcadd($gamelog->amount,-$amount,2);
                         $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
                         $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
                     }elseif($balance>$gamelog->amount){
                         //用户赢的情况
                         $money_type=1;
-                        $amount=$balance-$gamelog->amount;
-                        $userbalance=$gamelog->amount+$amount;
+                        $amount= bcadd($balance,-$gamelog->amount,2);
+                        $userbalance=bcadd($gamelog->amount,$amount,2);
                         $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentt}'.$amount.'{capital.money}';
                         $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金增加'.$amount.'美元';
                     }elseif($balance==$gamelog->amount){
@@ -452,8 +452,8 @@ class Game extends BaseController
                         }elseif($balance>$v->amount){
                             //用户赢的情况
                             $money_type=1;
-                            $amount=$balance-$v->amount;
-                            $userbalance=$v->amount+$amount;
+                            $amount=bcadd($balance,-$v->amount,2);
+                            $userbalance=bcadd($v->amount,$amount,2);
                             $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
                             $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
                         }elseif($balance==$v->amount){

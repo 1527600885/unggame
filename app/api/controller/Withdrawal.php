@@ -82,13 +82,13 @@ class Withdrawal extends BaseController
 		if($input['type']==1){
 			$rateamount=round($input['amount']/$rate,7);
 			$charge=round($rateamount*($feel/100),7);
-			$money=$rateamount-$charge;
+			$money=bcadd($rateamount,-$charge,2);
 			$data['name']=$input['name'];
 			$data['address']=$input['address'];
 		}else{
 			$rateamount=round($input['amount']*$rate,2);
 			$charge=round($rateamount*($feel/100),2);
-			$money=$rateamount-$charge;
+			$money=bcadd($rateamount,-$charge,2);
 			$splicedata=array_splice($input,7);
 			$data['other']=json_encode($splicedata);
 		}
@@ -103,7 +103,7 @@ class Withdrawal extends BaseController
 		$Wid=$this->WithdrawalModel->insertGetId($data);
 		if($Wid){
 			$amount=$input['amount'];
-			$userbalance=$userInfo->balance-$input['amount'];
+			$userbalance=bcadd($userInfo->balance,-$input['amount'],2);
 			$content='{withdrawal.text}'.$amount.'{capital.money}';
 			$admin_content='用户'.$userInfo->nickname.'提现'.$amount.'美元';
 			capital_flow($userInfo->id,$Wid,2,2,$amount,$userbalance,$content,$admin_content);
@@ -199,6 +199,7 @@ class Withdrawal extends BaseController
 				}
 				$money_sum=$this->OrderModel->where('status',1)->whereIn('uid',$invite_str)->sum('money');
 			}
+
 			if($invite_count<3){
 				$feel=30;
 			}elseif($invite_count>=3 && $invite_count<10){
@@ -219,5 +220,9 @@ class Withdrawal extends BaseController
 		}
 		return $feel;
 	}
+	public function getInvitConfig()
+    {
+
+    }
 }
 ?>
