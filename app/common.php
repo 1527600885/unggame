@@ -543,7 +543,7 @@ function getipcountry($ip){
                  }else{
                      $address='未知';
                  }
-                 $redis->set("ip_address_{$ip}",$address,600);
+                 $redis->set("ip_address_{$ip}",$address,10*24*3600);
              }
 
          }
