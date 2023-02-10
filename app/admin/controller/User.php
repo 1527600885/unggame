@@ -37,7 +37,7 @@ class User extends BaseController
             $data   = UserModel::withSearch($search, $input)->append($append)->with(['group'])->order($order)->page($input['page'], $input['pageSize'])->select()->each(function($item){
                 $item['invite_log'] = "<a style='color: #00FF00' href='/game_admin/user/index?invite_one_uid={$item['id']}'>邀请记录</a>";
                 $item['capital_log'] = "<a style='color: #0000FF' href='/game_admin/capitalFlow/index?uid={$item['id']}'>账单记录</a>";
-                $item['login_ip_address'] = getipcountry($item['login_ip']);
+                $item['login_ip'] .= "(".getipcountry($item['login_ip']).")";
             });
 			return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
