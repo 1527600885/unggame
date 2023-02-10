@@ -511,27 +511,31 @@ function randStr($len = 6, $format = 'default')
  * @throws \think\exception\DbException
  */
 function getipcountry($ip){
-	$country;
-	// $handle = fopen("http://ip-api.com/json/".$ip."?lang=zh-CN", "rb");
-	// $contents = stream_get_contents($handle);
-	// $contents=json_decode($contents,true);
-	// if($contents['status']=='success'){
-	// 	if($contents['country']=='香港' || $contents['country']=='澳门'){
-	// 		$contents['country']='中国';
-	// 	}
-	// 	$country=$contents['country'];
-	// }else{
-	// 	$country='未知';
-	// }
-	// fclose($handle);
-	$reader = new Reader(root_path().'GeoIp2_data/GeoLite2-Country.mmdb');
-	// HK=>香港，TW=>台湾，MO=>澳门
-	$record = $reader->country($ip);
-	$country = $record->country->isoCode;
-	if($country=='HK' || $country=='TW' || $country=='MO'){
-		$country='CN';
-	}
-	return $country;
+     $address = \think\facade\Cache::get("ip_address_{$ip}");
+     if(!$address){
+         $handle = fopen("http://ip-api.com/json/".$ip."?lang=zh-CN", "rb");
+         $contents = stream_get_contents($handle);
+         $contents=json_decode($contents,true);
+         if($contents['status']=='success'){
+//	 	if($contents['country']=='香港' || $contents['country']=='澳门'){
+//	 		$contents['country']='中国';
+//	 	}
+             $address=$contents['country'];
+         }else{
+             $address='未知';
+         }
+         \think\facade\Cache::set("ip_address_{$ip}",$address,600);
+         fclose($handle);
+     }
+
+//	$reader = new Reader(root_path().'GeoIp2_data/GeoLite2-Country.mmdb');
+//	// HK=>香港，TW=>台湾，MO=>澳门
+//	$record = $reader->country($ip);
+//	$country = $record->country->isoCode;
+//	if($country=='HK' || $country=='TW' || $country=='MO'){
+//		$country='中';
+//	}
+	return $address;
 }
 /**
  * @description：生成二维码
