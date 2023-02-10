@@ -13,6 +13,13 @@ class Index extends BaseController
 	}
     public function index()
     {
+        $service = new \app\common\game\ApiGame();
+        $username = "xgpdvbpn";
+        $start_date = "2023-02-09 00:00:00";
+        $end_date = "2023-02-10 00:00:00";
+        $page = 1;
+        $data = $service->get_bet_details_member($username, $start_date, $end_date, $page);
+        var_dump($data);
 		// $res=exportOpenSSLFile();
 		// $res=json_decode($res,true);
 		// dd(strlen($res['public']));
