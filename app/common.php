@@ -511,7 +511,8 @@ function randStr($len = 6, $format = 'default')
  * @throws \think\exception\DbException
  */
 function getipcountry($ip){
-     $address = \think\facade\Cache::get("ip_address_{$ip}") ? :'';
+     $redis = $GLOBALS['SPREDIS'] ? : (new \app\common\lib\Redis())->getRedis();
+     $address = $redis->get("ip_address_{$ip}") ? :'';
      try{
          if(!$address){
              $curl = curl_init();
@@ -542,7 +543,7 @@ function getipcountry($ip){
                  }else{
                      $address='未知';
                  }
-                 \think\facade\Cache::set("ip_address_{$ip}",$address,600);
+                 $redis->set("ip_address_{$ip}",$address,600);
              }
 
          }
