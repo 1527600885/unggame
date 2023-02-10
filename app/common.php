@@ -511,22 +511,45 @@ function randStr($len = 6, $format = 'default')
  * @throws \think\exception\DbException
  */
 function getipcountry($ip){
-     $address = \think\facade\Cache::get("ip_address_{$ip}");
-     if(!$address){
-         $handle = fopen("http://ip-api.com/json/".$ip."?lang=zh-CN", "rb");
-         $contents = stream_get_contents($handle);
-         $contents=json_decode($contents,true);
-         if($contents['status']=='success'){
+     $address = \think\facade\Cache::get("ip_address_{$ip}") ? :'';
+     try{
+         if(!$address){
+             $curl = curl_init();
+
+             curl_setopt_array($curl, array(
+                 CURLOPT_URL => "http://ip-api.com/json/{$ip}?lang=zh-CN",
+                 CURLOPT_RETURNTRANSFER => true,
+                 CURLOPT_ENCODING => '',
+                 CURLOPT_MAXREDIRS => 10,
+                 CURLOPT_TIMEOUT => 0,
+                 CURLOPT_FOLLOWLOCATION => true,
+                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                 CURLOPT_CUSTOMREQUEST => 'GET',
+                 CURLOPT_HTTPHEADER => array(
+                     'User-Agent:  Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'
+                 ),
+             ));
+
+             $response = curl_exec($curl);
+             if($response){
+                 curl_close($curl);
+                 $contents=json_decode($response,true);
+                 if($contents['status']=='success'){
 //	 	if($contents['country']=='香港' || $contents['country']=='澳门'){
 //	 		$contents['country']='中国';
 //	 	}
-             $address=$contents['country'];
-         }else{
-             $address='未知';
+                     $address=$contents['country'];
+                 }else{
+                     $address='未知';
+                 }
+                 \think\facade\Cache::set("ip_address_{$ip}",$address,600);
+             }
+
          }
-         \think\facade\Cache::set("ip_address_{$ip}",$address,600);
-         fclose($handle);
+     }catch (\Exception $e){
+         var_dump($e->getMessage());
      }
+
 
 //	$reader = new Reader(root_path().'GeoIp2_data/GeoLite2-Country.mmdb');
 //	// HK=>香港，TW=>台湾，MO=>澳门
