@@ -33,6 +33,10 @@ class Index extends BaseController
 		// $salt=createsalt();
 		// dump($salt);
     }
+    public function error503()
+    {
+        header('HTTP/1.1 503 Service Temporarily Unavailable');
+    }
 	//相关的配置
 	public function config(){
 		// dump(lang('welcome'));exit;
