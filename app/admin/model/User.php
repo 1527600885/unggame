@@ -40,6 +40,16 @@ class User extends Model
             $query->where("invite_one_uid",$value);
         }
     }
+    public function searchInviteTwoUidAttr($query, $value, $array){
+        if (! empty($value)) {
+            $query->where("invite_two_uid",$value);
+        }
+    }
+    public function searchInviteThreeUidAttr($query, $value, $array){
+        if (! empty($value)) {
+            $query->where("invite_three_uid",$value);
+        }
+    }
     public function searchKeywordAttr($query, $value, $array)
     {
         if (! empty($value)) {

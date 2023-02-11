@@ -77,7 +77,8 @@ return array(
 		'safetylow'=>'Low',
 		'safetycommonly'=>'Commonly',
 		'safetyhigh'=>'High',
-		'safetyperfect'=>'Perfect'
+		'safetyperfect'=>'Perfect',
+        'balanceFreeze'=>'Funds are frozen'
     ],
 	'game'=>[
 		'money_funds'=>'Insufficient funds',

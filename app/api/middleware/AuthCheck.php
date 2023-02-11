@@ -23,7 +23,8 @@ use think\facade\Cache;
 class AuthCheck extends BaseController
 {
     protected $freeze_method = [
-       1=>["user/getwallet","user/getwallet"]
+       1=>["User/getwallet","User/userinfo","Withdrawal/currencylist"],
+       2=>["Withdrawal/setwithdrawal_log",],
     ];
     public function handle($request, \Closure $next)
     {
@@ -54,10 +55,20 @@ class AuthCheck extends BaseController
 //            // return json(['status'=>'login', 'message'=> lang('user.tokenError')]);
 //        }
         $request->userInfo = User::with(['group'])->where('id', $id)->where('status', 1)->find();
-        var_dump($this->request->action());
         if (! $request->userInfo) {
             $this->error(lang('user.accountBlocked'));
             // return json(['status'=>'login', 'message'=> lang('user.accountBlocked')]);
+        }
+        if($request->userInfo['balance_status'] == 0)
+        {
+            $request_method = $request->controller().'/'.$request->action();
+            if(!in_array($request_method,$this->freeze_method[1])){
+                if(in_array($request_method,$this->freeze_method[2])){
+                    $this->error(lang("user.balanceFreeze"));
+                }else{
+                    $request->userInfo['balance'] = 0;
+                }
+            }
         }
         // 下一步
         return $next($request);

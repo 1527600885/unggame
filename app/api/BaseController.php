@@ -94,7 +94,7 @@ abstract class BaseController
 		$module = app('http')->getName();
 		//只限制接口模块验证
 		if($module=="api"){
-		    if(in_array($action,$this->noNeedCheckIp) || in_array("*",$this->noNeedCheckIp))
+		    if(!in_array($action,$this->noNeedCheckIp) || in_array("*",$this->noNeedCheckIp))
 		    {
                 //获取访问的目标地区
                 $country=getipcountry($this->request->ip());

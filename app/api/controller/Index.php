@@ -37,6 +37,7 @@ class Index extends BaseController
     public function error503()
     {
         header('HTTP/1.1 503 Service Temporarily Unavailable');
+        die();
     }
 	//相关的配置
 	public function config(){

@@ -1,7 +1,7 @@
 {include file="common/header"}
 <div id="app" v-cloak>
     <el-curd
-            index-url="user/index?invite_one_uid={:input('param.invite_one_uid',0)}"
+            index-url="user/index?invite_one_uid={:input('param.invite_one_uid',0)}&invite_two_uid={:input('param.invite_two_uid',0)}&invite_three_uid={:input('param.invite_three_uid',0)}"
         :field="field"
         :search-date="false"
         :table-operation-width="0"
@@ -9,12 +9,13 @@
         :search-status="[{label: '正常', value: 1}, {label: '屏蔽', value: 0}]"
         variable="userInfo" @one-key-data="oneKeyData($event)"
         preview>
-        {if condition="input('param.invite_one_uid')"}
+        {if condition="$invite_one_uid"}
             <template v-slot:button>
                 <el-button type="info" icon="el-icon-back" onclick="history.back()">返回</el-button>
             </template>
             <template  v-slot:search>
                 <el-button type="text">
+                    <span>团队总人数<span style="color: red">{$invite_data.invite_one_num+$invite_data.invite_two_num+$invite_data.invite_one_num}</span>人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <span>一级邀请<span style="color: red">{$invite_data.invite_one_num}</span>人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <span>二级邀请<span style="color: red">{$invite_data.invite_two_num}</span>人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <span>三级邀请<span style="color: red">{$invite_data.invite_three_num}</span>人</span>
@@ -123,9 +124,14 @@
                         table:{sort: true},
                     },
                     {
-                        prop: 'invite_log',
-                        label: '邀请记录',
-                        table:{sort: false},
+                        prop: 'invite_two_num',
+                        label: '二级邀请人数',
+                        table:{sort: true},
+                    },
+                    {
+                        prop: 'invite_three_num',
+                        label: '三级邀请人数',
+                        table:{sort: true},
                     },
                     {
                         prop: 'capital_log',

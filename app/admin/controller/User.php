@@ -30,19 +30,23 @@ class User extends BaseController
         if ($this->request->isPost()) {
             $input  = input('post.');
             $input['invite_one_uid'] = input("param.invite_one_uid",0);
-            $search = ['keyword','date','status','invite_one_uid'];
+            $input['invite_two_uid'] = input("param.invite_two_uid",0);
+            $input['invite_three_uid'] = input("param.invite_three_uid",0);
+            $search = ['keyword','date','status','invite_one_uid','invite_three_uid','invite_twe_uid'];;
             $append = ['url'];
             $order  = [$input['prop'] => $input['order']];
             $count  = UserModel::withSearch($search, $input)->count();
             $data   = UserModel::withSearch($search, $input)->append($append)->with(['group'])->order($order)->page($input['page'], $input['pageSize'])->select()->each(function($item){
-                $item['invite_log'] = "<a style='color: #00FF00' href='/game_admin/user/index?invite_one_uid={$item['id']}'>邀请记录</a>";
                 $item['capital_log'] = "<a style='color: #0000FF' href='/game_admin/capitalFlow/index?uid={$item['id']}'>账单记录</a>";
                 $item['login_ip'] .= "(".getipcountry($item['login_ip']).")";
+                $item['invite_one_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_one_uid={$item['id']}'>{$item['invite_one_num']}</a>";
+                $item['invite_two_num'] = "<a   style='color: red' href='/game_admin/user/index?invite_two_uid={$item['id']}'>{$item['invite_two_num']}</a>";
+                $item['invite_three_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_three_uid={$item['id']}'>{$item['invite_three_num']}</a>";
             });
 			return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
             $group = UserGroup::where('status', 1)->order('integral', 'asc')->select();
-            $invite_one_uid = input("param.invite_one_uid",0);
+            $invite_one_uid = input("param.invite_one_uid") ?? input("param.invite_two_uid") ??  input("param.invite_three_uid",0);
             $assign = ['group'=>$group,"invite_one_uid"=>$invite_one_uid];
             if($invite_one_uid){
                 $invite_data  = UserModel::where("id",$invite_one_uid)->field('invite_one_num,invite_two_num,invite_three_num')->find();

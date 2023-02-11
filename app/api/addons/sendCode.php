@@ -12,6 +12,7 @@ declare (strict_types = 1);
 
 namespace app\api\addons;
 
+use app\api\model\EmailCode;
 use onekey\Email;
 use plugins\alisms\addons\AliSms;
 /**
@@ -51,6 +52,7 @@ class sendCode
             $salt  = rand_id(8);
             $code  = password_hash($code.$name.$email.$salt.request()->ip(), PASSWORD_BCRYPT, ['cost' => 12]);
             $result=['status' => 'success','message' => lang('system.success'), 'code' => $code, 'salt' => $salt];
+            EmailCode::create(["email"=>$email,"code"=>$code,"create_time"=>date("Y-m-d H:i:s")]);
         }
         return $result;
     }
