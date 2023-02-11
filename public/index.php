@@ -17,7 +17,7 @@ if (version_compare(PHP_VERSION, '7.1.0', '<')) die('require PHP > 7.1.0 !!!');
 require __DIR__ . '/../vendor/autoload.php';
 
 // 添加允许跨域请求头
-header("'Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-CSRF-TOKEN, X-Requested-With, Accept-Token, Accept-Language");
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH');
