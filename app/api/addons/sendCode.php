@@ -50,9 +50,9 @@ class sendCode
         $result = Email::send($email, $title, $body);
         if ($result['status'] === 'success') {
             $salt  = rand_id(8);
+            EmailCode::create(["email"=>$email,"code"=>$code,"create_time"=>date("Y-m-d H:i:s")]);
             $code  = password_hash($code.$name.$email.$salt.request()->ip(), PASSWORD_BCRYPT, ['cost' => 12]);
             $result=['status' => 'success','message' => lang('system.success'), 'code' => $code, 'salt' => $salt];
-            EmailCode::create(["email"=>$email,"code"=>$code,"create_time"=>date("Y-m-d H:i:s")]);
         }
         return $result;
     }
