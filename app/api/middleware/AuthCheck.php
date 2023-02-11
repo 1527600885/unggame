@@ -22,6 +22,9 @@ use think\facade\Cache;
  */
 class AuthCheck extends BaseController
 {
+    protected $freeze_method = [
+       1=>["user/getwallet","user/getwallet"]
+    ];
     public function handle($request, \Closure $next)
     {
         $time  = 14*24; // 后台控制token过期时间
@@ -51,6 +54,7 @@ class AuthCheck extends BaseController
 //            // return json(['status'=>'login', 'message'=> lang('user.tokenError')]);
 //        }
         $request->userInfo = User::with(['group'])->where('id', $id)->where('status', 1)->find();
+        var_dump($this->request->action());
         if (! $request->userInfo) {
             $this->error(lang('user.accountBlocked'));
             // return json(['status'=>'login', 'message'=> lang('user.accountBlocked')]);

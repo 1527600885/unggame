@@ -64,7 +64,6 @@ abstract class BaseController
 	 * 不强制鉴权，获取用户资料
 	 */
 	protected $nologuserinfo;
-
     /**
      * 构造方法
      * @access public
@@ -91,10 +90,10 @@ abstract class BaseController
 		$this->gamelang=$this->gameslang($this->lang);
 		
 		//获取访问的目标地区
-		// $country=getipcountry($this->request->ip());
-		// if($country=='CN'){
-		// 	$this->error(lang('system.iperror'),$country,500);
-		// }
+		 $country=getipcountry($this->request->ip());
+		 if(in_array(["中国","香港","澳门"])){
+		 	$this->error(lang('system.iperror'),$country,407);
+		 }
 		
 		$action = strtolower($this->request->action());
 		$module = app('http')->getName();

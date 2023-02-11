@@ -133,7 +133,7 @@ class User  extends BaseController
 				$this->error($e->getError());
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
-            $field    = 'id,group_id,nickname,sex,email,mobile,cover,describe,birthday,history_integral,hide';
+            $field    = 'id,group_id,nickname,sex,email,mobile,cover,describe,birthday,history_integral,hide,invite_num';
             $userInfo = UserModel::with(['group'])->where('id', $input['id'])->field($field)->find();
             if ($userInfo) {
 				$this->success(lang('success'),$userInfo);

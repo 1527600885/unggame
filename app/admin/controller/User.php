@@ -42,7 +42,13 @@ class User extends BaseController
 			return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
             $group = UserGroup::where('status', 1)->order('integral', 'asc')->select();
-            View::assign(['group'=>$group,"invite_one_uid"=>input("param.invite_one_uid",0)]);
+            $invite_one_uid = input("param.invite_one_uid",0);
+            $assign = ['group'=>$group,"invite_one_uid"=>$invite_one_uid];
+            if($invite_one_uid){
+                $invite_data  = UserModel::where("id",$invite_one_uid)->field('invite_one_num,invite_two_num,invite_three_num')->find();
+                $assign['invite_data'] = $invite_data;
+            }
+            View::assign($assign);
             return View::fetch();
         }
     }
@@ -137,6 +143,14 @@ class User extends BaseController
         if ($this->request->isPost()) {
             UserModel::destroy(input('post.ids'));
             return json(['status' => 'success', 'message' => '删除成功']);
+        }
+    }
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+            $post = input("post.");
+            UserModel::where("id",$post['id'])->update([$post['name']=>$post['value']]);
+            return json(['status' => 'success', 'message' => '操作成功']);
         }
     }
 }

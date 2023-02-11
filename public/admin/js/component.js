@@ -142,6 +142,14 @@ Vue.component('el-curd', {
                             :disabled="scope.row.disabled"
                             @change="oneKeyData(scope.row)">
                         </el-switch>
+                         <el-switch
+                            v-if="item.table.is === 'el-switch2'"
+                            v-model="scope.row[item.prop]"
+                            :active-value="1"
+                            :inactive-value="0"
+                            :disabled="scope.row.disabled"
+                            @change="editStatus(scope.row,item.prop)">
+                        </el-switch>
                         <el-input 
                             v-if="item.table.is === 'el-input'"
                             class="el-curd-table-input" 
@@ -325,6 +333,10 @@ Vue.component('el-curd', {
         dropUrl: {
             type: String,
             default: controller + '/drop',
+        },
+        editUrl:{
+            type: String,
+            default: controller + '/edit',
         },
         tableTree: {
             type: Boolean,
@@ -569,6 +581,18 @@ Vue.component('el-curd', {
             this.drawerData.theme = theme;
             this.drawer = true;
             this.$emit('open-data', this.drawerData);
+        },
+        editStatus(row,name){
+            let self = this;
+            self.loading = true;
+            request.post(self.editUrl, {id:row.id,name:name,value:row[name]}, function(res) {
+                if (res.status === 'success') {
+                    self.$emit('edit-data', res);
+                } else {
+                    self.$notify({ showClose: true, message: res.message, type: res.status});
+                }
+                self.loading = false;
+            });
         },
         /**
          * 快捷修改数据

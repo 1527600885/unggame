@@ -4,18 +4,28 @@
             index-url="user/index?invite_one_uid={:input('param.invite_one_uid',0)}"
         :field="field"
         :search-date="false"
-        :table-operation-width="250"
+        :table-operation-width="0"
         :table-sort="{prop: 'create_time', order: 'desc'}"
         :search-status="[{label: '正常', value: 1}, {label: '屏蔽', value: 0}]"
-        variable="userInfo" @get-data="getData($event)"
+        variable="userInfo" @one-key-data="oneKeyData($event)"
         preview>
         {if condition="input('param.invite_one_uid')"}
             <template v-slot:button>
                 <el-button type="info" icon="el-icon-back" onclick="history.back()">返回</el-button>
             </template>
             <template  v-slot:search>
-                <el-button type="text">共邀请<span style="color: red">{{count}}</span>人</el-button>
+                <el-button type="text">
+                    <span>一级邀请<span style="color: red">{$invite_data.invite_one_num}</span>人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>二级邀请<span style="color: red">{$invite_data.invite_two_num}</span>人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>三级邀请<span style="color: red">{$invite_data.invite_three_num}</span>人</span>
+                </el-button>
             </template>
+<!--            <template  v-slot:search>-->
+<!--                <el-button type="text">二级邀请<span style="color: red">{$invite_data.invite_two_num}</span>人</el-button>-->
+<!--            </template>-->
+<!--            <template  v-slot:row>-->
+<!--                <el-button type="text">三级邀请<span style="color: red">{$invite_data.invite_three_num}</span>人</el-button>-->
+<!--            </template>-->
         {/if}
     </el-curd>
 </div>
@@ -90,9 +100,15 @@
                         form: false,
                     },
                     {
+                        prop: 'login_ip_address',
+                        label: 'IP地区',
+                        table:false,
+                        form: false,
+                    },
+                    {
                         prop: 'login_count',
                         label: '登录次数',
-                        table:{sort: false},
+                        table:{sort: true},
                         form: false,
                     },
                     {
@@ -100,6 +116,11 @@
                         label: '余额',
                         table:{sort: true},
                         form: {type: 'number',default: 0.00,colMd: 12}
+                    },
+                    {
+                        prop: 'invite_one_num',
+                        label: '邀请人数',
+                        table:{sort: true},
                     },
                     {
                         prop: 'invite_log',
@@ -169,8 +190,14 @@
                     },
                     {
                         prop: 'status',
-                        label: '状态',
-                        table: {is: 'el-switch', sort: true},
+                        label: '账号状态',
+                        table: {is: 'el-switch2', sort: true},
+                        form: {is: 'el-switch', default: 1},
+                    },
+                    {
+                        prop: 'balance_status',
+                            label: '资金状态',
+                        table: {is: 'el-switch2', sort: true},
                         form: {is: 'el-switch', default: 1},
                     },
                     {
@@ -183,9 +210,28 @@
             }
         },
         methods:{
-            getData(res) {
-                this.count = res.count;
+            editStatus(row) {
+                console.log(row);
+                // let self = this;
+                // request.post(self.updateUrl, row, function(res){
+                //     if (res.status === 'success') {
+                //         self.$emit('save-data', res);
+                //     } else {
+                //         self.$notify({ showClose: true, message: res.message, type: res.status});
+                //     }
+                // });
             },
+            // pluginStatus(row) {
+            //     console.log(row);
+            //     // let self = this;
+            //     // request.post(self.updateUrl, {name: row.name, status: row.status}, function(res) {
+            //     //     if (res.status === 'success') {
+            //     //         self.getData();
+            //     //     } else {
+            //     //         self.$message({ showClose: true, message: res.message, type: res.status});
+            //     //     }
+            //     // });
+            // },
         },
     })
 </script>
