@@ -169,9 +169,9 @@ class Login extends BaseController
 				$invite_one_list=UserModel::where('invitation_code',$input['invitation_code'])->find();
 				$invite_one_uid=$invite_one_list->id;
 				//二级邀请人
-				$invite_two_uid=UserModel::where('id',$invite_one_uid)->value('invite_one_uid');
+				$invite_two_uid=UserModel::where('id',$invite_one_uid)->value('invite_one_uid') ??0;
 				//三级邀请人
-				$invite_three_uid=UserModel::where('id',$invite_two_uid)->value('invite_one_uid');
+				$invite_three_uid=UserModel::where('id',$invite_two_uid)->value('invite_one_uid')??0;
 			}
             $group = UserGroup::where('default',1)->find();
             $group_id = 0;

@@ -224,24 +224,35 @@ class User  extends BaseController
 				$safetyindex=0;
 				if($this->request->userInfo['email']){
 					$safetyindex=$safetyindex+20;
-					$this->request->userInfo['safetytext']=lang('user.safetylow');
+//					$this->request->userInfo['safetytext']=lang('user.safetylow');
 				}
 				if($this->request->userInfo['mobile']){
 					$safetyindex=$safetyindex+20;
-					$this->request->userInfo['safetytext']=lang('user.safetylow');
+//					$this->request->userInfo['safetytext']=lang('user.safetylow');
 				}
 				if($this->request->userInfo['pay_paasword']==1){
 					$safetyindex=$safetyindex+20;
-					$this->request->userInfo['safetytext']=lang('user.safetycommonly');
+//					$this->request->userInfo['safetytext']=lang('user.safetycommonly');
 				}
 				if($this->request->userInfo['whatsapp']){
 					$safetyindex=$safetyindex+20;
-					$this->request->userInfo['safetytext']=lang('user.safetyhigh');
+//					$this->request->userInfo['safetytext']=lang('user.safetyhigh');
 				}
 				if($this->request->userInfo['messenger']){
 					$safetyindex=$safetyindex+20;
-					$this->request->userInfo['safetytext']=lang('user.safetyperfect');
+//					$this->request->userInfo['safetytext']=lang('user.safetyperfect');
 				}
+				if($safetyindex <= 40)
+				{
+                    $this->request->userInfo['safetytext']=lang('user.safetylow');
+                }else if($safetyindex <= 60)
+                {
+                    $this->request->userInfo['safetytext']=lang('user.safetycommonly');
+                }else if($safetyindex <=80){
+                    $this->request->userInfo['safetytext']=lang('user.safetyhigh');
+                }else{
+                    $this->request->userInfo['safetytext']=lang('user.safetyperfect');
+                }
 				$this->request->userInfo['safetyindex']=$safetyindex;
 				$this->success(lang('success'),$this->request->userInfo);
 			}

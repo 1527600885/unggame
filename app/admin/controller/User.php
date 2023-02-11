@@ -32,7 +32,7 @@ class User extends BaseController
             $input['invite_one_uid'] = input("param.invite_one_uid",0);
             $input['invite_two_uid'] = input("param.invite_two_uid",0);
             $input['invite_three_uid'] = input("param.invite_three_uid",0);
-            $search = ['keyword','date','status','invite_one_uid','invite_three_uid','invite_twe_uid'];;
+            $search = ['keyword','date','status','invite_one_uid','invite_three_uid','invite_two_uid'];;
             $append = ['url'];
             $order  = [$input['prop'] => $input['order']];
             $count  = UserModel::withSearch($search, $input)->count();
@@ -42,6 +42,7 @@ class User extends BaseController
                 $item['invite_one_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_one_uid={$item['id']}'>{$item['invite_one_num']}</a>";
                 $item['invite_two_num'] = "<a   style='color: red' href='/game_admin/user/index?invite_two_uid={$item['id']}'>{$item['invite_two_num']}</a>";
                 $item['invite_three_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_three_uid={$item['id']}'>{$item['invite_three_num']}</a>";
+                $item['balance'] = "<a style='color:darkgreen' onclick='app.showEditBalance({$item['id']})'>{$item['balance']}<a/>";
             });
 			return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
