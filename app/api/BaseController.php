@@ -92,7 +92,11 @@ abstract class BaseController
 		//获取访问的目标地区
 		 $country=getipcountry($this->request->ip());
 		 if(in_array($country,["中国","香港","澳门"])){
-		 	$this->error(lang('system.iperror'),$country,407);
+             header('Access-Control-Allow-Origin:*'); // *代表允许任何网址请求
+             header('Access-Control-Allow-Methods:GET, POST, PATCH, PUT, DELETE, OPTIONS'); // 允许请求的类型
+             header('Access-Control-Allow-Credentials: true'); // 设置是否允许发送 cookies
+             header('Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-CSRF-TOKEN, X-Requested-With, Accept-Token, Accept-Language');
+             $this->error(lang('system.iperror'),$country,407);
 		 }
 		
 		$action = strtolower($this->request->action());
