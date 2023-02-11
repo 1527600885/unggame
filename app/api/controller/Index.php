@@ -8,6 +8,7 @@ use Hashids\Hashids;
 class Index extends BaseController
 {
 	protected $noNeedLogin = ['*'];
+	protected $noNeedCheckIp = ['error503'];
 	public function initialize(){
 		parent::initialize();
 	}

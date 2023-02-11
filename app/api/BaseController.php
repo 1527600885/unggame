@@ -64,6 +64,8 @@ abstract class BaseController
 	 * 不强制鉴权，获取用户资料
 	 */
 	protected $nologuserinfo;
+
+	protected $noNeedCheckIp = [];
     /**
      * 构造方法
      * @access public
@@ -88,17 +90,18 @@ abstract class BaseController
 			$this->lang = 'en-us';
 		}
 		$this->gamelang=$this->gameslang($this->lang);
-		
-		//获取访问的目标地区
-		 $country=getipcountry($this->request->ip());
-		 if(in_array($country,["中国","香港","澳门"])){
-             $this->error(lang('system.iperror'),$country,407);
-		 }
-		
 		$action = strtolower($this->request->action());
 		$module = app('http')->getName();
 		//只限制接口模块验证
 		if($module=="api"){
+		    if(in_array($action,$this->noNeedCheckIp) || in_array("*",$this->noNeedCheckIp))
+		    {
+                //获取访问的目标地区
+                $country=getipcountry($this->request->ip());
+                if(in_array($country,["中国","香港","澳门"])){
+                    $this->error(lang('system.iperror'),$country,407);
+                }
+            }
 			if (in_array($action,$this->noNeedLogin)||in_array('*',$this->noNeedLogin)){
 				  if($this->request->header('accept-token')){
 					  $this->nologuserinfo=$this->getuserinfo($this->request->header('accept-token'));
