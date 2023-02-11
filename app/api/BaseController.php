@@ -91,7 +91,7 @@ abstract class BaseController
 		
 		//获取访问的目标地区
 		 $country=getipcountry($this->request->ip());
-		 if(in_array(["中国","香港","澳门"],$country)){
+		 if(in_array($country,["中国","香港","澳门"])){
 		 	$this->error(lang('system.iperror'),$country,407);
 		 }
 		
