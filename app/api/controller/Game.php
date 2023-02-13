@@ -278,7 +278,7 @@ class Game extends BaseController
         if($rungame){
             $this->error(lang("frequent_operation"));
         }else{
-            $redis->set($key,1,2);
+            $redis->set($key,1,10);
         }
         $tcgGameCode=input('tcgGameCode');
         $gameinfo=$this->GameListModel->where('tcgGameCode',$tcgGameCode)->find();
@@ -383,7 +383,7 @@ class Game extends BaseController
         if($rungame){
             $this->error(lang("frequent_operation"));
         }else{
-            $redis->set($key,1,2);
+            $redis->set($key,1,10);
         }
         //查看最后一个游戏得记录
         $gamelog=$this->GamelogModel->where(['uid'=>$userInfo->id,'type'=>1])->order('id desc')->find();
