@@ -377,6 +377,14 @@ class Game extends BaseController
      */
     public function recapture(){
         $userInfo=$this->request->userInfo;
+        $redis = (new Redis())->getRedis();
+        $key = "user_recapture_{$this->request->userInfo->id}";
+        $rungame = $redis->get($key);
+        if($rungame){
+            $this->error(lang("frequent_operation"));
+        }else{
+            $redis->set($key,1,2);
+        }
         //查看最后一个游戏得记录
         $gamelog=$this->GamelogModel->where(['uid'=>$userInfo->id,'type'=>1])->order('id desc')->find();
         if($gamelog){
