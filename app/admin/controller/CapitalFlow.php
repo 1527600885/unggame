@@ -22,10 +22,11 @@ class CapitalFlow extends BaseController
         if ($this->request->isPost()) {
             $input  = input('post.');
             $input['uid'] = input("param.uid",0);
-            $search = ['keyword','status','catalog','uid'];
+            if(!$input['uid']) $input['type'] = 8;
+            $search = ['keyword','status','catalog','uid','type'];
             $order  = [$input['prop'] => $input['order']];
             $count  = CapitalFlowModel::withSearch($search, $input)->count();
-            $data   = CapitalFlowModel::withSearch($search, $input)->order($order)->page($input['page'], $input['pageSize'])->select();
+            $data   = CapitalFlowModel::withSearch($search, $input)->with(["adminAccount"])->order($order)->page($input['page'], $input['pageSize'])->select();
             return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
            return View::fetch();

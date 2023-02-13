@@ -511,7 +511,6 @@ function randStr($len = 6, $format = 'default')
  * @throws \think\exception\DbException
  */
 function getipcountry($ip){
-    return "";
      $redis = isset($GLOBALS['SPREDIS']) ? $GLOBALS['SPREDIS']  : (new \app\common\lib\Redis())->getRedis();
      $address = $redis->get("ip_address_{$ip}") ? :'';
      try{
@@ -623,7 +622,8 @@ function capital_flow($uid,$other_id,$type,$money_type,$amount,$balance,$content
 			'balance'=>round($balance),
 			'content'=>$content,
 			'admin_content'=>$admin_content,
-			'add_time'=>time()
+			'add_time'=>time(),
+            'add_ip'=>request()->ip()
 		];
 		$cId =CapitalFlowmodel::insertGetId($data);
 		if($cId){

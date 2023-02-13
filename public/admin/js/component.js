@@ -587,6 +587,11 @@ Vue.component('el-curd', {
             self.loading = true;
             request.post(self.editUrl, {id:row.id,name:name,value:row[name]}, function(res) {
                 if (res.status === 'success') {
+                    self.$notify({
+                        title: '成功',
+                        message: '操作成功',
+                        type: 'success'
+                    });
                     self.$emit('edit-data', res);
                 } else {
                     self.$notify({ showClose: true, message: res.message, type: res.status});

@@ -29,9 +29,19 @@
                         table: false,
                     },
                     {
+                        label: '管理员账号',
+                        prop: 'account',
+                        table: {if condition="input('param.uid')"}false{else /}true{/if},
+                    },
+                    {
+                        label: '管理员IP',
+                        prop: 'add_ip',
+                        table: {if condition="input('param.uid')"}false{else /}true{/if},
+                    },
+                    {
                         prop: 'type',
                         label: '类型',
-                        table:{sort: false},
+                        table:{if condition="input('param.uid')"}true{else /}false{/if},
                     },
                     {
                         prop: 'money_type',

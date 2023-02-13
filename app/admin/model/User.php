@@ -26,7 +26,12 @@ class User extends Model
             'group_title' => 'title'
         ]);
     }
-
+    public function inviteName()
+    {
+        return $this->belongsTo(User::class, 'invite_one_uid')->bind([
+            'invite_name' => 'nickname'
+        ]);
+    }
     // 搜索器
     public function setPasswordAttr($value, $array)
     {

@@ -36,9 +36,10 @@ class User extends BaseController
             $append = ['url'];
             $order  = [$input['prop'] => $input['order']];
             $count  = UserModel::withSearch($search, $input)->count();
-            $data   = UserModel::withSearch($search, $input)->append($append)->with(['group'])->order($order)->page($input['page'], $input['pageSize'])->select()->each(function($item){
+            $data   = UserModel::withSearch($search, $input)->append($append)->with(['group','inviteName'])->order($order)->page($input['page'], $input['pageSize'])->select()->each(function($item){
                 $item['capital_log'] = "<a style='color: #0000FF' href='/game_admin/capitalFlow/index?uid={$item['id']}'>账单记录</a>";
                 $item['login_ip'] .= "(".getipcountry($item['login_ip']).")";
+                $item['invite_name'] = "<a  style='color: #0000FF' href='/game_admin/user/index?invite_one_uid={$item['invite_one_uid']}'>{$item['invite_name']}</a>";
                 $item['invite_one_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_one_uid={$item['id']}'>{$item['invite_one_num']}</a>";
                 $item['invite_two_num'] = "<a   style='color: red' href='/game_admin/user/index?invite_two_uid={$item['id']}'>{$item['invite_two_num']}</a>";
                 $item['invite_three_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_three_uid={$item['id']}'>{$item['invite_three_num']}</a>";
@@ -155,6 +156,52 @@ class User extends BaseController
         if ($this->request->isPost()) {
             $post = input("post.");
             UserModel::where("id",$post['id'])->update([$post['name']=>$post['value']]);
+            return json(['status' => 'success', 'message' => '操作成功']);
+        }
+    }
+    public function editMoney()
+    {
+        if($this->request->isPost())
+        {
+            $post = input("post.");
+            if($post['money_type'] == "1")
+            {
+                UserModel::where("id",$post['id'])->inc("balance",$post['amount'])->update();
+
+            }else{
+                UserModel::where("id",$post['id'])->dec("balance",$post['amount'])->update();
+            }
+            $user = UserModel::where("id",$post['id'])->field("nickname,balance")->find();
+            $balance = $user['balance'];
+            switch ($post['type'])
+            {
+                case 5:
+                    $content = "{user.inviteusers}{user.inviteregister}{$post['amount']}{capital.money}";
+                    $admin_content = "邀请注册奖励{$post['amount']}美元";
+                    break;
+                case 6:
+                    $content = "{Friend's recharge} reward {$post['amount']}{capital.money}";
+                    $admin_content = "好友充值奖励{$post['amount']}美元";
+                    break;
+                case 7:
+                    $content = "{admin's reward} {$post['amount']}{capital.money}";
+                    $admin_content = "管理员后台添加 {$post['amount']}美元";
+                    break;
+                case 2:
+                    $content = "{withdrawal.text}{$post['amount']}{capital.money}";
+                    $admin_content = "提现{$post['amount']}美元";
+                    break;
+                case 3:
+                    if($post['money_type'] == 1){
+                        $content = "{capital.gamecontento}{$user['nickname']}{capital.gamecontentt}{$post['amount']}{capital.money}";
+                        $admin_content = "用户{$user['nickname']}玩游戏资金增加{$post['amount']}{capital.money}";
+                    }else{
+                        $content = "{capital.gamecontento}{$user['nickname']}{capital.gamecontenth}{$post['amount']}{capital.money}";
+                        $admin_content = "用户{$user['nickname']}玩游戏资金减少{$post['amount']}{capital.money}";
+                    }
+                    break;
+            }
+            capital_flow($post['id'],$this->request->userInfo->id,8,$post['money_type'],$post['amount'],$balance,$content,$admin_content);
             return json(['status' => 'success', 'message' => '操作成功']);
         }
     }

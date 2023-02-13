@@ -14,6 +14,16 @@ class CapitalFlow extends Model
             $query->where("admin_content",'like', '%' . $value . '%');
         }
     }
+    public function adminAccount()
+    {
+        return $this->belongsTo(Admin::class, 'other_id')->bind(["account"]);
+    }
+    public function searchUidAttr($query, $value, $array)
+    {
+        if(!empty($value)){
+            $query->where("uid",$value);
+        }
+    }
     public function searchCatalogAttr($query, $value, $array){
         if(! empty($value))
         {
@@ -32,7 +42,7 @@ class CapitalFlow extends Model
     }
     public function getTypeAttr($value)
     {
-        $data = [1=>'充值',2=>'提现',3=>'游戏',4=>'独角币股息',5=>'邀请注册奖励',6=>'好友充值奖励',7=>'管理员后台添加'];
+        $data = [1=>'充值',2=>'提现',3=>'游戏',4=>'独角币股息',5=>'邀请注册奖励',6=>'好友充值奖励',7=>'安全中心绑定奖励',8=>"后台管理员添加"];
         return isset($data[$value]) ? $data[$value] : $value;
     }
     public function getMoneyTypeAttr($value)
