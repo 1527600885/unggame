@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 use app\api\BaseController;
+use app\common\lib\Redis;
 use think\exception\HttpResponseException;
 use think\facade\Cache;
 use Hashids\Hashids;
@@ -271,6 +272,14 @@ class Game extends BaseController
      * @return \think\Response
      */
     public function rungame(){
+        $redis = (new Redis())->getRedis();
+        $key = "user_rungame_{$this->request->userInfo->id}";
+        $rungame = $redis->get($key);
+        if($rungame){
+            $this->error(lang("frequent_operation"));
+        }else{
+            $redis->set($key,1,2);
+        }
         $tcgGameCode=input('tcgGameCode');
         $gameinfo=$this->GameListModel->where('tcgGameCode',$tcgGameCode)->find();
         $gamename=json_decode($gameinfo->gameName,true)[$this->gamelang];
@@ -302,6 +311,7 @@ class Game extends BaseController
                 // dump($rechargeno);
                 // exit;
                 $result=$this->apigame->user_transfer($userInfo->game_account,$gameinfo->productType,1,$userInfo->balance,$rechargeno);
+                //游戏成功了
                 $ret=json_decode($result,true);
                 //  var_dump($ret);die();
                 //强制赋予成功返回，方便测试

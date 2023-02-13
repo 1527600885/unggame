@@ -31,6 +31,7 @@ return array(
 		'describe'=>'This man is very lazy and left nothing.',
 		'operation_succeeded'=>'Operation succeeded',
 		'operation_failed'=>'Operation failed',
+		"frequent_operation"=>"Frequent operation",
 		'currency_name'=>'Digital currency payment',
 		'online_name'=>'Online payment',
 		'creditcards'=>'Credit Cards Accepted',
