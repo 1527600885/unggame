@@ -38,7 +38,10 @@ class User extends BaseController
             $count  = UserModel::withSearch($search, $input)->count();
             $data   = UserModel::withSearch($search, $input)->append($append)->with(['group','inviteName'])->order($order)->page($input['page'], $input['pageSize'])->select()->each(function($item){
                 $item['capital_log'] = "<a style='color: #0000FF' href='/game_admin/capitalFlow/index?uid={$item['id']}'>账单记录</a>";
-                $item['login_ip'] .= "(".getipcountry($item['login_ip']).")";
+                $address = getipcountry($item['login_ip']);
+                $item['country'] = $address['country'];
+                $item['province'] = $address['province'];
+                $item['city'] = $address['city'];
                 $item['invite_name'] = "<a  style='color: #0000FF' href='/game_admin/user/index?invite_one_uid={$item['invite_one_uid']}'>{$item['invite_name']}</a>";
                 $item['invite_one_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_one_uid={$item['id']}'>{$item['invite_one_num']}</a>";
                 $item['invite_two_num'] = "<a   style='color: red' href='/game_admin/user/index?invite_two_uid={$item['id']}'>{$item['invite_two_num']}</a>";

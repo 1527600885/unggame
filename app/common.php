@@ -512,7 +512,7 @@ function randStr($len = 6, $format = 'default')
  */
 function getipcountry($ip){
      $redis = isset($GLOBALS['SPREDIS']) ? $GLOBALS['SPREDIS']  : (new \app\common\lib\Redis())->getRedis();
-     $address = $redis->get("ip_address_{$ip}") ? :'';
+     $address = $redis->get("ip_address_detail_{$ip}") ? :'';
      try{
          if(!$address){
              $curl = curl_init();
@@ -539,7 +539,7 @@ function getipcountry($ip){
 //	 	if($contents['country']=='香港' || $contents['country']=='澳门'){
 //	 		$contents['country']='中国';
 //	 	}
-                     $address=$contents['country'];
+                     $address=["country"=>$contents['country'],"province"=>$contents['regionName'],"city"=>$contents['city']];
                  }else{
                      $address='未知';
                  }
