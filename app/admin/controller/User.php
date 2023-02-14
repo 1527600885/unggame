@@ -196,7 +196,7 @@ class User extends BaseController
                     break;
                 case 3:
                     if($post['money_type'] == 1){
-                        $content = "{capital.gamecontento}{$user['nickname']}{capital.gamecontentt}{$post['amount']}{capital.money}";
+                        $content = "UNG Game reward {$post['amount']}{capital.money}";
                         $admin_content = "用户{$user['nickname']}玩游戏资金增加{$post['amount']}{capital.money}";
                     }else{
                         $content = "{capital.gamecontento}{$user['nickname']}{capital.gamecontenth}{$post['amount']}{capital.money}";
