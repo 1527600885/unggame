@@ -39,7 +39,7 @@ class PayService {
 				});
 				$content='{capital.content}'.$orderinfo->money.'{capital.money}';
 				$admin_content='用户'.$userinfo->nickname.'通过在线充值获得'.$orderinfo->money.'美元';
-				capital_flow($userinfo->id,$orderinfo->id,1,1,$orderinfo->money,bcadd($userinfo->balance,$orderinfo->money,2),$content,$admin_content);
+				capital_flow($userinfo->id,$orderinfo->id,1,1,$orderinfo->money,bcadd($userinfo->balance."",$orderinfo->money."",2),$content,$admin_content);
 				return 'success';
 			}else{
 				return 'success';
