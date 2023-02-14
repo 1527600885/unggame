@@ -535,7 +535,7 @@ class User  extends BaseController
 				$data['profit']=round($gamewind-$gamefail,2);
 			}
 			// 今日流水
-			$data['water']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3])->whereDay('add_time')->sum('amount');
+			$data['water']=round(CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3])->whereDay('add_time')->sum('amount'),2);
 			// echo CapitalFlowmodel::getLastSql();exit;
 			// 今日股息
 			$data['dividend']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->whereDay('add_time')->sum('amount');
