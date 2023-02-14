@@ -543,9 +543,11 @@ function getipcountry($ip){
                  }else{
                      $address='未知';
                  }
-                 $redis->set("ip_address_{$ip}",$address,10*24*3600);
+                 $redis->set("ip_address_{$ip}",json_encode($address),10*24*3600);
              }
 
+         }else{
+             $address = json_decode($address,true);
          }
      }catch (\Exception $e){
          var_dump($e->getMessage());
