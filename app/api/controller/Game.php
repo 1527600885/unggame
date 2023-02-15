@@ -319,7 +319,7 @@ class Game extends BaseController
                 if($ret['status']==0){
                     if($ret['transaction_status']=="SUCCESS"){
                         //转入成功操作
-                        $this->UserModel->where('id',$userInfo->id)->update(['balance'=>0]);
+                        $this->UserModel->lock(true)->where('id',$userInfo->id)->update(['balance'=>0]);
                         $id=$this->GamelogModel->insertGetId(['uid'=>$userInfo->id,'gid'=>$gameinfo->id,'amount'=>$userInfo->balance,'add_time'=>time()]);
                         if($id){
                             $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
