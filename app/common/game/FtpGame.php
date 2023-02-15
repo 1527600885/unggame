@@ -38,11 +38,11 @@ class FtpGame
 		
 		
 		 
-		// if (ftp_fget($conn_id, $handle, $remote_file, FTP_ASCII, 0)) {
-		//     echo "下載成功, 並儲存到 $local_file\n";
-		// } else {
-		//     echo "下載 $remote_file 到 $local_file 失敗\n";
-		// }
+		 if (ftp_fget($conn_id, $handle, $remote_file, FTP_ASCII, 0)) {
+		     echo "下載成功, 並儲存到 $local_file\n";
+		 } else {
+		     echo "下載 $remote_file 到 $local_file 失敗\n";
+		 }
 		 
 		ftp_close($conn_id);
 		// fclose($handle);

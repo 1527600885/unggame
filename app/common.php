@@ -613,7 +613,7 @@ function create_qrcode($data,$userInfo){
  * @throws \think\db\exception\ModelNotFoundException
  * @throws \think\exception\DbException
  */
-function capital_flow($uid,$other_id,$type,$money_type,$amount,$balance,$content,$admin_content){
+function capital_flow($uid,$other_id,$type,$money_type,$amount,$balance,$content,$admin_content,$game_log_id = 0){
 	if($amount>0){
 		$data=[
 			'uid'=>$uid,
@@ -625,7 +625,8 @@ function capital_flow($uid,$other_id,$type,$money_type,$amount,$balance,$content
 			'content'=>$content,
 			'admin_content'=>$admin_content,
 			'add_time'=>time(),
-            'add_ip'=>request()->ip()
+            'add_ip'=>request()->ip(),
+            'game_log_id'=>$game_log_id
 		];
 		$cId =CapitalFlowmodel::insertGetId($data);
 		if($cId){

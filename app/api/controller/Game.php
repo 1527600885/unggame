@@ -385,53 +385,65 @@ class Game extends BaseController
         }else{
             $redis->set($key,1,10);
         }
-        //查看最后一个游戏得记录
-        $gamelog=$this->GamelogModel->where(['uid'=>$userInfo->id,'type'=>1])->order('id desc')->find();
-        if($gamelog){
-            $game_info=$this->GameListModel->where('id',$gamelog->gid)->find();
-            //查询上一个游戏的资金情况
-            $result=$this->apigame->get_balance($userInfo->game_account,$game_info->productType);
-            $ret=json_decode($result,true);
-            if($ret['status']==0 && $ret['balance']>0){
-                //将资金回笼到平台
-                $result=$this->apigame->user_all_transfer($userInfo->game_account,$game_info->productType,"game_withdrawal_".$userInfo->game_account.time());
+        try{
+            Db::startTrans();
+            $gamelog=$this->GamelogModel->where(['uid'=>$userInfo->id,'type'=>1])->lock(true)->order('id desc')->find();
+            if($gamelog){
+                $game_info=$this->GameListModel->where('id',$gamelog->gid)->find();
+                //查询上一个游戏的资金情况
+                $result=$this->apigame->get_balance($userInfo->game_account,$game_info->productType);
                 $ret=json_decode($result,true);
-                if($ret['status']==0){
-                    $balance=$ret['amount'];
-                    $this->UserModel->where('id',$userInfo->id)->update(['balance'=>$balance]);
-                    $this->GamelogModel->update(['type'=>2,'id'=>$gamelog->id]);
-                    $game_name=json_decode($game_info->gameName,true)[$this->gamelang];
-                    if($gamelog->amount>$balance){
-                        //用户输的情况
-                        $money_type=2;
-                        $amount=bcadd($gamelog->amount."",-$balance."",2);
-                        $userbalance=bcadd($gamelog->amount."",-$amount."",2);
-                        $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
-                        $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
-                    }elseif($balance>$gamelog->amount){
-                        //用户赢的情况
-                        $money_type=1;
-                        $amount= bcadd($balance."",-$gamelog->amount."",2);
-                        $userbalance=bcadd($gamelog->amount."",$amount."",2);
-                        $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentt}'.$amount.'{capital.money}';
-                        $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金增加'.$amount.'美元';
-                    }elseif($balance==$gamelog->amount){
-                        // 用户没赢没输的情况
-                        $money_type=0;
-                        $amount=0;
-                        $userbalance=$gamelog->amount;
-                        $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentf}';
-                        $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金不变';
+                if($ret['status']==0 && $ret['balance']>0){
+                    //将资金回笼到平台
+                    $result=$this->apigame->user_all_transfer($userInfo->game_account,$game_info->productType,"game_withdrawal_".$userInfo->game_account.time());
+                    $ret=json_decode($result,true);
+                    if($ret['status']==0){
+                        $balance=$ret['amount'];
+                        $this->UserModel->where('id',$userInfo->id)->update(['balance'=>$balance]);
+                        $this->GamelogModel->update(['type'=>2,'id'=>$gamelog->id]);
+                        $game_name=json_decode($game_info->gameName,true)[$this->gamelang];
+                        if($gamelog->amount>$balance){
+                            //用户输的情况
+                            $money_type=2;
+                            $amount=bcadd($gamelog->amount."",-$balance."",2);
+                            $userbalance=bcadd($gamelog->amount."",-$amount."",2);
+                            $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
+                            $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
+                        }elseif($balance>$gamelog->amount){
+                            //用户赢的情况
+                            $money_type=1;
+                            $amount= bcadd($balance."",-$gamelog->amount."",2);
+                            $userbalance=bcadd($gamelog->amount."",$amount."",2);
+                            $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentt}'.$amount.'{capital.money}';
+                            $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金增加'.$amount.'美元';
+                        }elseif($balance==$gamelog->amount){
+                            // 用户没赢没输的情况
+                            $money_type=0;
+                            $amount=0;
+                            $userbalance=$gamelog->amount;
+                            $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentf}';
+                            $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金不变';
+                        }
+                        capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
+                        $this->success(lang('system.operation_succeeded'));
+                    }else{
+                        $this->error($ret['error_desc'],null,301);
                     }
-                        capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content);
-                    $this->success(lang('system.operation_succeeded'));
                 }else{
-                    $this->error($ret['error_desc'],null,301);
+                    $this->error(lang('game.synchronizing_funds'));
                 }
-            }else{
-                $this->error(lang('game.synchronizing_funds'));
             }
+            Db::commit();
+        }catch (HttpResponseException $e){
+            $re = $e->getResponse();
+            Db::commit();
+            throw new HttpResponseException($re);
+        }catch (\Exception $e){
+            Db::rollback();
+            $this->error($e->getMessage());
         }
+        //查看最后一个游戏得记录
+
         exit;
     }
     /**
