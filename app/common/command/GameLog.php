@@ -41,7 +41,8 @@ class GameLog extends Command
         ftp_pasv($conn_id,true);
         $data = [];
         foreach ($gameType as $v){
-            $data=array_merge($data,$this->getData($v,$conn_id));
+            $s = $this->getData($v,$conn_id) ?? [];
+            $data=array_merge($data,$s);
         }
         $model = new GameBetLog();
         $model->saveAll($data);
@@ -110,11 +111,12 @@ class GameLog extends Command
                             ];
                         }
                     }
-                    return $save;
+
                 }else{
                     echo "获取文件{$local_file}异常\n";
                 }
             }
+            return $save;
         }catch(\Exception $e){
             echo $e->getMessage()."\n";
         }
