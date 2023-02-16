@@ -36,7 +36,7 @@ class GameLog extends Command
         //和三方建立连接
         $conn_id = ftp_connect(Env::get("GAMECONF.IP"));
         //账号登录
-        ftp_login($conn_id, "GAMECONF.merchantCode", "GAMECONF.PASSWORD");
+        ftp_login($conn_id, Env::get("GAMECONF.merchantCode"), Env::get("GAMECONF.PASSWORD"));
         //切换到主动模式
         ftp_pasv($conn_id,true);
         $data = [];
@@ -73,7 +73,7 @@ class GameLog extends Command
         //获取已传入的文件
         $exit = scandir($dir);
         foreach ($exit as &$v){
-            $v = "/{$gameType}/SETTLED/20230216/".$v;
+            $v = "/{$gameType}/SETTLED/{$date}/".$v;
         }
         $save = [];
         //筛选出未写入的文件
