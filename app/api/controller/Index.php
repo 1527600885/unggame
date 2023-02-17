@@ -16,7 +16,6 @@ class Index extends BaseController
 	}
     public function index()
     {
-        
         $app = new App();
         $path = $app->getRootPath();
         $local_path = $path."gamelog";   ### 本機儲存檔案名稱//batchnamejson

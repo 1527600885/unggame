@@ -119,7 +119,7 @@ class Withdrawal extends BaseController
 	}
 	public function isCanwithdrawal($price)
     {
-        $user_id = $this->request->userinfo['id'];
+        $user_id = $this->request->userInfo['id'];
         $today_bet = GameBetLog::where("user_id",$user_id)->whereTime("betTime","today")->sum("betTime");
         if($today_bet >= $price*3)
         {

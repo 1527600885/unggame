@@ -90,6 +90,10 @@ class GameLog extends Command
 
                     //获取写入文件的内容
                     $str = file_get_contents($local_file);
+                    if(!$str){
+                        unlink($local_file);
+                        continue;
+                    }
                     $datas = json_decode($str,true);
                     //  $datas['page_info']['totalCount'] 记录的总条数
                     if($datas['status'] == 0 && $datas['page_info']['totalCount'] > 0){
