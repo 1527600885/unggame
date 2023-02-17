@@ -351,7 +351,13 @@
 				var ob = {
 
 				};
-				this.withdrawForm.tableData.push(ob);
+				if(this.withdrawForm.tableData){
+					this.withdrawForm.tableData.push(ob);
+				}else{
+					this.withdrawForm.tableData =[];
+					this.withdrawForm.tableData.push(ob);
+				}
+
 			},
 			setCurrent(row) {
 				this.$refs.singleTable.setCurrentRow(row);
