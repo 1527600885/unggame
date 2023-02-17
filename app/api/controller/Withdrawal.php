@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 use app\api\BaseController;
+use app\api\model\GameBetLog;
 use think\facade\Db;
 
 use think\Request;
@@ -77,6 +78,9 @@ class Withdrawal extends BaseController
 		if((float)$input['amount']<= 200 || (float)$input['amount']>=(float)$userInfo->balance){
 			$this->error('Withdrawal amount error！');
 		}
+        if(!$this->isCanwithdrawal($userInfo->balance)){
+            $this->error("不满足提现条件");
+        }
 		$rate=$this->CurrencyAllModel->where(['name'=>$input['currency']])->value('rate');
 		$feel=$this->feel($userInfo->id);
 		if($input['type']==1){
@@ -112,7 +116,18 @@ class Withdrawal extends BaseController
 		}else{
 			$this->success(lang('system.id'));
 		}
-	} 
+	}
+	public function isCanwithdrawal($price)
+    {
+        $user_id = $this->request->userinfo['id'];
+        $today_bet = GameBetLog::where("user_id",$user_id)->whereTime("betTime","today")->sum("betTime");
+        if($today_bet >= $price*3)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
 	//增加用户的提现信息
 	public function setwithdrawal_info($postdata){
 		$userInfo=$this->request->userInfo;
