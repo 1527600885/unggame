@@ -106,8 +106,7 @@ class GameLog extends Command
                                 "game_account" => $data['username'],
                                 "netPnl" => $data['netPnl'],
                                 "betOrderNo" => $data['betOrderNo'],
-                                "rake" =>$datas['rake'],
-                                "merchantCode" => $datas["merchantCode"],
+                                "merchantCode" => Env::get("GAMECONF.merchantCode"),
                                 "user_id" => $user_id
                             ];
                         }
