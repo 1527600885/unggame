@@ -394,14 +394,14 @@ class Game extends BaseController
                 $result=$this->apigame->get_balance($userInfo->game_account,$game_info->productType);
                 $ret=json_decode($result,true);
                 if($ret['status']==0 && $ret['balance']>0){
-                    //将资金回笼到平台
-                    $result=$this->apigame->user_all_transfer($userInfo->game_account,$game_info->productType,"game_withdrawal_".$userInfo->game_account.time());
-                    $ret=json_decode($result,true);
-                    if($ret['status']==0){
+                    $game_name=json_decode($game_info->gameName,true)[$this->gamelang];
+                    if($ret['balance'] > 0){
+                        //将资金回笼到平台
+                        $result=$this->apigame->user_all_transfer($userInfo->game_account,$game_info->productType,"game_withdrawal_".$userInfo->game_account.time());
+                        $ret=json_decode($result,true);
                         $balance=$ret['amount'];
                         $this->UserModel->where('id',$userInfo->id)->update(['balance'=>$balance]);
                         $this->GamelogModel->update(['type'=>2,'id'=>$gamelog->id]);
-                        $game_name=json_decode($game_info->gameName,true)[$this->gamelang];
                         if($gamelog->amount>$balance){
                             //用户输的情况
                             $money_type=2;
@@ -424,11 +424,16 @@ class Game extends BaseController
                             $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentf}';
                             $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金不变';
                         }
-                        capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
-                        $this->success(lang('system.operation_succeeded'));
-                    }else{
-                        $this->error($ret['error_desc'],null,301);
+                    }else if($gamelog->amount > 0){//初始金额不为0.全部输光
+                        $this->GamelogModel->update(['type'=>2,'id'=>$gamelog->id]);
+                        $money_type=2;
+                        $amount = $gamelog->amount;
+                        $userbalance= 0;
+                        $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
+                        $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
                     }
+                    capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
+                    $this->success(lang('system.operation_succeeded'));
                 }else{
                     $this->error(lang('game.synchronizing_funds'));
                 }
