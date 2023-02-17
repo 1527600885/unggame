@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\api\controller;
 
+use app\api\model\GameBetLog;
 use think\File as Fileupload;
 use think\facade\Filesystem;
 use think\exception\ValidateException;
@@ -530,12 +531,10 @@ class User  extends BaseController
 			$gamewind=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3,'money_type'=>1])->whereDay('add_time')->sum('amount');
 			//今日游戏输的
 			$gamefail=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3,'money_type'=>2])->whereDay('add_time')->sum('amount');
-			$data['profit']=0;
-			if($gamewind>$gamefail){
-				$data['profit']=round($gamewind-$gamefail,2);
-			}
+			$profit = round(GameBetLog::where(['user_id'=>$userInfo->id])->whereDay('betTime')->sum('netPnl'),2);
+            $data['profit']=$profit > 0 ? $profit : 0 ;
 			// 今日流水
-			$data['water']=round(CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3])->whereDay('add_time')->sum('amount'),2);
+			$data['water']=round(GameBetLog::where(['user_id'=>$userInfo->id])->whereDay('betTime')->sum('betAmount'),2);
 			// echo CapitalFlowmodel::getLastSql();exit;
 			// 今日股息
 			$data['dividend']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->whereDay('add_time')->sum('amount');
