@@ -106,7 +106,7 @@ class GameLog extends Command
                                 "netPnl" => $data['netPnl'],
                                 "betOrderNo" => $data['betOrderNo'],
                                 "rake" => isset($data['rake']) ? strtotime($data['rake']) : 0,
-                                "merchantCode" => $data['merchantCode'],
+                                "merchantCode" => isset($data['merchantCode']) ? strtotime($data['merchantCode']) : 0,
                                 "user_id" => $user_id
                             ];
                         }
