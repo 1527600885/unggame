@@ -56,7 +56,7 @@ class GameLog extends Command
         $path = $app->getRootPath();
         $local_path = $path."gamelog";
 //        $date = date("Ymd");
-        $date = date("Ymd",time()-24*60*60);
+        $date = date("Ymd",time());
         //获取所有文件列表
         $contents = ftp_nlist($conn_id, "/$gameType/SETTLED/{$date}");
 
