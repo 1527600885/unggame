@@ -99,7 +99,7 @@ class GameLog extends Command
                                 'tcgGameCode' => $data['gameCode'],
                                 "game_id" => $games ? $games['id'] : 0,
                                 "betTime" => strtotime($data['betTime']),
-                                "endTime" => strtotime($data["endTime"]),
+                                "endTime" => isset($data["endTime"]) && strtotime($data["endTime"]),
                                 "productType" => $data["productType"],
                                 "betAmount" => $data['betAmount'],
                                 "game_account" => $data['username'],
