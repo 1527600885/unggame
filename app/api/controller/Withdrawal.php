@@ -270,7 +270,7 @@ class Withdrawal extends BaseController
     public function getWithdrawLog()
     {
         $type = $this->request->post("type",0);
-        $data = \app\api\model\Withdrawal::withSearch(["type"])->order("id desc")->paginate();
+        $data = \app\api\model\Withdrawal::withSearch(["type"=>$type])->order("id desc")->paginate();
         $this->success(lang('system.success'),$data);
     }
 }
