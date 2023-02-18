@@ -280,10 +280,20 @@ class Game extends BaseController
         }else{
             $redis->set($key,1,10);
         }
+
         $tcgGameCode=input('tcgGameCode');
         $gameinfo=$this->GameListModel->where('tcgGameCode',$tcgGameCode)->find();
         $gamename=json_decode($gameinfo->gameName,true)[$this->gamelang];
         $userInfo=$this->request->userInfo;
+        $log = $this->GamelogModel->where("uid",$userInfo->id)->where("type",1)->find();
+        if($log){
+            try{
+                $this->recapture();
+                $this->error("Please wait for the funds to be withdrawn from the game");
+            }catch (\Exception $e){
+
+            }
+        }
         try{
             Db::startTrans();
             if($userInfo->balance<=0){

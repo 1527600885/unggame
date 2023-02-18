@@ -167,6 +167,7 @@ class Login extends BaseController
 			if($input['invitation_code']){
 				//一级邀请人
 				$invite_one_list=UserModel::where('invitation_code',$input['invitation_code'])->find();
+				if(!$invite_one_list) $this->error("invalid invitation code");
 				$invite_one_uid=$invite_one_list->id;
 				//二级邀请人
 				$invite_two_uid=UserModel::where('id',$invite_one_uid)->value('invite_one_uid') ??0;
