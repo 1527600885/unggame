@@ -336,12 +336,11 @@
 	        	uploadForm: {:json_encode($upload)},
 	        	themesForm: {:json_encode($theme)},
 				withdrawForm:{
-	        		rate:0,
-					number:0,
+	        		rate:"",minprice:"",
 					tableData:[
 						{
-							number:'',
-							rate:'',
+							number:"",
+							rate:"",
 						}
 					]
 				},
@@ -350,8 +349,7 @@
 
         created() {
 			var withdrawForm = {:json_encode($withdraw)};
-			console.log(withdrawForm)
-			if(withdrawForm !=[]){
+			if(withdrawForm.length != 0){
 				this.withdrawForm = withdrawForm;
 			}
         	this.uploadForm.index.size.image = this.uploadForm.index.size.image / 1024 / 1024;
@@ -364,15 +362,14 @@
 	    methods: {
 			add(){
 				var ob = {
-					number :"",
-					rate : "",
+					number :'',
+					rate : ''	,
 				};
 				console.log(this.withdrawForm);
 				if(this.withdrawForm.tableData != undefined){
-					console.log(2);
 					this.withdrawForm.tableData.push(ob);
 				}else{
-					this.withdrawForm.tableData =[ob];
+					this.withdrawForm.tableData=[ob];
 				}
 
 			},
