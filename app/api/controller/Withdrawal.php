@@ -124,9 +124,17 @@ class Withdrawal extends BaseController
 			$this->success(lang('system.id'));
 		}
 	}
-	public function isCanwithdrawal($price,$rate=3)
+
+    /**
+     * 判断是否满足流水
+     * @param $price 金额
+     * @param int $rate 倍数
+     * @return bool
+     */
+    public function isCanwithdrawal($price, $rate=3)
     {
         $user_id = $this->request->userInfo['id'];
+        //统计今天的流水
         $today_bet = GameBetLog::where("user_id",$user_id)->whereTime("betTime","today")->sum("betAmount");
         if($today_bet >= $price*$rate)
         {
@@ -242,7 +250,13 @@ class Withdrawal extends BaseController
 		}
 		return $feel;
 	}
-	public function getRate($data)
+
+    /**
+     * 获取后台配置的提现费率(要求邀请人数从小到大排列)
+     * @param $data
+     * @return int
+     */
+    public function getRate($data)
     {
         $invite_nume = $this->request->userInfo["invite_one_num"];
         $rate = 0;
@@ -252,6 +266,12 @@ class Withdrawal extends BaseController
             }
         }
         return $rate;
+    }
+    public function getWithdrawLog()
+    {
+        $type = $this->request->post("type",0);
+        $data = \app\api\model\Withdrawal::withSearch(["type"])->order("id desc")->paginate();
+        $this->success(lang('system.success'),$data);
     }
 }
 ?>
