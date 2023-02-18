@@ -18,4 +18,12 @@ class Withdrawal extends Model
             $query->where("online_status",$value);
         }
     }
+    public function getTypeTextAttr($value,$data)
+    {
+        if(isset($data['type'])&& !empty($data['type'])){
+            $typeList = [1=>"Cryptocurrency",2=>"Cash currency"];
+            $value = $typeList[$data['type']];
+        }
+        return $value;
+    }
 }
