@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 
 namespace app\api\controller;
+use app\admin\model\Config as ConfigModel;
 use app\api\BaseController;
 use app\api\model\GameBetLog;
 use think\facade\Db;
@@ -22,7 +23,10 @@ class Withdrawal extends BaseController
 	//获取当前支持提现的货币(包括数字货币和在线货币)
 	public function currencylist(){
 		$data['userInfo']=$this->request->userInfo;
-		$data['feel']=$this->feel($this->request->userInfo['id']);
+//		$data['feel']=$this->feel($this->request->userInfo['id']);
+        $withdrawConfig =  ConfigModel::getVal('withdraw');
+		$data['feel'] = $this->getRate($withdrawConfig['tableData']);
+		$data['withdrawConfigTableData'] = $withdrawConfig['tableData'];
 		// 数字货币
 		$digital=$this->WithdrawalSettingsModel->field('`id`,`name` as currency,`type`')->where(['is_show'=>1,'type'=>1])->select();
 		$digitalarr=[];
@@ -75,14 +79,17 @@ class Withdrawal extends BaseController
 		if(!$userone){
 			$this->error('Your Payment Password is wrong!');
 		}
-		if((float)$input['amount']<= 200 || (float)$input['amount']>=(float)$userInfo->balance){
+		$withdrawConfig =  ConfigModel::getVal('withdraw');
+
+		if((float)$input['amount']<= $withdrawConfig['minprice'] || (float)$input['amount']>=(float)$userInfo->balance){
 			$this->error('Withdrawal amount error！');
 		}
-        if(!$this->isCanwithdrawal($userInfo->balance)){
+        if(!$this->isCanwithdrawal($userInfo->balance,$withdrawConfig['rate'])){
             $this->error("不满足提现条件");
         }
 		$rate=$this->CurrencyAllModel->where(['name'=>$input['currency']])->value('rate');
-		$feel=$this->feel($userInfo->id);
+//		$feel=$this->feel($userInfo->id);
+        $feel = $this->getRate($withdrawConfig['tableData']);
 		if($input['type']==1){
 			$rateamount=round($input['amount']/$rate,7);
 			$charge=round($rateamount*($feel/100),7);
@@ -117,11 +124,11 @@ class Withdrawal extends BaseController
 			$this->success(lang('system.id'));
 		}
 	}
-	public function isCanwithdrawal($price)
+	public function isCanwithdrawal($price,$rate=3)
     {
         $user_id = $this->request->userInfo['id'];
         $today_bet = GameBetLog::where("user_id",$user_id)->whereTime("betTime","today")->sum("betAmount");
-        if($today_bet >= $price*3)
+        if($today_bet >= $price*$rate)
         {
             return true;
         }else{
@@ -235,9 +242,16 @@ class Withdrawal extends BaseController
 		}
 		return $feel;
 	}
-	public function getInvitConfig()
+	public function getRate($data)
     {
-
+        $invite_nume = $this->request->userInfo["invite_one_num"];
+        $rate = 0;
+        foreach ($data as $v){
+            if($invite_nume >= $v['number']){
+                $rate = $v['rate'];
+            }
+        }
+        return $rate;
     }
 }
 ?>
