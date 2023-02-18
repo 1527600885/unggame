@@ -273,7 +273,8 @@ class Game extends BaseController
      */
     public function rungame(){
         $userInfo=$this->request->userInfo;
-        $log = $this->GamelogModel->where("uid",$userInfo->id)->where("type",1)->find();
+        $redis = (new Redis())->getRedis();
+        $log = $redis->get("user_wait_recapture_{$userInfo->id}");
         if($log){
             try{
                 $this->recapture();
@@ -338,6 +339,7 @@ class Game extends BaseController
                             $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
                             $ret=json_decode($result,true);
                             if($ret['status']==0){
+                                $redis->set("user_wait_recapture_{$userInfo->id}",1);
                                 $this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
                             }else{
                                 $this->error(isset($ret['error_message'])?$ret['error_message']:$ret['error_desc']);
@@ -356,6 +358,7 @@ class Game extends BaseController
                                 $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
                                 $ret=json_decode($result,true);
                                 if($ret['status']==0){
+                                    $redis->set("user_wait_recapture_{$userInfo->id}",1);
                                     $this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
                                 }else{
                                     $this->error(isset($ret['error_message'])?$ret['error_message']:$ret['error_desc']);
@@ -448,7 +451,7 @@ class Game extends BaseController
                         $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
                         capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
                     }
-
+                    $redis->set("user_wait_recapture_{$userInfo->id}",0);
                     $this->success(lang('system.operation_succeeded'));
                 }else{
                     $this->error(lang('game.synchronizing_funds'));
