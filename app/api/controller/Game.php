@@ -278,7 +278,7 @@ class Game extends BaseController
         if($rungame){
             $this->error(lang("frequent_operation"));
         }else{
-            $redis->set($key,1,10);
+            $redis->set($key,1,5);
         }
 
         $tcgGameCode=input('tcgGameCode');
@@ -289,10 +289,11 @@ class Game extends BaseController
         if($log){
             try{
                 $this->recapture();
-                $this->error("Please wait for the funds to be withdrawn from the game");
+
             }catch (\Exception $e){
 
             }
+            $this->error("Please wait for the funds to be withdrawn from the game");
         }
         try{
             Db::startTrans();
