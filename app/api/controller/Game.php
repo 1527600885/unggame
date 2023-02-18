@@ -272,6 +272,17 @@ class Game extends BaseController
      * @return \think\Response
      */
     public function rungame(){
+        $userInfo=$this->request->userInfo;
+        $log = $this->GamelogModel->where("uid",$userInfo->id)->where("type",1)->find();
+        if($log){
+            try{
+                $this->recapture();
+
+            }catch (\Exception $e){
+
+            }
+            $this->error("Please wait for the funds to be withdrawn from the game");
+        }
         $redis = (new Redis())->getRedis();
         $key = "user_rungame_{$this->request->userInfo->id}";
         $rungame = $redis->get($key);
@@ -284,17 +295,7 @@ class Game extends BaseController
         $tcgGameCode=input('tcgGameCode');
         $gameinfo=$this->GameListModel->where('tcgGameCode',$tcgGameCode)->find();
         $gamename=json_decode($gameinfo->gameName,true)[$this->gamelang];
-        $userInfo=$this->request->userInfo;
-        $log = $this->GamelogModel->where("uid",$userInfo->id)->where("type",1)->find();
-        if($log){
-            try{
-                $this->recapture();
 
-            }catch (\Exception $e){
-
-            }
-            $this->error("Please wait for the funds to be withdrawn from the game");
-        }
         try{
             Db::startTrans();
             if($userInfo->balance<=0){
