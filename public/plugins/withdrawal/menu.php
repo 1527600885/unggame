@@ -38,6 +38,17 @@ return array (
             'path' => 'mkWithdrawal/delete',
             'logwriting' => 1,
           ),
+          4 => 
+          array (
+            'title' => '审核',
+            'sort' => 0,
+            'path' => 'mkWithdrawal/check',
+            'ifshow' => 0,
+            'logwriting' => 0,
+            'children' => 
+            array (
+            ),
+          ),
         ),
       ),
     ),

@@ -26,13 +26,8 @@ class MkWithdrawal extends BaseController
         if ($this->request->isPost()) {
             $input = input("post.");
             $count = MkWithdrawalModel::withSearch(["keyword"], $input)->count();
-            $data  = MkWithdrawalModel::withSearch(["keyword"], $input)->order($input["prop"], $input["order"])->page($input["page"], $input["pageSize"])->select();
+            $data  = MkWithdrawalModel::withSearch(["keyword"], $input)->append(["online_status_name","add_times","type_name"])->order($input["prop"], $input["order"])->page($input["page"], $input["pageSize"])->select();
             foreach($data as $k=>$v){
-				if($v->type==1){
-					$v->type_name="数字货币提现";
-				}else{
-					$v->type_name="在线提现";
-				}
 				$v->amount_name=$v->amount."($)";
 				$v->money_name=$v->money."(".$v->currency.")";
 				$v->charge_name=$v->charge."(".$v->currency.")";
@@ -44,19 +39,19 @@ class MkWithdrawal extends BaseController
 						$v->other_name.=$key.":".$value."</br>";
 					}
 				}
-				if($v->type>1){
-					if($v->online_status==0){
-						$v->online_status_name="未代付";
-					}elseif($v->online_status==1){
-						$v->online_status_name="<span style='color:#FF8000;'>代付中</span>";
-					}elseif($v->online_status==2){
-						$v->online_status_name="<span style='color:#0080FF;'>代付完成</span>";
-					}elseif($v->online_status==3){
-						$v->online_status_name="<span style='color:#FF0000;'>代付失败</span>";
-					}
-				}else{
-					$v->online_status_name="数字货币自己支付";
-				}
+//				if($v->type>1){
+//					if($v->online_status==0){
+//						$v->online_status_name="未代付";
+//					}elseif($v->online_status==1){
+//						$v->online_status_name="<span style='color:#FF8000;'>代付中</span>";
+//					}elseif($v->online_status==2){
+//						$v->online_status_name="<span style='color:#0080FF;'>代付完成</span>";
+//					}elseif($v->online_status==3){
+//						$v->online_status_name="<span style='color:#FF0000;'>代付失败</span>";
+//					}
+//				}else{
+//					$v->online_status_name="数字货币自己支付";
+//				}
 			}
 			return json(["status" => "success", "message" => "请求成功", "data" => $data, "count" => $count]);
         } else {
@@ -94,6 +89,15 @@ class MkWithdrawal extends BaseController
         if ($this->request->isPost()) {
             MkWithdrawalModel::destroy(input("post.ids"));
             return json(["status" => "success", "message" => "删除成功"]);
+        }
+    }
+    public function check()
+    {
+        if ($this->request->isPost()) {
+            $input = input("post.");
+            $input['status_time'] = $input['pay_time'] =  time();
+            MkWithdrawalModel::where("id",$input['id'])->update($input);
+            return json(["status" => "success", "message" => "审核成功"]);
         }
     }
 }

@@ -1,19 +1,66 @@
 {include file="common/header"}
 <div id="app" v-cloak>
 	<el-curd
+			ref="el_curd"
 		:field="field"
 		:table-export="false"
 		:table-page-size="20"
 		:table-page-sizes="[20, 50, 100, 200, 500]"
 		:search-status='[{"value":"0","label":"未审核"},{"value":"1","label":"已审核"}]'
 		:search-date="false">
+		<!-- 在表格操作单元格中插入代码 -->
+		<template v-slot:operation="row" >
+			<el-button  size="mini" circle @click="check(row.id)" style="color: green" v-if="row.online_status == 0">审核</el-button>
+			<el-button  size="mini" circle @click="showReason(row.reason)" style="color: red" v-if="row.online_status == 3">查看</el-button>
+		</template>
 	</el-curd>
+	<el-dialog
+			title="审核"
+			:visible.sync="dialogVisible"
+			width="30%"
+			:before-close="handleClose">
+		<el-form ref="formRef" :model="form" label-width="80px">
+			<el-form-item label="审核结果">
+				<el-radio-group v-model="form.online_status">
+					<el-radio label="2" >转账成功</el-radio>
+					<el-radio label="3" >转账失败</el-radio>
+				</el-radio-group>
+			</el-form-item>
+			<el-form-item label="失败原因" v-if="form.online_status == 3">
+				<el-input v-model="form.reason" type="text" placeholder="请填写原因"></el-input>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" @click="onSubmit">确认</el-button>
+				<el-button  @click="closeForm()">取消</el-button>
+			</el-form-item>
+		</el-form>
+	</el-dialog>
+	<el-dialog
+			title="失败原因"
+			:visible.sync="dialogVisible2"
+			width="30%">
+		<el-form ref="formRef" :model="form" label-width="80px">
+			<el-form-item label="失败原因">
+				<el-input v-model="form2.reason" type="text" placeholder="请填写原因" readonly></el-input>
+			</el-form-item>
+		</el-form>
+	</el-dialog>
 </div>
 <script>
 	new Vue({
 		el: "#app",
 		data() {
 			return {
+				operation_id:0,
+				form:{
+					online_status:"",
+					reason:"",
+				},
+				form2:{
+					reason:""
+				},
+				dialogVisible2:false,
+				dialogVisible:false,
 				field: [
 					{
 						prop: 'id',
@@ -32,9 +79,7 @@
 					{
 						prop: 'uid',
 						label: '用户ID',
-						table: {
-							
-						},
+						table: false,
 						form: false
 					},
 					{
@@ -139,10 +184,7 @@
 					{
 						prop: 'status',
 						label: '提现状态',
-						table: {
-							sort: true,
-							is: 'el-switch',
-						},
+						table: false,
 						form: {
 							is: 'el-switch',
 							default: '1',
@@ -176,6 +218,50 @@
 				],
 			}
 		},
+		methods:{
+			check(id){
+				this.operation_id = id
+				this.dialogVisible = true;
+			},
+			closeForm(){
+				this.dialogVisible = false
+				this.resetForm();
+			},
+			handleClose(done) {
+				this.resetForm();
+				done();
+			},
+			resetForm(){
+				console.log("重置表单")
+				this.form.reason = "";
+				this.form.online_status = "";
+			},
+			showReason(reason){
+				console.log(reason);
+				this.form2.reason = reason;
+				this.dialogVisible2 = true;
+			},
+			onSubmit() {
+				self = this;
+				this.$refs.el_curd.loading = true;
+				this.form.id = this.operation_id;
+				request.post("withdrawal/mkWithdrawal/check",this.form,function (res){
+					if (res.status === 'success') {
+						self.$notify({
+							title: '成功',
+							message: '操作成功',
+							type: 'success'
+						});
+						self.$refs.el_curd.$emit('edit-data', res.message);
+						self.$refs.el_curd.refreshData();
+					} else {
+						self.$notify({showClose: true, message: res.message, type: res.status});
+					}
+					self.$refs.el_curd.loading = false;
+					self.closeForm();
+				})
+			},
+		}
 	})
 </script>
 {include file="common/footer"}

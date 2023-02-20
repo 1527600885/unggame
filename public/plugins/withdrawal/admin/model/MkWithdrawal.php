@@ -18,6 +18,7 @@ class MkWithdrawal extends Model
 	// 设置json类型字段
 	protected $json = ['field'];
 	protected $jsonAssoc = true;
+	protected $dateFormat=["pay_time","status_time"];
     
 	// 关联模型
 	public function group()
@@ -39,5 +40,27 @@ class MkWithdrawal extends Model
         if (! empty($value)) { 
             $query->whereBetweenTime("", $value[0], $value[1]);
         }
+    }
+    public function getOnlineStatusNameAttr($value,$data)
+    {
+        $list = [0=>"未转账",1=>"转账中",2=>"<span style='color:green;'>转账成功</span>",3=>"<span style='color:red;'>转账失败</span>"];
+        return $list[$data['online_status']];
+    }
+    public function getAddTimesAttr($value,$data){
+	    return date("Y-m-d",$data['add_time']);
+    }
+    public function getTypeNameAttr($value,$data)
+    {
+        $list = [1=>"数字货币提现",2=>"在线提现"];
+        return $list[$data['type']];
+    }
+    public function getStatusTimeAttr($value,$data)
+    {
+
+       return $value ? date("Y-m-d H:i:s",$data['status_time']):$value;
+    }
+    public function getPayTimeAttr($value,$data)
+    {
+        return $value  ? date("Y-m-d H:i:s",$data['pay_time']) : $value;
     }
 }
