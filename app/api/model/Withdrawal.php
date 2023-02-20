@@ -26,4 +26,14 @@ class Withdrawal extends Model
         }
         return $value;
     }
+    public function getAddTimeTextAttr($value,$data){
+	    return date("Y-m-H:i:s",$data['add_time']);
+    }
+    public function getPayTimeTextAttr($value,$data)
+    {
+        if($value){
+            $value = date("Y-m-d H:i:s",$value);
+        }
+        return $value;
+    }
 }
