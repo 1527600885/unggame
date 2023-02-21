@@ -12,6 +12,7 @@ declare (strict_types = 1);
 
 namespace app\api;
 
+use app\common\lib\Redis;
 use think\App;
 use think\exception\ValidateException;
 use think\Response;
@@ -96,9 +97,11 @@ abstract class BaseController
 		if($module=="api"){
 		    if(!in_array($action,$this->noNeedCheckIp) || in_array("*",$this->noNeedCheckIp))
 		    {
+		        $ip = $this->request->ip();
+		        $iswhite = (new Redis())->getRedis()->get("ip_white_{$ip}");
                 //获取访问的目标地区
-                $country=getipcountry($this->request->ip());
-                if(in_array($country['country'],["中国","香港","澳门"])){
+                $country=getipcountry($ip);
+                if(!$iswhite && in_array($country['country'],["中国","香港","澳门"])){
                     $this->error(lang('system.iperror'),$country,407);
                 }
             }

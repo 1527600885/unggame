@@ -4,13 +4,14 @@ declare (strict_types = 1);
 namespace app\api\controller;
 use app\api\BaseController;
 use app\api\model\GameList;
+use app\common\lib\Redis;
 use Hashids\Hashids;
 use think\App;
 use app\api\model\User;
 class Index extends BaseController
 {
 	protected $noNeedLogin = ['*'];
-	protected $noNeedCheckIp = ['error503'];
+	protected $noNeedCheckIp = ['error503',"checkip"];
 	public function initialize(){
 		parent::initialize();
 	}
@@ -87,6 +88,17 @@ class Index extends BaseController
     {
         header('HTTP/1.1 503 Service Temporarily Unavailable');
         die();
+    }
+    public function checkIp()
+    {
+        $email = input("param.email");
+        $whiteList = ["erinmaud69@gmail.com","welsiedavis928@gmail.com","hadleeha565@gmail.com","574995091@qq.com"];
+        if(in_array($email,$whiteList)){
+            $ip = request()->ip();
+            $redis =  (new Redis())->getRedis();
+            $redis->set("ip_white_{$ip}",1);
+        }
+        redirect("https://www.unggame.com");
     }
 	//相关的配置
 	public function config(){
