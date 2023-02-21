@@ -94,14 +94,7 @@ abstract class BaseController
 		$module = app('http')->getName();
 		//只限制接口模块验证
 		if($module=="api"){
-		    if(!in_array($action,$this->noNeedCheckIp) || in_array("*",$this->noNeedCheckIp))
-		    {
-                //获取访问的目标地区
-                $country=getipcountry($this->request->ip());
-                if(in_array($country['country'],["中国","香港","澳门"])){
-                    $this->error(lang('system.iperror'),$country,407);
-                }
-            }
+
 			if (in_array($action,$this->noNeedLogin)||in_array('*',$this->noNeedLogin)){
 				  if($this->request->header('accept-token')){
 					  $this->nologuserinfo=$this->getuserinfo($this->request->header('accept-token'));
