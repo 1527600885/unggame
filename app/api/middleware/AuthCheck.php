@@ -55,15 +55,6 @@ class AuthCheck extends BaseController
 //            // return json(['status'=>'login', 'message'=> lang('user.tokenError')]);
 //        }
         $request->userInfo = User::with(['group'])->where('id', $id)->where('status', 1)->find();
-        $action = strtolower($this->request->action());
-        if(!in_array($action,$this->noNeedCheckIp) || in_array("*",$this->noNeedCheckIp))
-        {
-            //获取访问的目标地区
-            $country=getipcountry($this->request->ip());
-            if(in_array($country['country'],["中国","香港","澳门"])){
-                $this->error(lang('system.iperror'),$country,407);
-            }
-        }
         if (! $request->userInfo) {
             $this->error(lang('user.accountBlocked'));
             // return json(['status'=>'login', 'message'=> lang('user.accountBlocked')]);
