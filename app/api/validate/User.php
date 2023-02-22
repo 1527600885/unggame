@@ -68,12 +68,12 @@ class User extends Validate
         'whatsApp.require'       => 'user.whatsAppEmpty'
     ];
     protected $scene = [
-        'login'          => ['account','password'],
+        'login'          => ['email','password'],
         'loginphone'          => ['phone','password'],
         'passwordEmail'  => ['email','password','code'],
         'passwordMobile' => ['mobile','password','code'],
-        'registerEmail'  => ['email','password','code','whatsApp'],
         'registerphone'  => ['phone','password','code','confirmpassword'],
+        'registerEmail'  => ['email','password','code','confirmpassword'],
         'registerMobile' => ['mobile','password','code'],
         'bindEmail'      => ['email','code'],
         // 'bindMobile'     => ['mobile','code'],

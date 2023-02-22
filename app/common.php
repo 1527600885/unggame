@@ -597,7 +597,7 @@ function create_qrcode($data,$userInfo){
 	// $label = Label::create('Label')
 	//     ->setTextColor(new Color(255, 0, 0));
 	
-	$result = $writer->write($qrCode, $logo);
+	$result = $writer->write($qrCode);
 	// header('Content-Type: '.$result->getMimeType());
 	
 	$result->saveToFile($qrcodefile.'/'.$userInfo['id'].$userInfo['game_account'].'.png');
