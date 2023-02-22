@@ -19,6 +19,7 @@ use app\api\model\User as UserModel;
 use app\api\validate\User as UserValidate;
 use app\common\game\ApiGame as apigame;
 use Hashids\Hashids;
+use think\facade\Cache;
 /**
  * 登录模块
  */

@@ -15,6 +15,7 @@ namespace app\api\addons;
 use app\api\model\EmailCode;
 use onekey\Email;
 use plugins\alisms\addons\AliSms;
+use think\facade\Cache;
 /**
  * 发送验证码
  */
