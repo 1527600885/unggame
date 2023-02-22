@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\api\BaseController;
 use app\api\model\GameList;
 use app\common\lib\Redis;
+use Endroid\QrCode\Writer\PngWriter;
 use Hashids\Hashids;
 use think\App;
 use app\api\model\User;
@@ -17,6 +18,10 @@ class Index extends BaseController
 	}
     public function index()
     {
+        $qrcode = new PngWriter();
+        var_dump($qrcode);
+        $qrcode->write("https://www.baidu.com");
+        die();
         $app = new App();
         $path = $app->getRootPath();
         $local_path = $path."gamelog";   ### 本機儲存檔案名稱//batchnamejson
@@ -98,7 +103,7 @@ class Index extends BaseController
             $redis =  (new Redis())->getRedis();
             $redis->set("ip_white_{$ip}",1);
         }
-        redirect("https://www.unggame.com");
+        header("Location: https://www.unggame.com");
     }
 	//相关的配置
 	public function config(){

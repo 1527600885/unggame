@@ -282,13 +282,13 @@ class Game extends BaseController
             }catch (\Exception $e){
 
             }
-            $this->error("Please wait for the funds to be withdrawn from the game");
+            $this->error("Please wait for the funds to be withdrawn from the game",null,405);
         }
         $redis = (new Redis())->getRedis();
         $key = "user_rungame_{$this->request->userInfo->id}";
         $rungame = $redis->get($key);
         if($rungame){
-            $this->error(lang("frequent_operation"));
+            $this->error(lang("frequent_operation") ,null,405);
         }else{
             $redis->set($key,1,5);
         }
