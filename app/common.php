@@ -589,9 +589,9 @@ function create_qrcode($data,$userInfo){
 	    ->setBackgroundColor(new Color(255, 255, 255));
 	
 	// Create generic logo
-	$logo = Logo::create($userInfo['cover'])
-	    ->setResizeToWidth(50)
-		->setResizeToHeight(50);
+	// $logo = Logo::create($userInfo['cover'])
+	//     ->setResizeToWidth(50)
+	// 	->setResizeToHeight(50);
 	
 	// Create generic label
 	// $label = Label::create('Label')
@@ -600,10 +600,10 @@ function create_qrcode($data,$userInfo){
 	$result = $writer->write($qrCode, $logo);
 	// header('Content-Type: '.$result->getMimeType());
 	
-	$aaa=$result->saveToFile($qrcodefile.'/'.$userInfo['game_account'].'.png');
-	$filename='/upload/qrcode/'.date('Y').date('m').date('d').'/'.$userInfo['game_account'].'.png';
-	UserModel::where('id',$userInfo['id'])->update(['QR_code'=>$filename]);
-	return $filename;
+	$result->saveToFile($qrcodefile.'/'.$userInfo['id'].$userInfo['game_account'].'.png');
+    $filename='/upload/qrcode/'.date('Y').date('m').date('d').'/'.$userInfo['id'].$userInfo['game_account'].'.png';
+    UserModel::where('id',$userInfo['id'])->update(['QR_code'=>$filename]);
+    return $filename;
 }
 /**
  * @description：资金流水

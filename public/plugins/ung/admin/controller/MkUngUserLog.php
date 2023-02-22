@@ -11,6 +11,7 @@
 namespace plugins\ung\admin\controller;
 
 use think\facade\View;
+use think\Facade\Db;
 use app\admin\BaseController;
 use plugins\ung\admin\model\MkUngUserLog as MkUngUserLogModel;
 /**
@@ -26,7 +27,33 @@ class MkUngUserLog extends BaseController
         if ($this->request->isPost()) {
             $input = input("post.");
             $count = MkUngUserLogModel::withSearch(["keyword"], $input)->count();
-            $data  = MkUngUserLogModel::withSearch(["keyword"], $input)->order($input["prop"], $input["order"])->page($input["page"], $input["pageSize"])->select();
+            $data  = MkUngUserLogModel::withSearch(["keyword"], $input)->order($input["prop"], $input["order"])->page($input["page"], $input["pageSize"])->select()->each(function($item){
+                    $info=Db::name("user")->field('id,nickname')->where('id',$item["uid"])->select()->toArray();
+                    $infos=Db::name("user")->field('id,nickname')->where('id',$item["touserid"])->select()->toArray();
+                    $item['nickname']=$info[0]['nickname'];
+                    $item['tonickname']=$infos[0]['nickname'];
+                    return $item;
+            });
+            foreach ($data as $k=>$value) {
+                switch ($value->type)
+                {
+                    case 1:
+                        $value->type="转账";
+                        break;
+                    case 2:
+                        $value->type="官方转账";
+                        break;
+                    case 3:
+                        $value->type="申购";
+                        break;
+                    case 4:
+                        $value->type="赎回";
+                        break;
+                    default:
+                        $value->type="";
+                }
+                $value->add_times = date("Y-m-d H:i:s",$value->add_time);    
+            }
             return json(["status" => "success", "message" => "请求成功", "data" => $data, "count" => $count]);
         } else {
             return View::fetch();

@@ -22,8 +22,8 @@
 						form: false
 					},
 					{
-						prop: 'uid',
-						label: '用户名称',
+						prop: 'nickname',
+						label: '转让方昵称',
 						table: {
 							sort: true,
 						},
@@ -32,11 +32,10 @@
 						}
 					},
 					{
-						prop: 'ung_id',
-						label: '虚拟币ID',
+						prop: 'tonickname',
+						label: '接收方昵称',
 						table: {
 							sort: true,
-							label: '虚拟币名称',
 						},
 						form: {
 							is: 'el-input',
@@ -49,9 +48,9 @@
 							sort: true,
 						},
 						form: {
-							is: 'el-switch',
+							is: 'el-input',
+							placeholder: '1:用户之间转账，2:后台转账，3:用户申购，4：用户赎回',
 							tips: '买入卖出',
-							default: '0',
 						}
 					},
 					{
@@ -85,12 +84,25 @@
 						}
 					},
 					{
-						prop: 'add_time',
-						label: '创建时间',
+						prop: 'orderno',
+						label: '订单编号',
 						table: {
 							sort: true,
 						},
 						form: {
+							is: 'el-input',
+						}
+					},
+
+					{
+						prop: 'add_time',
+						label: '创建时间',
+						table: {
+							prop: 'add_times',
+							sort: true,
+						},
+						form: {
+
 							is: 'el-input',
 						}
 					},

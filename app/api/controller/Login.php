@@ -24,7 +24,7 @@ use Hashids\Hashids;
  */
 class Login extends BaseController
 {
-	protected $noNeedLogin = ['*'];
+    protected $noNeedLogin = ['*'];
     /**
      * 登录
      */
@@ -33,57 +33,75 @@ class Login extends BaseController
         if ($this->request->isPost()) {
             try {
                 $input = input('post.');
-                validate(UserValidate::class)->scene('login')->check($input);
+                if($input['checklable']==1){
+                    validate(UserValidate::class)->scene('loginphone')->check($input);
+                }else if($input['checklable']==2){
+                    validate(UserValidate::class)->scene('login')->check($input);
+                }
+                
             } catch ( ValidateException $e ) {
-				$this->error($e->getError());
+                $this->error($e->getError());
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
-            $userInfo = UserModel::with(['group'])->append(['url'])->where('mobile|email',$input['account'])->find();
-			if (! $userInfo) {
-				$this->error(lang('user.accountnot'));
+            if($input['checklable']==1){
+                $userInfo = UserModel::with(['group'])->append(['url'])->where('mobile',$input['phone'])->where('uncode',$input['uncode'])->find();
+            }else{
+                $userInfo = UserModel::with(['group'])->append(['url'])->where('email',$input['email'])->find();
+            }
+            if (! $userInfo) {
+                $this->error(lang('user.accountnot'));
                 // return json(['status' => 'error', 'message' => '账号不存在']);
             }
             $password = UserModel::where('id', $userInfo->id)->value('password');
             if (! $password) {
-				$this->error(lang('user.wrong'));
+                $this->error(lang('user.wrong'));
                 // return json(['status' => 'error', 'message' => '密码或账号错误']);
             }
             if (! password_verify($input['password'], $password)) {
-				$this->error(lang('user.wrong'));
+                $this->error(lang('user.wrong'));
                 // return json(['status' => 'error', 'message' => '密码或账号错误']);
             }
-			// dump($userInfo->status);exit;
+            // dump($userInfo->status);exit;
             if ($userInfo->status != 1) { 
-				$this->error(lang('user.shield'));
+                $this->error(lang('user.shield'));
                 // return json(['status' => 'error', 'message' => '您的账号被屏蔽']);
             }
             // 生成令牌
             $token = password_hash($userInfo->id . $this->request->ip() . $password, PASSWORD_BCRYPT, ['cost' => 12]);
-			UserToken::create([
+            UserToken::create([
                 'user_id'     => $userInfo->id,
                 'token'       => $token,
                 'create_time' => date('Y-m-d H:i:s')
             ]);
-			if(!$userInfo->game_account){
-				$hashids = new Hashids(env('hashids'), 8,env('hashids_write'));
-				$game_account=$hashids->encode($userInfo->id);
-				$apigame=new ApiGame();
-				$result=$apigame->create_user($game_account,$input['password']);
-				$ret  = json_decode($result,true);
-				if($ret['status']==0){
-					$userInfo->game_account  = $game_account;
-				}
-			}
+            if(!$userInfo->game_account){
+                $hashids = new Hashids(env('hashids'), 8,env('hashids_write'));
+                $game_account=$hashids->encode($userInfo->id);
+                $apigame=new ApiGame();
+                $result=$apigame->create_user($game_account,$input['password']);
+                $ret  = json_decode($result,true);
+                if($ret['status']==0){
+                    $userInfo->game_account  = $game_account;
+                }
+            }
             // 修改信息
             $userInfo->login_count = $userInfo->login_count + 1;
             $userInfo->login_ip    = $this->request->ip();
             $userInfo->login_time  = date('Y-m-d H:i:s');
             $userInfo->save();
-			$this->success(lang('user.login'),['token'=>$token,'userInfo'=>$userInfo]);
+            $this->success(lang('user.login'),['token'=>$token,'userInfo'=>$userInfo]);
             // return json(['status' => 'success', 'message' => '登录成功', 'token' => $token, 'userInfo' => $userInfo]);
         }
     }
-    
+    // 手机发送验证码
+    public function sendphonecode(){
+        $phone = '+'.input("uncode").input("phone");
+        $result=sendCode::singleSend($phone);
+        // $data = json_decode($result,true);
+        if($result['code']!=0){
+            $this->error(lang('user.codeerror'));
+        }
+        $this->success('',$result);
+    }
     /**
      * 邮箱找回密码
      */
@@ -92,23 +110,48 @@ class Login extends BaseController
         if ($this->request->isPost()) {
             try {
                 $input = input('post.');
-                validate(UserValidate::class)->scene('passwordEmail')->check($input);
+                
+                if($input['checklable']==1){
+                    validate(UserValidate::class)->scene('registerphone')->check($input);
+                }else{
+                    validate(UserValidate::class)->scene('passwordEmail')->check($input);
+                }
+                
             } catch ( ValidateException $e ) {
-				$this->error($e->getError());
+                $this->error($e->getError());
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
-            if (! password_verify($input['code'].'index_password_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
+            if($input['checklable']==2){
+                if (! password_verify($input['code'].'index_password_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
                 $this->error(lang('user.captchaError'));
-				// return json(["status" => "error", "message" => lang('user.captchaError')]);
+                // return json(["status" => "error", "message" => lang('user.captchaError')]);
+                }
+            }else if($input['checklable']==1){
+                 $regtype = 1;
+                //          手机验证码验证
+                    $pcode = cache::get('+'.$input['uncode'].$input['phone']);
+                 //   var_dump($input['code']);
+                    if($input['code']!=$pcode){
+                        $this->error(lang('user.codeerror'));
+                    }
+                   
+            }else{
+                $this->error(lang('user.codeerror'));
             }
-            $save = UserModel::where('email', $input['email'])->find();
+            
+            if($input['checklable']==1){
+                $save = UserModel::where(['mobile'=>$input['phone'],'uncode'=>$input['uncode']])->find();
+            }else{
+                $save = UserModel::where('email', $input['email'])->find();
+            }
+            
             if (! $save) {
-				$this->error(lang('user.accountnot'));
+                $this->error(lang('user.accountnot'));
                 // return json(['status' => 'error', 'message' => lang('user.accountnot')]);
             }
             $save->password = $input['password'];
             $save->save();
-			$this->success(lang('system.operation_succeeded'));
+            $this->success(lang('system.operation_succeeded'));
             // return json(['status' => 'success', 'message' => lang('system.operation_succeeded')]);
         }
     }
@@ -146,34 +189,63 @@ class Login extends BaseController
         if ($this->request->isPost()) {
             try {
                 $input = input('post.');
+            if($input['checklable']==1){
+                validate(UserValidate::class)->scene('registerphone')->check($input);
+            }else{
                 validate(UserValidate::class)->scene('registerEmail')->check($input);
+            }
+                
             } catch ( ValidateException $e ) {
-				$this->error($e->getError());
+                $this->error($e->getError());
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
-			if($input['code']!='5426'){
-				if (! password_verify($input['code'].'index_register_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
-				    $this->error(lang('user.codeerror'));
-					// return json(["status" => "error", "message" => '邮箱验证码错误']);
-				}
-			}
-            if (UserModel::where('email', $input['email'])->value('id')) {
-                $this->error(lang('user.emailerror'));
-				// return json(['status' => 'error', 'message' => '邮箱号已被注册']);
+            
+            if($input['code']!='5427'&&$input['checklable']==2){
+                $regtype = 2;
+                if (! password_verify($input['code'].'index_register_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
+                    $this->error(lang('user.codeerror'));
+                    // return json(["status" => "error", "message" => '邮箱验证码错误']);
+                }
+            }else if($input['checklable']==1){
+                 $regtype = 1;
+                //          手机验证码验证
+                    $pcode = cache::get('+'.$input['uncode'].$input['phone']);
+                    if($input['code']!=$pcode){
+                        $this->error(lang('user.codeerror'));
+                    }
+                   
+            }else{
+                $this->error(lang('user.codeerror'));
             }
-			$invite_one_uid=0;
-			$invite_two_uid=0;
-			$invite_three_uid=0;
-			if($input['invitation_code']){
-				//一级邀请人
-				$invite_one_list=UserModel::where('invitation_code',$input['invitation_code'])->find();
-				if(!$invite_one_list) $this->error("invalid invitation code");
-				$invite_one_uid=$invite_one_list->id;
-				//二级邀请人
-				$invite_two_uid=UserModel::where('id',$invite_one_uid)->value('invite_one_uid') ??0;
-				//三级邀请人
-				$invite_three_uid=UserModel::where('id',$invite_two_uid)->value('invite_one_uid')??0;
-			}
+            if($input['checklable']==1&&UserModel::where(['mobile'=>$input['phone'],'uncode'=>$input['uncode']])->value('id')){
+                 $this->error(lang('user.phoneerror'));
+            }else{
+                 if (UserModel::where('email', $input['email'])->value('id')) {
+                    $this->error(lang('user.emailerror'));
+                    
+                // return json(['status' => 'error', 'message' => '邮箱号已被注册']);
+                }
+            }
+           
+            if($input["password"]!=$input["confirmpassword"]){
+                $this->error(lang('user.passwordconfirm'));
+            }
+            $invite_one_uid=0;
+            $invite_two_uid=0;
+            $invite_three_uid=0;
+            // var_dump(isset($input['invitation_code'])&&$input['invitation_code']!=='');
+            // die;
+            if(isset($input['invitation_code'])&&$input['invitation_code']!==''){
+                //一级邀请人
+                $invite_one_list=UserModel::where('invitation_code',$input['invitation_code'])->find();
+                if(!$invite_one_list) $this->error("invalid invitation code");
+                $invite_one_uid=$invite_one_list->id;
+                //二级邀请人
+                $invite_two_uid=UserModel::where('id',$invite_one_uid)->value('invite_one_uid');
+                //三级邀请人
+                $invite_three_uid=UserModel::where('id',$invite_two_uid)->value('invite_one_uid');
+            }
+
             $group = UserGroup::where('default',1)->find();
             $group_id = 0;
             $integral = 0;
@@ -181,14 +253,23 @@ class Login extends BaseController
                 $group_id = $group['id'];
                 $integral = $group['integral'];
             }
+        //     var_dump(request()->domain());
+        // die;
+            
+            $ungaddress=$this->rand(34);
+            // var_dump(strlen($ungaddress));
+            // die;
             $date = date('Y-m-d H:i:s');
             $registerInfo = UserModel::create([
                 'group_id'         => $group_id,
                 'nickname'         => $input['nickname']?$input['nickname']:lang('system.nickname_default'),
                 'cover'            => '../../static/images/header/header'.rand(1,8).'.png',
                 'sex'              => 0,
-                'email'            => $input['email'],
-                'mobile'           => "",
+                'email'            => isset($input['email'])?$input['email']:'',
+                'mobile'           => isset($input['phone'])?$input['phone']:'',
+                'uncode'           => isset($input['uncode'])?$input['uncode']:'',
+                'ungaddress'       => $ungaddress,
+                'regtype'          => $regtype,
                 'account'          => "",
                 'password'         => $input['password'],
                 'pay_paasword'     => "",
@@ -205,10 +286,11 @@ class Login extends BaseController
                 'create_time'      => $date,
                 'status'           => 1,
                 'hide'             => 1,
-				'invite_one_uid'   => $invite_one_uid,
-				'invite_two_uid'   => $invite_two_uid,
-				'invite_three_uid' => $invite_three_uid
+                'invite_one_uid'   => $invite_one_uid,
+                'invite_two_uid'   => $invite_two_uid,
+                'invite_three_uid' => $invite_three_uid
             ]);
+<<<<<<< Updated upstream
 			
 			// $hashids = new Hashids();
 			$hashids = new Hashids(env('hashids'), 8,env('hashids_write'));
@@ -216,6 +298,10 @@ class Login extends BaseController
 			$apigame=new ApiGame();
 			$result=$apigame->create_user($game_account,$input['password']);
 			$ret  = json_decode($result,true);
+            $userInfo['game_account']=$game_account;
+            $userInfo['id']=$registerInfo->id;
+            $ungewm = \create_qrcode(request()->domain().'?ad=$ungaddress',$userInfo);
+            UserModel::where('id',$registerInfo->id)->update(['QR_code'=>$ungewm]);
 			//测试强制等于0
 			// $ret['status']=0;
 			if($ret['status']==0){
@@ -246,16 +332,16 @@ class Login extends BaseController
 			// $id=$hashids->decode($game_account);
             // 绑定事件
             event('RegisterEnd', $registerInfo);
-			// 注册完执行登录操作
-			// 生成令牌
-			$password=UserModel::where('id',$registerInfo->id)->value('password');
-			$token = password_hash($registerInfo->id . $this->request->ip() . $password, PASSWORD_BCRYPT, ['cost' => 12]);
-			UserToken::create([
-			    'user_id'     => $registerInfo->id,
-			    'token'       => $token,
-			    'create_time' => date('Y-m-d H:i:s')
-			]);
-			$this->success(lang('user.registersuccess'),['token'=>$token,'userInfo'=>$registerInfo]);
+            // 注册完执行登录操作
+            // 生成令牌
+            $password=UserModel::where('id',$registerInfo->id)->value('password');
+            $token = password_hash($registerInfo->id . $this->request->ip() . $password, PASSWORD_BCRYPT, ['cost' => 12]);
+            UserToken::create([
+                'user_id'     => $registerInfo->id,
+                'token'       => $token,
+                'create_time' => date('Y-m-d H:i:s')
+            ]);
+            $this->success(lang('user.registersuccess'),['token'=>$token,'userInfo'=>$registerInfo]);
             // return json(['status' => 'success', 'message' => '注册成功']);
         }
     }
@@ -314,7 +400,19 @@ class Login extends BaseController
             return json(['status' => 'success', 'message' => '注册成功']);
         }
     }
-
+    // 生成假地址
+   function rand($len)
+    {
+        $chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+        $string=time();
+        for(;$len>=1;$len--)
+        {
+            $position=rand()%strlen($chars);
+            $position2=rand()%strlen($string);
+            $string=substr_replace($string,substr($chars,$position,1),$position2,0);
+        }
+        return $string;
+    }
     /**
      * 发送注册邮箱验证码
      */
@@ -325,15 +423,15 @@ class Login extends BaseController
                 $input = input('post.');
                 validate(UserValidate::class)->scene('codeEmail')->check($input);
             } catch ( ValidateException $e ) {
-				$this->error($e->getError());
+                $this->error($e->getError());
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
             if (UserModel::where('email', $input['email'])->value('id')) {
-				$this->error(lang('user.emailoccupy'),['status'=>'error']);
+                $this->error(lang('user.emailoccupy'),['status'=>'error']);
                 // return json(['status' => 'error', 'message' => '邮箱号已被注册']);
             }
             $result = sendCode::email($input['email'], 'index_register_email_code',lang('user.userregister'));
-			$this->success('',$result);
+            $this->success('',$result);
             // return json($result);
         }
     }
@@ -368,15 +466,15 @@ class Login extends BaseController
                 $input = input('post.');
                 validate(UserValidate::class)->scene('codeEmail')->check($input);
             } catch ( ValidateException $e ) {
-				$this->error($e->getError());
+                $this->error($e->getError());
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
             if (UserModel::where('email', $input['email'])->value('id')) {
                 $result = sendCode::email($input['email'], 'index_password_email_code', lang('user.forgot'));
                 $this->success('',$result);
-				// return json($result);
+                // return json($result);
             } else {
-				$this->error(lang('user.unregistered'));
+                $this->error(lang('user.unregistered'));
                 // return json(['status' => 'error', 'message' => '邮箱号未注册']);
             }
         }

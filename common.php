@@ -573,3 +573,50 @@ function create_qrcode($data,$userInfo){
 	UserModel::where('id',$userInfo['id'])->update(['QR_code'=>$filename]);
 	return $filename;
 }
+ //生成二维码跳转
+     function qrcode($url,$userInfo){
+        $qrcodefile=public_path().'upload/qrcode/'.date('Y').date('m').date('d');
+        // 扫描二维码后跳转的地址
+        // 扫描二维码后跳转的地址
+        $qrCode = new QrCode($url);
+        // 内容区域宽高,默认为300
+        $qrCode->setSize(300);
+        // 外边距大小,默认为10
+        $qrCode->setMargin(10);
+        // 设置编码
+        $qrCode->setEncoding('UTF-8');
+        // 设置容错等级
+        $qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
+        // 设置二维码颜色,默认为黑色
+        $qrCode->setForegroundColor(['r' => 0, 'g' => 0, 'b' => 0, 'a' => 0]);
+        // 设置二维码背景色,默认为白色
+        $qrCode->setBackgroundColor(['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0]);
+        // var_dump(LabelAlignment::CENTER());
+        // die;
+        // 设置二维码下方的文字
+        // $qrCode->setLabel('个人技术博客网站', 11, null, LabelAlignment::CENTER());
+        
+        ##### 二维码中的logo #####
+        // $qrCode->setLogoPath('logo.jpg');
+        $qrCode->setLogoSize(100, 90);
+        // $qrCode->setLogoWidth(100);
+        // $qrCode->setLogoHeight(90);
+        ##### 二维码中的logo / #####
+        // 启用内置的验证读取器(默认情况下禁用)
+        $qrCode->setValidateResult(false);
+        
+        ########## 二维码三种显示方式 ##########
+        
+        // 二维码输出在浏览器上
+        // header('Content-Type: ' . $qrCode->getContentType());
+        // echo $qrCode->writeString();
+        
+        // 二维码存在本地
+        $qrCode->writeFile($qrcodefile.'/'.$userInfo['game_account'].'.png');
+        
+        // 返回数据URI
+        // data:image/png;base64,iVBORwxxx
+        // $dataUri = $qrCode->writeDataUri();
+        // echo '<img src="' . $dataUri . '">';
+        var_dump($qrCode);
+    }

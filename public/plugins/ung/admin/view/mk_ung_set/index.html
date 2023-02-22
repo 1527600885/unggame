@@ -36,18 +36,9 @@
 						prop: 'currency_num',
 						label: '数量',
 						table: {
+							is: 'el-input',
 							sort: true,
 							label: '货币数量',
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'price',
-						label: '单个购买的价格',
-						table: {
-							label: '单价'
 						},
 						form: {
 							is: 'el-input',
@@ -57,7 +48,63 @@
 						prop: 'interest',
 						label: '利率',
 						table: {
-							prop: 'interests'
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'realinterest',
+						label: '实际利率',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'activeuser',
+						label: '活跃用户',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'activeuser',
+						label: '实际活跃用户',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'cumulativeturnover',
+						label: '营业额',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'profityesterday',
+						label: '昨日总利润',
+						table: {
+							is: 'el-input',
+							sort: true,
 						},
 						form: {
 							is: 'el-input',
@@ -77,6 +124,78 @@
 						},
 						form: {
 							is: 'el-input',
+						}
+					},
+				
+					{
+						prop: 'update_time',
+						label: '修改时间',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'add_time',
+						label: '创建时间',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'price',
+						label: '单个购买的价格',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'redemptionprice',
+						label: '赎回价格',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'servicecharge',
+						label: '赎回手续费',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'isbuy',
+						label: '开启申购:0关闭，1开启',
+						table: {
+							is: 'el-switch',
+						},
+						form: {
+							is: 'el-switch',
+							default: '0',
+						}
+					},
+					{
+						prop: 'isredeem',
+						label: '开启赎回:0关闭，1开启',
+						table: {
+							is: 'el-switch',
+						},
+						form: {
+							is: 'el-switch',
+							default: '0',
 						}
 					},
 					{
@@ -166,24 +285,6 @@
 							is: 'el-editor',
 							placeholder: '',
 						}
-					},
-					{
-						prop: 'update_time',
-						label: '修改时间',
-						table: {
-							prop: 'update_times',
-							sort: true,
-						},
-						form: false
-					},
-					{
-						prop: 'add_time',
-						label: '创建时间',
-						table: {
-							prop: 'add_times',
-							sort: true,
-						},
-						form: false
 					},
 				],
 			}

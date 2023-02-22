@@ -50,6 +50,7 @@ return array(
 		'nicknameError'=> 'Nama panggilan tidak dapat melebihi 40',
 		'describeError'=> 'Jumlah tanda tangan tidak dapat melebihi 255',
 		'passwordEmpty'=> 'Silakan isi kata sandi',
+		'passwordconfirm'=> 'Kata sandi berbeda',
 		'passwordMin'=> 'Kata sandi tidak dapat kurang dari 6',
 		'passwordMax'=> 'Kata sandi tidak bisa lebih dari 12',
 		'passwordAlphaNum'=>'Hanya angka dan huruf Inggris yang dapat dimasukkan',

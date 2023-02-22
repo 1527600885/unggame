@@ -54,6 +54,7 @@ return array(
 		'nicknameError'=> 'Nama panggilan tidak boleh melebihi 40',
 		'describeError'=> 'Bilangan tandatangan tidak boleh melebihi 255',
 		'passwordEmpty'=> 'Sila isi kata laluan',
+		'passwordconfirm'=> 'Katalaluan berbeza',
 		'passwordMin'=> 'Katalaluan tidak boleh kurang dari 6',
 		'passwordMax'=> 'Kata laluan tidak boleh lebih dari 12',
 		'passwordAlphaNum'=>'Hanya nombor dan huruf Inggeris boleh dimasukkan',

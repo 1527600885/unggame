@@ -1,0 +1,24 @@
+{"time":"2023-02-11 09:23:51","type":"error","msg":"[0]Class 'plugins\\ung\\admin\\controller\\Db' not found"}
+{"time":"2023-02-11 09:23:58","type":"error","msg":"[0]Class 'plugins\\ung\\admin\\controller\\Db' not found"}
+{"time":"2023-02-11 09:24:04","type":"error","msg":"[0]Class 'plugins\\ung\\admin\\controller\\Db' not found"}
+{"time":"2023-02-11 09:25:53","type":"error","msg":"[8]Undefined property: think\\db\\Query::$select"}
+{"time":"2023-02-11 09:25:56","type":"error","msg":"[8]Undefined property: think\\db\\Query::$select"}
+{"time":"2023-02-11 09:26:10","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:26:31","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:26:43","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:26:51","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:27:09","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:28:49","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:32:35","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:32:38","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:33:27","type":"error","msg":"[8]Undefined property: think\\Collection::$nickname"}
+{"time":"2023-02-11 09:34:29","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 09:34:49","type":"error","msg":"[8]Undefined index: nickname"}
+{"time":"2023-02-11 10:02:40","type":"error","msg":"[8]Undefined offset: 0"}
+{"time":"2023-02-11 10:02:46","type":"error","msg":"[8]Undefined offset: 0"}
+{"time":"2023-02-11 13:55:16","type":"error","msg":"[10500]order express error:en-id"}
+{"time":"2023-02-11 13:55:17","type":"error","msg":"[10500]order express error:en-id"}
+{"time":"2023-02-11 13:55:18","type":"error","msg":"[10500]order express error:en-id"}
+{"time":"2023-02-11 13:55:19","type":"error","msg":"[10500]order express error:en-us"}
+{"time":"2023-02-11 14:03:50","type":"error","msg":"[10501]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'game.mk_mk_ung_set' doesn't exist"}
+{"time":"2023-02-11 14:04:04","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pricle' in 'field list'"}

@@ -22,8 +22,8 @@
 						form: false
 					},
 					{
-						prop: 'uid',
-						label: '用户ID',
+						prop: 'nickname',
+						label: '用户昵称',
 						table: {
 							sort: true,
 							label: '用户',
@@ -42,6 +42,16 @@
 					{
 						prop: 'num',
 						label: '拥有的数量',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'money',
+						label: '拥有的资产',
 						table: {
 							sort: true,
 						},

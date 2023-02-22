@@ -1,0 +1,13 @@
+{"time":"2023-02-09 17:17:01","type":"error","msg":"[10501]SQLSTATE[HY000] [1045] Access denied for user 'game'@'localhost' (using password: YES)"}
+{"time":"2023-02-09 17:59:25","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}
+{"time":"2023-02-09 18:04:48","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}
+{"time":"2023-02-09 21:02:19","type":"error","msg":"[10501]SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'create_time' at row 1"}
+{"time":"2023-02-09 21:02:31","type":"error","msg":"[10501]SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'create_time' at row 1"}
+{"time":"2023-02-09 21:02:49","type":"error","msg":"[10501]SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'create_time' at row 1"}
+{"time":"2023-02-09 21:03:48","type":"error","msg":"[10501]SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'create_time' at row 1"}
+{"time":"2023-02-09 21:04:19","type":"error","msg":"[10501]SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'orderno' at row 1"}
+{"time":"2023-02-09 21:11:09","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}
+{"time":"2023-02-09 21:18:54","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}
+{"time":"2023-02-09 22:03:50","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}
+{"time":"2023-02-09 22:04:07","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}
+{"time":"2023-02-09 22:19:11","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}
