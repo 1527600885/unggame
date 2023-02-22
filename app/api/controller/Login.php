@@ -94,7 +94,7 @@ class Login extends BaseController
     }
     // 手机发送验证码
     public function sendphonecode(){
-        $phone = '+'.input("uncode").input("phone");
+       $phone = '+'.input("uncode").input("phone");
         $result=sendCode::singleSend($phone);
         // $data = json_decode($result,true);
         if($result['code']!=0){
