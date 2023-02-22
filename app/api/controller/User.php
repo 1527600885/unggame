@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\api\controller;
 
+use app\admin\model\Config as ConfigModel;
 use app\api\model\GameBetLog;
 use think\File as Fileupload;
 use think\facade\Filesystem;
@@ -540,6 +541,9 @@ class User  extends BaseController
 			$data['dividend']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->whereDay('add_time')->sum('amount');
 			// 总获得的股息
 			$data['dividends']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->sum('amount');
+            $withdrawConfig =  ConfigModel::getVal('withdraw');
+			$data['miniwithrawal'] = $withdrawConfig['minprice'];
+			$data['rate'] = $withdrawConfig['rate'];
 			// 资金的详细列表
 			$data['list']=CapitalFlowmodel::where([
 				['uid','=',$userInfo->id],
