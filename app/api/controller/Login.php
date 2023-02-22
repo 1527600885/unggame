@@ -241,9 +241,9 @@ class Login extends BaseController
                 if(!$invite_one_list) $this->error("invalid invitation code");
                 $invite_one_uid=$invite_one_list->id;
                 //二级邀请人
-                $invite_two_uid=UserModel::where('id',$invite_one_uid)->value('invite_one_uid');
+                $invite_two_uid=UserModel::where('id',$invite_one_uid)->value('invite_one_uid')??0;
                 //三级邀请人
-                $invite_three_uid=UserModel::where('id',$invite_two_uid)->value('invite_one_uid');
+                $invite_three_uid=UserModel::where('id',$invite_two_uid)->value('invite_one_uid')??0;
             }
 
             $group = UserGroup::where('default',1)->find();
@@ -290,7 +290,7 @@ class Login extends BaseController
                 'invite_two_uid'   => $invite_two_uid,
                 'invite_three_uid' => $invite_three_uid
             ]);
-<<<<<<< Updated upstream
+
 			
 			// $hashids = new Hashids();
 			$hashids = new Hashids(env('hashids'), 8,env('hashids_write'));
