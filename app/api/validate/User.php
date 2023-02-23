@@ -70,6 +70,7 @@ class User extends Validate
     protected $scene = [
         'login'          => ['email','password'],
         'loginphone'          => ['phone','password'],
+        'loginaccount'          => ['account','password'],
         'passwordEmail'  => ['email','password','code'],
         'passwordMobile' => ['mobile','password','code'],
         'registerphone'  => ['phone','password','code','confirmpassword'],

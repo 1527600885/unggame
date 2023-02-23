@@ -34,21 +34,23 @@ class Login extends BaseController
         if ($this->request->isPost()) {
             try {
                 $input = input('post.');
-                if($input['checklable']==1){
-                    validate(UserValidate::class)->scene('loginphone')->check($input);
-                }else if($input['checklable']==2){
-                    validate(UserValidate::class)->scene('login')->check($input);
-                }
+                validate(UserValidate::class)->scene('loginaccount')->check($input);
+                // if($input['checklable']==1){
+                //     validate(UserValidate::class)->scene('loginphone')->check($input);
+                // }else if($input['checklable']==2){
+                //     validate(UserValidate::class)->scene('login')->check($input);
+                // }
                 
             } catch ( ValidateException $e ) {
                 $this->error($e->getError());
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
-            if($input['checklable']==1){
-                $userInfo = UserModel::with(['group'])->append(['url'])->where('mobile',$input['phone'])->where('uncode',$input['uncode'])->find();
-            }else{
-                $userInfo = UserModel::with(['group'])->append(['url'])->where('email',$input['email'])->find();
-            }
+             $userInfo = UserModel::with(['group'])->append(['url'])->where('mobile|email',$input['account'])->find();
+            // if($input['checklable']==1){
+            //     $userInfo = UserModel::with(['group'])->append(['url'])->where('mobile',$input['phone'])->where('uncode',$input['uncode'])->find();
+            // }else{
+            //     $userInfo = UserModel::with(['group'])->append(['url'])->where('email',$input['email'])->find();
+            // }
             if (! $userInfo) {
                 $this->error(lang('user.accountnot'));
                 // return json(['status' => 'error', 'message' => '账号不存在']);
