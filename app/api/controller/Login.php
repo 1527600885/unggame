@@ -228,8 +228,6 @@ class Login extends BaseController
                     
                 // return json(['status' => 'error', 'message' => '邮箱号已被注册']);
                 
-            }else{
-                $this->error(lang('user.accountEmpty'));
             }
            
             if($input["password"]!=$input["confirmpassword"]){
