@@ -63,7 +63,7 @@ return array(
 		'notRegister'=> 'The user is not registered yet',
 		'emailoccupy'=>'Email number has been registered',
 		'userregister'=>'Your unicorn game registration',
-		'codeerror'=>'Email verification code error',
+		'codeerror'=>'The verification code error',
 		'emailerror'=>'Email number has been registered',
 		'phoneerror'=>'Phone Number has been registered',
 		'registersuccess'=>'login was successful',

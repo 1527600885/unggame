@@ -222,12 +222,14 @@ class Login extends BaseController
             }
             if($input['checklable']==1&&UserModel::where(['mobile'=>$input['phone'],'uncode'=>$input['uncode']])->value('id')){
                  $this->error(lang('user.phoneerror'));
-            }else{
-                 if (UserModel::where('email', $input['email'])->value('id')) {
+            }else if ($input['checklable']==2&&UserModel::where('email', $input['email'])->value('id')){
+                  
                     $this->error(lang('user.emailerror'));
                     
                 // return json(['status' => 'error', 'message' => '邮箱号已被注册']);
-                }
+                
+            }else{
+                $this->error(lang('user.accountEmpty'));
             }
            
             if($input["password"]!=$input["confirmpassword"]){
