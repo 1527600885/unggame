@@ -81,7 +81,10 @@ return array(
 		'safetycommonly'=>'Commonly',
 		'safetyhigh'=>'High',
 		'safetyperfect'=>'Perfect',
-        'balanceFreeze'=>'Funds are frozen'
+        'balanceFreeze'=>'Funds are frozen',
+        'signrewards'=>'User sign-in rewards',
+        "lxsignrewards"=>'Continuous user sign-in rewards',
+        "platformrewards"=>'Platform sign-in rewards'
     ],
 	'game'=>[
 		'money_funds'=>'Insufficient funds',
@@ -105,7 +108,7 @@ return array(
 	'capital'=>[
 		'user'=>'user',
 		'content'=>'Obtained through online recharge',
-		'money'=>'dollar',
+		'money'=>'$',
 		'gamecontento'=>'Play games',
 		'gamecontentt'=>'Increase in funds',
 		'gamecontenth'=>'Decrease in funds',
