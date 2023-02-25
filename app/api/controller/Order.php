@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 use app\api\BaseController;
+use app\common\lib\pay\Pay;
 use think\facade\Db;
 use think\Request;
 class Order extends BaseController
@@ -30,7 +31,6 @@ class Order extends BaseController
 		$lang=$this->lang;
 		if($paymentinfo->type==2 || $paymentinfo->type==3){
 			if(!$data['currencyvalue']){
-				$this->error(lang('order.currencyvalue'));
 				$this->error(lang('order.currencyvalue'));
 			}
 			if(strpos($paymentinfo->currency_name,$data['currencyvalue']) === false){ 
@@ -94,48 +94,74 @@ class Order extends BaseController
 	}
 	//在线支付
 	public function online($paymentinfo,$data){
-		if($paymentinfo->rate){
-			$rate=json_decode($paymentinfo->rate,true);
-		}else{
-			$rate[$this->lang]=1;
-		}
 		$rate=$this->CurrencyAllModel->where('name',$data['currencyvalue'])->value('rate');
 		$ratemoney=round($data['money']*$rate,2);
 		$userInfo=$this->request->userInfo;
-		$email=$this->UserModel->where('id',$userInfo['id'])->value('email');
-		$mobile=$this->UserModel->where('id',$userInfo['id'])->value('mobile');
-		$channel=json_decode($paymentinfo->channel,true); 
-		$placedata=[
-			'merchantNo'=>$paymentinfo->pay_memberid,
-			'merchantOrderId'=>'order'.$userInfo['game_account'].time(),
-			'channelCode'=>$channel[$data['currencyvalue']],
-			'amount'=>(int)($ratemoney*100),
-			'currency'=>$data['currencyvalue'],
-			'email'=>$email,
-			'userName'=>$userInfo->nickname,
-			'mobileNo'=>$mobile,
-			'notifyUrl'=>'https://game.unicgm.com/api/order/notify',
-			'expireTime'=>60
-		];
-		$arr=$this->pay->place($paymentinfo,$placedata);
-		if($arr['code']==000){
+		$result = false;
+		$orderNo = 'order'.$userInfo['game_account'].time();
+        if($paymentinfo['id']!=10)
+        {
+            try{
+                $pay = Pay::instance($paymentinfo["name"],$data['currencyvalue']);
+                $param = [
+                    "mch_order_no"=>$orderNo,
+                    "trade_amount"=>$ratemoney,
+                    "order_date"=>date("Y-m-d H:i:s"),
+                    "goods_name"=>"Recharge",
+                ];
+                $arr = $pay->run("createOrder",$param);
+                $porderNo = $arr['orderNo'];
+                $fee = 0;
+                $realAmount = $arr['oriAmount'];
+                $url = $arr['payInfo'];
+                $result = true;
+            }catch (\Exception $e){
+                $this->error($e->getMessage());
+            }
+
+        }else{
+            $email=$this->UserModel->where('id',$userInfo['id'])->value('email');
+            $mobile=$this->UserModel->where('id',$userInfo['id'])->value('mobile');
+            $channel=json_decode($paymentinfo->channel,true);
+            $placedata=[
+                'merchantNo'=>$paymentinfo->pay_memberid,
+                'merchantOrderId'=>$orderNo,
+                'channelCode'=>$channel[$data['currencyvalue']],
+                'amount'=>(int)($ratemoney*100),
+                'currency'=>$data['currencyvalue'],
+                'email'=>$email,
+                'userName'=>$userInfo->nickname,
+                'mobileNo'=>$mobile,
+                'notifyUrl'=>'https://game.unicgm.com/api/order/notify',
+                'expireTime'=>60
+            ];
+            $arr=$this->pay->place($paymentinfo,$placedata);
+            if($arr['code']==000){
+                $result =  true;
+                $porderNo = $arr['data']['sysOrderId'];
+                $fee = $arr['data']['fee'];
+                $realAmount = $arr['data']['realAmount'];
+                $url = $arr['data']['checkStand'];
+            }
+        }
+
+		if($result){
 			$data=[
 				'uid'=>$userInfo['id'],
-				'mer_order_no'=>$placedata['merchantOrderId'],
+				'mer_order_no'=>$orderNo,
 				'pid'=>$paymentinfo->id,
 				'money'=>$data['money'],
 				'type'=>2,
 				'time'=>time(),
 				'pname'=>$userInfo['nickname'],
-				'pemail'=>$email,
 				// 'sign'=>$arr['data']['sign'],
-				'order_no'=>$arr['data']['sysOrderId'],
-				'fee'=>$arr['data']['fee'],
-				'realAmount'=>$arr['data']['realAmount'],
+				'order_no'=>$porderNo,
+				'fee'=>$fee,
+				'realAmount'=>$realAmount,
 			];
 			$Id=$this->OrderModel->insertGetId($data);
 			if($Id){
-				$this->success(lang('order.placesuccess'),$arr['data']['checkStand']);
+				$this->success(lang('order.placesuccess'),$url);
 			}else{
 				$this->error(lang('order.placeerror'));
 			}

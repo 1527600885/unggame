@@ -14,12 +14,14 @@ class WowPay extends Pay
             "MYR"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"111887001",
+                "key"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
             ]
         ],
         "config"=>[
             "MYR"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"111887001",
+                "key"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
             ]
         ],
         "gateWay"=>[
@@ -29,7 +31,7 @@ class WowPay extends Pay
         "notifyGateWay"=>"/api/notify.wowpay/callback",
         "pay_type"=>"423",
         "sign_type"=>"MD5",
-        "key"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
+        "page_url"=>"https://www.unggame.com/#/pages/center/wallet"
     ];
     public function run($type,$param)
     {
@@ -39,7 +41,10 @@ class WowPay extends Pay
         $param['pay_type'] = $this->payConfig['pay_type'];
         $param['notify_url'] = $domain.$this->payConfig['notifyGateWay'];
         $param['version'] = $this->payConfig['version'];
-        $param['sign'] = $this->getSign($param);
+        $param['page_url'] = $this->payConfig['page_url'];
+        $param['mch_return_msg'] = $this->currency_type;
+        $key = $config[$this->currency_type]["key"];
+        $param['sign'] = $this->getSign($param,$key);
         $param['sign_type'] = $this->payConfig['sign_type'];
         $reuslt_json = curl($config[$this->currency_type]["requestUrl"].$this->payConfig['gateWay'][$type],$param);
         $result = json_decode($reuslt_json,true);
@@ -50,11 +55,11 @@ class WowPay extends Pay
             throw new Exception($result['tradeMsg']);
         }
     }
-    public function getSign($param)
+    public function getSign($param,$key)
     {
         ksort($param);
         $str = http_build_query($param);
-        $str.="&key=".$this->payConfig["key"];
+        $str.="&key=".$key;
         $str = urldecode($str);
         return md5($str);
     }
