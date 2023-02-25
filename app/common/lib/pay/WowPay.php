@@ -33,23 +33,13 @@ class WowPay extends Pay
     ];
     public function run($type,$param)
     {
-        // header('Content-type: application/x-www-form-urlencoded');
         $domain =  request()->domain();
         $config = $this->payConfig['debug'] ? $this->payConfig['testconfig'] : $this->payConfig['config'];
         $param['mch_id'] = $config[$this->currency_type]['mch_id'];
         $param['pay_type'] = $this->payConfig['pay_type'];
         $param['notify_url'] = $domain.$this->payConfig['notifyGateWay'];
         $param['version'] = $this->payConfig['version'];
-        // $param["key"] = $this->payConfig["key"];
-        ksort($param);
-        $str = http_build_query($param);
-        $str.="&key=".$this->payConfig["key"];
-        $str = urldecode($str);
-        // echo __DIR__."/1.txt";die();
-        $file = fopen(__DIR__."/1.txt","wr");
-        fwrite($file,$str);
-        // var_dump($param);die();
-        $param['sign'] = md5($str);
+        $param['sign'] = $this->getSign($param);
         $param['sign_type'] = $this->payConfig['sign_type'];
         $reuslt_json = curl($config[$this->currency_type]["requestUrl"].$this->payConfig['gateWay'][$type],$param);
         $result = json_decode($reuslt_json,true);
@@ -59,6 +49,14 @@ class WowPay extends Pay
         }else{
             throw new Exception($result['tradeMsg']);
         }
+    }
+    public function getSign($param)
+    {
+        ksort($param);
+        $str = http_build_query($param);
+        $str.="&key=".$this->payConfig["key"];
+        $str = urldecode($str);
+        return md5($str);
     }
     public function getBankCode($bankName)
     {
