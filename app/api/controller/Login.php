@@ -308,7 +308,7 @@ class Login extends BaseController
 			//测试强制等于0
 			// $ret['status']=0;
 			if($ret['status']==0){
-				UserModel::where('id',$registerInfo->id)->update(['game_account'=>$game_account]);
+				UserModel::where('id',$registerInfo->id)->update(['game_account'=>$game_account,$input['nickname']?$input['nickname']:$game_account]);
 				// 给直接邀请人添加注册奖励
 				if($input['invitation_code']){
 					$amount=2;
