@@ -5,7 +5,7 @@ namespace app\common\lib\pay;
 
 
 use think\Exception;
-
+use think\facade\Log;
 class WowPay extends Pay
 {
     protected $payConfig = [
@@ -23,30 +23,41 @@ class WowPay extends Pay
             ]
         ],
         "gateWay"=>[
-            "createOrder"=>"pay/web"
+            "createOrder"=>"/pay/web"
         ],
         "version"=>"1.0",
         "notifyGateWay"=>"/api/notify.wowpay/callback",
         "pay_type"=>"423",
         "sign_type"=>"MD5",
+        "key"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
     ];
     public function run($type,$param)
     {
+        // header('Content-type: application/x-www-form-urlencoded');
         $domain =  request()->domain();
         $config = $this->payConfig['debug'] ? $this->payConfig['testconfig'] : $this->payConfig['config'];
         $param['mch_id'] = $config[$this->currency_type]['mch_id'];
-        $param['pay_type'] = $config['pay_type'];
-        $param['notify_url'] = $domain.$config['notifyGateWay'];
-        sort($param);
-        $param['sign'] = http_build_query($param);
-        $param['sign_type'] = $config['sign_type'];
-        $reuslt_json = curl($domain.$config['gateWay'][$type],$param);
-        $reuslt = json_decode($reuslt_json,true);
-        if($reuslt['respCode'] == "SUCCESS")
+        $param['pay_type'] = $this->payConfig['pay_type'];
+        $param['notify_url'] = $domain.$this->payConfig['notifyGateWay'];
+        $param['version'] = $this->payConfig['version'];
+        // $param["key"] = $this->payConfig["key"];
+        ksort($param);
+        $str = http_build_query($param);
+        $str.="&key=".$this->payConfig["key"];
+        $str = urldecode($str);
+        // echo __DIR__."/1.txt";die();
+        $file = fopen(__DIR__."/1.txt","wr");
+        fwrite($file,$str);
+        // var_dump($param);die();
+        $param['sign'] = md5($str);
+        $param['sign_type'] = $this->payConfig['sign_type'];
+        $reuslt_json = curl($config[$this->currency_type]["requestUrl"].$this->payConfig['gateWay'][$type],$param);
+        $result = json_decode($reuslt_json,true);
+        if($result['respCode'] == "SUCCESS")
         {
-            return $reuslt;
+            return $result;
         }else{
-            throw new Exception($reuslt['tradeMsg']);
+            throw new Exception($result['tradeMsg']);
         }
     }
     public function getBankCode($bankName)

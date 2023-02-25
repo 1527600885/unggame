@@ -3,7 +3,6 @@
 
 namespace app\common\lib\pay;
 
-
 class Pay
 {
     protected $currency_type;
@@ -14,7 +13,11 @@ class Pay
     }
     public static function instance($pay_type,$currency_type)
     {
-        $static = new $pay_type($currency_type);
-        return $static;
+        $className = "app\common\lib\pay\\".$pay_type;
+        if (class_exists($className)) {
+            $static = new $className($currency_type);
+            return $static;
+        }
+        return self::class;
     }
 }
