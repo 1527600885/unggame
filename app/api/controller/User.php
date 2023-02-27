@@ -63,23 +63,23 @@ class User  extends BaseController
 			// if($input['line']){
 			// 	$this->request->userInfo->line= $input['line'];
 			// }
+            $user = $this->request->userInfo;
             $this->request->userInfo->save();
 			$userInfo=$this->request->userInfo;
-			$data=UserModel::where('id',$userInfo->id)->find();
 			$amount=1;
-			if(!$data->mobile){
+			if(!$user->mobile && $userInfo->mobile){
 				$content='{user.addmobile}'.$amount.'{capital.money}';
 				$admin_content='用户'.$userInfo->nickname.'添加手机号码资金增加'.$amount.'美元';
 				UserModel::where('id',$userInfo->id)->inc('balance')->update();
 				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
 			}
-			if(!$data->messenger){
+			if(!$user->messenger && $userInfo->messenger){
 				$content='{user.addmessenger}'.$amount.'{capital.money}';
 				$admin_content='用户'.$userInfo->nickname.'添加Facebook资金增加'.$amount.'美元';
 				UserModel::where('id',$userInfo->id)->inc('balance')->update();
 				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
 			}
-			if(!$data->whatsapp){
+			if(!$user->whatsapp && $userInfo->whatsapp){
 				$content='{user.addwhatsapp}'.$amount.'{capital.money}';
 				$admin_content='用户'.$userInfo->nickname.'添加whatsapp资金增加'.$amount.'美元';
 				UserModel::where('id',$userInfo->id)->inc('balance')->update();
