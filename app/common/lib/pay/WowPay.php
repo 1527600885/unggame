@@ -8,7 +8,7 @@ use think\Exception;
 use think\facade\Log;
 class WowPay extends Pay
 {
-    protected $payConfig = [
+    public $payConfig = [
         "debug"=>true,
         "testconfig"=>[
             "MYR"=>[
