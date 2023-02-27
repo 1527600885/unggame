@@ -680,39 +680,138 @@ function getBankList($currency)
 {
     $list =[
         "MYR"=>[
-            "Bank of america" =>"AAAA",
-            "Affin Bank" =>"AFFIN",
-            "AGRO" =>"AGRO",
-            "Alliance Bank Malaysia Berhad" =>"ALLIANCE",
-            "AmBank" =>"AM",
-            "Bangkok Bank Malaysia" =>"BAKO",
-            "Bank Rakyat" =>"BKRM",
-            "Bank Muamalate" =>"BMMB",
-            "BNP PARIBAS MALAYSIA" =>"BNPB",
-            "BSN" =>"BSN",
-            "Bank of china" =>"CCCC",
-            "CIMB Bank" =>"CIMB",
-            "Citibank Malaysia" =>"CITI",
-            "DEUTSCHE BANK" =>"DEUT",
-            "EON Bank" =>"EON",
-            "Hong Leong Bank" =>"HONGLEONG",
-            "HSBC" =>"HSBC",
-            "INDUSTRIAL & COMMERCIAL BANK OF CHINA" =>"ICBC",
-            "Bank Islam Malaysia" =>"ISLAM",
-            "J.P. MORGAN CHASE BANK" =>"JPMB",
-            "KUWAIT FINANCE HOUSE" =>"KFHB",
-            "Maybank" =>"MAY",
-            "MBSB Bank Berhad" =>"MBSB",
-            "CHINA CONST BK (M) BHD" =>"MCCB",
-            "MIZUHO BANK" =>"MIZU",
-            "MUFG BANK" =>"MUFG",
-            "OCBC" =>"OCBC",
-            "Public Bank Berhad" =>"PUBLIC",
-            "RHB Bank" =>"RHB",
-            "Standard Chartered Bank Malaysia" =>"SCBM",
-            "BANK SIMPANAN NASIONAL" =>"SINA",
-            "SUMITOMO MITSUI BANKING" =>"SUMB",
-            "UOB" =>"UOB"
+            [
+                "code" =>"AAAA",
+                "bankname" =>"Bank of america"
+            ],
+            [
+                "code" =>"AFFIN",
+                "bankname" =>"Affin Bank"
+            ],
+            [
+                "code" =>"AGRO",
+                "bankname" =>"AGRO"
+            ],
+            [
+                "code" =>"ALLIANCE",
+                "bankname" =>"Alliance Bank Malaysia Berhad"
+            ],
+            [
+                "code" =>"AM",
+                "bankname" =>"AmBank"
+            ],
+            [
+                "code" =>"BAKO",
+                "bankname" =>"Bangkok Bank Malaysia"
+            ],
+            [
+                "code" =>"BKRM",
+                "bankname" =>"Bank Rakyat"
+            ],
+            [
+                "code" =>"BMMB",
+                "bankname" =>"Bank Muamalate"
+            ],
+            [
+                "code" =>"BNPB",
+                "bankname" =>"BNP PARIBAS MALAYSIA"
+            ],
+            [
+                "code" =>"BSN",
+                "bankname" =>"BSN"
+            ],
+            [
+                "code" =>"CCCC",
+                "bankname" =>"Bank of china"
+            ],
+            [
+                "code" =>"CIMB",
+                "bankname" =>"CIMB Bank"
+            ],
+            [
+                "code" =>"CITI",
+                "bankname" =>"Citibank Malaysia"
+            ],
+            [
+                "code" =>"DEUT",
+                "bankname" =>"DEUTSCHE BANK"
+            ],
+            [
+                "code" =>"EON",
+                "bankname" =>"EON Bank"
+            ],
+            [
+                "code" =>"HONGLEONG",
+                "bankname" =>"Hong Leong Bank"
+            ],
+            [
+                "code" =>"HSBC",
+                "bankname" =>"HSBC"
+            ],
+            [
+                "code" =>"ICBC",
+                "bankname" =>"INDUSTRIAL & COMMERCIAL BANK OF CHINA"
+            ],
+            [
+                "code" =>"ISLAM",
+                "bankname" =>"Bank Islam Malaysia"
+            ],
+            [
+                "code" =>"JPMB",
+                "bankname" =>"J.P. MORGAN CHASE BANK"
+            ],
+            [
+                "code" =>"KFHB",
+                "bankname" =>"KUWAIT FINANCE HOUSE"
+            ],
+            [
+                "code" =>"MAY",
+                "bankname" =>"Maybank"
+            ],
+            [
+                "code" =>"MBSB",
+                "bankname" =>"MBSB Bank Berhad"
+            ],
+            [
+                "code" =>"MCCB",
+                "bankname" =>"CHINA CONST BK (M) BHD"
+            ],
+            [
+                "code" =>"MIZU",
+                "bankname" =>"MIZUHO BANK"
+            ],
+            [
+                "code" =>"MUFG",
+                "bankname" =>"MUFG BANK"
+            ],
+            [
+                "code" =>"OCBC",
+                "bankname" =>"OCBC"
+            ],
+            [
+                "code" =>"PUBLIC",
+                "bankname" =>"Public Bank Berhad"
+            ],
+            [
+                "code" =>"RHB",
+                "bankname" =>"RHB Bank"
+            ],
+            [
+                "code" =>"SCBM",
+                "bankname" =>"Standard Chartered Bank Malaysia"
+            ],
+            [
+                "code" =>"SINA",
+                "bankname" =>"BANK SIMPANAN NASIONAL"
+            ],
+            [
+                "code" =>"SUMB",
+                "bankname" =>"SUMITOMO MITSUI BANKING"
+            ],
+            [
+                "code" =>"UOB",
+                "bankname" =>"UOB"
+            ]
         ]
     ] ;
     return isset($list[$currency]) ? $list[$currency] : [];
