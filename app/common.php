@@ -676,3 +676,44 @@ function getlang($content){
 	$langcontent = str_replace(['{','}'],'',$langcontent);
 	return $langcontent;
 }
+function getBankList($currency)
+{
+    $list =[
+        "MYR"=>[
+            "Bank of america" =>"AAAA",
+            "Affin Bank" =>"AFFIN",
+            "AGRO" =>"AGRO",
+            "Alliance Bank Malaysia Berhad" =>"ALLIANCE",
+            "AmBank" =>"AM",
+            "Bangkok Bank Malaysia" =>"BAKO",
+            "Bank Rakyat" =>"BKRM",
+            "Bank Muamalate" =>"BMMB",
+            "BNP PARIBAS MALAYSIA" =>"BNPB",
+            "BSN" =>"BSN",
+            "Bank of china" =>"CCCC",
+            "CIMB Bank" =>"CIMB",
+            "Citibank Malaysia" =>"CITI",
+            "DEUTSCHE BANK" =>"DEUT",
+            "EON Bank" =>"EON",
+            "Hong Leong Bank" =>"HONGLEONG",
+            "HSBC" =>"HSBC",
+            "INDUSTRIAL & COMMERCIAL BANK OF CHINA" =>"ICBC",
+            "Bank Islam Malaysia" =>"ISLAM",
+            "J.P. MORGAN CHASE BANK" =>"JPMB",
+            "KUWAIT FINANCE HOUSE" =>"KFHB",
+            "Maybank" =>"MAY",
+            "MBSB Bank Berhad" =>"MBSB",
+            "CHINA CONST BK (M) BHD" =>"MCCB",
+            "MIZUHO BANK" =>"MIZU",
+            "MUFG BANK" =>"MUFG",
+            "OCBC" =>"OCBC",
+            "Public Bank Berhad" =>"PUBLIC",
+            "RHB Bank" =>"RHB",
+            "Standard Chartered Bank Malaysia" =>"SCBM",
+            "BANK SIMPANAN NASIONAL" =>"SINA",
+            "SUMITOMO MITSUI BANKING" =>"SUMB",
+            "UOB" =>"UOB"
+        ]
+    ] ;
+    return isset($list[$currency]) ? $list[$currency] : [];
+}
