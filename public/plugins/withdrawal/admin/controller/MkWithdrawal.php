@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace plugins\withdrawal\admin\controller;
 
+use app\api\model\WithdrawalSettings;
 use think\facade\View;
 use app\admin\BaseController;
 use plugins\withdrawal\admin\model\MkWithdrawal as MkWithdrawalModel;
@@ -32,6 +33,11 @@ class MkWithdrawal extends BaseController
 				$v->money_name=$v->money."(".$v->currency.")";
 				$v->charge_name=$v->charge."(".$v->currency.")";
 				$v->add_times=date("Y-m-d H:i:s",$v->add_time);
+				$v->pay_type = 1;
+				if($v->payment_name &&  WithdrawalSettings::where("name",$v->payment_name)->value("pay_type") == 2)
+				{
+				   $v->pay_type = 2;
+                }
 				if($v->other){
 					$other=json_decode($v->other,true);
 					$v->other_name=null;

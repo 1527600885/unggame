@@ -10,8 +10,9 @@
 		:search-date="false">
 		<!-- 在表格操作单元格中插入代码 -->
 		<template v-slot:operation="row" >
-			<el-button  size="mini" circle @click="check(row.id)" style="color: green" v-if="row.online_status == 0">审核</el-button>
-			<el-button  size="mini" circle @click="showReason(row.reason)" style="color: red" v-if="row.online_status == 3">查看</el-button>
+			<el-button  size="mini" circle @click="check(row.id)" style="color: green" v-if="row.online_status == 0 && row.pay_type == 1">审核</el-button>
+			<el-button  size="mini" circle @click="payonline(row.id)" style="color: green" v-if="row.online_status == 0 && row.pay_type == 2">打款</el-button>
+			<el-button  size="mini" circle @click="showReason(row.reason)" style="color: red" v-else-if="row.online_status == 3">查看</el-button>
 		</template>
 	</el-curd>
 	<el-dialog
@@ -240,6 +241,24 @@
 				console.log(reason);
 				this.form2.reason = reason;
 				this.dialogVisible2 = true;
+			},
+			payonline(id){
+				self = this;
+				this.$refs.el_curd.loading = true;
+				request.post("withdrawal/mkWithdrawal/payonline",{id:id},function (res){
+					if (res.status === 'success') {
+						self.$notify({
+							title: '成功',
+							message: '操作成功',
+							type: 'success'
+						});
+						self.$refs.el_curd.$emit('edit-data', res.message);
+						self.$refs.el_curd.refreshData();
+					} else {
+						self.$notify({showClose: true, message: res.message, type: res.status});
+					}
+					self.$refs.el_curd.loading = false;
+				})
 			},
 			onSubmit() {
 				self = this;
