@@ -109,6 +109,7 @@ class Withdrawal extends BaseController
 		$data['type']=$input['type'];
 		$data['currency']=$input['currency'];
 		$data['amount']=$input['amount'];
+		$data['payment_name'] = $input['payment_name'] ?? "";
 		$data['money']=$money;
 		$data['charge']=$charge;
 		$data['add_time']=time();
