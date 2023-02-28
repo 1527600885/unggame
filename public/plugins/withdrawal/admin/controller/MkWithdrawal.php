@@ -10,7 +10,9 @@
 // +----------------------------------------------------------------------
 namespace plugins\withdrawal\admin\controller;
 
+use app\admin\model\User;
 use app\api\model\WithdrawalSettings;
+use app\common\lib\pay\Pay;
 use think\facade\View;
 use app\admin\BaseController;
 use plugins\withdrawal\admin\model\MkWithdrawal as MkWithdrawalModel;
@@ -113,6 +115,21 @@ class MkWithdrawal extends BaseController
         if(!$data || $data->status!=0)  return json(["status" => "failed", "message" => "状态错误"]);
         $setting = WithdrawalSettings::where("name",$data->payment_name)->find();
         if($setting->pay_type !=2) return json(["status" => "failed", "message" => "不支持在线打款"]);
-
+        $pay = Pay::instance($data->payment_name,$data->currency);
+        $userInfo = User::where("id",$data->uid)->find();
+        $mch_transferId = 'order'.$userInfo['game_account'].time();
+        $other = json_decode($data->other,true);
+        $pay->transfer([
+            "mch_transferId"=>$mch_transferId,
+            "transfer_amount"=>$data->money,
+            "bank_code"=>$other['bank'],
+            "receive_name"=>$other['receive name'],
+            "receive_account"=>$other['card number'],
+        ]);
+        $data->online_status = 1;
+        $data->status_time = time();
+        $data->merTransferId = $mch_transferId;
+        $data->save();
+        return json(["status" => "success", "message" => "提交成功"]);
     }
 }
