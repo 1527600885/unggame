@@ -116,7 +116,7 @@ class Withdrawal extends BaseController
 		if($Wid){
 			$amount=$input['amount'];
 			$userbalance=bcadd($userInfo->balance."",-$input['amount']."",2);
-			$content='{withdrawal.text}'.$amount.'{capital.money}';
+			$content='{withdrawal.text}{capital.money}'.$amount;
 			$admin_content='用户'.$userInfo->nickname.'提现'.$amount.'美元';
 			capital_flow($userInfo->id,$Wid,2,2,$amount,$userbalance,$content,$admin_content);
 			$this->UserModel->where('id',$userInfo->id)->update(['balance'=>$userbalance]);

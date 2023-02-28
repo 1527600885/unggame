@@ -118,6 +118,9 @@ return array(
 		'digital'=>'USDT/BTC/ETH recharge',
 		'cash'=>'Cash recharge',
 		'Credit'=>'Credit card recharge'
-	]
+	],
+    "withdrawal"=>[
+        "text"=>"Cash withdrawal"
+    ]
 );
 ?>
