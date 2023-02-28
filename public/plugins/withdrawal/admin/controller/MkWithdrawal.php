@@ -106,4 +106,13 @@ class MkWithdrawal extends BaseController
             return json(["status" => "success", "message" => "审核成功"]);
         }
     }
+    public function payonline()
+    {
+        $input = input("post.");
+        $data = MkWithdrawalModel::where("id",$input['id'])->find();
+        if(!$data || $data->status!=0)  return json(["status" => "failed", "message" => "状态错误"]);
+        $setting = WithdrawalSettings::where("name",$data->payment_name)->find();
+        if($setting->pay_type !=2) return json(["status" => "failed", "message" => "不支持在线打款"]);
+
+    }
 }

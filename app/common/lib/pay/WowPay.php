@@ -6,8 +6,16 @@ namespace app\common\lib\pay;
 
 use think\Exception;
 use think\facade\Log;
+
+/**
+ * Class WowPay
+ * @package app\common\lib\pay
+ */
 class WowPay extends Pay
 {
+    /**
+     * @var array
+     */
     public $payConfig = [
         "debug"=>true,
         "testconfig"=>[
@@ -25,15 +33,25 @@ class WowPay extends Pay
             ]
         ],
         "gateWay"=>[
-            "createOrder"=>"/pay/web"
+            "createOrder"=>"/pay/web",
+            "transfer"=>"/pay/transfer"
         ],
         "version"=>"1.0",
         "notifyGateWay"=>"/api/notify.wowpay/callback",
+        "backurl"=>"/api/notify.wowpay/transferback",
         "pay_type"=>"423",
         "sign_type"=>"MD5",
         "page_url"=>"https://www.unggame.com/#/pages/center/wallet"
     ];
-    public function run($type,$param)
+
+    /**
+     * 支付
+     * @param $type
+     * @param $param
+     * @return mixed
+     * @throws Exception
+     */
+    public function run($type, $param)
     {
         $domain =  request()->domain();
         $config = $this->payConfig['debug'] ? $this->payConfig['testconfig'] : $this->payConfig['config'];
@@ -55,7 +73,14 @@ class WowPay extends Pay
             throw new Exception($result['tradeMsg']);
         }
     }
-    public function getSign($param,$key)
+
+    /**
+     * 签名
+     * @param $param
+     * @param $key
+     * @return string
+     */
+    public function getSign($param, $key)
     {
         ksort($param);
         $str = http_build_query($param);
@@ -63,6 +88,11 @@ class WowPay extends Pay
         $str = urldecode($str);
         return md5($str);
     }
+
+    /**
+     * @param $bankName
+     * @return string
+     */
     public function getBankCode($bankName)
     {
         $list = [
@@ -101,5 +131,31 @@ class WowPay extends Pay
             "UOB" =>"UOB"
         ];
         return isset($list[$bankName]) ? $list[$bankName] : "";
+    }
+    public function transfer($param)
+    {
+        $config = $this->payConfig['debug'] ? $this->payConfig['testconfig'] : $this->payConfig['config'];
+        $domain =  request()->domain();
+        $data = [
+            "mch_transferId"=>$param['mch_transferId'],
+            "mch_id"=> $config[$this->currency_type]['mch_id'],
+            "transfer_amount"=>$param['transfer_amount'],
+            "apply_date"=>date("Y-m-d H:i:s"),
+            "bank_code"=>$param['bank_code'],
+            "receive_name"=>$param['receive_name'],
+            "receive_account"=>$param['receive_account'],
+            "backurl"=> $domain.$this->payConfig['backurl']
+        ];
+        $key = $config[$this->currency_type]["key"];
+        $data['sign'] = $this->getSign($data,$key);
+        $data['sign_type'] = $this->payConfig['sign_type'];
+        $reuslt_json = curl($config[$this->currency_type]["requestUrl"].$this->payConfig['gateWay']["transfer"],$param);
+        $result = json_decode($reuslt_json,true);
+        if($result['respCode'] == "SUCCESS")
+        {
+            return $result;
+        }else{
+            throw new Exception($result['tradeMsg']);
+        }
     }
 }
