@@ -104,7 +104,16 @@ class MkWithdrawal extends BaseController
         if ($this->request->isPost()) {
             $input = input("post.");
             $input['status_time'] = $input['pay_time'] =  time();
-            MkWithdrawalModel::where("id",$input['id'])->update($input);
+            $data = MkWithdrawalModel::where("id",$input['id'])->find();
+            $data->save($input);
+            if($data->online_status){
+                User::where("id",$data->uid)->inc("balance",$data->amount)->update();
+                $userInfo = User::where("id",$data->uid)->find();
+                $content='{capital.withdrawalfailed}'.$data->amount.'{capital.money}';
+                $admin_content='用户'.$userInfo->nickname.'提现失败,退款$'.$data->amount;
+                capital_flow($data->uid,$data->id,11,1,$data->amount,$userInfo->balance,$content,$admin_content);
+            }
+
             return json(["status" => "success", "message" => "审核成功"]);
         }
     }
