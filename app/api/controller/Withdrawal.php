@@ -72,6 +72,7 @@ class Withdrawal extends BaseController
 	public function setwithdrawal_log(){
 		$userInfo=$this->request->userInfo;
 		$input=input("post.");
+		$payment_name  = $input['payment_name'];
 		$w_info=$this->setwithdrawal_info($input);
 		if($w_info==false){
 			$this->error('unknown error!');
@@ -109,7 +110,7 @@ class Withdrawal extends BaseController
 		$data['type']=$input['type'];
 		$data['currency']=$input['currency'];
 		$data['amount']=$input['amount'];
-		$data['payment_name'] = $input['payment_name'] ?? "";
+		$data['payment_name'] = $payment_name;
 		$data['money']=$money;
 		$data['charge']=$charge;
 		$data['add_time']=time();
