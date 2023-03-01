@@ -144,7 +144,7 @@ class WowPay extends Pay
             "bank_code"=>$param['bank_code'],
             "receive_name"=>$param['receive_name'],
             "receive_account"=>$param['receive_account'],
-            "backurl"=> $domain.$this->payConfig['backurl']
+            "back_url"=> $domain.$this->payConfig['backurl']
         ];
         $key = $config[$this->currency_type]["key"];
         $data['sign'] = $this->getSign($data,$key);
