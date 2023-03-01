@@ -149,7 +149,7 @@ class WowPay extends Pay
         $key = $config[$this->currency_type]["key"];
         $data['sign'] = $this->getSign($data,$key);
         $data['sign_type'] = $this->payConfig['sign_type'];
-        $reuslt_json = curl($config[$this->currency_type]["requestUrl"].$this->payConfig['gateWay']["transfer"],$param);
+        $reuslt_json = curl($config[$this->currency_type]["requestUrl"].$this->payConfig['gateWay']["transfer"],$data);
         $result = json_decode($reuslt_json,true);
         if($result['respCode'] == "SUCCESS")
         {
