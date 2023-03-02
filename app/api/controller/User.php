@@ -24,6 +24,7 @@ use app\api\model\Order as OrderModel;
 use app\api\model\ShareSet as ShareSetModel;
 use app\api\model\CapitalFlow as CapitalFlowmodel;
 use Hashids\Hashids;
+use think\facade\Db;
 /**
  * 个人中心模块
  */
@@ -85,8 +86,10 @@ class User  extends BaseController
 				UserModel::where('id',$userInfo->id)->inc('balance')->update();
 				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
 			}
-			
-			$this->success(lang('system.setting_succeeded'));
+			$data = $userInfo;
+		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+		    $data['password'] = '';
+			$this->success(lang('system.setting_succeeded'),$data);
             // return json(['status' => 'success','message' => '设置成功']);
         }
     }
@@ -101,7 +104,10 @@ class User  extends BaseController
 	        // $this->request->userInfo->cover    = str_replace(request()->domain(), '', $input['cover']);
 	        $this->request->userInfo->cover    = $input['cover'];
 			$this->request->userInfo->save();
-			$this->success(lang('system.setting_succeeded'));
+			$data = $this->request->userInfo->toArray();
+		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+		    $data['password'] = '';
+			$this->success(lang('system.setting_succeeded'),$data);
 	        // return json(['status' => 'success','message' => '设置成功']);
 	    }
 	}
@@ -118,10 +124,28 @@ class User  extends BaseController
 			}
 			$this->request->userInfo->pay_paasword    = $input['pay_paasword'];
 			$this->request->userInfo->save();
-			$this->success(lang('system.setting_succeeded'));
+				$data = $this->request->userInfo->toArray();
+		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+		    $data['password'] = '';
+			$this->success(lang('system.setting_succeeded'),$data);
 		}
 	}
-    
+     // 获取用户区块链地址
+    public function addressinfo()
+    {
+        if ($this->request->isPost()) {
+            
+            $field    = 'ungaddress';
+            $userInfo = UserModel::where('id', input('code'))->field($field)->find();
+            if ($userInfo) {
+				$this->success(lang('success'),$userInfo);
+                // return json(['status' => 'success', 'message' => '获取成功', 'data' => $userInfo]);
+            } else {
+				$this->error(lang('user.notRegister'));
+                // return json(['status' => 'error', 'message' => '该用户暂未注册']);
+            }
+        }
+    }
     /**
      * 用户资料(别人的)
      */
@@ -344,7 +368,10 @@ class User  extends BaseController
             $this->request->userInfo->email       = $input['email'];
             $this->request->userInfo->update_time = date('Y-m-d H:i:s');
             $this->request->userInfo->save();
-			$this->success(lang('user.mobilesuccess'));
+            $data = $this->request->userInfo->toArray();
+		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+		    $data['password'] = '';
+			$this->success(lang('user.mobilesuccess'),$data);
             // return json(['status' => 'success', 'message' => '绑定成功']);
         }
     }
@@ -377,7 +404,10 @@ class User  extends BaseController
             $this->request->userInfo->mobile      = $input['mobile'];
             $this->request->userInfo->update_time = date('Y-m-d H:i:s');
             $this->request->userInfo->save();
-			$this->success(lang('user.mobilesuccess'));
+            $data = $this->request->userInfo->toArray();
+		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+		    $data['password'] = '';
+			$this->success(lang('user.mobilesuccess'),$data);
             // return json(['status' => 'success', 'message' => '绑定成功']);
         }
     }
@@ -464,7 +494,10 @@ class User  extends BaseController
 		    $save->password = $input['password'];
 			$save->update_time = date('Y-m-d H:i:s');
 		    $save->save();
-			$this->success(lang('system.operation_succeeded'));
+		    $data = $save->toArray();
+		    $data['pay_paasword'] = $save->pay_paasword==0?0:1;
+		    $data['password'] = '';
+			$this->success(lang('system.operation_succeeded'),$data);
 		    // return json(['status' => 'success', 'message' => lang('system.operation_succeeded')]);
 		}
 	}
@@ -506,7 +539,10 @@ class User  extends BaseController
 		    $save->pay_paasword = $input['pay_paasword'];
 			$save->update_time = date('Y-m-d H:i:s');
 		    $save->save();
-			$this->success(lang('system.operation_succeeded'));
+		    $data = $save->toArray();
+		    $data['pay_paasword'] = $save->pay_paasword==0?0:1;
+		    $data['password'] = '';
+			$this->success(lang('system.operation_succeeded'),$data);
 		    // return json(['status' => 'success', 'message' => lang('system.operation_succeeded')]);
 		}
 	}

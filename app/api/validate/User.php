@@ -29,6 +29,9 @@ class User extends Validate
 		'sex'           => 'require',
 		'pay_paasword'  => ['number','length'=>6],
         'whatsApp' =>'require',
+        'ungaddress' =>'require|max:50',
+        'quantity' => 'require|number|max:20',
+        'num' => 'require|number|max:20',
     ];
     protected $message = [
         // 'id.require'             => '参数错误',
@@ -65,7 +68,15 @@ class User extends Validate
 		'sex.require'            => 'user.sex',
 		'pay_paasword.require'   => 'user.pay_paasword_require',
 		'pay_paasword.length'    => 'user.pay_paasword_length',
-        'whatsApp.require'       => 'user.whatsAppEmpty'
+        'whatsApp.require'       => 'user.whatsAppEmpty',
+        'ungaddress.require'    => 'user.ungaddressempty',
+        'ungaddress.max'    => 'user.ungaddresserror',
+        'quantity.require'    => 'user.quantityempty',
+        'quantity.number'    => 'user.quantitynumber',
+        'quantity.max'    => 'user.quantityerror',
+        'num.require'    => 'user.quantityempty',
+        'num.number'    => 'user.quantitynumber',
+        'num.max'    => 'user.quantityerror',
     ];
     protected $scene = [
         'login'          => ['email','password'],
@@ -83,5 +94,8 @@ class User extends Validate
         'info'           => ['id'],
         'set'            => ['nickname','sex','mobile'],
 		'set_pay_paasword'=> ['pay_paasword'],
+        'ung_buy'=> ['pay_paasword','num'],
+        'ung_sell'=> ['pay_paasword'],
+        'ung_transfer'=> ['pay_paasword','ungaddress','num'],
     ];
 }

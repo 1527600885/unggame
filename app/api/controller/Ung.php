@@ -10,9 +10,11 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\LabelAlignment;
 use Endroid\QrCode\Response\QrCodeResponse;
+use app\common\lib\Redis;
+use app\api\validate\User as UserValidate;
 class Ung extends BaseController
 {
-	protected $noNeedLogin = ['ungset','ungdata','qrcode','transfer'];
+	protected $noNeedLogin = ['ungset','ungdata','qrcode'];
 	public function initialize(){
 		parent::initialize();
 		$this->UngSetModel = new \app\api\model\UngSet;//虚拟币设置
@@ -24,6 +26,7 @@ class Ung extends BaseController
 	public function ungset(){
 	    if($this->nologuserinfo){
 	        $userInfo=$this->nologuserinfo;
+	        $userung= Db::name('ung_user')->where('uid',$userInfo['id'])->find();
     // 	     var_dump($userInfo);
     // 		 die;
     		$ungone=$this->UngSetModel->order('id asc')->find();
@@ -42,8 +45,9 @@ class Ung extends BaseController
     		}else{
     		    $ungsetdata['divdmoney'] = 0;
     		}
-    		 $ungsetdata['UNG'] = $userInfo['UNG'];
-    		
+    		 $ungsetdata['UNG'] = $userung['num'];
+    		$ungsetdata['trachecharge']=$ungone->trachecharge;
+    		$ungsetdata['servicecharge'] = $ungone->servicecharge;
     // 		累计股息金额
             $userdvdall = Db::name("ung_user_divd")->where("userid",$userInfo['id'])->sum("divdmoney");
             if($userdvdall){
@@ -60,7 +64,9 @@ class Ung extends BaseController
         		$ungsetdata['divdmoney']=0;
         		$ungsetdata['UNG']=0;
         		$ungsetdata['userdvdall']=0;
+        		$ungsetdata['servicecharge'] = 0;
         		$ungsetdata['interest']=0;
+        		$ungsetdata['trachecharge']=$ungone->trachecharge;
         // 		var_dump($ungone->interest);
 	    }
 	    $this->success(lang('system.success'),$ungsetdata);
@@ -133,24 +139,41 @@ class Ung extends BaseController
 	}
 	// 转赠
 	public function transfer(){
-	    
-		$userinfo = $this->request->userInfo;
-		
+	    $redis = (new Redis())->getRedis();
+	    $counts = $redis->keys('ung_user_divd*');
+	    var_dump($counts);
+	    die;
+	    try{
+	        $input = input('post.');
+	        
+	        validate(UserValidate::class)->scene('ung_transfer')->check(input('post.'));
+	    }catch(\Exception $e ){
+	        $this->error($e->getError());
+	    }
+	     
+		$userinfo = Db::name("user")->where("id", $this->request->userInfo->id)->find();
+		$userUng =  Db::name("ung_user")->where("uid", $this->request->userInfo->id)->find();
+		if($userinfo['pay_paasword']==0){
+		    $this->error(lang('user.pay_paasword_empty'),['code'=>2]);
+		}
 		
 		$ungaddress = input("ungaddress");//收账区块地址
-		$quantity = input("quantity");//数量
+		$quantity = input("num");//数量
 // 		$actual   = input("actual");//手续费
-        $password   = input("password");//支付密码
-        $userdata = Db::name("user")->where("id",$userinfo['id'])->where("password",$password)->find();
+        $password   = input("pay_password");//支付密码
+        $userdata = Db::name("user")->where("id",$userinfo['id'])->where("pay_paasword",$password)->find();
         if(!$userdata){
-            $this->error(lang('支付密码错误'));
+            $this->error(lang('user.pay_paasword_error'));
         }
-		$touser = Db::name("user")->where("ungaddress",$ungaddress)->find();
+		$touser = Db::name("user")->alias('a')->where("a.ungaddress",$ungaddress)->join('mk_ung_user b ','b.uid= a.id')->find();
 		if(!$touser){
-		    $this->error(lang('user.emailerror'));
+		    $this->error(lang('user.addresseror'));
 		}
-		if($touser["ungaddress"]==$ungaddress){
-		    $this->error(lang('user.emailerror'));
+		if($userinfo["ungaddress"]==$ungaddress){
+		    $this->error(lang('user.toyouself'));
+		}
+		if($quantity>$userUng['num']){
+		    $this->error(lang('user.UNGinsufficient'));
 		}
         //获取数字资产设置
         $ungset = Db::name("ung_set")->order('id asc')->find();
@@ -161,34 +184,56 @@ class Ung extends BaseController
 		$insert_log['uid'] = $userinfo['id'];
 		$insert_log['type'] = 1;//操作类型
 		$insert_log['num'] = $quantity;//数量
-		$insert_log['price'] = $ungset->price;//价格
-		$insert_log['touserid'] = $touser['id'];//收入方ID
+		$insert_log['price'] = $ungset['price'];//价格
+		$insert_log['touserid'] = $touser['uid'];//收入方ID
 		$insert_log['orderno'] = $orderno;//订单编号
-		$insert_log['total_price'] = bcmul($quantity,$ungset->price);//总价值
-		$insert_log['actual'] = bcmul($quantity,$ungset->trachecharge);//手续费
-		$insert_log['add_time'] = date();
+		$insert_log['total_price'] = bcmul($quantity,$ungset['price'],5);//总价值
+		$insert_log['actual'] = bcmul($quantity,$ungset['trachecharge'],5)/100;//手续费
+		$insert_log['add_time'] = time();
 // 		转入方
-        $touser_log['uid'] = $touser['id'];
+        $touser_log['uid'] = $touser['uid'];
 		$touser_log['type'] = 2;//操作类型
-		$touser_log['num'] = bcsub($quantity,$insert_log['actual']);//数量
-		$touser_log['price'] = $ungset->price;//价格
+		$touser_log['num'] = bcsub((string)$quantity,(string)$insert_log['actual'],5);//数量
+		$touser_log['price'] = $ungset['price'];//价格
 		$touser_log['touserid'] = $userinfo['id'];//转入方ID
 		$touser_log['orderno'] = $orderno;//订单编号
-		$touser_log['total_price'] = bcmul($touser_log['num'],$ungset->price);//总价值
+		$touser_log['total_price'] = bcmul((string)$touser_log['num'],(string)$ungset['price'],5);//总价值
 		$touser_log['total_price'] = $insert_log['actual'];//手续费
-		$touser_log['add_time'] = date();
+		$touser_log['add_time'] = time();
         //计算ung
         //开启事务
         Db::startTrans();
         try {
             // 修改数量
-            Db::name("user")->where("id",$userinfo["id"])->update("mun",bcsub($userinfo["num"],$quantity)); 
-            Db::name("user")->where("id",$touser)->update("mun",bcadd($touser['num'],$touser_log['num']));
+            Db::name("ung_user")->where("uid",$userinfo["id"])->update(["num"=>bcsub($userUng["num"],$quantity,5)]); 
+            Db::name("ung_user")->where("uid",$touser['uid'])->update(["num"=>bcadd($touser['num'],$touser_log['num'],5)]);
             // 增加记录
             Db::name("ung_user_log")->insert($insert_log);
             // 增加手续费池
-            Db::name("user_set")->where('id',$ungset['id'])->update('allcharge',bcadd($ungset['allcharge'],$insert_log['actual']));
+            Db::name("ung_set")->where('id',$ungset['id'])->update(['allcharge'=>bcadd((string)$ungset['allcharge'],(string)$insert_log['actual'],5)]);
+            
+            // $redis->hSet('ung_user_divd:ung_user_'.$touser['id'],'divd_time',time());
             Db::commit();
+            //放入redis
+		    $redis = (new Redis())->getRedis();
+            if(!$redis->exists('ung_user_divd:ung_user_'.$userinfo['id'])){
+                 $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'divd_time',time());
+            }
+            if(!$redis->exists('ung_user_divd:ung_user_'.$touser['uid'])){
+                 $redis->hSet('ung_user_divd:ung_user_'.$touser['uid'],'divd_time',time());
+            }
+            $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',bcsub($userUng["num"],$quantity,5));
+            $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'update_time',time());
+            $redis->hSet('ung_user_divd:ung_user_'.$touser['uid'],'num',bcadd($touser['num'],$touser_log['num'],5));
+            $redis->hSet('ung_user_divd:ung_user_'.$touser['uid'],'update_time',time());
+            $redis->sAdd('ung_user_id',$userinfo['id']);
+            $redis->sAdd('ung_user_id',$touser['uid']);
+            // if(!$redis->get('ung_user_id_pop'.$userinfo['id'])){
+            //     $redis->set('ung_user_id_pop'.$userinfo['id'],$userinfo['id']);
+            // }
+            // if(!$redis->get('ung_user_id_pop'.$touser['uid'])){
+            //     $redis->set('ung_user_id_pop'.$touser['uid'],$touser['uid']);
+            // }
             $this->success(lang('system.success'));
             // Db::name("ung_user_log")->insert($touser_log);
         } catch (Exception $e) {
@@ -207,29 +252,78 @@ class Ung extends BaseController
 	}
 	// 购买虚拟币
 	public function buy(){
-	    $userinfo = $this->request->userInfo;
-	    $password = input('password');
-	    if($password != $userinfo['password']){
-	        $this->error(lang('user.emailerror'));
+	    try{
+	        $input = input('post.');
+	        validate(UserValidate::class)->scene('ung_buy')->check(input('post.'));
+	    }catch( ValidateException $e ){
+	        $this->error($e->getError());
+	    }
+	    $userinfo = Db::name("user")->alias('a')->where("a.id", $this->request->userInfo->id)->join('mk_ung_user b ','b.uid= a.id')->find();
+	   // var_dump($userinfo);
+	   // die;
+		if($userinfo['pay_paasword']==0){
+		    $this->error(lang('user.pay_paasword_empty'),['code'=>2]);
+		}
+	    $password = input('paypassword');
+	    if($password != $userinfo['pay_paasword']){
+	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
 	    }
 		$num = input("num");
-		$ungset = Db::name("ung_set")->order('id,asc')->find();
+		$ungset = Db::name("ung_set")->order('id asc')->find();
 		if($num<$ungset['buylimit']){
-		    $this->error(lang('user.emailerror'));
+		    $this->error(lang('user.buy_limit_error'),['code'=>2]);
 		}
 		if($num>$ungset['currency_num']){
-		    $this->error(lang('user.emailerror'));
+		    $this->error(lang('user.ung_Insufficient'),['code'=>2]);
 		}
+		if($userinfo['balance']<bcmul($num,$ungset['price'],5)){
+		    $this->error(lang('user.banlance_none'),['code'=>2]);
+		}
+		
 		Db::startTrans();
 		try{
-		    $userdata = Db::name("user")->where('id',$userinfo['id'])->find();
-		    $setdata['UNG']  = bcadd($userdata['ung'],$num);
-		    $setdata['balance']  = bcsub($userdata['balance'],bcmul($num,$ungset['price']));
-		    Db::name("user")->where('id',$userinfo['id'])->update($setdata);
-		    Db::name("user_set")->where('id',$ungset['id'])->update('currency_num',bcsub($ungset['currency_num'],$num));
+		    $setungdata['num']  = bcadd($userinfo['num'],$num,5);
+		    
+		    $setdata['balance']  = bcsub((String)$userinfo['balance'],bcmul($num,$ungset['price'],5));
+		    // 生成唯一订单号
+            $subzm=['F','B','H'];
+		    $orderno = $subzm[rand(0,2)].date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+		    Db::name("user")->where('id',$userinfo['uid'])->update($setdata);
+		    Db::name("ung_user")->where('uid',$userinfo['uid'])->update($setungdata);
+		    Db::name("ung_set")->where('id',$ungset['id'])->update(['currency_num'=>bcsub((String)$ungset['currency_num'],$num,5)]);
+		    $insert['uid']=$userinfo['uid'];
+		    $insert['type']=4;
+		    $insert['num']=$num;
+		    $insert['price']=$ungset['price'];
+		    $insert['orderno']=$orderno;
+		    $insert['total_price']=bcmul($num,$ungset['price'],5);
+		    $insert['totalnum'] = bcsub((String)$ungset['currency_num'],$num,5);
+		    $insert['add_time']=time();
+		    $logid = Db::name("ung_user_log")->insert($insert,true);
+		    $userflow['uid'] = $userinfo['uid'];
+		    $userflow['other_id'] = $logid;//关联ung_user_log表
+            $userflow['type'] = 10;//ung账单类型
+            $userflow['money_type'] = 2;
+            $userflow['amount'] = $insert['total_price'];//资金
+            $userflow['balance'] = $setdata['balance'];//余额
+            $userflow['content'] ="UNG coin purchase ".'$'.$userflow['amount'];//前端显示
+            $userflow['admin_content'] = "用户".$userinfo['nickname']."UNG购买,金额减少".$insert['total_price']."美元";
+            $userflow['add_time'] = time();
+            Db::name("capital_flow")->insert($userflow);
+		    Db::commit();
+		    //放入redis
+		    $redis = (new Redis())->getRedis();
+            if(!$redis->exists('ung_user_divd:ung_user_'.$userinfo['uid'])){
+                 $redis->hSet('ung_user_divd:ung_user_'.$userinfo['uid'],'divd_time',time());
+            }
+            $redis->hSet('ung_user_divd:ung_user_'.$userinfo['uid'],'num',$setungdata['num']);
+            $redis->hSet('ung_user_divd:ung_user_'.$userinfo['uid'],'update_time',time());
+            $redis->sAdd('ung_user_id',$userinfo['uid']);
+		    $this->success(lang('system.success'));
+		  //  var_dump(22222222);
 		}catch(Exception $e){
 		    Db::rollback();
-		    $this->error(lang('user.emailerror'));
+		    $this->error(lang('user.buy_field'));
 		}
 		
 	}
@@ -242,47 +336,79 @@ class Ung extends BaseController
     }
 	// 赎回虚拟币
 	public function sell(){
+	    try{
+	        $input = input('post.');
+	        validate(UserValidate::class)->scene('ung_sell')->check(input('post.'));
+	    }catch( ValidateException $e ){
+	        $this->error($e->getError());
+	    }
 		$userinfo=$this->request->userInfo;
-		$password = input("password");
-		$userdata = Db::name("user")->where("id",$userinfo['id'])->find();
-        if(!$userdata || $userdata['password']!=$password){
-            $this->error(lang('支付密码错误'));
-        }
+		$userdata = Db::name("user")->alias('a')->where("a.id", $this->request->userInfo->id)->join('mk_ung_user b ','b.uid= a.id')->find();
+        if($userdata['pay_paasword']==0){
+		    $this->error(lang('user.pay_paasword_empty'),['code'=>2]);
+		}
+	    $password = input('paypassword');
+	    if($password != $userdata['pay_paasword']){
+	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
+	    }
         //获取数字资产设置
-        $ungset = Db::name("ung_set")->order("id,asc")->find();
-        $actual = bcmul(bcmul($ungset['servicecharge'],$userdata['ung']),$ungset['price']);//手续费
-        $realung = bcsub($userdata['ung'],bcmul($ungset['servicecharge'],$userdata['ung']));//实际回收ung数量
-        $allmoney = bcmul($ungset['price'],$userdata['ung']);//账户总金额美刀
-        $realmoney = bcsub($allmoney,$actual);//实际到账
+        // 生成唯一订单号
+        $subzm=['F','B','H'];
+        $ungset = Db::name("ung_set")->order("id asc")->find();
+        $actual = bcmul((string)$ungset['servicecharge'],$userdata['num'],5)/100;//手续费UNG
+        $actualmoney = bcmul((string)$actual,$ungset['redemptionprice'],5);//手续费$
+        $realung = bcsub((string)$userdata['num'],(string)$actual,5);//实际回收ung数量
+        $allmoney = bcmul((string)$ungset['redemptionprice'],$userdata['num'],5);//UNG账户兑换成金额美刀
+        $realmoney = bcsub((string)$allmoney,(string)$actualmoney,5);//实际到账
+        // var_dump($actual);
+        // var_dump($actualmoney);
+        // var_dump($realmoney);
+        //  var_dump(bcadd((string)$realmoney,(string)$userinfo['balance'],5));
+        // die;
         $orderno = $subzm[rand(0,2)].date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
         Db::startTrans();
         try{
-            $insert_log['uid'] = $userinfo['id'];
+            $insert_log['uid'] = $userinfo['uid'];
     		$insert_log['type'] = 5;//操作类型
-    		$insert_log['num'] = $quantity;//数量
-    		$insert_log['price'] = $ungset->price;//价格
+    		$insert_log['num'] = $userdata['num'];//数量
+    		$insert_log['price'] = $ungset['price'];//价格
     		$insert_log['touserid'] = 0;//收入方ID
     		$insert_log['orderno'] = $orderno;//订单编号
     		$insert_log['total_price'] = $realmoney;//总价值
-    		$insert_log['actual'] = $actual;//手续费
-    		$insert_log['add_time'] = date();
-    		$update['ung'] = 0;
-    		$update['balance'] = $realmoney;
+    		$insert_log['actual'] = $actual;//手续费UNG
+    		$insert_log['actualmoney'] =  $actualmoney;//手续费$
+    		$insert_log['add_time'] = time();
+    		$ungupdate['num'] = 0;
+    		$update['balance'] =  bcadd((string)$realmoney,(string)$userinfo['balance'],5);
+    // 		var_dump($realmoney);
+    // 		var_dump($userinfo['balance']);
+    // 		var_dump($update['balance']);
+    // 		die;
     		Db::name("user")->where('id',$userinfo['id'])->update($update);//更新金额
-            Db::name("ung_user_log")->insert($insert_log);//插入ung日志表
+    		Db::name("ung_user")->where('uid',$userinfo['id'])->update($ungupdate);//更新金额
+            $logid = Db::name("ung_user_log")->insert($insert_log,true);//插入ung日志表
             $userflow['uid'] = $userinfo['id'];
-            $userflow['type'] = 8;//ung赎回
+            $userflow['type'] = 10;//ung账单类型
+            $userflow['other_id'] = $logid;//关联ung_user_log表
             $userflow['money_type'] = 1;
-            $userflow['amount'] = $realmoney;
-            $userflow['balance'] = $userinfo['balance'];
-            $userflow['content'] ="{user.inviteusers}yaoqing{user.inviteregister}$2";//前端显示
+            $userflow['amount'] = $realmoney;//金额
+            $userflow['balance'] = bcadd((string)$realmoney,(string)$userinfo['balance'],5);//用户余额
+            $userflow['content'] ="UNG coin redeem ".'$'.$userflow['amount'];;//前端显示
             $userflow['admin_content'] = "用户".$userinfo['nickname']."UNG资产赎回,金额增加".$realmoney."美元";
-            $userflow['add_time'] = date();
+            $userflow['add_time'] = time();
             Db::name("capital_flow")->insert($userflow);
-            $setdata['currency_num'] = bcadd($ungset['currency_num'],$realung);//ung总数
-            $setdata['allcharge'] = bcadd($ungset['allcharge'],bcmul($ungset['servicecharge'],$userdata['ung']));
+            $setdata['currency_num'] = bcadd((string)$ungset['currency_num'],$realung,5);//ung总数
+            $setdata['allcharge'] = bcadd((string)$ungset['allcharge'],(string)$actual,5);//手续费池
             Db::name("ung_set")->where("id",$ungset['id'])->update($setdata);
             Db::commit();
+            $redis = (new Redis())->getRedis();
+            // if(!$redis->exists('ung_user_divd:ung_user_'.$userinfo['id'])){
+            //      $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'divd_time',time());
+            // }
+            $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'update_time',time());
+            $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',0);
+            $redis->sAdd('ung_user_id',$userinfo['id']);
+            $this->success(lang('system.success'));
         } catch(Exception $e){
             Db::rollback();
             $this->error(lang('user.emailerror'));
