@@ -299,6 +299,11 @@ class Game extends BaseController
 
         try{
             Db::startTrans();
+            if(in_array($userInfo->id,[])){
+                $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,0,$tcgGameCode,'html5',$this->gamelang);
+                $ret = json_decode($result,true);
+                $this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
+            }
             if($userInfo->balance<=0){
                 //没有资金的情况下，将不进行资金的操作
                 $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
