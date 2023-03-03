@@ -60,6 +60,8 @@ class Config extends BaseController
                     file_put_contents(root_path().'app/admin/config/upload.php', "<?php\nreturn ".var_export($input['value']['admin'],true).";");
                     $msg = ['status' => 'success', 'message' => '修改成功'];
                     break;
+                case "numberoneuser":
+                case "numbertwouser":
                 case 'withdraw':
                     $msg = ConfigModel::setVal($input['name'],$input['title'], $input['value']);
                     break;

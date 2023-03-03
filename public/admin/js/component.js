@@ -266,6 +266,7 @@ Vue.component('el-curd', {
                                                 :search="item.form.search"
                                                 :ifset="item.form.ifset"
                                                 :list="item.form.list"
+                                                :fetch-suggestions="querySearch"
                                                 arrow-control
                                                 show-word-limit
                                                 @input="formRules()">
@@ -598,6 +599,9 @@ Vue.component('el-curd', {
                 }
                 self.loading = false;
             });
+        },
+        querySearch(queryString, cb){
+            this.$emit('query-search',{queryString:queryString,cb:cb});
         },
         /**
          * 快捷修改数据

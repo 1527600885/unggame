@@ -1,0 +1,131 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+    <div class="el-layout">
+        <el-tabs v-model="tabs" :tab-position="document.body.clientWidth > 768 ? 'left' : 'top'">
+            <el-tab-pane label="第一个游戏配置" name="numberoneuser">
+                <div class="el-pane-warp">
+                    <el-form ref="numberoneuserForm" :model="numberoneuserForm" label-width="120px">
+<!--                        <el-form-item>-->
+<!--                            <template slot="label">-->
+<!--                                <div><el-tooltip placement="top" content="{literal}{$numberoneuser.gameImage}{/literal}"><div>游戏图片：</div></el-tooltip></div>-->
+<!--                            </template>-->
+<!--                            <el-file-select v-model="numberoneuserForm.gameImage"></el-file-select>-->
+<!--                        </el-form-item>-->
+                        <el-form-item label="用户名称">
+                            <el-input v-model="numberoneuserForm.username" 	style="width: 40%"></el-input>
+                        </el-form-item>
+                        <el-form-item label="赢得金额">
+                            <el-input v-model="numberoneuserForm.price"  type="number"	style="width: 40%"></el-input>
+                        </el-form-item>
+                        <el-form-item label="游戏">
+                            <el-autocomplete
+                                    v-model="numberoneuserForm.gamename"
+                                    :fetch-suggestions="querySearchAsync"
+                                    placeholder="请输入内容"
+                                    @select="handleSelect"
+                            ></el-autocomplete>
+                        </el-form-item>
+                        <el-form-item label="游戏图片">
+                            <el-image v-model="numberoneuserForm.gameImage" :src="numberoneuserForm.gameImage"></el-image>
+                        </el-form-item>
+                        <div class="el-bottom">
+                            <el-button
+                                    size="medium"
+                                    :loading="loading"
+                                    type="primary"
+                                    icon="el-icon-refresh-right"
+                                    @click="saveConfig('第一名用户配置', numberoneuserForm)">
+                                保 存
+                            </el-button>
+                        </div>
+                    </el-form>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane label="第二个游戏配置" name="numbertwouser">
+                <div class="el-pane-warp">
+                    <el-form ref="numbertwouserForm" :model="numbertwouserForm" label-width="120px">
+                        <el-form-item label="用户名称">
+                            <el-input v-model="numbertwouserForm.username" 	style="width: 40%"></el-input>
+                        </el-form-item>
+                        <el-form-item label="赢得金额">
+                            <el-input v-model="numbertwouserForm.price"  type="number"	style="width: 40%"></el-input>
+                        </el-form-item>
+                        <el-form-item label="游戏">
+                            <el-autocomplete
+                                    v-model="numbertwouserForm.gamename"
+                                    :fetch-suggestions="querySearchAsync"
+                                    placeholder="请输入内容"
+                                    @select="handleSelect2"
+                            ></el-autocomplete>
+                        </el-form-item>
+                        <el-form-item label="游戏图片">
+                            <el-image v-model="numbertwouserForm.gameImage" :src="numbertwouserForm.gameImage"></el-image>
+                        </el-form-item>
+                        <div class="el-bottom">
+                            <el-button
+                                    size="medium"
+                                    :loading="loading"
+                                    type="primary"
+                                    icon="el-icon-refresh-right"
+                                    @click="saveConfig('第二名用户配置', numbertwouserForm)">
+                                保 存
+                            </el-button>
+                        </div>
+                    </el-form>
+                </div>
+            </el-tab-pane>>
+        </el-tabs>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                tabs: 'numberoneuser',
+                editUrl: "config/update",
+                loading: false,
+                options :[],
+                restaurants:[],
+                numberoneuserForm:{:json_encode($numberoneuser)},
+                numbertwouserForm:{:json_encode($numbertwouser)}
+            }
+        },
+
+        created() {
+
+        },
+        methods: {
+            /**
+             * 保存基础配置
+             */
+            saveConfig(title, value) {
+                let self = this;
+                let row = {
+                    gameImage : value.gameImage,
+                    gamename : value.gamename,
+                    username : value.username,
+                    price : value.price,
+                }
+                self.loading = true;
+                request.post(self.editUrl, {title: title, name: self.tabs, value: row}, function(res){
+                    self.loading = false;
+                    self.$notify({showClose: true, message: res.message, type: res.status});
+                });
+            },
+            querySearchAsync(queryString, cb) {
+                request.post("numberone/getGameList",{key:queryString},function (res){
+                    var results = res.data;
+                    cb(results);
+                })
+            },
+            handleSelect2(item){
+                this.numbertwouserForm.gameImage = item.gameImage
+            },
+            handleSelect(item){
+                this.numberoneuserForm.gameImage = item.gameImage
+            }
+        },
+    })
+</script>
+{include file="common/footer"}

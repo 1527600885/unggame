@@ -30,4 +30,10 @@ class MkCarouselChart extends Model
             $query->whereBetweenTime("", $value[0], $value[1]);
         }
     }
+    public function searchStatusAttr($query,$value,$array){
+        if(isset($value) && $value != '')
+        {
+            $query->where("status",$value);
+        }
+    }
 }

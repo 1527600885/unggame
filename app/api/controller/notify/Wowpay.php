@@ -51,7 +51,7 @@ class Wowpay
     {
         $result = input("param.");
         // $result = json_decode($data,true);
-        if( isset($result['tradeResult']) && $result['tradeResult'] == 1){
+        if( isset($result['tradeResult'])){
             $sign = $result['sign'];
             unset($result['sign'],$result['signType']);
             $withdrawl = Withdrawal::where("merTransferId",$result['merTransferId'])->find();
@@ -71,5 +71,6 @@ class Wowpay
             }
             echo "success";
         }
+        echo "success";
     }
 }

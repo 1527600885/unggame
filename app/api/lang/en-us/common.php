@@ -35,7 +35,8 @@ return array(
 		'currency_name'=>'Digital currency payment',
 		'online_name'=>'Online payment',
 		'creditcards'=>'Credit Cards Accepted',
-		'setting_succeeded'=>'Setting succeeded'
+		'setting_succeeded'=>'Setting succeeded',
+        'busy'=>"System busy, please try again later."
     ],
     'user'=> [
     	'accountnot' => 'The account does not exist',
