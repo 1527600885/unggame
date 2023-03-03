@@ -20,6 +20,7 @@ use app\api\validate\User as UserValidate;
 use app\common\game\ApiGame as apigame;
 use Hashids\Hashids;
 use think\facade\Cache;
+use think\facade\Db;
 /**
  * 登录模块
  */
@@ -303,12 +304,18 @@ class Login extends BaseController
 			$ret  = json_decode($result,true);
             $userInfo['game_account']=$game_account;
             $userInfo['id']=$registerInfo->id;
-            $ungewm = \create_qrcode(request()->domain().'?ad=$ungaddress',$userInfo);
+            $ungewm = \create_qrcode($ungaddress,$userInfo);
             UserModel::where('id',$registerInfo->id)->update(['QR_code'=>$ungewm]);
+            // 创建ung账户
+            $unguser['uid'] = $registerInfo->id;
+            $unguser['num'] = 0;
+            $unguser['update_time'] =time();
+            $unguser['add_time'] =time();
+            Db::name('ung_user')->insert($unguser);
 			//测试强制等于0
 			// $ret['status']=0;
 			if($ret['status']==0){
-				UserModel::where('id',$registerInfo->id)->update(['game_account'=>$game_account,$input['nickname']?$input['nickname']:$game_account]);
+				UserModel::where('id',$registerInfo->id)->update(['game_account'=>$game_account,'nickname'=>$input['nickname']?$input['nickname']:$game_account]);
 				// 给直接邀请人添加注册奖励
 			}
             if($input['invitation_code']){
