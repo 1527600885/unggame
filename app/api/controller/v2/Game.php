@@ -25,7 +25,7 @@ class Game extends BaseController
      */
     public function recommendedList()
     {
-        $where[] = ["gameType", "<>", "LIVE"];
+        $where["gameType"] = [ "<>", "LIVE"];
         $this->success("success",$this->getList($where));
     }
 
@@ -34,7 +34,7 @@ class Game extends BaseController
      */
     public function liveList()
     {
-        $where[] = ["gameType", "=", "LIVE"];
+        $where["gameType"] = ["=", "LIVE"];
         $this->success("success",$this->getList($where));
     }
 
