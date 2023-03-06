@@ -97,7 +97,17 @@ class Index extends BaseController
     public function checkIp()
     {
         $email = input("param.email");
-        $whiteList = ["erinmaud69@gmail.com","welsiedavis928@gmail.com","hadleeha565@gmail.com","574995091@qq.com"];
+        $whiteList = [
+            "erinmaud69@gmail.com",
+            "welsiedavis928@gmail.com",
+            "hadleeha565@gmail.com",
+            "574995091@qq.com",
+            "lyndibrown70@gmail.com",
+            "salliemacara882@gmail.com",
+            "demiyou999@gamil.com",
+            "kiarral107@gmail.com",
+            "elliotlucilius69@gmail.com"
+        ];
         if(in_array($email,$whiteList)){
             $ip = request()->ip();
             $redis =  (new Redis())->getRedis();
