@@ -36,8 +36,6 @@ class MkGamelist extends Model
     }
     public function setImagesAttr($value)
     {
-        $image = array_column($value,"url");
-        $image = implode(";",$image);
-        return $image;
+        return json_encode($value);
     }
 }
