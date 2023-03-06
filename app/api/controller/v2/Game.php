@@ -25,7 +25,7 @@ class Game extends BaseController
      */
     public function recommendedList()
     {
-        $where["gameType"] = [ "<>", "LIVE"];
+        $where[] = ["gameType", "!=", "LIVE"];
         $this->success("success",$this->getList($where));
     }
 
@@ -34,7 +34,7 @@ class Game extends BaseController
      */
     public function liveList()
     {
-        $where["gameType"] = ["=", "LIVE"];
+        $where[] = ["gameType", "=", "LIVE"];
         $this->success("success",$this->getList($where));
     }
 
@@ -47,8 +47,8 @@ class Game extends BaseController
     private function getList($where)
     {
         $page = input("page.");
-        $where = json_encode($where);
-        $key = "gamelist_{$where}_{$page}";
+        $whereKey = json_encode($where);
+        $key = "gamelist_{$whereKey}_{$page}";
         $gamelist = Cache::get($key);
         if (!$gamelist) {
             $gamelist = GameList::cache("gamelist_{$page}_{$where}")->field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sorts asc,hot desc")->paginate(4);
