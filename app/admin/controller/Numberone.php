@@ -19,6 +19,8 @@ class Numberone extends Config
         View::assign([
             'numberoneuser' =>  ConfigModel::getVal('numberoneuser'),
             'numbertwouser' =>  ConfigModel::getVal('numbertwouser'),
+            'numberthreeuser' =>  ConfigModel::getVal('numberthreeuser'),
+            'numberfouruser' =>  ConfigModel::getVal('numberfouruser'),
         ]);
 //        var_dump( ConfigModel::getVal('numbertwouser'));
         return View::fetch();

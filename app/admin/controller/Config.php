@@ -62,6 +62,8 @@ class Config extends BaseController
                     break;
                 case "numberoneuser":
                 case "numbertwouser":
+                case "numberthreeuser":
+                case "numberfouruser":
                 case 'withdraw':
                     $msg = ConfigModel::setVal($input['name'],$input['title'], $input['value']);
                     break;

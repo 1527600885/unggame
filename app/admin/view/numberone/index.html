@@ -73,7 +73,73 @@
                         </div>
                     </el-form>
                 </div>
-            </el-tab-pane>>
+            </el-tab-pane>
+            <el-tab-pane label="第三个游戏配置" name="numberthreeuser">
+                <div class="el-pane-warp">
+                    <el-form ref="numberthreeuserForm" :model="numberthreeuserForm" label-width="120px">
+                        <el-form-item label="用户名称">
+                            <el-input v-model="numberthreeuserForm.username" 	style="width: 40%"></el-input>
+                        </el-form-item>
+                        <el-form-item label="赢得金额">
+                            <el-input v-model="numberthreeuserForm.price"  type="number"	style="width: 40%"></el-input>
+                        </el-form-item>
+                        <el-form-item label="游戏">
+                            <el-autocomplete
+                                    v-model="numberthreeuserForm.gamename"
+                                    :fetch-suggestions="querySearchAsync"
+                                    placeholder="请输入内容"
+                                    @select="handleSelect3"
+                            ></el-autocomplete>
+                        </el-form-item>
+                        <el-form-item label="游戏图片">
+                            <el-image v-model="numberthreeuserForm.gameImage" :src="numberthreeuserForm.gameImage"></el-image>
+                        </el-form-item>
+                        <div class="el-bottom">
+                            <el-button
+                                    size="medium"
+                                    :loading="loading"
+                                    type="primary"
+                                    icon="el-icon-refresh-right"
+                                    @click="saveConfig('第三名用户配置', numberthreeuserForm)">
+                                保 存
+                            </el-button>
+                        </div>
+                    </el-form>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane label="第四个游戏配置" name="numberfouruser">
+                <div class="el-pane-warp">
+                    <el-form ref="numberfouruserForm" :model="numberfouruserForm" label-width="120px">
+                        <el-form-item label="用户名称">
+                            <el-input v-model="numberfouruserForm.username" 	style="width: 40%"></el-input>
+                        </el-form-item>
+                        <el-form-item label="赢得金额">
+                            <el-input v-model="numberfouruserForm.price"  type="number"	style="width: 40%"></el-input>
+                        </el-form-item>
+                        <el-form-item label="游戏">
+                            <el-autocomplete
+                                    v-model="numberfouruserForm.gamename"
+                                    :fetch-suggestions="querySearchAsync"
+                                    placeholder="请输入内容"
+                                    @select="handleSelect4"
+                            ></el-autocomplete>
+                        </el-form-item>
+                        <el-form-item label="游戏图片">
+                            <el-image v-model="numberfouruserForm.gameImage" :src="numberfouruserForm.gameImage"></el-image>
+                        </el-form-item>
+                        <div class="el-bottom">
+                            <el-button
+                                    size="medium"
+                                    :loading="loading"
+                                    type="primary"
+                                    icon="el-icon-refresh-right"
+                                    @click="saveConfig('第四名用户配置', numberfouruserForm)">
+                                保 存
+                            </el-button>
+                        </div>
+                    </el-form>
+                </div>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </div>
@@ -88,7 +154,9 @@
                 options :[],
                 restaurants:[],
                 numberoneuserForm:{:json_encode($numberoneuser)},
-                numbertwouserForm:{:json_encode($numbertwouser)}
+                numbertwouserForm:{:json_encode($numbertwouser)},
+                numberthreeuserForm:{:json_encode($numberthreeuser)},
+                numberfouruserForm:{:json_encode($numberfouruser)}
             }
         },
 
@@ -118,6 +186,12 @@
                     var results = res.data;
                     cb(results);
                 })
+            },
+            handleSelect4(item){
+                this.numberfouruserForm.gameImage = item.gameImage
+            },
+            handleSelect3(item){
+                this.numberthreeuserForm.gameImage = item.gameImage
             },
             handleSelect2(item){
                 this.numbertwouserForm.gameImage = item.gameImage
