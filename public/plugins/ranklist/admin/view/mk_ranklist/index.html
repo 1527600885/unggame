@@ -1,0 +1,92 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-sort="{prop: 'id', order: 'desc'}"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		@query-search = "querySearch($event)"
+		:search-date="false">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'username',
+						label: '用户名',
+						table: {
+							sort: false,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'profit',
+						label: '金额',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'avatar',
+						label: '头像链接',
+						table: {label: '用户头像', is: 'image',width: '100px'},
+						form: {
+							is: 'el-file-select',
+							type: 'image',
+							filterable: 1,
+							multiple: 1,
+						}
+					},
+					{
+						prop: 'game_name',
+						label: '游戏名称',
+						table: {
+							sort: false,
+						},
+						form: {
+							is: 'el-autocomplete',
+						}
+					},
+					{
+						prop: 'payout',
+						label: 'PayOut',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					}
+				],
+			}
+		},
+		methods:{
+			querySearch(data)
+			{
+				request.post("numberone/getGameList",{key:data.queryString},function (res){
+					var results = res.data;
+					data.cb(results);
+				})
+			}
+		}
+	})
+</script>
+{include file="common/footer"}
