@@ -6,7 +6,7 @@ namespace app\api\controller\v2;
 
 use app\admin\model\Config as ConfigModel;
 use app\api\BaseController;
-use app\api\model\GameList;
+use app\api\model\v2\GameList;
 use app\api\model\RankList;
 use app\common\game\ApiGame;
 use app\common\lib\Redis;
@@ -50,6 +50,7 @@ class Game extends BaseController
         $whereKey = json_encode($where);
         $key = "gamelist_{$whereKey}_{$page}";
         $gamelist = Cache::get($key);
+        $lang = $this->gamelang;
         if (!$gamelist) {
             $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sorts asc,hot desc")->paginate(4);
             Cache::set($key, $gamelist, 300);
@@ -92,6 +93,8 @@ class Game extends BaseController
     }
     public function getGameDetail()
     {
-
+        $id = input("param.id");
+        $data  =GameList::where(compact("id"))->field("id,gameName,gameImage,game_release_date,author,description,images,trialSupport")->find();
+        $this->success('success',$data);
     }
 }
