@@ -51,7 +51,7 @@ class Game extends BaseController
         $key = "gamelist_{$whereKey}_{$page}";
         $gamelist = Cache::get($key);
         if (!$gamelist) {
-            $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sorts asc,hot desc")->paginate(4);
+            $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sorts asc,hot desc")->paginate(12);
             Cache::set($key, $gamelist, 300);
         }
         return $gamelist;
@@ -64,7 +64,7 @@ class Game extends BaseController
         $numberfourData = ConfigModel::getVal("numberfouruser");
         $topGame = [[$numberoneData,$numbertwoData],[$numberthreeData,$numberfourData]];
         $topList = RankList::order("profit desc,update_time desc,id desc")->select()->toArray();
-        $topThree = array_slice($topList,0,2);
+        $topThree = array_slice($topList,0,3);
         $this->success("success",compact("topGame","topThree","topList"));
     }
     public function tryGame()
