@@ -50,7 +50,6 @@ class Game extends BaseController
         $whereKey = json_encode($where);
         $key = "gamelist_{$whereKey}_{$page}";
         $gamelist = Cache::get($key);
-        $lang = $this->gamelang;
         if (!$gamelist) {
             $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sorts asc,hot desc")->paginate(4);
             Cache::set($key, $gamelist, 300);
