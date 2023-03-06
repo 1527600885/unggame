@@ -60,7 +60,9 @@ class Game extends BaseController
     {
         $numberoneData = ConfigModel::getVal("numberoneuser");
         $numbertwoData = ConfigModel::getVal("numbertwouser");
-        $topGame = [$numberoneData,$numbertwoData];
+        $numberthreeData = ConfigModel::getVal("numberthreeuser");
+        $numberfourData = ConfigModel::getVal("numberfouruser");
+        $topGame = [[$numberoneData,$numbertwoData],[$numberthreeData,$numberfourData]];
         $topList = RankList::order("profit desc,update_time desc,id desc")->select()->toArray();
         $topThree = array_slice($topList,0,2);
         $this->success("success",compact("topGame","topThree","topList"));
