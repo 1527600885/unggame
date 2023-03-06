@@ -88,5 +88,8 @@ class Game extends BaseController
         $gamename= json_decode($gameData->gameName,true)[$this->gamelang];
         $this->success(lang('game.run_game'),["gamename"=>$gamename,"game_url"=>$runData['game_url']]);
     }
+    public function getGameDetail()
+    {
 
+    }
 }
