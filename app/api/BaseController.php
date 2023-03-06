@@ -91,6 +91,8 @@ abstract class BaseController
 			$this->lang = 'en-us';
 		}
 		$this->gamelang=$this->gameslang($this->lang);
+        global $lang;
+        $lang = $this->gamelang;
 		$action = strtolower($this->request->action());
 		$module = app('http')->getName();
 		//只限制接口模块验证
