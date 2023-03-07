@@ -46,7 +46,7 @@ class Game extends BaseController
      */
     private function getList($where)
     {
-        $page = input("page.");
+        $page = input("param.page");
         $whereKey = json_encode($where);
         $key = "gamelist_{$whereKey}_{$page}";
         $gamelist = Cache::get($key);
@@ -69,7 +69,7 @@ class Game extends BaseController
     }
     public function tryGame()
     {
-        $id = input("post.id");
+        $id = input("param.id");
         $gameData = GameList::where("id",$id)->find();
         $redis = (new Redis())->getRedis();
         $ip = request()->ip();
