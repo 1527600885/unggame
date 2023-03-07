@@ -12,4 +12,7 @@ class GameList extends Model
 {
     //
 	protected $name = 'gamelist';
+	public function getImagesAttr($value){
+	    return json_decode($value,true);
+    }
 }
