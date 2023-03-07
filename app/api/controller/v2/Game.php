@@ -93,7 +93,7 @@ class Game extends BaseController
         }
         $run = $game->getLaunchGameRng($game_account,$game_account, $gameData->productType,0, $gameData->tcgGameCode, "html5" ,$this->gamelang);
         $runData = json_decode($run,true);
-        if(!isset($runData['error_desc'])){
+        if(isset($runData['error_desc'])){
             $this->error($runData['error_desc']);
         }
         $gamename=$gameData->gameName;
