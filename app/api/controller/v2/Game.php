@@ -93,7 +93,7 @@ class Game extends BaseController
     public function getGameDetail()
     {
         $id = input("param.id");
-        $data  =GameList::where(compact("id"))->field("id,gameName,gameImage,game_release_date,author,description,images,trialSupport")->find();
+        $data  =GameList::where(compact("id"))->field("id,gameName,gameImage,game_release_date,author,description,images,trialSupport,tcgGameCode")->find();
         $this->success('success',$data);
     }
 }
