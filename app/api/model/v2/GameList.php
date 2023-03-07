@@ -26,4 +26,7 @@ class GameList extends Model
             return $gameImage[$lang];
         }
     }
+    public function getImagesAttr($value){
+        return json_decode($value,true);
+    }
 }
