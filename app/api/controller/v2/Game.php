@@ -69,8 +69,8 @@ class Game extends BaseController
     }
     public function tryGame()
     {
-        $tcgGameCode = input("post.tcgGameCode");
-        $gameData = GameList::where("tcgGameCode",$tcgGameCode)->find();
+        $id = input("post.id");
+        $gameData = GameList::where("id",$id)->find();
         $redis = (new Redis())->getRedis();
         $ip = request()->ip();
         $key = "try_game_account_{$ip}";
