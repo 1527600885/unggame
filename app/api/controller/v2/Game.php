@@ -26,6 +26,9 @@ class Game extends BaseController
     public function recommendedList()
     {
         $where[] = ["gameType", "<>", "LIVE"];
+        $where[] = ['displayStatus','=',1];
+        $where[] = ['is_groom','=',1];//是否首页推荐
+        $where[] = ['groom_sort','>',0];//排序序列号>0
         $this->success("success",$this->getList($where));
     }
 
@@ -35,6 +38,9 @@ class Game extends BaseController
     public function liveList()
     {
         $where[] = ["gameType", "=", "LIVE"];
+        $where[] = ['displayStatus','=',1];
+        $where[] = ['is_groom','=',1];//是否首页推荐
+        $where[] = ['groom_sort','>',0];//排序序列号>0
         $this->success("success",$this->getList($where));
     }
 
@@ -51,7 +57,7 @@ class Game extends BaseController
         $key = "gamelist_{$whereKey}_{$page}";
         $gamelist = Cache::get($key);
         if (!$gamelist) {
-            $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sorts asc,hot desc")->paginate(12);
+            $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sort asc,hot desc")->paginate(12);
             Cache::set($key, $gamelist, 300);
         }
         return $gamelist;
