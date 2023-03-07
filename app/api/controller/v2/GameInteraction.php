@@ -16,6 +16,15 @@ class GameInteraction extends BaseController
         if(!$validate->check($data)){
            $this->error( $validate->getError());
         }
-        
+        $inter = \app\api\model\v2\GameInteraction::where(["game_id"=>$data['game_id'],"user_id"=>$this->request->userInfo['id']])->find();
+        $type = [1=>"is_favorite",2=>"is_liked"];
+        if(!$inter)
+        {
+            \app\api\model\v2\GameInteraction::create(["game_id"=>$data['game_id'],"user_id"=>$this->request->userInfo['id'],$type[$data['type']]=>1,"created_at"=>time(),"updated_at"=>time()]);
+        }else{
+            $inter->save([$type[$data['type']]=>3-$data['type']]);
+        }
+        $this->success("success");
+
     }
 }
