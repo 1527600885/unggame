@@ -132,4 +132,9 @@ class Index extends BaseController
 		];
 		$this->success(lang('system.success'),$system_config);
 	}
+	public function platformData()
+    {
+        $data = \app\api\model\Config::getVal("ungconfig");
+        $this->success(lang('system.success'),$data);
+    }
 }

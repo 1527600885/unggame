@@ -206,6 +206,28 @@
 					</div>
 				</div>
 			</el-tab-pane>
+			<el-tab-pane label="平台配置" name="ungconfig">
+				<div class="el-pane-warp">
+					<el-form ref="ungForm" :model="ungForm" label-width="150px">
+						<el-form-item label="官方简介：" prop="ung_content">
+							<el-input v-model="ungForm.ung_content" type="textarea" placeholder="请填写简介内容"></el-input>
+						</el-form-item>
+						<el-form-item label="官方邮箱：" prop="email">
+							<el-input v-model="ungForm.email" placeholder="如：xxxx@qq.com"></el-input>
+						</el-form-item>
+					</el-form>
+					<div class="el-bottom">
+						<el-button
+								size="medium"
+								:loading="loading"
+								type="primary"
+								icon="el-icon-refresh-right"
+								@click="saveConfig('平台配置', ungForm)">
+							保 存
+						</el-button>
+					</div>
+				</div>
+			</el-tab-pane>
 			<el-tab-pane label="上传限制" name="upload">
 				<div class="el-pane-warp">
 					<el-form ref="uploadForm" :model="uploadForm" label-width="170px">
@@ -335,6 +357,7 @@
 	        	systemForm: {:json_encode($system)},
 	        	uploadForm: {:json_encode($upload)},
 	        	themesForm: {:json_encode($theme)},
+				ungForm:{:json_encode($ungconfig)},
 				withdrawForm:{
 	        		rate:"",minprice:"",
 					tableData:[
@@ -387,8 +410,9 @@
              */
 	        saveConfig(title, value) {
 	        	let self = this;
-	        	let row  = JSON.parse(JSON.stringify(value));
 	        	console.log(value);
+	        	let row  = JSON.parse(JSON.stringify(value));
+	        	console.log(JSON.stringify(value));
 	        	if (self.tabs === 'upload') {
 	        		row.index.size.image = row.index.size.image * 1024 * 1024;
 		        	row.admin.size.image = row.admin.size.image * 1024 * 1024;

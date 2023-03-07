@@ -38,4 +38,8 @@ class MkGamelist extends Model
     {
         return json_encode($value);
     }
+    public function getImagesAttr($value)
+    {
+        return json_decode($value,true);
+    }
 }

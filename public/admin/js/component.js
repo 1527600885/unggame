@@ -1690,8 +1690,9 @@ Vue.component('el-file-list', {
         table() {
             let self = this;
             let list = self.list;
-            list.forEach( function (item, key) {
-                let index  = common.arrayIndex(self.rows, item.id, 'id');
+            Array.from(list).forEach( function (item, key) {
+                let index  = common.arrayIndex(Array.from(self.rows), item.id, 'id');
+
                 item.check = index === -1 ? false : true;
             })
             return list;
@@ -2068,7 +2069,7 @@ Vue.component('el-file-dialog', {
     computed: {
         previewImages() {
             let arr = [];
-            this.selected.forEach( function (item, index) {
+            Array.from(this.selected).forEach( function (item, index) {
                 if (item.type === 'image') {
                     arr.push(item.url);
                 }
@@ -2151,7 +2152,9 @@ Vue.component('el-file-list-select', {
     computed: {
         previewImages() {
             let arr = [];
-            this.list.forEach( function (item, index) {
+            // let list = JSON.parse(JSON.stringify(this.list));
+            let list = Array.from(this.list);
+            list.forEach( function (item, index) {
                 if (item.type === 'image') {
                     arr.push(item.url);
                 }
