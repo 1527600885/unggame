@@ -15,7 +15,7 @@ use think\Model;
 class User extends Model
 {
     // 设置json类型字段
-    protected $json = ['field'];
+    protected $json = ['field','other_accounts'];
 
     protected $jsonAssoc = true;
 

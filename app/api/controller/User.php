@@ -58,6 +58,14 @@ class User  extends BaseController
 			if($input['whatsapp']){
 				$this->request->userInfo->whatsapp= $input['whatsapp'];
 			}
+            if($input["other_accounts"])
+            {
+                $this->request->userInfo->other_accounts= $input['other_accounts'];
+            }
+            if($input['country'])
+            {
+                $this->request->userInfo->country= $input['country'];
+            }
 			// if($input['telegram']){
 			// 	$this->request->userInfo->telegram= $input['telegram'];
 			// }
@@ -87,7 +95,7 @@ class User  extends BaseController
 //				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
 //			}
 			$data = $userInfo;
-		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+		    $data['pay_password'] = $userInfo['pay_password']==0?0:1;
 		    $data['password'] = '';
 			$this->success(lang('system.setting_succeeded'),$data);
             // return json(['status' => 'success','message' => '设置成功']);
