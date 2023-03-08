@@ -420,7 +420,7 @@ class User  extends BaseController
                 UserModel::where('id',$this->request->userInfo->id)->inc('balance')->update();
                 capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$this->request->userInfo->balance,$content,$admin_content);
             }
-		    $data['pay_paasword'] = $this->request->userInfo['pay_paasword']==0?0:1;
+		    $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
 		    $data['password'] = '';
 			$this->success(lang('user.mobilesuccess'),$data);
             // return json(['status' => 'success', 'message' => '绑定成功']);
