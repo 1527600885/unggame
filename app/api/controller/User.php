@@ -67,25 +67,25 @@ class User  extends BaseController
             $user = $this->request->userInfo;
             $this->request->userInfo->save();
 			$userInfo=$this->request->userInfo;
-			$amount=1;
-			if(!$user->mobile && $userInfo->mobile){
-				$content='{user.addmobile}'.$amount.'{capital.money}';
-				$admin_content='用户'.$userInfo->nickname.'添加手机号码资金增加'.$amount.'美元';
-				UserModel::where('id',$userInfo->id)->inc('balance')->update();
-				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
-			}
-			if(!$user->messenger && $userInfo->messenger){
-				$content='{user.addmessenger}'.$amount.'{capital.money}';
-				$admin_content='用户'.$userInfo->nickname.'添加Facebook资金增加'.$amount.'美元';
-				UserModel::where('id',$userInfo->id)->inc('balance')->update();
-				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
-			}
-			if(!$user->whatsapp && $userInfo->whatsapp){
-				$content='{user.addwhatsapp}'.$amount.'{capital.money}';
-				$admin_content='用户'.$userInfo->nickname.'添加whatsapp资金增加'.$amount.'美元';
-				UserModel::where('id',$userInfo->id)->inc('balance')->update();
-				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
-			}
+//			$amount=1;
+//			if(!$user->mobile && $userInfo->mobile){
+//				$content='{user.addmobile}'.$amount.'{capital.money}';
+//				$admin_content='用户'.$userInfo->nickname.'添加手机号码资金增加'.$amount.'美元';
+//				UserModel::where('id',$userInfo->id)->inc('balance')->update();
+//				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
+//			}
+//			if(!$user->messenger && $userInfo->messenger){
+//				$content='{user.addmessenger}'.$amount.'{capital.money}';
+//				$admin_content='用户'.$userInfo->nickname.'添加Facebook资金增加'.$amount.'美元';
+//				UserModel::where('id',$userInfo->id)->inc('balance')->update();
+//				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
+//			}
+//			if(!$user->whatsapp && $userInfo->whatsapp){
+//				$content='{user.addwhatsapp}'.$amount.'{capital.money}';
+//				$admin_content='用户'.$userInfo->nickname.'添加whatsapp资金增加'.$amount.'美元';
+//				UserModel::where('id',$userInfo->id)->inc('balance')->update();
+//				capital_flow($userInfo->id,$userInfo->id,7,1,$amount,$userInfo->balance,$content,$admin_content);
+//			}
 			$data = $userInfo;
 		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
 		    $data['password'] = '';
@@ -93,7 +93,7 @@ class User  extends BaseController
             // return json(['status' => 'success','message' => '设置成功']);
         }
     }
-	
+
 	/**
 	 * 修改头像
 	 */
@@ -369,7 +369,14 @@ class User  extends BaseController
             $this->request->userInfo->update_time = date('Y-m-d H:i:s');
             $this->request->userInfo->save();
             $data = $this->request->userInfo->toArray();
-		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+            if(!$data['is_check_email']){
+                $amount = 10;
+				$content='{user.addemail}'.$amount.'{capital.money}';
+				$admin_content='用户'.$this->request->userInfo->nickname.'添加校验邮箱资金增加'.$amount.'美元';
+				UserModel::where('id',$this->request->userInfo->id)->inc('balance')->update();
+				capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$this->request->userInfo->balance,$content,$admin_content);
+            }
+		    $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
 		    $data['password'] = '';
 			$this->success(lang('user.mobilesuccess'),$data);
             // return json(['status' => 'success', 'message' => '绑定成功']);
@@ -390,7 +397,7 @@ class User  extends BaseController
 			// }
 			$input = input('post.');
 			if(!$input['mobile']){
-				$this->error($e->getError());
+				$this->error("Please enter your mobile phone number.");
 			}
 			
             // if (! password_verify($input['code'].'index_bind_mobile_code'.$input['mobile'].$input['salt'].request()->ip(), $input['rcode'])) {
@@ -401,11 +408,19 @@ class User  extends BaseController
 				$this->error(lang('user.mobileexistence'));
                 // return json(['status' => 'error', 'message' => '此手机号已被注册']);
             }
+
             $this->request->userInfo->mobile      = $input['mobile'];
             $this->request->userInfo->update_time = date('Y-m-d H:i:s');
             $this->request->userInfo->save();
             $data = $this->request->userInfo->toArray();
-		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+            if(!$this->request->userInfo['is_check_email']){
+                $amount = 10;
+                $content='{user.addmobile}'.$amount.'{capital.money}';
+                $admin_content='用户'.$this->request->userInfo->nickname.'添加校验手机资金增加'.$amount.'美元';
+                UserModel::where('id',$this->request->userInfo->id)->inc('balance')->update();
+                capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$this->request->userInfo->balance,$content,$admin_content);
+            }
+		    $data['pay_paasword'] = $this->request->userInfo['pay_paasword']==0?0:1;
 		    $data['password'] = '';
 			$this->success(lang('user.mobilesuccess'),$data);
             // return json(['status' => 'success', 'message' => '绑定成功']);

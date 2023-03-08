@@ -204,23 +204,23 @@ class Login extends BaseController
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
             
-            if($input['code']!='5427'&&$input['checklable']==2){
-                $regtype = 2;
-                if (! password_verify($input['code'].'index_register_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
-                    $this->error(lang('user.codeerror'));
-                    // return json(["status" => "error", "message" => '邮箱验证码错误']);
-                }
-            }else if($input['checklable']==1){
-                 $regtype = 1;
-                //          手机验证码验证
-                    $pcode = cache::get('+'.$input['uncode'].$input['phone']);
-                    if($input['code']!=$pcode){
-                        $this->error(lang('user.codeerror'));
-                    }
-                   
-            }else{
-                $this->error(lang('user.codeerror'));
-            }
+//            if($input['code']!='5427'&&$input['checklable']==2){
+//                $regtype = 2;
+//                if (! password_verify($input['code'].'index_register_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
+//                    $this->error(lang('user.codeerror'));
+//                    // return json(["status" => "error", "message" => '邮箱验证码错误']);
+//                }
+//            }else if($input['checklable']==1){
+//                 $regtype = 1;
+//                //          手机验证码验证
+//                    $pcode = cache::get('+'.$input['uncode'].$input['phone']);
+//                    if($input['code']!=$pcode){
+//                        $this->error(lang('user.codeerror'));
+//                    }
+//
+//            }else{
+//                $this->error(lang('user.codeerror'));
+//            }
             if($input['checklable']==1&&UserModel::where(['mobile'=>$input['phone'],'uncode'=>$input['uncode']])->value('id')){
                  $this->error(lang('user.phoneerror'));
             }else if ($input['checklable']==2&&UserModel::where('email', $input['email'])->value('id')){
