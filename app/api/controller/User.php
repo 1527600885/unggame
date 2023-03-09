@@ -12,6 +12,8 @@ namespace app\api\controller;
 
 use app\admin\model\Config as ConfigModel;
 use app\api\model\GameBetLog;
+use app\api\model\v2\UserIdcard;
+use app\api\validate\IdCard;
 use think\facade\Validate;
 use think\File as Fileupload;
 use think\facade\Filesystem;
@@ -500,6 +502,22 @@ class User  extends BaseController
 		    // return json(['status' => 'success', 'message' => lang('system.operation_succeeded')]);
 		}
 	}
+	public function passwordMobile()
+    {
+        $input = input("post.");
+        if($input['code'] != cache($this->request->userInfo["mobile"]))
+        {
+            $this->error(lang('user.captchaError'));
+        }
+        $save = $this->request->userInfo;
+        $save->password = $input['password'];
+        $save->update_time = date('Y-m-d H:i:s');
+        $save->save();
+        $data = $save->toArray();
+        $data['pay_paasword'] = $save->pay_paasword==0?0:1;
+        $data['password'] = '';
+        $this->success(lang('system.operation_succeeded'),$data);
+    }
 	/**
 	 * 发送修改支付密码邮箱验证码（已登录的情况）
 	 */
@@ -628,6 +646,7 @@ class User  extends BaseController
         if($user->is_check_email)
         {
             $result = sendCode::email($user['email'], 'index_modifyPassword_email_code', "modify Password");
+            $type = "email";
         }else if($user->is_check_mobile)
         {
             $phone = '+'.$user['uncode'].$user["mobile"];
@@ -636,13 +655,40 @@ class User  extends BaseController
             if($result['code']!=0){
                 $this->error(lang('user.codeerror'));
             }
+            $type = "mobile";
         }else{
             $this->error("Please verify your account first.","",414);
         }
-        $this->success("success",$result);
+        $this->success("success",["type"=>$type,"data"=>$result]);
     }
 	public function searchwallet()
     {
         
+    }
+    public function addIdCardImage()
+    {
+        $data = input("post.");
+        $validate = new IdCard();
+        if(!$validate->check($data))
+        {
+            $this->error($validate->getError());
+        }
+        $userIdCard = UserIdcard::where("user_id",$this->request->userInfo['id'])->find();
+        if($userIdCard && $userIdCard->status == 1) $this->error("Duplicate submission");
+        $save = [
+            "user_id"=>$this->request->userInfo['id'],
+            "idCard_image"=>$data['idCard_image'],
+            "idCard_image_with_hand"=>$data['idCard_image_with_hand'],
+            "surname"=>$data['surname'],
+            "name"=>$data['name'],
+            "status"=>0
+        ];
+        if($save)
+        {
+            $userIdCard->save($save);
+        }else{
+            UserIdcard::create($save);
+        }
+        $this->success("Submission successful.");
     }
 }

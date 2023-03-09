@@ -66,12 +66,14 @@ return array(
 		'userregister'=>'Your unicorn game registration',
 		'codeerror'=>'The verification code error',
 		'emailerror'=>'Email number has been registered',
+		'emailEmpty'=>'Please fill in your email.',
 		'phoneerror'=>'Phone Number has been registered',
 		'registersuccess'=>'login was successful',
 		'unregistered'=>'Email not registered',
 		'forgot'=>'Forgot password',
 		'mobileexistence'=>'This mobile number has been registered',
 		'mobilesuccess'=>'Binding succeeded',
+		'mobileError'=>'The phone number is incorrect.',
 		'sex'=>'Please select gender',
 		'pay_paasword_require'=>'Payment password is required',
 		'pay_paasword_length'=>'Payment password must be six digits',
@@ -136,6 +138,15 @@ return array(
 	],
     "withdrawal"=>[
         "text"=>"Cash withdrawal"
+    ],
+    "idCard"=>[
+        "imagerequire"=>"Please upload a photo of your ID card.",
+        'imageWithHand'=>"Please upload a photo of yourself holding your ID card.",
+        "surname"=>"Please fill in your surname.",
+        "name"=>"Please fill in your first name",
+        "imageInvalid"=>"Invalid image.",
+        "surnamelengtherror"=>"The surname you filled in does not comply with the rules.",
+        "namelengtherror"=>"The first name you filled in does not comply with the rules.",
     ]
 );
 ?>
