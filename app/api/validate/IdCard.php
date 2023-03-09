@@ -9,8 +9,8 @@ use think\Validate;
 class IdCard extends Validate
 {
     protected $rule=[
-        "idCard_image"=>"require|url",
-        "idCard_image_with_hand"=>"require|url",
+        "idCard_image"=>"require",
+        "idCard_image_with_hand"=>"require",
         "surname"=>"require|length:1,40",
         "name"=>"require|length:1,40"
     ];
