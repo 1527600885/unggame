@@ -683,7 +683,7 @@ class User  extends BaseController
             "name"=>$data['name'],
             "status"=>0
         ];
-        if($save)
+        if($userIdCard)
         {
             $userIdCard->save($save);
         }else{
