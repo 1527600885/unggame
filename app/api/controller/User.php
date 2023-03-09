@@ -691,4 +691,8 @@ class User  extends BaseController
         }
         $this->success("Submission successful.");
     }
+    public function getUserIdCard()
+    {
+        return $this->success("success",UserIdcard::find($this->request->userInfo['id']));
+    }
 }
