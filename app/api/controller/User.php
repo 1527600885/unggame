@@ -443,7 +443,7 @@ class User  extends BaseController
     {
         if ($this->request->isPost()) {
             $email = $this->request->post("email");
-            if(!Validate::is($email,"email")){
+            if($email && !Validate::is($email,"email")){
                 $this->error(Validate::getError());
             }
             if($email){
@@ -452,7 +452,7 @@ class User  extends BaseController
                     $this->error(lang("user.emailoccupy"));
                 }
             }
-            $input['email']= $email ?:$this->request->userInfo['email'];
+            $input['email']= $email ?:UserModel::where("id",$this->request->userInfo['id'])->value("email");
             $result = sendCode::email($input['email'], 'index_bind_email_code', lang('user.bindemail'));
             $this->success('success',$result);
 			// return json($result);
