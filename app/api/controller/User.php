@@ -12,6 +12,7 @@ namespace app\api\controller;
 
 use app\admin\model\Config as ConfigModel;
 use app\api\model\GameBetLog;
+use think\facade\Validate;
 use think\File as Fileupload;
 use think\facade\Filesystem;
 use think\exception\ValidateException;
@@ -113,7 +114,7 @@ class User  extends BaseController
 	        $this->request->userInfo->cover    = $input['cover'];
 			$this->request->userInfo->save();
 			$data = $this->request->userInfo->toArray();
-		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+		    $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
 		    $data['password'] = '';
 			$this->success(lang('system.setting_succeeded'),$data);
 	        // return json(['status' => 'success','message' => '设置成功']);
@@ -133,7 +134,7 @@ class User  extends BaseController
 			$this->request->userInfo->pay_paasword    = $input['pay_paasword'];
 			$this->request->userInfo->save();
 				$data = $this->request->userInfo->toArray();
-		    $data['pay_paasword'] = $userInfo['pay_paasword']==0?0:1;
+		    $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
 		    $data['password'] = '';
 			$this->success(lang('system.setting_succeeded'),$data);
 		}
@@ -441,21 +442,19 @@ class User  extends BaseController
     public function sendBindEmailCode()
     {
         if ($this->request->isPost()) {
-            try {
-                $input = input('post.');
-                validate(UserValidate::class)->scene('codeEmail')->check($input);
-            } catch ( ValidateException $e ) {
-				$this->error($e->getError());
-                // return json(['status' => 'error', 'message' => $e->getError()]);
+            $email = $this->request->post("email");
+            if(!Validate::is($email,"email")){
+                $this->error(Validate::getError());
             }
-			$email=UserModel::where('id', $this->request->userInfo['id'])->value('email');
-			$input['email']=$email;
-    //         if (UserModel::where('email', $input['email'])->value('id')) {
-				// $this->error(lang('user.emailerror'));
-    //             return json(['status' => 'error', 'message' => '此邮箱号已被注册']);
-    //         }
+            if($email){
+                $email = UserModel::where("email",$email)->find();
+                if($email){
+                    $this->error(lang("user.emailoccupy"));
+                }
+            }
+            $input['email']= $email ?:$this->request->userInfo['email'];
             $result = sendCode::email($input['email'], 'index_bind_email_code', lang('user.bindemail'));
-            $this->success('',$result);
+            $this->success('success',$result);
 			// return json($result);
         }
     }
@@ -466,16 +465,16 @@ class User  extends BaseController
     public function sendBindMobileCode()
     {
         if ($this->request->isPost()) {
-            try {
-                $input = input('post.');
-                validate(UserValidate::class)->scene('codeMobile')->check($input);
-            } catch ( ValidateException $e ) {
-                return json(['status' => 'error', 'message' => $e->getError()]);
+            $mobile = $this->request->post("mobile");
+            if(!Validate::is($mobile,"mobile")){
+                $this->error(Validate::getError());
             }
-            if (UserModel::where('mobile', $input['mobile'])->value('id')) {
-                return json(['status' => 'error', 'message' => '此手机号已被注册']);
+            $uncode = $this->request->post("uncode");
+            if (UserModel::where('mobile', $mobile)->value('id')) {
+                return json(['status' => 'error', 'message' => 'The mobile phone number has already been registered.']);
             }
-            $result = sendCode::sms($input['mobile'], 'index_bind_mobile_code', '26BEKytK3bCe');
+            $phone = '+'.$uncode.$mobile;
+            $result = sendCode::singleSend($phone);
             return json($result);
         }
     }
@@ -645,6 +644,25 @@ class User  extends BaseController
 			$v->content=getlang($v->content);
 		}
 		$this->success(lang('system.operation_succeeded'),$data);
+    }
+    public function modifyPasswordSendCode()
+    {
+        $user = $this->request->userInfo;
+        if($user->is_check_email)
+        {
+            $result = sendCode::email($user['email'], 'index_modifyPassword_email_code', "modify Password");
+        }else if($user->is_check_mobile)
+        {
+            $phone = '+'.$user['uncode'].$user["mobile"];
+            $result=sendCode::singleSend($phone);
+            // $data = json_decode($result,true);
+            if($result['code']!=0){
+                $this->error(lang('user.codeerror'));
+            }
+        }else{
+            $this->error("Please verify your account first.","",414);
+        }
+        $this->success("success",$result);
     }
 	public function searchwallet()
     {
