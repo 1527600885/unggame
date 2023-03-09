@@ -349,91 +349,62 @@ class User  extends BaseController
             // return json(['status' => 'error', 'message' => $e->getError()]);
         }
     }
-    
-    /**
-     * 绑定邮箱
-     */
-    public function bindEmail()
-    {
-        if ($this->request->isPost()) {
-            try {
-                $input = input('post.');
-                validate(UserValidate::class)->scene('bindEmail')->check($input);
-            } catch ( ValidateException $e ) {
-				$this->error($e->getError());
-                // return json(['status' => 'error', 'message' => $e->getError()]);
-            }
-			$oldemail = UserModel::where('id', $this->request->userInfo['id'])->value('email');
-			
-            if (! password_verify($input['code'].'index_bind_email_code'.$oldemail.$input['salt'].request()->ip(), $input['rcode'])) {
-                $this->error(lang('user.codeerror'));
-				// return json(["status" => "error", "message" => '验证码不正确']);
-            }
-            $email = UserModel::where('email', $input['email'])->value('id');
-            if ($email) {
-				$this->error(lang('user.emailerror'));
-                // return json(['status' => 'error', 'message' => '此邮箱号已被注册']);
-            }
-            $this->request->userInfo->email       = $input['email'];
-            $this->request->userInfo->update_time = date('Y-m-d H:i:s');
-            $this->request->userInfo->save();
-            $data = $this->request->userInfo->toArray();
-            if(!$data['is_check_email']){
-                $amount = 10;
-				$content='{user.addemail}'.$amount.'{capital.money}';
-				$admin_content='用户'.$this->request->userInfo->nickname.'添加校验邮箱资金增加'.$amount.'美元';
-				UserModel::where('id',$this->request->userInfo->id)->inc('balance')->update();
-				capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$this->request->userInfo->balance,$content,$admin_content);
-            }
-		    $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
-		    $data['password'] = '';
-			$this->success(lang('user.mobilesuccess'),$data);
-            // return json(['status' => 'success', 'message' => '绑定成功']);
+    public function bindEmail(){
+        $input = input("post.");
+        if(!isset($input['email']) || empty($input['email']))
+        {
+            $email = UserModel::where('id', $this->request->userInfo['id'])->value('email');
+            if(!$email) $this->error(lang("user.emailEmpty"));
         }
+        if (! password_verify($input['code'].'index_bind_email_code'.$email.$input['salt'].request()->ip(), $input['rcode'])) {
+            $this->error(lang('user.codeerror'));
+        }
+        $email = UserModel::where('email', $input['email'])->value('id');
+        if ($email) {
+            $this->error(lang('user.emailerror'));
+        }
+        $this->request->userInfo->email       = $input['email'];
+        $this->request->userInfo->update_time = date('Y-m-d H:i:s');
+        $this->request->userInfo->save();
+        $data = $this->request->userInfo->toArray();
+        if(!$data['is_check_email']){
+            $amount = 10;
+            $content='{user.addemail}'.$amount.'{capital.money}';
+            $admin_content='用户'.$this->request->userInfo->nickname.'添加校验邮箱资金增加'.$amount.'美元';
+            UserModel::where('id',$this->request->userInfo->id)->inc('balance',$amount)->update();
+            capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$this->request->userInfo->balance,$content,$admin_content);
+        }
+        $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
+        $data['password'] = '';
+        $this->success("Operation successful.",$data);
     }
-
-    /**
-     * 绑定手机
-     */
-    public function bindMobile()
-    {
-        if ($this->request->isPost()) {
-   //          try {
-   //              $input = input('post.');
-   //              validate(UserValidate::class)->scene('bindMobile')->check($input);
-   //          } catch ( ValidateException $e ) {
-			// 	$this->error($e->getError());
-			// }
-			$input = input('post.');
-			if(!$input['mobile']){
-				$this->error("Please enter your mobile phone number.");
-			}
-			
-            // if (! password_verify($input['code'].'index_bind_mobile_code'.$input['mobile'].$input['salt'].request()->ip(), $input['rcode'])) {
-            //     return json(["status" => "error", "message" => '验证码不正确']);
-            // }
-            $mobile = UserModel::where('mobile', $input['mobile'])->value('id');
-            if ($mobile) {
-				$this->error(lang('user.mobileexistence'));
-                // return json(['status' => 'error', 'message' => '此手机号已被注册']);
-            }
-
-            $this->request->userInfo->mobile      = $input['mobile'];
-            $this->request->userInfo->update_time = date('Y-m-d H:i:s');
-            $this->request->userInfo->save();
-            $data = $this->request->userInfo->toArray();
-            if(!$this->request->userInfo['is_check_email']){
-                $amount = 10;
-                $content='{user.addmobile}'.$amount.'{capital.money}';
-                $admin_content='用户'.$this->request->userInfo->nickname.'添加校验手机资金增加'.$amount.'美元';
-                UserModel::where('id',$this->request->userInfo->id)->inc('balance')->update();
-                capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$this->request->userInfo->balance,$content,$admin_content);
-            }
-		    $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
-		    $data['password'] = '';
-			$this->success(lang('user.mobilesuccess'),$data);
-            // return json(['status' => 'success', 'message' => '绑定成功']);
+    public function bindMobile(){
+        $input = input('post.');
+        if(!isset($input['mobile']) || empty($input['mobile']))
+        {
+            $mobile = UserModel::where('id', $this->request->userInfo['id'])->value('mobile');
+            if(!$mobile) $this->error(lang("user.mobileEmpty"));
         }
+        $code = cache($mobile);
+        if($code != $input['code']) $this->error(lang("user.codeerror"));
+        $usermobile = UserModel::where('mobile', $input['mobile'])->value('id');
+        if ($usermobile) {
+            $this->error(lang('user.mobileexistence'));
+        }
+        $this->request->userInfo->mobile      = $input['mobile'];
+        $this->request->userInfo->update_time = date('Y-m-d H:i:s');
+        $this->request->userInfo->save();
+        $data = $this->request->userInfo->toArray();
+        if(!$this->request->userInfo['is_check_mobile']){
+            $amount = 10;
+            $content='{user.addmobile}'.$amount.'{capital.money}';
+            $admin_content='用户'.$this->request->userInfo->nickname.'添加校验手机资金增加'.$amount.'美元';
+            UserModel::where('id',$this->request->userInfo->id)->inc('balance',$amount)->update();
+            capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$this->request->userInfo->balance,$content,$admin_content);
+        }
+        $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
+        $data['password'] = '';
+        $this->success(lang('user.mobilesuccess'),$data);
     }
 
     /**
@@ -444,7 +415,7 @@ class User  extends BaseController
         if ($this->request->isPost()) {
             $email = $this->request->post("email");
             if($email && !Validate::is($email,"email")){
-                $this->error(Validate::getError());
+                $this->error(lang("user.email"));
             }
             if($email){
                 $email = UserModel::where("email",$email)->find();
@@ -466,16 +437,21 @@ class User  extends BaseController
     {
         if ($this->request->isPost()) {
             $mobile = $this->request->post("mobile");
-            if(!Validate::is($mobile,"mobile")){
-                $this->error(Validate::getError());
+            if($mobile && !Validate::is($mobile,"length:4,16|number")){
+                $this->error(lang("user.mobileError"));
             }
             $uncode = $this->request->post("uncode");
-            if (UserModel::where('mobile', $mobile)->value('id')) {
-                return json(['status' => 'error', 'message' => 'The mobile phone number has already been registered.']);
+            if ($mobile) {
+                if(UserModel::where('mobile', $mobile)->where("uncode",$uncode)->value('id')){
+                    $this->error(lang("user.mobileexistence"));
+                }
+                $phone = '+'.$uncode.$mobile;
+            }else{
+                $phone = '+'.$this->request->userInfo['uncode'].$this->request->userInfo['mobile'];
             }
-            $phone = '+'.$uncode.$mobile;
+
             $result = sendCode::singleSend($phone);
-            return json($result);
+            $this->success("success",$result);
         }
     }
 	/**
@@ -491,6 +467,7 @@ class User  extends BaseController
 			// return json($result);
 	    }
 	}
+
 	/**
 	 * 修改登录密码（已登录的情况）
 	 */
@@ -504,7 +481,7 @@ class User  extends BaseController
 		        // return json(['status' => 'error', 'message' => $e->getError()]);
 		    }
 			$input['email']=$oldemail = UserModel::where('id', $this->request->userInfo['id'])->value('email');
-		    if (! password_verify($input['code'].'index_password_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
+		    if (! password_verify($input['code'].'index_modifyPassword_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
 		        $this->error(lang('user.captchaError'));
 				// return json(["status" => "error", "message" => lang('user.captchaError')]);
 		    }
@@ -549,7 +526,7 @@ class User  extends BaseController
 		        // return json(['status' => 'error', 'message' => $e->getError()]);
 		    }
 			$input['email']=$oldemail = UserModel::where('id', $this->request->userInfo['id'])->value('email');
-		    if (! password_verify($input['code'].'index_pay_password_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
+		    if (! password_verify($input['code'].'index_modifyPassword_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
 		        $this->error(lang('user.captchaError'));
 				// return json(["status" => "error", "message" => lang('user.captchaError')]);
 		    }
