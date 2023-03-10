@@ -82,22 +82,58 @@ class sendCode
     public static function singleSend($mobile) {
         $code = rand(1000,9999);
         $text = '[UNGGAME] The verification code is '. $code;
-        $data = [
-                'apikey' => "34ff173cb17ee45bb0f6444a933e2233",
-                'mobile' => $mobile,
-                'text' => $text,
-                ];
-        $header = array("Content-Type:application/x-www-form-urlencoded;charset=utf-8;", "Accept:application/json;charset=utf-8;");
-        $result = self::curlPost("https://us.yunpian.com/v2/sms/single_send.json", $data,5,$header);
-        $data = json_decode($result,true);
-        if($data["code"]!=0){
+        if(!self::niuxinyunCode($mobile,$text)){
             return false;
         }
         cache::set($mobile,$code,300);
         $result=['status' => 'success','message' => lang('system.success'), 'code' => 0];
         return $result;
     }
-    
+    public static function yunpianCode($mobile,$text)
+    {
+
+        $data = [
+            'apikey' => "34ff173cb17ee45bb0f6444a933e2233",
+            'mobile' => $mobile,
+            'text' => $text,
+        ];
+        $header = array("Content-Type:application/x-www-form-urlencoded;charset=utf-8;", "Accept:application/json;charset=utf-8;");
+        $result = self::curlPost("https://us.yunpian.com/v2/sms/single_send.json", $data,5,$header);
+        $data = json_decode($result,true);
+        if($data["code"]!=0){
+            return false;
+        }
+        return true;
+
+    }
+    public static function niuxinyunCode($mobile,$text)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api2.nxcloud.com/api/sms/mtsend',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => "appkey=iXZqD8M6&secretkey=UOm4pvTX&phone={$mobile}&content={$text}",
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $data = json_decode($response,true);
+        if($data['code'] !=0){
+            return false;
+        }
+        return true;
+    }
    public static function curlPost($url, $post_data = array(), $timeout = 5, $header = "", $data_type = "") {
             $header = empty($header) ? '' : $header;
             //支持json数据数据提交
