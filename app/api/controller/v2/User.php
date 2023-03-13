@@ -17,7 +17,7 @@ class User extends BaseController
         if($data['is_check'] == 0 && $account){
             $check_type = !empty($data['email']) ? "email" : "mobile";
             $check_account = $data[$check_type];
-            if($account!=$check_account) $this->error("Please verify the {$check_type}  that you used during registration first.");
+            if($account!=$check_account) $this->error("Please verify the {$check_type}  that you used during registration first.","",466);
         }
 
         $code = input("post.code","");
