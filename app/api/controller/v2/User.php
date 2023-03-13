@@ -13,6 +13,13 @@ class User extends BaseController
     public function checkAccount()
     {
         $account = input("post.account","");
+        $data = UserModel::where("id",$this->request->userInfo['id'])->where("email,mobile,is_check")->find();
+        if($data['is_check'] == 0 && $account){
+            $check_type = !empty($data['email']) ? "email" : "mobile";
+            $check_account = $data[$check_type];
+            if($account!=$check_account) $this->error("Please verify the {$check_type}  that you used during registration first.");
+        }
+
         $code = input("post.code","");
         $is_fill = input("post.is_fill",1);
         $type = input("post.type");
@@ -45,4 +52,5 @@ class User extends BaseController
         $data['password'] = '';
         $this->success("Operation successful.",$data);
     }
+
 }
