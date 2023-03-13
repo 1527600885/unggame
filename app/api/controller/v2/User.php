@@ -41,7 +41,7 @@ class User extends BaseController
         }
         $this->request->userInfo->save($save);
         $data = $this->request->userInfo->toArray();
-        $data['pay_password'] = $data['pay_password']==0?0:1;
+        $data['pay_password'] = $this->request->userInfo['pay_password']==0?0:1;
         $data['password'] = '';
         $this->success("Operation successful.",$data);
     }
