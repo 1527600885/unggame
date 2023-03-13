@@ -362,7 +362,8 @@ class User  extends BaseController
             $this->error(lang('user.codeerror'));
         }
         $email = UserModel::where('email', $input['email'])->value('id');
-        if ($email) {
+        $input['type'] = $input['type'] ?? 0;
+        if ($email && $input['type'] == 0) {
             $this->error(lang('user.emailerror'));
         }
         $this->request->userInfo->email       = $input['email'];
@@ -390,7 +391,8 @@ class User  extends BaseController
         $code = cache($mobile);
         if($code != $input['code']) $this->error(lang("user.codeerror"));
         $usermobile = UserModel::where('mobile', $input['mobile'])->value('id');
-        if ($usermobile) {
+        $input['type'] = $input['type'] ?? 0;
+        if ($usermobile && $input['type'] == 0 ) {
             $this->error(lang('user.mobileexistence'));
         }
         $this->request->userInfo->mobile      = $input['mobile'];
