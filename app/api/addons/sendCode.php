@@ -51,6 +51,7 @@ class sendCode
         $email = trim($email);
         $result = Email::send($email, $title, $body);
         if ($result['status'] === 'success') {
+            cache($email,$code,300);
             $salt  = rand_id(8);
             EmailCode::create(["email"=>$email,"code"=>$code,"create_time"=>date("Y-m-d H:i:s")]);
             $code  = password_hash($code.$name.$email.$salt.request()->ip(), PASSWORD_BCRYPT, ['cost' => 12]);
