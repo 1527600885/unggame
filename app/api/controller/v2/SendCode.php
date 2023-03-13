@@ -26,7 +26,7 @@ class SendCode extends BaseController
             }else{
                 $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
             }
-           return json(\app\api\addons\sendCode::email($account, 'index_bind_email_code', lang('user.bindemail')));
+            $this->success("success",\app\api\addons\sendCode::email($account, 'index_bind_email_code', lang('user.bindemail')));
         }else if($type == "mobile")
         {
             if($is_fill)
@@ -43,7 +43,7 @@ class SendCode extends BaseController
             }else{
                 $phone = '+'.$this->request->userInfo['uncode'].$this->request->userInfo['mobile'];
             }
-             return json(\app\api\addons\sendCode::singleSend($phone));
+            $this->success("success",\app\api\addons\sendCode::singleSend($phone));
         }
     }
 }
