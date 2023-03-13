@@ -12,21 +12,25 @@ class User extends BaseController
 {
     public function checkAccount()
     {
-        $account = input("post.account","");
+        $key = $account = input("post.account","");
         $data = UserModel::where("id",$this->request->userInfo['id'])->field("email,mobile,is_check")->find();
         if($data['is_check'] == 0 && $account){
             $check_type = !empty($data['email']) ? "email" : "mobile";
             $check_account = $data[$check_type];
             if($account!=$check_account) $this->error("Please verify the {$check_type}  that you used during registration first.","",466);
         }
-
         $code = input("post.code","");
         $is_fill = input("post.is_fill",1);
         $type = input("post.type");
+        if($type == 'mobile') $uncode = input("post.uncode","");
         if(!$is_fill){
             $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
+            if($type == "mobile"){
+                $uncode = UserModel::where("id",$this->request->userInfo['id'])->value("uncode");
+            }
         }
-        $cache = cache($account);
+        if($type == "mobile")  $key  = "+{$uncode}{$account}";
+        $cache = cache($key);
         if(!$cache || $code != $cache)
         {
             $this->error(lang("user.codeerror"));
