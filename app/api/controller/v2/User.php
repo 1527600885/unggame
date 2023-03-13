@@ -13,7 +13,7 @@ class User extends BaseController
     public function checkAccount()
     {
         $account = input("post.account","");
-        $data = UserModel::where("id",$this->request->userInfo['id'])->where("email,mobile,is_check")->find();
+        $data = UserModel::where("id",$this->request->userInfo['id'])->field("email,mobile,is_check")->find();
         if($data['is_check'] == 0 && $account){
             $check_type = !empty($data['email']) ? "email" : "mobile";
             $check_account = $data[$check_type];
