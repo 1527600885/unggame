@@ -35,7 +35,7 @@ class User extends BaseController
             $amount = 10;
             $content='{user.addmobile}'.$amount.'{capital.money}';
             $admin_content='用户'.$this->request->userInfo->nickname.'添加校验手机资金增加'.$amount.'美元';
-            $save['balance'] = bcadd($this->request->userInfo->balance,$account,4);
+            $save['balance'] = bcadd($this->request->userInfo->balance,$amount,4);
             capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$save['balance'],$content,$admin_content);
             $save["is_check_{$type}"] = 1;
         }
