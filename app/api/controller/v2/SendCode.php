@@ -31,7 +31,7 @@ class SendCode extends BaseController
         {
             if($is_fill)
             {
-                if(!Validate::is($account,"number") || Validate::length($account,"4,16"))
+                if(!Validate::is($account,"number") || !Validate::length($account,"4,16"))
                 {
                     $this->error(lang("user.mobileError"));
                 }
