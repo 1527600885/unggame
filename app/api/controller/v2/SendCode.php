@@ -18,13 +18,13 @@ class SendCode extends BaseController
         $is_exit = input("post.is_exit",0);
         if($type == "email")
         {
-            if($is_fill && !Validate::is($account,"email"))
+            if($is_fill)
             {
-                $this->error(lang("user.email"));
-                if($is_exit &&  UserModel::where("email",$account)->find())
-                {
-                    $this->error(lang("user.emailoccupy"));
-                }
+                if(!Validate::is($account,"email"))  $this->error(lang("user.email"));
+                if($is_exit &&  UserModel::where("email",$account)->find())  $this->error(lang("user.emailoccupy"));
+
+            }else{
+                $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
             }
            return json(\app\api\addons\sendCode::email($account, 'index_bind_email_code', lang('user.bindemail')));
         }else if($type == "mobile")

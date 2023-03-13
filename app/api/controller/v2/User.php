@@ -14,7 +14,7 @@ class User extends BaseController
     {
         $account = input("post.account","");
         $code = input("post.code","");
-        $is_fill = input("post.is_fill",0);
+        $is_fill = input("post.is_fill",1);
         $type = input("post.type");
         if(!$is_fill){
             $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
