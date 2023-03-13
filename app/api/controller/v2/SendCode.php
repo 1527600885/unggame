@@ -41,7 +41,7 @@ class SendCode extends BaseController
                 }
                 $phone = '+'.input('uncode').$account;
             }else{
-                $phone = '+'.$this->request->userInfo['uncode'].$this->request->userInfo['mobile'];
+                $phone = '+'.$this->request->userInfo['uncode'].UserModel::where("id",$this->request->userInfo['id'])->value($type);;
             }
             $this->success("success",\app\api\addons\sendCode::singleSend($phone));
         }
