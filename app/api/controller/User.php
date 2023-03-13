@@ -353,12 +353,12 @@ class User  extends BaseController
     }
     public function bindEmail(){
         $input = input("post.");
-        if(!isset($input['email']) || empty($input['email']))
+        if(! $input['is_fill']  || empty($input['email']))
         {
-            $email = UserModel::where('id', $this->request->userInfo['id'])->value('email');
-            if(!$email) $this->error(lang("user.emailEmpty"));
+            $input['email'] = UserModel::where('id', $this->request->userInfo['id'])->value('email');
+            if(!$input['email']) $this->error(lang("user.emailEmpty"));
         }
-        if (! password_verify($input['code'].'index_bind_email_code'.$email.$input['salt'].request()->ip(), $input['rcode'])) {
+        if (! password_verify($input['code'].'index_bind_email_code'.$input['email'].$input['salt'].request()->ip(), $input['rcode'])) {
             $this->error(lang('user.codeerror'));
         }
         $email = UserModel::where('email', $input['email'])->value('id');
@@ -366,9 +366,12 @@ class User  extends BaseController
         if ($email && $input['type'] == 0) {
             $this->error(lang('user.emailerror'));
         }
-        $this->request->userInfo->email       = $input['email'];
-        $this->request->userInfo->update_time = date('Y-m-d H:i:s');
-        $this->request->userInfo->save();
+        if($input['type'] != 0){
+            $this->request->userInfo->email       = $input['email'];
+            $this->request->userInfo->update_time = date('Y-m-d H:i:s');
+            $this->request->userInfo->save();
+        }
+
         $data = $this->request->userInfo->toArray();
         if(!$data['is_check_email']){
             $amount = 10;
@@ -383,7 +386,7 @@ class User  extends BaseController
     }
     public function bindMobile(){
         $input = input('post.');
-        if(!isset($input['mobile']) || empty($input['mobile']))
+        if(!$input['is_fill'] || empty($input['mobile']))
         {
             $mobile = UserModel::where('id', $this->request->userInfo['id'])->value('mobile');
             if(!$mobile) $this->error(lang("user.mobileEmpty"));
@@ -395,9 +398,11 @@ class User  extends BaseController
         if ($usermobile && $input['type'] == 0 ) {
             $this->error(lang('user.mobileexistence'));
         }
-        $this->request->userInfo->mobile      = $input['mobile'];
-        $this->request->userInfo->update_time = date('Y-m-d H:i:s');
-        $this->request->userInfo->save();
+        if($input['type'] !=0){
+            $this->request->userInfo->mobile = $input['mobile'];
+            $this->request->userInfo->update_time = date('Y-m-d H:i:s');
+            $this->request->userInfo->save();
+        }
         $data = $this->request->userInfo->toArray();
         if(!$this->request->userInfo['is_check_mobile']){
             $amount = 10;
