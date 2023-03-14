@@ -273,7 +273,7 @@ class Login extends BaseController
                 'mobile'           => isset($input['phone'])?$input['phone']:'',
                 'uncode'           => isset($input['uncode'])?$input['uncode']:'',
                 'ungaddress'       => $ungaddress,
-                'regtype'          => $regtype,
+//                'regtype'          => $regtype,
                 'account'          => "",
                 'password'         => $input['password'],
                 'pay_paasword'     => "",

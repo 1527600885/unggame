@@ -3,6 +3,8 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 use app\api\BaseController;
+use app\api\model\v2\UngUserDivd;
+use app\api\model\v2\UngUserLog;
 use think\Request;
 use think\facade\Cache;
 use think\facade\Db;
@@ -73,10 +75,8 @@ class Ung extends BaseController
 	}
 	// 获取相关的数据
 	public function ungdata(){
-	   // die;
+	    die;
 		$userInfo=$this->nologuserinfo;
-		var_dump($userInfo);
-		die;
 		$date=strtotime(date('Y-m-d 23:59:59'))-24*60*60;
 		$time=time();
 // 		var_dump($userInfo);
@@ -141,8 +141,6 @@ class Ung extends BaseController
 	public function transfer(){
 	    $redis = (new Redis())->getRedis();
 	    $counts = $redis->keys('ung_user_divd*');
-	    var_dump($counts);
-	    die;
 	    try{
 	        $input = input('post.');
 	        
@@ -204,6 +202,8 @@ class Ung extends BaseController
         //开启事务
         Db::startTrans();
         try {
+            \app\api\model\User::where("id",$userinfo['id'])->update(["last_trade_time"=>time()]);
+            \app\api\model\User::where("id",$touser['uid'])->update(["last_trade_time"=>time()]);
             // 修改数量
             Db::name("ung_user")->where("uid",$userinfo["id"])->update(["num"=>bcsub($userUng["num"],$quantity,5)]); 
             Db::name("ung_user")->where("uid",$touser['uid'])->update(["num"=>bcadd($touser['num'],$touser_log['num'],5)]);
@@ -285,6 +285,7 @@ class Ung extends BaseController
 		    $setungdata['num']  = bcadd($userinfo['num'],$num,5);
 		    
 		    $setdata['balance']  = bcsub((String)$userinfo['balance'],bcmul($num,$ungset['price'],5));
+		    $setdata['last_trade_time'] = time();
 		    // 生成唯一订单号
             $subzm=['F','B','H'];
 		    $orderno = $subzm[rand(0,2)].date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
@@ -380,6 +381,7 @@ class Ung extends BaseController
     		$insert_log['add_time'] = time();
     		$ungupdate['num'] = 0;
     		$update['balance'] =  bcadd((string)$realmoney,(string)$userinfo['balance'],5);
+    		$update['last_trade_time'] = time();
     // 		var_dump($realmoney);
     // 		var_dump($userinfo['balance']);
     // 		var_dump($update['balance']);
@@ -418,4 +420,14 @@ class Ung extends BaseController
 	public function bonus(){
 		
 	}
+    public function divdList()
+    {
+       $lists = UngUserDivd::where("userid",$this->request->userInfo['id'])->order("id desc")->paginate(10);
+       $this->success("success",$lists);
+    }
+    public function userLog()
+    {
+        $lists = UngUserLog::withSearch("")->where("uid",$this->request->userInfo['id'])->order("id desc")->paginate(10);
+        $this->success("success",$lists);
+    }
 }

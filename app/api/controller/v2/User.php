@@ -57,5 +57,32 @@ class User extends BaseController
         $data['password'] = '';
         $this->success("Operation successful.",$data);
     }
-
+    public function modifyPassword()
+    {
+        $type = input("post.type");
+        $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
+        $cache = cache($account);
+        $code = input("post.code","");
+        if(!$cache || $code != $cache)
+        {
+            $this->error(lang("user.codeerror"));
+        }
+        $password = input("post.password/s");
+        $this->request->userInfo->save(compact("password"));
+        $this->success("Operation successful.");
+    }
+    public function modifyPayPassword()
+    {
+        $type = input("post.type");
+        $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
+        $cache = cache($account);
+        $code = input("post.code","");
+        if(!$cache || $code != $cache)
+        {
+            $this->error(lang("user.codeerror"));
+        }
+        $pay_password = input("post.pay_password/s");
+        $this->request->userInfo->save(compact("pay_password"));
+        $this->success("Operation successful.");
+    }
 }
