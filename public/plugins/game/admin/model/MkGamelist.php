@@ -30,4 +30,16 @@ class MkGamelist extends Model
             $query->whereBetweenTime("", $value[0], $value[1]);
         }
     }
+    public function setGameReleaseDateAttr($value)
+    {
+        return date("Y-m-d",strtotime($value));
+    }
+    public function setImagesAttr($value)
+    {
+        return json_encode($value);
+    }
+    public function getImagesAttr($value)
+    {
+        return json_decode($value,true);
+    }
 }

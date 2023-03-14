@@ -299,6 +299,11 @@ class Game extends BaseController
 
         try{
             Db::startTrans();
+            if(in_array($userInfo->id,[])){
+                $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,0,$tcgGameCode,'html5',$this->gamelang);
+                $ret = json_decode($result,true);
+                $this->success(lang('game.run_game'),['game_url'=>$ret['game_url'],'gamename'=>$gamename]);
+            }
             if($userInfo->balance<=0){
                 //没有资金的情况下，将不进行资金的操作
                 $result=$this->apigame->getLaunchGameRng($userInfo->game_account,$userInfo->nickname,$gameinfo->productType,1,$tcgGameCode,'html5',$this->gamelang);
@@ -426,6 +431,7 @@ class Game extends BaseController
                             $userbalance=bcadd($gamelog->amount."",-$amount."",2);
                             $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
                             $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
+                            $result_type = 2;
                         }elseif($balance>$gamelog->amount){
                             //用户赢的情况
                             $money_type=1;
@@ -433,6 +439,7 @@ class Game extends BaseController
                             $userbalance=bcadd($gamelog->amount."",$amount."",2);
                             $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentt}'.$amount.'{capital.money}';
                             $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金增加'.$amount.'美元';
+                            $result_type = 1;
                         }elseif($balance==$gamelog->amount){
                             // 用户没赢没输的情况
                             $money_type=0;
@@ -440,6 +447,7 @@ class Game extends BaseController
                             $userbalance=$gamelog->amount;
                             $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentf}';
                             $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金不变';
+                            $result_type = 0;
                         }
                         capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
                     }else if($gamelog->amount > 0){//初始金额不为0.全部输光
@@ -452,7 +460,7 @@ class Game extends BaseController
                         capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
                     }
                     $redis->set("user_wait_recapture_{$userInfo->id}",0);
-                    $this->success(lang('system.operation_succeeded'));
+                    $this->success(lang('system.operation_succeeded'),["amount"=>$amount,"result_type"=>$result_type]);
                 }else{
                     $this->error(lang('game.synchronizing_funds'));
                 }

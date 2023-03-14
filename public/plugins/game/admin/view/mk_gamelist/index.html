@@ -178,6 +178,40 @@
 							default: 0,
 						}
 					},
+					{
+						prop:'game_release_date',
+						label: '发行日期',
+						table: false,
+						form: {
+							is:'el-date-picker',
+						}
+					},
+					{
+						prop:'author',
+						label: '作者',
+						table: false,
+						form: {
+							is:'el-input',
+						}
+					},
+					{
+						prop: 'description',
+						label: '描述',
+						table: false,
+						form: {
+							is:'el-input',
+							type:'textarea'
+						}
+					},
+					{
+						prop:'images',
+						label: "详情页图片表",
+						table: false,
+						form: {
+							is:'el-file-list-select',
+							type:'image'
+						}
+					}
 					// {
 					// 	prop: 'trialSupport',
 					// 	label: '试玩',

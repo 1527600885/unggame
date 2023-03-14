@@ -31,6 +31,7 @@ class Config extends BaseController
             'email'  => ConfigModel::getVal('email'),
             'system' => ConfigModel::getVal('system'),
             'withdraw' =>  ConfigModel::getVal('withdraw'),
+            'ungconfig'=> ConfigModel::getVal("ungconfig"),
             'themes' => Themes::select(),
             'upload' => [
                 'admin' => include(root_path().'app/admin/config/upload.php'),
@@ -60,7 +61,12 @@ class Config extends BaseController
                     file_put_contents(root_path().'app/admin/config/upload.php', "<?php\nreturn ".var_export($input['value']['admin'],true).";");
                     $msg = ['status' => 'success', 'message' => '修改成功'];
                     break;
+                case "numberoneuser":
+                case "numbertwouser":
+                case "numberthreeuser":
+                case "numberfouruser":
                 case 'withdraw':
+                case 'ungconfig':
                     $msg = ConfigModel::setVal($input['name'],$input['title'], $input['value']);
                     break;
                 default:

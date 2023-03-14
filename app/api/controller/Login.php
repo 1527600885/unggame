@@ -204,23 +204,23 @@ class Login extends BaseController
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
             
-            if($input['code']!='5427'&&$input['checklable']==2){
-                $regtype = 2;
-                if (! password_verify($input['code'].'index_register_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
-                    $this->error(lang('user.codeerror'));
-                    // return json(["status" => "error", "message" => '邮箱验证码错误']);
-                }
-            }else if($input['checklable']==1){
-                 $regtype = 1;
-                //          手机验证码验证
-                    $pcode = cache::get('+'.$input['uncode'].$input['phone']);
-                    if($input['code']!=$pcode){
-                        $this->error(lang('user.codeerror'));
-                    }
-                   
-            }else{
-                $this->error(lang('user.codeerror'));
-            }
+//            if($input['code']!='5427'&&$input['checklable']==2){
+//                $regtype = 2;
+//                if (! password_verify($input['code'].'index_register_email_code'.$input['email'].$input['salt'].$this->request->ip(), $input['rcode'])) {
+//                    $this->error(lang('user.codeerror'));
+//                    // return json(["status" => "error", "message" => '邮箱验证码错误']);
+//                }
+//            }else if($input['checklable']==1){
+//                 $regtype = 1;
+//                //          手机验证码验证
+//                    $pcode = cache::get('+'.$input['uncode'].$input['phone']);
+//                    if($input['code']!=$pcode){
+//                        $this->error(lang('user.codeerror'));
+//                    }
+//
+//            }else{
+//                $this->error(lang('user.codeerror'));
+//            }
             if($input['checklable']==1&&UserModel::where(['mobile'=>$input['phone'],'uncode'=>$input['uncode']])->value('id')){
                  $this->error(lang('user.phoneerror'));
             }else if ($input['checklable']==2&&UserModel::where('email', $input['email'])->value('id')){
@@ -273,7 +273,7 @@ class Login extends BaseController
                 'mobile'           => isset($input['phone'])?$input['phone']:'',
                 'uncode'           => isset($input['uncode'])?$input['uncode']:'',
                 'ungaddress'       => $ungaddress,
-                'regtype'          => $regtype,
+//                'regtype'          => $regtype,
                 'account'          => "",
                 'password'         => $input['password'],
                 'pay_paasword'     => "",
@@ -317,28 +317,28 @@ class Login extends BaseController
 			if($ret['status']==0){
 				UserModel::where('id',$registerInfo->id)->update(['game_account'=>$game_account,'nickname'=>$input['nickname']?$input['nickname']:$game_account]);
 				// 给直接邀请人添加注册奖励
-				if($input['invitation_code']){
-					$amount=2;
-					//更新一级邀请人数
-					$one_count = UserModel::where("id",$invite_one_uid)->count();
-					UserModel::where('id',$invite_one_uid)->inc('balance',$amount)->update(['invite_one_num'=>$one_count]);
-					//更新二级邀请人数
-					if($invite_two_uid){
-                        $two_count = UserModel::where("id",$invite_two_uid)->count();
-                        UserModel::where("id",$invite_two_uid)->update(["invite_two_num"=>$two_count]);
-                    }
-					//更新三级邀请人数
-                   if($invite_three_uid){
-                       $three_count = UserModel::where("id",$invite_three_uid)->count();
-                       UserModel::where("id",$invite_three_uid)->update(["invite_three_num"=>$three_count]);
-                   }
-					//添加资金列表
-					$userbalance=$invite_one_list->balance;
-					$content='{user.inviteusers}'.$registerInfo->nickname.'{user.inviteregister}$'.$amount;
-					$admin_content='用户'.$invite_one_list->nickname.'邀请用户'.$registerInfo->nickname.'注册获得'.$amount.'美金';
-					capital_flow($invite_one_uid,$registerInfo->id,5,1,$amount,$userbalance,$content,$admin_content);
-				}
 			}
+            if($input['invitation_code']){
+                $amount=2;
+                //更新一级邀请人数
+                $one_count = UserModel::where("id",$invite_one_uid)->count();
+                UserModel::where('id',$invite_one_uid)->inc('balance',$amount)->update(['invite_one_num'=>$one_count]);
+                //更新二级邀请人数
+                if($invite_two_uid){
+                    $two_count = UserModel::where("id",$invite_two_uid)->count();
+                    UserModel::where("id",$invite_two_uid)->update(["invite_two_num"=>$two_count]);
+                }
+                //更新三级邀请人数
+                if($invite_three_uid){
+                    $three_count = UserModel::where("id",$invite_three_uid)->count();
+                    UserModel::where("id",$invite_three_uid)->update(["invite_three_num"=>$three_count]);
+                }
+                //添加资金列表
+                $userbalance=$invite_one_list->balance;
+                $content='{user.inviteusers}'.$registerInfo->nickname.'{user.inviteregister}$'.$amount;
+                $admin_content='用户'.$invite_one_list->nickname.'邀请用户'.$registerInfo->nickname.'注册获得'.$amount.'美金';
+                capital_flow($invite_one_uid,$registerInfo->id,5,1,$amount,$userbalance,$content,$admin_content);
+            }
 			// $id=$hashids->decode($game_account);
             // 绑定事件
             event('RegisterEnd', $registerInfo);

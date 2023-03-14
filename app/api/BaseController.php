@@ -91,20 +91,22 @@ abstract class BaseController
 			$this->lang = 'en-us';
 		}
 		$this->gamelang=$this->gameslang($this->lang);
+        global $lang;
+        $lang = $this->gamelang;
 		$action = strtolower($this->request->action());
 		$module = app('http')->getName();
 		//只限制接口模块验证
 		if($module=="api"){
-		    if(!in_array($action,$this->noNeedCheckIp) || in_array("*",$this->noNeedCheckIp))
-		    {
-		        $ip = $this->request->ip();
-		        $iswhite = (new Redis())->getRedis()->get("ip_white_{$ip}");
-                //获取访问的目标地区
-                $country=getipcountry($ip);
-                if(!$iswhite && in_array($country['country'],["中国","香港","澳门"])){
-                    $this->error(lang('system.iperror'),$country,407);
-                }
-            }
+//		    if(!in_array($action,$this->noNeedCheckIp) || in_array("*",$this->noNeedCheckIp))
+//		    {
+//		        $ip = $this->request->ip();
+//		        $iswhite = (new Redis())->getRedis()->get("ip_white_{$ip}");
+//                //获取访问的目标地区
+//                $country=getipcountry($ip);
+//                if(!$iswhite && in_array($country['country'],["中国","香港","澳门"])){
+//                    $this->error(lang('system.iperror'),$country,407);
+//                }
+//            }
 			if (in_array($action,$this->noNeedLogin)||in_array('*',$this->noNeedLogin)){
 				  if($this->request->header('accept-token')){
 					  $this->nologuserinfo=$this->getuserinfo($this->request->header('accept-token'));

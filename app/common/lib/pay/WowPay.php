@@ -22,7 +22,8 @@ class WowPay extends Pay
             "MYR"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"111887001",
-                "key"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
+                "key"=>"8ba4b3d14415441aa9fc1eca23093c7c",
+                "dfkey"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
             ]
         ],
         "config"=>[
@@ -146,7 +147,7 @@ class WowPay extends Pay
             "receive_account"=>$param['receive_account'],
             "back_url"=> $domain.$this->payConfig['backurl']
         ];
-        $key = $config[$this->currency_type]["key"];
+        $key = $config[$this->currency_type]["dfkey"];
         $data['sign'] = $this->getSign($data,$key);
         $data['sign_type'] = $this->payConfig['sign_type'];
         $reuslt_json = curl($config[$this->currency_type]["requestUrl"].$this->payConfig['gateWay']["transfer"],$data);
