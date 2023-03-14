@@ -6,7 +6,9 @@ namespace app\api\controller\v2;
 
 use app\api\BaseController;
 use app\api\model\User as UserModel;
+use app\api\model\v2\AccountType;
 use think\facade\Validate;
+use think\response\Json;
 
 class User extends BaseController
 {
@@ -82,6 +84,9 @@ class User extends BaseController
     {
         $type = input("post.type");
         $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
+        if($type == "mobile"){
+            $account ='+'.$this->request->userInfo['uncode'].$account;
+        }
         $cache = cache($account);
         $code = input("post.code","");
         if(!$cache || $code != $cache)
@@ -90,6 +95,17 @@ class User extends BaseController
         }
         $pay_password = input("post.pay_password/s");
         $this->request->userInfo->save(compact("pay_password"));
+        $this->success("Operation successful.");
+    }
+    public function addOtherAccounts()
+    {
+        $post = input("post.");
+        $names = AccountType::column("name");
+        if(!in_array($post['type'],$names))
+        {
+            $this->error("Account type is wrong");
+        }
+        $this->request->userInfo->save(["other_accounts"=>$post]);
         $this->success("Operation successful.");
     }
 }

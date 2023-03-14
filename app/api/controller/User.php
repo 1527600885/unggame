@@ -54,20 +54,20 @@ class User  extends BaseController
 			// }
             // $this->request->userInfo->nickname = $input['nickname'];
 			// $this->request->userInfo->sex      = $input['sex'];
-			if($input['mobile']){
+			if(isset($input['mobile']) && !empty($input['mobile'])){
 				$this->request->userInfo->mobile   = $input['mobile'];
 			}
-			if($input['messenger']){
+			if(isset($input['messenger']) && !empty($input['messenger'])){
 				$this->request->userInfo->messenger= $input['messenger'];
 			}
-			if($input['whatsapp']){
+			if(isset($input['whatsapp']) && !empty($input['whatsapp'])){
 				$this->request->userInfo->whatsapp= $input['whatsapp'];
 			}
-            if($input["other_accounts"])
+            if(isset($input["other_accounts"]) && !empty($input['other_accounts']))
             {
                 $this->request->userInfo->other_accounts= $input['other_accounts'];
             }
-            if($input['country'])
+            if(isset($input['country']) && !empty($input['country']))
             {
                 $this->request->userInfo->country= $input['country'];
             }

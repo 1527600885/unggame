@@ -437,7 +437,7 @@ class Ung extends BaseController
     }
     public function userLog()
     {
-        $lists = UngUserLog::withSearch("")->where("uid",$this->request->userInfo['id'])->order("id desc")->paginate(10);
+        $lists = UngUserLog::withSearch("type",["type"=>$this->request->param("type/d")])->where("uid",$this->request->userInfo['id'])->order("id desc")->paginate(10);
         $this->success("success",$lists);
     }
 }

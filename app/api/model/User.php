@@ -16,7 +16,6 @@ class User extends Model
 {
     // 设置json类型字段
     protected $json = ['field','other_accounts'];
-
     protected $jsonAssoc = true;
 
     // 关联模型
@@ -69,5 +68,10 @@ class User extends Model
     		$password = password_hash($value, PASSWORD_BCRYPT, ['cost' => 12]);	
 	        $this->set('password', $password);
     	}
+    }
+    public function setOtherAccountsAttr($value,$array)
+    {
+        if(!empty($value)) $value = json_encode($value);
+        return $value;
     }
 }
