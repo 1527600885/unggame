@@ -48,8 +48,11 @@ class Ung extends BaseController
     		    $ungsetdata['divdmoney'] = 0;
     		}
     		$ungsetdata['UNG'] = bcadd($userung['num'],'0',2);
-    		$ungsetdata['trachecharge']=$ungone->trachecharge;
-    		$ungsetdata['servicecharge'] = $ungone->servicecharge;
+    		$ungsetdata['trachecharge']=$ungone->trachecharge;//转账手续费
+    		$ungsetdata['servicecharge'] = $ungone->servicecharge;//赎回手续费
+    		$ungsetdata['redemptionprice'] = $ungone->redemptionprice;//赎回单价
+    		$ungsetdata['balance'] = $userInfo['balance'];//用户余额
+    		$ungsetdata['buylimit'] = $userInfo['buylimit'];//最低购买额度
     // 		累计股息金额
             $userdvdall = Db::name("ung_user_divd")->where("userid",$userInfo['id'])->value("SUM(CAST(divdmoney as DECIMAL (18,2))) as divdmoney");
             if($userdvdall){
