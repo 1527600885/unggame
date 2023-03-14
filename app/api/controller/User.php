@@ -652,11 +652,13 @@ class User  extends BaseController
         $user = $this->request->userInfo;
         if($user->is_check_email)
         {
-            $result = sendCode::email($user['email'], 'index_modifyPassword_email_code', "modify Password");
+            $account = UserModel::where("id",$user['id'])->value("email");
+            $result = sendCode::email($account, 'index_modifyPassword_email_code', "modify Password");
             $type = "email";
         }else if($user->is_check_mobile)
         {
-            $phone = '+'.$user['uncode'].$user["mobile"];
+            $account = UserModel::where("id",$user['id'])->value("mobile");
+            $phone = '+'.$user['uncode'].$account;
             $result=sendCode::singleSend($phone);
             // $data = json_decode($result,true);
             if($result['code']!=0){
@@ -664,9 +666,9 @@ class User  extends BaseController
             }
             $type = "mobile";
         }else{
-            $this->error("Please verify your account first.","",414);
+            $this->error("Please verify your account first.","",466);
         }
-        $this->success("success",["type"=>$type,"data"=>$result]);
+        $this->success("success",["type"=>$type,"data"=>$result,"account"=>$user[$type]]);
     }
 	public function searchwallet()
     {
