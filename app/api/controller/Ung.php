@@ -77,11 +77,7 @@ class Ung extends BaseController
 	public function ungdata(){
 	    die;
 		$userInfo=$this->nologuserinfo;
-<<<<<<< HEAD
-		// var_dump($userInfo);
-		// die;
-=======
->>>>>>> 9705755f34fe896960024ec0d4cdca35c2bb2cb3
+
 		$date=strtotime(date('Y-m-d 23:59:59'))-24*60*60;
 		$time=time();
 // 		var_dump($userInfo);
@@ -146,11 +142,7 @@ class Ung extends BaseController
 	public function transfer(){
 	    $redis = (new Redis())->getRedis();
 	    $counts = $redis->keys('ung_user_divd*');
-<<<<<<< HEAD
-	    // var_dump($counts);
-	    // die;
-=======
->>>>>>> 9705755f34fe896960024ec0d4cdca35c2bb2cb3
+
 	    try{
 	        $input = input('post.');
 	        
