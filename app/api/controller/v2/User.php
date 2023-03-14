@@ -29,7 +29,14 @@ class User extends BaseController
                 $uncode = UserModel::where("id",$this->request->userInfo['id'])->value("uncode");
             }
         }
-        if($type == "mobile")  $key  = "+{$uncode}{$account}";
+        $save = [
+            $type=>$account,
+            "update_time"=>date("Y-m-d H:i:s")
+        ];
+        if($type == "mobile")  {
+            $save['uncode'] = $uncode;
+            $key  = "+{$uncode}{$account}";
+        }
         $cache = cache($key);
         if(!$cache || $code != $cache)
         {
@@ -38,10 +45,7 @@ class User extends BaseController
         if($is_fill && UserModel::where($type,$account)->find()){
             $this->error($type == 'email' ? lang("user.emailoccupy"): lang("user.mobileexistence"));
         }
-        $save = [
-            $type=>$account,
-            "update_time"=>date("Y-m-d H:i:s")
-        ];
+
         if(!$this->request->userInfo["is_check_{$type}"]){
             $amount = 10;
             $content='{user.addmobile}'.$amount.'{capital.money}';
