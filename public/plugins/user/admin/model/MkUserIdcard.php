@@ -8,23 +8,24 @@
 // +----------------------------------------------------------------------
 // | Author: MUKE <513038996@qq.com>
 // +----------------------------------------------------------------------
-namespace plugins\ung\admin\model;
+namespace plugins\user\admin\model;
 
-use app\admin\model\User;
 use think\Model;
 
-class MkUngUser extends Model
+class MkUserIdcard extends Model
 {
-    protected $name = "ung_user";
+    protected $name = "user_idcard";
     protected $type = [
-      "update_time" => 'timestamp',
-       "add_time"=> 'timestamp'
+        "create_time"=>"timestamp",
+        "update_time"=>"timestamp",
+        "review_time"=>"timestamp"
     ];
+    
     // 搜索器
     public function searchKeywordAttr($query, $value)
     {
     	if (! empty($value)) {
-	        $query->where("num","like", "%" . $value . "%");
+	        $query->where("idCard_image|idCard_image_with_hand|surname|name|failed_reason","like", "%" . $value . "%");
 	    }
     }
     
@@ -34,8 +35,9 @@ class MkUngUser extends Model
             $query->whereBetweenTime("", $value[0], $value[1]);
         }
     }
-    public function user()
+    public function getStatusTextAttr($value,$data)
     {
-        return $this->belongsTo(User::class,"uid")->bind(["nickname"=>"nickname"]);
+        $list = [0=>"待审核",1=>"审核通过",2=>"审核失败"];
+        return $list[$data['status']];
     }
 }

@@ -5,7 +5,17 @@
 		:table-export="false"
 		:table-page-size="20"
 		:table-page-sizes="[20, 50, 100, 200, 500]">
+		<template  v-slot:search>
+			<el-button type="text">
+				<span>活跃用户:<span style="color: red">{$userNumbers}</span>人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span>累计营收:<span style="color: red">${$total}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span>昨日分红:<span style="color: red">${$yesterday_divd}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span>昨日利润:<span style="color: red">${$yesterday_price}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span>平台运营天数:<span style="color: red">{$total_days}</span></span>
+			</el-button>
+		</template>
 	</el-curd>
+
 </div>
 <script>
 	new Vue({
@@ -42,7 +52,7 @@
 						}
 					},
 					{
-						prop: 'type',
+						prop: 'type_text',
 						label: '类型',
 						table: {
 							sort: true,
@@ -98,7 +108,7 @@
 						prop: 'add_time',
 						label: '创建时间',
 						table: {
-							prop: 'add_times',
+							prop: 'add_time',
 							sort: true,
 						},
 						form: {
