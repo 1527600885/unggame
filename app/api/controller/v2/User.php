@@ -24,7 +24,7 @@ class User extends BaseController
         $type = input("post.type");
         if($type == 'mobile') $uncode = input("post.uncode","");
         if(!$is_fill){
-            $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
+            $key = $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
             if($type == "mobile"){
                 $uncode = UserModel::where("id",$this->request->userInfo['id'])->value("uncode");
             }
