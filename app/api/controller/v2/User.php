@@ -65,6 +65,9 @@ class User extends BaseController
     {
         $type = input("post.type");
         $account = UserModel::where("id",$this->request->userInfo['id'])->value($type);
+        if($type == "mobile"){
+            $account ='+'.$this->request->userInfo['uncode'].$account;
+        }
         $cache = cache($account);
         $code = input("post.code","");
         if(!$cache || $code != $cache)
