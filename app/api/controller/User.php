@@ -565,21 +565,21 @@ class User  extends BaseController
 			// 用户余额
 			$data['balance']=$userInfo->balance;
 			// 今天的游戏赢得
-			$gamewind=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3,'money_type'=>1])->whereDay('add_time')->sum('amount');
+			$gamewind=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3,'money_type'=>1])->whereDay('add_time')->value("SUM(CAST(amount as DECIMAL (18,3))) as amount");
 			//今日游戏输的
-			$gamefail=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3,'money_type'=>2])->whereDay('add_time')->sum('amount');
+			$gamefail=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>3,'money_type'=>2])->whereDay('add_time')->value("SUM(CAST(amount as DECIMAL (18,3))) as amount");
 			$profit = round(GameBetLog::where(['user_id'=>$userInfo->id])->whereDay('betTime')->sum('netPnl'),2);
             $data['profit']=$profit > 0 ? $profit : 0 ;
 			// 今日流水
 			$data['water']=round(GameBetLog::where(['user_id'=>$userInfo->id])->whereDay('betTime')->sum('betAmount'),2);
 			// echo CapitalFlowmodel::getLastSql();exit;
 			// 今日股息
-			$data['dividend']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->whereDay('add_time')->sum('amount');
+			$data['dividend']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->whereDay('add_time')->value("SUM(CAST(amount as DECIMAL (18,3))) as amount");
 			// 总获得的股息
-			$data['dividends']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->sum('amount');
+			$data['dividends']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->value("SUM(CAST(amount as DECIMAL (18,3))) as amount");
             $withdrawConfig =  ConfigModel::getVal('withdraw');
-			$data['miniwithrawal'] = $withdrawConfig['minprice'];
-			$data['rate'] = $withdrawConfig['rate'];
+			$data['miniwithrawal']r = $withdrawConfig['minprice'];
+			$data['rate'] = $withdawConfig['rate'];
 			// 资金的详细列表
 			$data['list']=CapitalFlowmodel::where([
 				['uid','=',$userInfo->id],

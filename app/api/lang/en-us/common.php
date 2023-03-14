@@ -84,7 +84,7 @@ return array(
         'balanceFreeze'=>'Funds are frozen',
         'signrewards'=>'User sign-in rewards',
         "lxsignrewards"=>'Continuous user sign-in rewards',
-        "platformrewards"=>'Platform sign-in rewards'
+        "platformrewards"=>'Platform sign-in rewards',
         'addresseror' =>'Blockchain address error',
         'toyouself'   =>'Cannot transfer or gift to yoursel',
         'pay_paasword_empty'=>'Payment password is empty',
