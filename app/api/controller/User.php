@@ -12,6 +12,7 @@ namespace app\api\controller;
 
 use app\admin\model\Config as ConfigModel;
 use app\api\model\GameBetLog;
+use app\api\model\UngUser;
 use app\api\model\v2\UserIdcard;
 use app\api\validate\IdCard;
 use think\facade\Validate;
@@ -291,6 +292,7 @@ class User  extends BaseController
                     $this->request->userInfo['safetytext']=lang('user.safetyperfect');
                 }
 				$this->request->userInfo['safetyindex']=$safetyindex;
+				$this->request->userInfo['ung_num'] = UngUser::where("uid",$this->request->userInfo['id'])->value('num');
 				$this->success(lang('success'),$this->request->userInfo);
 			}
 		}
