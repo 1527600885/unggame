@@ -53,6 +53,7 @@ class Ung extends BaseController
     		$ungsetdata['redemptionprice'] = $ungone->redemptionprice;//赎回单价
     		$ungsetdata['balance'] = $userInfo['balance'];//用户余额
     		$ungsetdata['buylimit'] = $ungone->buylimit;//最低购买额度
+    		$ungsetdata['price'] = $ungone->price;//最低购买额度
     // 		累计股息金额
             $userdvdall = Db::name("ung_user_divd")->where("userid",$userInfo['id'])->value("SUM(CAST(divdmoney as DECIMAL (18,2))) as divdmoney");
             if($userdvdall){
