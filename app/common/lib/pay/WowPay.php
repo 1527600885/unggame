@@ -17,7 +17,7 @@ class WowPay extends Pay
      * @var array
      */
     public $payConfig = [
-        "debug"=>true,
+        "debug"=>false,
         "testconfig"=>[
             "MYR"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
@@ -31,6 +31,18 @@ class WowPay extends Pay
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"111887001",
                 "key"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
+            ],
+            "NGN"=>[
+                "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
+                "mch_id"=>"900776827",
+                "key"=>"767701826b6042a39cda3575655b2c13",
+                "dfkey"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
+            ],
+            "PHP"=>[
+                "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
+                "mch_id"=>"777999857",
+                "key"=>"d1d0562ede0f41179e529b2d10321969",
+                "dfkey"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
             ]
         ],
         "gateWay"=>[
