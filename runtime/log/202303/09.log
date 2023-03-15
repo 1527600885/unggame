@@ -1,0 +1,5 @@
+{"time":"2023-03-09 16:22:24","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/user/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:69]"}
+{"time":"2023-03-09 16:22:35","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/user/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:69]"}
+{"time":"2023-03-09 16:31:40","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-09 17:09:20","type":"error","msg":"[0]DateTime::__construct() expects parameter 1 to be string, int given[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\model\\concern\\TimeStamp.php:197]"}
+{"time":"2023-03-09 17:47:13","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}

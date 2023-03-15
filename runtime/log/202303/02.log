@@ -1,0 +1,20 @@
+{"time":"2023-03-02 10:31:35","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/carousel/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:69]"}
+{"time":"2023-03-02 10:31:49","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/carousel/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:69]"}
+{"time":"2023-03-02 10:33:16","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/carousel/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:69]"}
+{"time":"2023-03-02 10:34:18","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/carousel/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:69]"}
+{"time":"2023-03-02 10:39:56","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/carousel/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:69]"}
+{"time":"2023-03-02 10:47:26","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/carousel/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:152]"}
+{"time":"2023-03-02 10:47:37","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/carousel/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:152]"}
+{"time":"2023-03-02 10:48:01","type":"error","msg":"[2]include(E:\\project\\unggame\\public\\plugins/carousel/menu.php): failed to open stream: No such file or directory[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:152]"}
+{"time":"2023-03-02 10:48:28","type":"error","msg":"[2]array_push() expects parameter 1 to be array, null given[E:\\project\\unggame\\app\\admin\\controller\\AdminMenu.php:163]"}
+{"time":"2023-03-02 10:50:32","type":"error","msg":"[2]Use of undefined constant getGameList - assumed 'getGameList' (this will throw an Error in a future version of PHP)[E:\\project\\unggame\\runtime\\admin\\temp\\094efff095c24d9d50b363d2c7a44ae6.php:87]"}
+{"time":"2023-03-02 10:51:10","type":"error","msg":"[0]Call to undefined function getGameList()[E:\\project\\unggame\\runtime\\admin\\temp\\094efff095c24d9d50b363d2c7a44ae6.php:87]"}
+{"time":"2023-03-02 11:34:55","type":"error","msg":"[0]Cannot use object of type stdClass as array[E:\\project\\unggame\\app\\admin\\controller\\Numberone.php:28]"}
+{"time":"2023-03-02 11:34:56","type":"error","msg":"[0]Cannot use object of type stdClass as array[E:\\project\\unggame\\app\\admin\\controller\\Numberone.php:28]"}
+{"time":"2023-03-02 11:34:56","type":"error","msg":"[0]Cannot use object of type stdClass as array[E:\\project\\unggame\\app\\admin\\controller\\Numberone.php:28]"}
+{"time":"2023-03-02 13:50:14","type":"error","msg":"[8]Undefined variable: number1[E:\\project\\unggame\\runtime\\admin\\temp\\094efff095c24d9d50b363d2c7a44ae6.php:78]"}
+{"time":"2023-03-02 13:50:46","type":"error","msg":"[8]Undefined variable: numberoneuserForm[E:\\project\\unggame\\runtime\\admin\\temp\\094efff095c24d9d50b363d2c7a44ae6.php:78]"}
+{"time":"2023-03-02 15:52:03","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-02 17:13:48","type":"error","msg":"[10501]SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-02 17:13:52","type":"error","msg":"[10501]SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-02 17:55:23","type":"error","msg":"[8]Undefined property: app\\common\\game\\ApiGame::$productType[E:\\project\\unggame\\app\\api\\controller\\v2\\Game.php:71]"}

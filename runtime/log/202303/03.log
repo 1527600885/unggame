@@ -1,0 +1,6 @@
+{"time":"2023-03-03 10:09:37","type":"error","msg":"[2]file_get_contents(http://www.connect6play.com/doBusiness.do): failed to open stream: 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。\r\n[E:\\project\\unggame\\app\\common\\game\\ApiGame.php:242]"}
+{"time":"2023-03-03 10:18:08","type":"error","msg":"[0]syntax error, unexpected ''addresseror'' (T_CONSTANT_ENCAPSED_STRING), expecting ']'[E:\\project\\unggame\\app\\api\\lang\\en-us\\common.php:89]"}
+{"time":"2023-03-03 10:39:21","type":"error","msg":"[0]syntax error, unexpected ''addresseror'' (T_CONSTANT_ENCAPSED_STRING), expecting ']'[E:\\project\\unggame\\app\\api\\lang\\en-us\\common.php:89]"}
+{"time":"2023-03-03 10:40:59","type":"error","msg":"[8]Undefined index: game_url[E:\\project\\unggame\\app\\api\\controller\\v2\\Game.php:89]"}
+{"time":"2023-03-03 10:41:55","type":"error","msg":"[8]Undefined index: game_url[E:\\project\\unggame\\app\\api\\controller\\v2\\Game.php:90]"}
+{"time":"2023-03-03 10:47:57","type":"error","msg":"[2]file_get_contents(http://www.connect6play.com/doBusiness.do): failed to open stream: HTTP request failed![E:\\project\\unggame\\app\\common\\game\\ApiGame.php:242]"}

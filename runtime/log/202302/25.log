@@ -1,0 +1,10 @@
+{"time":"2023-02-25 16:47:34","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\api\\BaseController.php:104]"}
+{"time":"2023-02-25 16:47:56","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\api\\BaseController.php:104]"}
+{"time":"2023-02-25 16:48:17","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\api\\BaseController.php:104]"}
+{"time":"2023-02-25 16:48:59","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\api\\BaseController.php:104]"}
+{"time":"2023-02-25 16:50:15","type":"error","msg":"[10501]SQLSTATE[HY000] [1045] Access denied for user 'game_log'@'localhost' (using password: YES)[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-02-25 16:55:55","type":"error","msg":"[8]Undefined index: code[E:\\project\\unggame\\app\\api\\controller\\Order.php:121]"}
+{"time":"2023-02-25 17:02:45","type":"error","msg":"[8]Undefined offset: 3[E:\\project\\unggame\\app\\api\\controller\\Payment.php:23]"}
+{"time":"2023-02-25 17:10:06","type":"error","msg":"[0]Too few arguments to function app\\common\\lib\\pay\\Pay::instance(), 1 passed in E:\\project\\unggame\\app\\api\\controller\\Order.php on line 99 and exactly 2 expected[E:\\project\\unggame\\app\\common\\lib\\pay\\Pay.php:14]"}
+{"time":"2023-02-25 17:40:59","type":"error","msg":"[0]Call to a member function run() on string[E:\\project\\unggame\\app\\api\\controller\\Order.php:112]"}
+{"time":"2023-02-25 17:42:16","type":"error","msg":"[8]Undefined index: key[E:\\project\\unggame\\app\\common\\lib\\pay\\WowPay.php:59]"}

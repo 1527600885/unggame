@@ -1,0 +1,6 @@
+{"time":"2023-03-11 11:45:10","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-11 11:45:17","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-11 11:46:20","type":"error","msg":"[8]Undefined index: province[E:\\project\\unggame\\app\\admin\\controller\\User.php:43]"}
+{"time":"2023-03-11 11:46:24","type":"error","msg":"[8]Undefined index: province[E:\\project\\unggame\\app\\admin\\controller\\User.php:43]"}
+{"time":"2023-03-11 14:03:41","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'last_trade_time' in 'where clause'[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-11 14:04:52","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'creaate_time' in 'where clause'[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}

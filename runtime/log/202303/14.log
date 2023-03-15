@@ -1,0 +1,14 @@
+{"time":"2023-03-14 18:03:36","type":"error","msg":"[2]stream_socket_enable_crypto(): SSL: Handshake timed out[E:\\project\\unggame\\extend\\phpmailer\\class.smtp.php:160]"}
+{"time":"2023-03-14 18:05:28","type":"error","msg":"[0]json_decode() expects parameter 1 to be string, bool given[E:\\project\\unggame\\app\\api\\addons\\sendCode.php:132]"}
+{"time":"2023-03-14 18:06:55","type":"error","msg":"[0]json_decode() expects parameter 1 to be string, bool given[E:\\project\\unggame\\app\\api\\addons\\sendCode.php:132]"}
+{"time":"2023-03-14 18:07:59","type":"error","msg":"[0]json_decode() expects parameter 1 to be string, bool given[E:\\project\\unggame\\app\\api\\addons\\sendCode.php:132]"}
+{"time":"2023-03-14 18:08:23","type":"error","msg":"[0]json_decode() expects parameter 1 to be string, bool given[E:\\project\\unggame\\app\\api\\addons\\sendCode.php:132]"}
+{"time":"2023-03-14 18:37:26","type":"error","msg":"[0]Argument 1 passed to think\\db\\BaseQuery::value() must be of the type string, null given, called in E:\\project\\unggame\\app\\api\\controller\\v2\\User.php on line 67[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\BaseQuery.php:261]"}
+{"time":"2023-03-14 18:46:27","type":"error","msg":"[10501]SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'password' cannot be null[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-14 18:47:24","type":"error","msg":"[10501]SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'password' cannot be null[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-14 18:47:39","type":"error","msg":"[0]Argument 1 passed to think\\db\\BaseQuery::value() must be of the type string, null given, called in E:\\project\\unggame\\app\\api\\controller\\v2\\User.php on line 67[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\BaseQuery.php:261]"}
+{"time":"2023-03-14 19:08:34","type":"error","msg":"[10501]SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'password' cannot be null[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-14 21:40:14","type":"error","msg":"[8]Undefined index: mobile[E:\\project\\unggame\\app\\api\\controller\\User.php:57]"}
+{"time":"2023-03-14 22:49:29","type":"error","msg":"[0]json_decode() expects parameter 1 to be string, array given[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\model\\concern\\Attribute.php:623]"}
+{"time":"2023-03-14 22:50:50","type":"error","msg":"[0]json_decode() expects parameter 1 to be string, array given[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\model\\concern\\Attribute.php:623]"}
+{"time":"2023-03-14 22:51:32","type":"error","msg":"[0]json_decode() expects parameter 1 to be string, array given[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\model\\concern\\Attribute.php:623]"}

@@ -1,0 +1,22 @@
+{"time":"2023-03-10 14:08:33","type":"error","msg":"[0]Too few arguments to function think\\db\\BaseQuery::column(), 0 passed and at least 1 expected[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\BaseQuery.php:278]"}
+{"time":"2023-03-10 14:08:49","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:08:52","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUserLog.php:33]"}
+{"time":"2023-03-10 14:08:53","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:08:54","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUserLog.php:33]"}
+{"time":"2023-03-10 14:08:55","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:08:59","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:08:59","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:08:59","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:09:00","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:09:04","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:10:06","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:18:49","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 14:23:45","type":"error","msg":"[0]Too few arguments to function think\\db\\BaseQuery::column(), 0 passed and at least 1 expected[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\BaseQuery.php:278]"}
+{"time":"2023-03-10 14:24:07","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUser.php:32]"}
+{"time":"2023-03-10 15:13:43","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUserLog.php:33]"}
+{"time":"2023-03-10 15:13:55","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUserLog.php:33]"}
+{"time":"2023-03-10 15:17:46","type":"error","msg":"[0]DateTime::__construct() expects parameter 1 to be string, int given[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\model\\concern\\TimeStamp.php:197]"}
+{"time":"2023-03-10 15:19:15","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'nickname' in 'order clause'[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-10 15:19:16","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'nickname' in 'order clause'[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-10 15:19:17","type":"error","msg":"[10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'nickname' in 'order clause'[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-10 15:23:31","type":"error","msg":"[8]Undefined offset: 0[E:\\project\\unggame\\public\\plugins\\ung\\admin\\controller\\MkUngUserLog.php:33]"}

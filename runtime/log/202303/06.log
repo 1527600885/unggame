@@ -1,0 +1,14 @@
+{"time":"2023-03-06 09:11:08","type":"error","msg":"[0]Argument 1 passed to Endroid\\QrCode\\Writer\\PngWriter::write() must be an instance of Endroid\\QrCode\\QrCodeInterface, string given, called in E:\\project\\unggame\\app\\api\\controller\\Index.php on line 23[E:\\project\\unggame\\vendor\\endroid\\qr-code\\src\\Writer\\PngWriter.php:23]"}
+{"time":"2023-03-06 09:11:33","type":"error","msg":"[10501]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'game.mk_ungcoin_flow' doesn't exist[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-06 09:19:14","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 09:19:36","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 09:20:15","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 09:20:37","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 09:20:37","type":"error","msg":"[10501]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'game.mk_ungcoin_flow' doesn't exist[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-06 09:22:04","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 09:22:25","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 09:30:01","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 09:31:03","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 09:31:45","type":"error","msg":"[2]Illegal string offset 'country'[E:\\project\\unggame\\app\\admin\\controller\\User.php:42]"}
+{"time":"2023-03-06 14:15:06","type":"error","msg":"[8]Undefined index: en-us[E:\\project\\unggame\\app\\api\\model\\v2\\GameList.php:16]"}
+{"time":"2023-03-06 16:56:50","type":"error","msg":"[10501]SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'images' at row 1[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
