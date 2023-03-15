@@ -22,7 +22,7 @@ class GameInteraction extends BaseController
         {
             \app\api\model\v2\GameInteraction::create(["game_id"=>$data['game_id'],"user_id"=>$this->request->userInfo['id'],$type[$data['type']]=>1,"created_at"=>time(),"updated_at"=>time()]);
         }else{
-            $inter->save([$type[$data['type']]=>3-$data['type'],"updated_at"=>time()]);
+            $inter->save([$type[$data['type']]=>1-$data['type'],"updated_at"=>time()]);
         }
         $this->success("success");
 
