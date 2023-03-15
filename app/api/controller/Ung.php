@@ -47,11 +47,15 @@ class Ung extends BaseController
     		}else{
     		    $ungsetdata['divdmoney'] = 0;
     		}
-    		 $ungsetdata['UNG'] = $userung['num'];
-    		$ungsetdata['trachecharge']=$ungone->trachecharge;
-    		$ungsetdata['servicecharge'] = $ungone->servicecharge;
+    		$ungsetdata['UNG'] = bcadd($userung['num'],'0',2);
+    		$ungsetdata['trachecharge']=$ungone->trachecharge;//转账手续费
+    		$ungsetdata['servicecharge'] = $ungone->servicecharge;//赎回手续费
+    		$ungsetdata['redemptionprice'] = $ungone->redemptionprice;//赎回单价
+    		$ungsetdata['balance'] = $userInfo['balance'];//用户余额
+    		$ungsetdata['buylimit'] = $ungone->buylimit;//最低购买额度
+    		$ungsetdata['price'] = $ungone->price;//最低购买额度
     // 		累计股息金额
-            $userdvdall = Db::name("ung_user_divd")->where("userid",$userInfo['id'])->sum("divdmoney");
+            $userdvdall = Db::name("ung_user_divd")->where("userid",$userInfo['id'])->value("SUM(CAST(divdmoney as DECIMAL (18,2))) as divdmoney");
             if($userdvdall){
                 $ungsetdata['userdvdall'] = $userdvdall;
             }else{
@@ -77,6 +81,7 @@ class Ung extends BaseController
 	public function ungdata(){
 	    die;
 		$userInfo=$this->nologuserinfo;
+
 		$date=strtotime(date('Y-m-d 23:59:59'))-24*60*60;
 		$time=time();
 // 		var_dump($userInfo);
@@ -141,6 +146,7 @@ class Ung extends BaseController
 	public function transfer(){
 	    $redis = (new Redis())->getRedis();
 	    $counts = $redis->keys('ung_user_divd*');
+
 	    try{
 	        $input = input('post.');
 	        
