@@ -22,8 +22,8 @@ class GameInteraction extends BaseController
         {
             \app\api\model\v2\GameInteraction::create(["game_id"=>$data['game_id'],"user_id"=>$this->request->userInfo['id'],$type[$data['type']]=>1,"created_at"=>time(),"updated_at"=>time()]);
         }else{
-            $save = [$type[$data['type']]=>1-$inter[$data['type']],"updated_at"=>time()];
-            $inter->save($save);
+            $key = $type[$data['type']];
+            $inter->save([$key=>1-$inter[$key],"updated_at"=>time()]);
         }
         $this->success("success");
 

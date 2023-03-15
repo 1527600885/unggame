@@ -104,14 +104,14 @@ class Game extends BaseController
         $id = input("param.id");
         $data  =GameList::where(compact("id"))->field("id,gameName,gameImage,game_release_date,author,description,images,trialSupport,tcgGameCode")->find();
         $data['is_favorite'] = 0;
-        $data['is_like'] = 0;
-        if($this->request->userInfo)
+        $data['is_liked'] = 0;
+        if($this->nologuserinfo)
         {
-           $result =  \app\api\model\v2\GameInteraction::where("user_id",$this->request->userInfo['id'])->where("game_id",$id)->find();
-           if($result){
-               $data['is_favorite'] = $result['is_favorite'];
-               $data['is_like'] = $result['is_like'];
-           }
+            $result =  \app\api\model\v2\GameInteraction::where("user_id",$this->nologuserinfo['id'])->where("game_id",$id)->field("id,is_favorite,is_liked")->find();
+            if($result){
+                $data['is_favorite'] = $result['is_favorite'];
+                $data['is_like'] = $result['is_liked'];
+            }
         }
         $this->success('success',$data);
     }
