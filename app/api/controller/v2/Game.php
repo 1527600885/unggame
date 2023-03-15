@@ -107,7 +107,7 @@ class Game extends BaseController
         $data['is_like'] = 0;
         if($this->request->userInfo)
         {
-           $result =  \app\api\model\v2\GameInteraction::where("user_id",$this->request->userInfo['id'])->find();
+           $result =  \app\api\model\v2\GameInteraction::where("user_id",$this->request->userInfo['id'])->where("game_id",$id)->find();
            if($result){
                $data['is_favorite'] = $result['is_favorite'];
                $data['is_like'] = $result['is_like'];
