@@ -98,6 +98,7 @@ class MkGamelist extends BaseController
 			unset($postarr['gameType']);
 			unset($postarr['gameName']);
 			unset($postarr['gameImage']);
+			$postarr['gameImage'] = "https://image.unggame.com".$postarr['gameImage'];
             MkGamelistModel::update($postarr);
             return json(["status" => "success", "message" => "修改成功"]);
         }
