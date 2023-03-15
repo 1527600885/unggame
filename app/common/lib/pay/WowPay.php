@@ -18,6 +18,7 @@ class WowPay extends Pay
      */
     public $payConfig = [
         "debug"=>false,
+
         "testconfig"=>[
             "MYR"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
