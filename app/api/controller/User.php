@@ -607,7 +607,7 @@ class User  extends BaseController
 			$data['dividends']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->value("SUM(CAST(amount as DECIMAL (18,3))) as amount");
             $withdrawConfig =  ConfigModel::getVal('withdraw');
 			$data['miniwithrawal'] = $withdrawConfig['minprice'];
-			$data['rate'] = $withdawConfig['rate'];
+			$data['rate'] = $withdrawConfig['rate'];
 			// 资金的详细列表
 			$data['list']=CapitalFlowmodel::where([
 				['uid','=',$userInfo->id],
