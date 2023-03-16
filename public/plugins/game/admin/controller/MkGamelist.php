@@ -95,7 +95,7 @@ class MkGamelist extends BaseController
             unset($postarr['gameType']);
             unset($postarr['gameName']);
             //unset($postarr['gameImage']);
-            if(stripos($postarr['gameImage'],"http")!== false){
+            if(stripos($postarr['gameImage'],"http") === false){
                 $postarr['gameImage'] =
                     json_encode([
                         "EN" =>"https://image.unggame.com".$postarr['gameImage'],

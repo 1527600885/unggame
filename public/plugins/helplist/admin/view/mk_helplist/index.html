@@ -1,0 +1,59 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		:search-date="false">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'title',
+						label: '标题',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'detail',
+						label: '详情',
+						table: false,
+						form: {
+							is: 'el-input',
+							type:'textarea',
+						}
+					},
+					{
+						prop: 'status',
+						label: '状态',
+						table: false,
+						form: {
+							is: 'el-radio-group',
+							child: {
+								value: [{"title":"启用","value":"1"},{"title":"禁用","value":"0"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}
