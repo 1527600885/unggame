@@ -81,24 +81,33 @@ class MkGamelist extends BaseController
             return json(["status" => "success", "message" => "添加成功"]);
         }
     }
-    
-    /**
-     * 保存更新的资源
-     */
+
     public function update()
     {
         if ($this->request->isPost()) {
-			$postarr=input("post.");
-			// if($postarr['is_groom']==0){
-			// 	return json(["status" => "error", "message" => "请先推荐首页"]);
-			// }
-			// if($postarr['category_put']==0){
-			// 	return json(["status" => "error", "message" => "请先推荐品牌"]);
-			// }
-			unset($postarr['gameType']);
-			unset($postarr['gameName']);
-			unset($postarr['gameImage']);
-			$postarr['gameImage'] = "https://image.unggame.com".$postarr['gameImage'];
+            $postarr=input("post.");
+            // if($postarr['is_groom']==0){
+            // 	return json(["status" => "error", "message" => "请先推荐首页"]);
+            // }
+            // if($postarr['category_put']==0){
+            // 	return json(["status" => "error", "message" => "请先推荐品牌"]);
+            // }
+            unset($postarr['gameType']);
+            unset($postarr['gameName']);
+            //unset($postarr['gameImage']);
+            if(stripos($postarr['gameImage'],"http")!== false){
+                $postarr['gameImage'] =
+                    json_encode([
+                        "EN" =>"https://image.unggame.com".$postarr['gameImage'],
+                        "TH" =>"https://image.unggame.com".$postarr['gameImage'],
+                        "VI" =>"https://image.unggame.com".$postarr['gameImage'],
+                        "ID" =>"https://image.unggame.com".$postarr['gameImage'],
+                        "KM" =>"https://image.unggame.com".$postarr['gameImage'],
+                        "MS" =>"https://image.unggame.com".$postarr['gameImage'],
+                        "JA" =>"https://image.unggame.com".$postarr['gameImage'],
+                        "KO" =>"https://image.unggame.com".$postarr['gameImage']]);
+            }
+
             MkGamelistModel::update($postarr);
             return json(["status" => "success", "message" => "修改成功"]);
         }
