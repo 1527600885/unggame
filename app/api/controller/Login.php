@@ -231,9 +231,9 @@ class Login extends BaseController
                 
             }
            
-            if($input["password"]!=$input["confirmpassword"]){
-                $this->error(lang('user.passwordconfirm'));
-            }
+            // if($input["password"]!=$input["confirmpassword"]){
+            //     $this->error(lang('user.passwordconfirm'));
+            // }
             $invite_one_uid=0;
             $invite_two_uid=0;
             $invite_three_uid=0;
