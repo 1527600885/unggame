@@ -455,6 +455,7 @@ class Game extends BaseController
                         $money_type=2;
                         $amount = $gamelog->amount;
                         $userbalance= 0;
+                        $result_type = 2;
                         $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
                         $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
                         capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
