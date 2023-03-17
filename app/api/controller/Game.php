@@ -460,7 +460,7 @@ class Game extends BaseController
                         capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
                     }
                     $redis->set("user_wait_recapture_{$userInfo->id}",0);
-                    $this->success(lang('system.operation_succeeded'),["amount"=>$amount,"result_type"=>$result_type]);
+                    $this->success(lang('system.operation_succeeded'),["amount"=>$amount,"result_type"=>$result_type,'tcgGameCode'=>$game_info['tcgGameCode']]);
                 }else{
                     $this->error(lang('game.synchronizing_funds'));
                 }
