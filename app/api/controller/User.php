@@ -292,9 +292,11 @@ class User  extends BaseController
                 }else{
                     $this->request->userInfo['safetytext']=lang('user.safetyperfect');
                 }
+                $data = UngSet::field("interest,price")->find();
 				$this->request->userInfo['safetyindex']=$safetyindex;
 				$this->request->userInfo['ung_num'] = UngUser::where("uid",$this->request->userInfo['id'])->value('num') ?? 0;
-				$this->request->userInfo['ung_rate'] = UngSet::value("interest");
+				$this->request->userInfo['ung_rate'] = $data["interest"];
+                $this->request->userInfo['ung_price'] = bcmul($this->request->userInfo['ung_num'],$data['price'],3);
 				$this->success(lang('success'),$this->request->userInfo);
 			}
 		}
