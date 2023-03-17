@@ -231,9 +231,9 @@ class Login extends BaseController
                 
             }
            
-            if($input["password"]!=$input["confirmpassword"]){
-                $this->error(lang('user.passwordconfirm'));
-            }
+            // if($input["password"]!=$input["confirmpassword"]){
+            //     $this->error(lang('user.passwordconfirm'));
+            // }
             $invite_one_uid=0;
             $invite_two_uid=0;
             $invite_three_uid=0;
@@ -308,7 +308,7 @@ class Login extends BaseController
             UserModel::where('id',$registerInfo->id)->update(['QR_code'=>$ungewm]);
             // 创建ung账户
             $unguser['uid'] = $registerInfo->id;
-            $unguser['num'] = 0;
+            $unguser['num'] = 10;
             $unguser['update_time'] =time();
             $unguser['add_time'] =time();
             Db::name('ung_user')->insert($unguser);
