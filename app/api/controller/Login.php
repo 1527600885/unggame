@@ -308,7 +308,7 @@ class Login extends BaseController
             UserModel::where('id',$registerInfo->id)->update(['QR_code'=>$ungewm]);
             // 创建ung账户
             $unguser['uid'] = $registerInfo->id;
-            $unguser['num'] = 0;
+            $unguser['num'] = 10;
             $unguser['update_time'] =time();
             $unguser['add_time'] =time();
             Db::name('ung_user')->insert($unguser);
