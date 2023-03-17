@@ -54,10 +54,11 @@ class Game extends BaseController
     {
         $page = input("param.page");
         $whereKey = json_encode($where);
-        $key = "gamelist_{$whereKey}_{$page}";
+        $size = 24;
+        $key = "gamelist_{$whereKey}_{$size}_{$page}";
         $gamelist = Cache::get($key);
         if (!$gamelist) {
-            $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sort asc,hot desc")->paginate(12);
+            $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sort asc,hot desc")->paginate($size);
             Cache::set($key, $gamelist, 300);
         }
         return $gamelist;
