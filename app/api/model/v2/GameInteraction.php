@@ -15,4 +15,8 @@ class GameInteraction extends Model
     {
         return $this->belongsTo(GameList::class,"game_id");
     }
+    public function getUpdateAtAttr($value)
+    {
+        return date("Y-m-d H:i:s",$value);
+    }
 }
