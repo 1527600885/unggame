@@ -293,7 +293,7 @@ class User  extends BaseController
                     $this->request->userInfo['safetytext']=lang('user.safetyperfect');
                 }
 				$this->request->userInfo['safetyindex']=$safetyindex;
-				$this->request->userInfo['ung_num'] = UngUser::where("uid",$this->request->userInfo['id'])->value('num');
+				$this->request->userInfo['ung_num'] = UngUser::where("uid",$this->request->userInfo['id'])->value('num') ?? 0;
 				$this->request->userInfo['ung_rate'] = UngSet::value("interest");
 				$this->success(lang('success'),$this->request->userInfo);
 			}
