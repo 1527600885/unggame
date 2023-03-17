@@ -28,4 +28,20 @@ class GameInteraction extends BaseController
         $this->success("success");
 
     }
+    public function getList()
+    {
+        $data = input("param.");
+        $type = $data['type'] ?? 1;
+        if($type == 1)
+        {
+            $map["is_liked"] = 1;
+        }else{
+            $map["is_favorite"] = 1;
+        }
+        $lists = \app\api\model\v2\GameInteraction::with(["game"])->where("user_id",$this->request->userInfo['id'])
+            ->where($map)
+            ->order("updated_at desc,id desc")
+            ->paginate(10);
+        $this->success("success",$lists);
+    }
 }
