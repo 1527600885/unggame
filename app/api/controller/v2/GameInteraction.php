@@ -41,7 +41,7 @@ class GameInteraction extends BaseController
         $lists = \app\api\model\v2\GameInteraction::with(["game"])->where("user_id",$this->request->userInfo['id'])
             ->where($map)
             ->order("updated_at desc,id desc")
-            ->paginate(10);
+            ->paginate(["list_rows"=>$data['pageSize'] ?? 15 ,"page"=> $data['pageNum'] ?? 1]);
         $this->success("success",$lists);
     }
 }
