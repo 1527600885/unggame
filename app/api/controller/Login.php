@@ -335,7 +335,7 @@ class Login extends BaseController
                 }
                 //添加资金列表
                 $userbalance=$invite_one_list->balance;
-                $content='{user.inviteusers}'.$registerInfo->nickname.'{user.inviteregister}$'.$amount;
+                $content='{user.inviteusers} '.$registerInfo->nickname.' {user.inviteregister} $'.$amount.' reward';
                 $admin_content='用户'.$invite_one_list->nickname.'邀请用户'.$registerInfo->nickname.'注册获得'.$amount.'美金';
                 capital_flow($invite_one_uid,$registerInfo->id,5,1,$amount,$userbalance,$content,$admin_content);
             }

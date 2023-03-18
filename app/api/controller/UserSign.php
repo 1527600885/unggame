@@ -144,6 +144,7 @@ class UserSign extends BaseController
                 $todayReward = 0;
                 //当日签到过
                 $data[] = ["last_sign_time"=>time(),"rewards"=>$platformReward,"type"=>3,"user_id"=>$user_id];
+                $days = $this->request->userInfo['days'];
             }else if($last['last_sign_time'] > strtotime(date("Ymd 00:00:00"))-24*3600){
                 //昨天签到过
                 $totalSignDay = $this->request->userInfo['days'];//连续签到天数
@@ -171,11 +172,11 @@ class UserSign extends BaseController
             //保存用户信息
             $this->request->userInfo->save(["days"=>$days,"total_rewards"=>$totalRewards,"balance"=>bcadd($signReward,$balance)]);
             $balance = bcadd($balance,$platformReward,2);
-            capital_flow($user_id,0,9,1,$platformReward,$balance,"{user.platformrewards} {capital.money}{$platformReward}","用户{$this->request->userInfo['nickname']}平台签到奖励\${$platformReward}");
+            capital_flow($user_id,0,9,1,$platformReward,$balance,"{user.platformrewards} ${$platformReward} bonus","用户{$this->request->userInfo['nickname']}平台签到奖励\${$platformReward}");
             if($todayReward != 0)
             {
                 //记录账单
-                capital_flow($user_id,0,9,1,$todayReward,bcadd($balance,$todayReward,2),"{user.signrewards} {capital.money}{$todayReward}","用户{$this->request->userInfo['nickname']}签到奖励\${$todayReward}");
+                capital_flow($user_id,0,9,1,$todayReward,bcadd($balance,$todayReward,2),"{user.platformrewards} ${$platformReward} bonus","用户{$this->request->userInfo['nickname']}签到奖励\${$todayReward}");
             }
             Db::commit();
         }catch (\Exception $e)

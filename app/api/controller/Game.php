@@ -429,7 +429,7 @@ class Game extends BaseController
                             $money_type=2;
                             $amount=bcadd($gamelog->amount."",-$balance."",2);
                             $userbalance=bcadd($gamelog->amount."",-$amount."",2);
-                            $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
+                            $content='{capital.gamecontento} '.$game_name.' {capital.gamecontenth} '.$amount.'{capital.money}';
                             $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
                             $result_type = 2;
                         }elseif($balance>$gamelog->amount){
@@ -437,7 +437,7 @@ class Game extends BaseController
                             $money_type=1;
                             $amount= bcadd($balance."",-$gamelog->amount."",2);
                             $userbalance=bcadd($gamelog->amount."",$amount."",2);
-                            $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentt}'.$amount.'{capital.money}';
+                            $content='{capital.gamecontento}'.$game_name.' {capital.gamecontentt} '.$amount.'{capital.money}';
                             $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金增加'.$amount.'美元';
                             $result_type = 1;
                         }elseif($balance==$gamelog->amount){
