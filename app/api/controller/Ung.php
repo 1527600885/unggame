@@ -433,7 +433,15 @@ class Ung extends BaseController
     }
     public function userLog()
     {
-        $lists = UngUserLog::withSearch("type",["type"=>$this->request->param("type/d")])->where("uid|touserid",$this->request->userInfo['id'])->order("id desc")->paginate(10);
+        $map = [];
+        if($this->request->param("type/d") == 2){
+            $map['touserid'] = $this->request->userInfo['id'];
+        }else if( $this->request->param("type/d") == 0){
+            $map['touserid|uid'] = $this->request->userInfo['id'];
+        }else{
+            $map['uid'] = $this->request->userInfo['id'];
+        }
+        $lists = UngUserLog::withSearch("type",["type"=>$this->request->param("type/d")])->where($map)->order("id desc")->paginate(10);
         $this->success("success",$lists);
     }
 }
