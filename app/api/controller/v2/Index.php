@@ -58,14 +58,16 @@ class Index extends BaseController
         {
             $id =  mt_rand(1,10000);
             $profit = mt_rand(10,100000);
-            $payout_rate = bcmul(mt_rand(1,2000),0.01,2);
+            $avartnum = mt_rand(1,2);
+            $payout = bcmul(mt_rand(12,200),0.1,1);
             $gameName=$gamelist[array_rand($gamelist)]['gameName'];
             $data[] = [
                 "id"=>$id,
                 "username"=>$hashids->encode($id),
                 'profit'=> $profit,
-                'payout'=>bcmul($profit,$payout_rate,2),
-                'game_name'=>$gameName
+                'payout'=>$payout,
+                'game_name'=>$gameName,
+                'avatar'=>"/static/images/index/playlg{$avartnum}.png"
             ];
         }
         return $data;
