@@ -94,7 +94,7 @@ class User extends BaseController
             $this->error(lang("user.codeerror"));
         }
         $pay_password = input("post.pay_password/s");
-        $this->request->userInfo->save(compact("pay_password"));
+        $this->request->userInfo->save(['pay_paasword'=>$pay_password]);
         $this->success("Operation successful.");
     }
     public function addOtherAccounts()
@@ -107,5 +107,9 @@ class User extends BaseController
         }
         $this->request->userInfo->save(["other_accounts"=>$post]);
         $this->success("Operation successful.");
+    }
+    public function getOrderList()
+    {
+
     }
 }
