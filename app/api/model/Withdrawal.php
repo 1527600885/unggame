@@ -39,7 +39,7 @@ class Withdrawal extends Model
     public function getOnlineStatusTextAttr($value,$data)
     {
         if(isset($data['online_status'])){
-            $statusList = [0=>"Pending Review",2=>"Approved",3=>"Not Approved"];
+            $statusList = [0=>"Pending",1=>"In Progress",2=>"Successful",3=>"Failed"];
             return $statusList[$data['online_status']];
         }
         return $value;
