@@ -7,6 +7,7 @@ namespace app\api\controller;
 use app\api\BaseController;
 use app\api\model\GameList;
 use app\api\model\UserSign as UserSignModel;
+use app\common\lib\Redis;
 use think\facade\Db;
 
 class UserSign extends BaseController
@@ -14,9 +15,9 @@ class UserSign extends BaseController
     public function index()
     {
         $data = [
-            "todayReward"=>20,
-            "tomorrowReward"=>20,
-            "platformReward"=>300
+            "todayReward"=>0,
+            "tomorrowReward"=>0,
+            "platformReward"=>0
         ];
         $user_id = $this->request->userInfo['id'];
         $model = new UserSignModel();
@@ -24,8 +25,10 @@ class UserSign extends BaseController
         $last = $model->where("user_id",$user_id)
             ->order("id desc")
             ->find();
+        $rewardData = \app\api\model\Config::getVal("signrewards");
         $data['totalSignDay'] = $this->request->userInfo['days'];//连续签到天数
         //isday今日奖励,islx连续签到奖励,isplat平台奖励, 0=>可领取,1=>不可领取
+        $hour = date("YmdH");
         if($last)
         {
             if($last['last_sign_time']+3600 > time())
@@ -34,29 +37,44 @@ class UserSign extends BaseController
                 $data['isday'] = 1;
                 $data['islx'] = 1;
                 $data['isplat'] = 1;
+                $key = $data['totalSignDay'] - 1;
+                $hour = date("YmdH",time()+36000);
             }else if($last['last_sign_time'] > strtotime(date("Ymd 00:00:00"))){
 
                 //当日签到过
                 $data['isday'] = 1;
                 $data['islx'] = 1;
                 $data['isplat'] = 0;
+                $key = $data['totalSignDay'] - 1;
             }else if($last['last_sign_time'] > strtotime(date("Ymd 00:00:00"))-24*3600){
                 //昨天签到过
                 $data['isday'] = 0;
                 $data['islx'] = 0;
                 $data['isplat'] = 0;
+                $key = $data['totalSignDay'];
             }else{
                 //签到时间在昨天之前
                 $data['isday'] = 0;
                 $data['islx'] = 1;
                 $data['isplat'] = 0;
                 $data['totalSignDay'] = 0;
+                $key = $data['totalSignDay'];
             }
         }else{
             //从未签过到
             $data['isday'] = 0;
             $data['islx'] = 1;
             $data['isplat'] = 0;
+            $key = 0;
+        }
+        $todayReward = isset($rewardData[$key]) ? $rewardData[$key] : end($rewardData);
+        $tomorrowReward = isset($rewardData[$key+1]) ? $rewardData[$key+1] : end($rewardData);
+        $redis = (new Redis())->getRedis();
+        $platformReward = $redis->get("signrewards_{$hour}");
+        if(!$platformReward)
+        {
+            $platformReward = bcmul( mt_rand(1,20),0.01);
+            $redis->set("signrewards_{$hour}",$platformReward,7200);
         }
         $data['totalReward'] = $this->request->userInfo['total_rewards'];
         if(!$last){
@@ -64,7 +82,7 @@ class UserSign extends BaseController
         }else{
             $signTime = $last['last_sign_time']+3600 - time();
         }
-
+        $data = array_merge($data,compact("tomorrowReward","todayReward","platformReward"));
         $hour = 0;
         $minute = intval($signTime/60);
         $second = $signTime%60;
@@ -92,6 +110,80 @@ class UserSign extends BaseController
         }
         $this->success("获取成功",['rewardData'=>$data,"times"=>$times,"gamelist"=>$hot_game]);
 
+    }
+    public function newSignIn()
+    {
+        $model = new UserSignModel();
+        $user_id = $this->request->userInfo['id'];
+        //查询最后一次签到
+        $last = $model->where("user_id",$user_id)
+            ->order("id desc")
+            ->find();
+        $rewardData = \app\api\model\Config::getVal("signrewards");
+
+        $hour = date("YmdH");
+        $redis = (new Redis())->getRedis();
+        $platformReward = $redis->get("signrewards_{$hour}");
+        if(!$platformReward)
+        {
+            $platformReward = bcmul( mt_rand(1,20),0.01);
+            $redis->set("signrewards_{$hour}",$platformReward,7200);
+        }
+        if(!$last)
+        {
+            $todayReward = current($rewardData);
+            $data[] = ["last_sign_time"=>time(),"rewards"=>$todayReward,"type"=>1,"user_id"=>$user_id];
+            $data[] = ["last_sign_time"=>time(),"rewards"=>$platformReward,"type"=>3,"user_id"=>$user_id];
+            $days = 1;
+        }else{
+            if($last['last_sign_time']+3600 > time())
+            {
+                //一小时内签到过
+                $this->error("Failed to sign in");
+            }else if($last['last_sign_time'] > strtotime(date("Ymd 00:00:00"))){
+                $todayReward = 0;
+                //当日签到过
+                $data[] = ["last_sign_time"=>time(),"rewards"=>$platformReward,"type"=>3,"user_id"=>$user_id];
+            }else if($last['last_sign_time'] > strtotime(date("Ymd 00:00:00"))-24*3600){
+                //昨天签到过
+                $totalSignDay = $this->request->userInfo['days'];//连续签到天数
+                $todayReward = isset($rewardData[$totalSignDay]) ? $rewardData[$totalSignDay] : end($rewardData);
+                $data[] = ["last_sign_time"=>time(),"rewards"=>$todayReward,"type"=>1,"user_id"=>$user_id];
+                $data[] = ["last_sign_time"=>time(),"rewards"=>$platformReward,"type"=>3,"user_id"=>$user_id];
+                $days = $this->request->userInfo['days']+1;
+            }else{
+                //签到时间在昨天之前
+                $todayReward = current($rewardData);
+                $data[] = ["last_sign_time"=>time(),"rewards"=>$todayReward,"type"=>1,"user_id"=>$user_id];
+                $data[] = ["last_sign_time"=>time(),"rewards"=>$platformReward,"type"=>3,"user_id"=>$user_id];
+                $days = 1;
+            }
+
+        }
+        $signReward = bcadd($todayReward,$platformReward,2);
+        $balance = $this->request->userInfo['balance'];
+        try{
+            Db::startTrans();
+            //记录签到日志
+            $model->saveAll($data);
+            //计算签到总奖励
+            $totalRewards = round($model->where("user_id",$user_id)->sum("rewards"),2);
+            //保存用户信息
+            $this->request->userInfo->save(["days"=>$days,"total_rewards"=>$totalRewards,"balance"=>bcadd($signReward,$balance)]);
+            $balance = bcadd($balance,$platformReward,2);
+            capital_flow($user_id,0,9,1,$platformReward,$balance,"{user.platformrewards} {capital.money}{$platformReward}","用户{$this->request->userInfo['nickname']}平台签到奖励\${$platformReward}");
+            if($todayReward != 0)
+            {
+                //记录账单
+                capital_flow($user_id,0,9,1,$todayReward,bcadd($balance,$todayReward,2),"{user.signrewards} {capital.money}{$todayReward}","用户{$this->request->userInfo['nickname']}签到奖励\${$todayReward}");
+            }
+            Db::commit();
+        }catch (\Exception $e)
+        {
+            Db::rollBack();
+            $this->error($e->getMessage());
+        }
+        $this->success("Sign in successfully");
     }
     public function signIn()
     {

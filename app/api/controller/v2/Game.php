@@ -8,6 +8,7 @@ use app\admin\model\Config as ConfigModel;
 use app\api\BaseController;
 use app\api\model\v2\GameList;
 use app\api\model\RankList;
+use app\api\model\v2\TopGame;
 use app\common\game\ApiGame;
 use app\common\lib\Redis;
 use think\facade\Cache;
@@ -65,11 +66,9 @@ class Game extends BaseController
     }
     public function getRankData()
     {
-        $numberoneData = ConfigModel::getVal("numberoneuser");
-        $numbertwoData = ConfigModel::getVal("numbertwouser");
-        $numberthreeData = ConfigModel::getVal("numberthreeuser");
-        $numberfourData = ConfigModel::getVal("numberfouruser");
-        $topGame = [[$numberoneData,$numbertwoData],[$numberthreeData,$numberfourData]];
+        $wow = array_chunk(TopGame::where("type",1)->append(["nickname","price"])->order("id desc")->select()->toArray(),2);
+        $top =  array_chunk(TopGame::where("type",1)->append(["nickname","price"])->order("id desc")->select()->toArray(),2);
+        $topGame = compact("wow","top");
         $topList = RankList::order("profit desc,update_time desc,id desc")->select()->toArray();
         $topThree = array_slice($topList,0,3);
         $this->success("success",compact("topGame","topThree","topList"));
