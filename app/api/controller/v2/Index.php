@@ -65,7 +65,7 @@ class Index extends BaseController
                 "id"=>$id,
                 "username"=>$hashids->encode($id),
                 'profit'=> $profit,
-                'payout'=>$payout,
+                'payout'=>$payout.'x',
                 'game_name'=>$gameName,
                 'avatar'=>"/static/images/index/playlg{$avartnum}.png"
             ];
