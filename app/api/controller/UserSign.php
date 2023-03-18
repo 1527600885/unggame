@@ -73,7 +73,7 @@ class UserSign extends BaseController
         $platformReward = $redis->get("signrewards_{$hour}");
         if(!$platformReward)
         {
-            $platformReward = bcmul( mt_rand(1,20),0.01);
+            $platformReward = bcmul( mt_rand(1,20),0.01,2);
             $redis->set("signrewards_{$hour}",$platformReward,7200);
         }
         $data['totalReward'] = $this->request->userInfo['total_rewards'];
@@ -126,7 +126,7 @@ class UserSign extends BaseController
         $platformReward = $redis->get("signrewards_{$hour}");
         if(!$platformReward)
         {
-            $platformReward = bcmul( mt_rand(1,20),0.01);
+            $platformReward = bcmul( mt_rand(1,20),0.01,2);
             $redis->set("signrewards_{$hour}",$platformReward,7200);
         }
         if(!$last)
