@@ -172,11 +172,11 @@ class UserSign extends BaseController
             //保存用户信息
             $this->request->userInfo->save(["days"=>$days,"total_rewards"=>$totalRewards,"balance"=>bcadd($signReward,$balance)]);
             $balance = bcadd($balance,$platformReward,2);
-            capital_flow($user_id,0,9,1,$platformReward,$balance,"{user.platformrewards} ${$platformReward} bonus","用户{$this->request->userInfo['nickname']}平台签到奖励\${$platformReward}");
+            capital_flow($user_id,0,9,1,$platformReward,$balance,"{user.platformrewards} \${$platformReward} bonus","用户{$this->request->userInfo['nickname']}平台签到奖励\${$platformReward}");
             if($todayReward != 0)
             {
                 //记录账单
-                capital_flow($user_id,0,9,1,$todayReward,bcadd($balance,$todayReward,2),"{user.platformrewards} ${$platformReward} bonus","用户{$this->request->userInfo['nickname']}签到奖励\${$todayReward}");
+                capital_flow($user_id,0,9,1,$todayReward,bcadd($balance,$todayReward,2),"{user.platformrewards} \${$platformReward} bonus","用户{$this->request->userInfo['nickname']}签到奖励\${$todayReward}");
             }
             Db::commit();
         }catch (\Exception $e)
