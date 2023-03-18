@@ -443,7 +443,18 @@ class Ung extends BaseController
         }else{
             $map['uid'] = $this->request->userInfo['id'];
         }
-        $lists = UngUserLog::withSearch("type",["type"=>$type])->where($map)->order("id desc")->paginate(10);
+        $user_id =$this->request->userInfo['id'];
+        $lists = UngUserLog::withSearch("type",["type"=>$type])->where($map)->order("id desc")->paginate(10)->each(function ($item)use($user_id){
+            if($item['type'] == 1 && $item['touserid'] ==$user_id)
+            {
+                $item['addtype'] = "+";
+            }else if(in_array($item['type'],[3,4,6])){
+                $item['addtype'] = "+";
+            }else{
+                $item['addtype'] = "-";
+            }
+            return $item;
+        });
         $this->success("success",$lists);
     }
 }
