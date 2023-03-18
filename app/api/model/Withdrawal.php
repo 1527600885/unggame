@@ -21,7 +21,7 @@ class Withdrawal extends Model
     public function getTypeTextAttr($value,$data)
     {
         if(isset($data['type'])&& !empty($data['type'])){
-            $typeList = [1=>"Cryptocurrency",2=>"Cash currency"];
+            $typeList = [1=>"Crypto",2=>"Cash"];
             $value = $typeList[$data['type']];
         }
         return $value;

@@ -83,7 +83,7 @@ class Withdrawal extends BaseController
 		}
 		$withdrawConfig =  ConfigModel::getVal('withdraw');
 
-		if((float)$input['amount']<= $withdrawConfig['minprice'] || (float)$input['amount']>=(float)$userInfo->balance){
+		if((float)$input['amount'] < $withdrawConfig['minprice'] || (float)$input['amount'] > (float)$userInfo->balance){
 			$this->error('Withdrawal amount error！');
 		}
         if(!$this->isCanwithdrawal($userInfo->balance,$withdrawConfig['rate'])){

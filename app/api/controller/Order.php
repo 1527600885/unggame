@@ -68,6 +68,7 @@ class Order extends BaseController
 		}
 		$paymentinfo=$this->PaymentModel->where('id',$postdata['id'])->find();
 		$orderinfo=$this->OrderModel->where('uid',$userInfo['id'])->order('id desc')->find();
+		if(!$orderinfo) $this->error(lang('system.id'));
 		if(time()-$orderinfo->time<=10){
 			$this->error(lang('order.toofast'));
 		}
