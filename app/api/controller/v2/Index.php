@@ -7,9 +7,14 @@ namespace app\api\controller\v2;
 use app\api\BaseController;
 use app\api\model\Helplist;
 use app\api\model\v2\AccountType;
+use app\api\model\v2\GameList;
+use app\common\lib\Redis;
+use Hashids\Hashids;
+use think\facade\Cache;
 
 class Index extends BaseController
 {
+    protected $noNeedLogin = ['*'];
     public function helpList()
     {
        $list = Helplist::where("status",1)->field("id,title")->select();
@@ -23,5 +28,46 @@ class Index extends BaseController
     {
         $list = AccountType::order("id desc")->column("name");
         $this->success("success",$list);
+    }
+    public function getRankData()
+    {
+       $key = "game_rank_list";
+       $redis = (new Redis())->getRedis();
+       $rankData = $redis->get($key);
+       if(!$rankData)
+       {
+           $rankData = $this->getRandData();
+           $redis->set($key,json_encode($rankData),1);
+       }else{
+           $rankData = json_decode($rankData,true);
+       }
+       $this->success("success",$rankData);
+    }
+    public function getRandData()
+    {
+        $hashids = new Hashids(env('hashids'), 6,env('hashids_write'));
+        $data = [];
+        $size = 24;
+        $key = "gamelist_{$size}";
+        $gamelist = Cache::get($key);
+        if (!$gamelist) {
+            $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->order("groom_sort asc,hot desc")->paginate($size)->toArray()['data'];
+            Cache::set($key, $gamelist, 600);
+        }
+        for($i=0;$i<10;$i++)
+        {
+            $id =  mt_rand(1,10000);
+            $profit = mt_rand(10,100000);
+            $payout_rate = bcmul(mt_rand(1,2000),0.01,2);
+            $gameName=$gamelist[array_rand($gamelist)]['gameName'];
+            $data[] = [
+                "id"=>$id,
+                "username"=>$hashids->encode($id),
+                'profit'=> $profit,
+                'payout'=>bcmul($profit,$payout_rate,2),
+                'game_name'=>$gameName
+            ];
+        }
+        return $data;
     }
 }

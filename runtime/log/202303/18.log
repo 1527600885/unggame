@@ -1,0 +1,14 @@
+{"time":"2023-03-18 10:07:07","type":"error","msg":"[0]syntax error, unexpected 'MkTopGameModel' (T_STRING)[E:\\project\\unggame\\public\\plugins\\top\\admin\\controller\\MkTopGame.php:44]"}
+{"time":"2023-03-18 10:13:53","type":"error","msg":"[0]syntax error, unexpected 'MkTopGameModel' (T_STRING)[E:\\project\\unggame\\public\\plugins\\top\\admin\\controller\\MkTopGame.php:44]"}
+{"time":"2023-03-18 11:00:08","type":"error","msg":"[10501]SQLSTATE[HY000]: General error: 1366 Incorrect integer value: 'Much wow Win' for column 'type' at row 1[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\PDOConnection.php:797]"}
+{"time":"2023-03-18 11:02:47","type":"error","msg":"[0]Argument 1 passed to think\\db\\BaseQuery::append() must be of the type array, string given, called in E:\\project\\unggame\\public\\plugins\\top\\admin\\controller\\MkTopGame.php on line 29[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\concern\\ModelRelationQuery.php:86]"}
+{"time":"2023-03-18 11:03:09","type":"error","msg":"[8]Undefined index: [E:\\project\\unggame\\public\\plugins\\top\\admin\\model\\MkTopGame.php:35]"}
+{"time":"2023-03-18 15:58:26","type":"error","msg":"[2]array_rand() expects parameter 1 to be array, object given[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:60]"}
+{"time":"2023-03-18 16:00:07","type":"error","msg":"[2]array_rand() expects parameter 1 to be array, object given[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:55]"}
+{"time":"2023-03-18 16:00:41","type":"error","msg":"[2]array_rand() expects parameter 1 to be array, object given[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:60]"}
+{"time":"2023-03-18 16:01:18","type":"error","msg":"[8]Trying to get property 'gameName' of non-object[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:60]"}
+{"time":"2023-03-18 16:02:18","type":"error","msg":"[8]Trying to get property 'gameName' of non-object[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:60]"}
+{"time":"2023-03-18 16:02:55","type":"error","msg":"[8]Trying to get property 'gameName' of non-object[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:60]"}
+{"time":"2023-03-18 16:03:20","type":"error","msg":"[8]Trying to access array offset on value of type int[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:60]"}
+{"time":"2023-03-18 16:04:12","type":"error","msg":"[8]Trying to access array offset on value of type null[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:61]"}
+{"time":"2023-03-18 16:04:45","type":"error","msg":"[8]Trying to access array offset on value of type null[E:\\project\\unggame\\app\\api\\controller\\v2\\Index.php:62]"}

@@ -11,6 +11,7 @@ use app\api\model\RankList;
 use app\api\model\v2\TopGame;
 use app\common\game\ApiGame;
 use app\common\lib\Redis;
+use Hashids\Hashids;
 use think\facade\Cache;
 
 /**
@@ -70,8 +71,47 @@ class Game extends BaseController
         $top =  array_chunk(TopGame::where("type",2)->append(["nickname","price"])->order("id desc")->select()->toArray(),2);
         $topGame = compact("wow","top");
         $topList = RankList::order("profit desc,update_time desc,id desc")->select()->toArray();
-        $topThree = array_slice($topList,0,3);
+        $redis = (new Redis())->getRedis();
+        $date = date("Ymd");
+        $topThree = $redis->get("top_three_{$date}");
+        if(!$topThree)
+        {
+            $topThree = $this->getRandData();
+            $redis->set("top_three_{$date}",json_encode($topThree),24*60*60*60);
+        }else{
+            $topThree = json_decode($topThree,true);
+        }
+//        $topThree = array_slice($topList,0,3);
         $this->success("success",compact("topGame","topThree","topList"));
+    }
+    public function getRandData()
+    {
+        $hashids = new Hashids(env('hashids'), 6,env('hashids_write'));
+        $data = [];
+        $size = 24;
+        $key = "gamelist_{$size}";
+        $gamelist = Cache::get($key);
+        if (!$gamelist) {
+            $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->order("groom_sort asc,hot desc")->paginate($size)->toArray()['data'];
+            Cache::set($key, $gamelist, 600);
+        }
+        for($i=0;$i<3;$i++)
+        {
+            $id =  mt_rand(1,10000);
+            $profit = mt_rand(10,100000);
+            $payout_rate = bcmul(mt_rand(1,2000),0.01,2);
+            $gameName=$gamelist[array_rand($gamelist)]['gameName'];
+            $headerNumber = mt_rand(1,8);
+            $data[] = [
+                "id"=>$id,
+                "username"=>$hashids->encode($id),
+                'profit'=> $profit,
+                'payout'=>bcmul($profit,$payout_rate,2),
+                'game_name'=>$gameName,
+                'avatar'=>"/static/images/header/header{$headerNumber}.png",
+            ];
+        }
+        return $data;
     }
     public function tryGame()
     {
