@@ -67,7 +67,7 @@ class Game extends BaseController
     public function getRankData()
     {
         $wow = array_chunk(TopGame::where("type",1)->append(["nickname","price"])->order("id desc")->select()->toArray(),2);
-        $top =  array_chunk(TopGame::where("type",1)->append(["nickname","price"])->order("id desc")->select()->toArray(),2);
+        $top =  array_chunk(TopGame::where("type",2)->append(["nickname","price"])->order("id desc")->select()->toArray(),2);
         $topGame = compact("wow","top");
         $topList = RankList::order("profit desc,update_time desc,id desc")->select()->toArray();
         $topThree = array_slice($topList,0,3);
