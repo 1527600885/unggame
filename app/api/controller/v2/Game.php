@@ -150,7 +150,7 @@ class Game extends BaseController
             $result =  \app\api\model\v2\GameInteraction::where("user_id",$this->nologuserinfo['id'])->where("game_id",$id)->find();
             if($result){
                 $data['is_favorite'] = $result['is_favorite'];
-                $data['is_like'] = $result['is_like'];
+                $data['is_like'] = $result['is_liked'];
             }
         }
         $this->success('success',$data);
