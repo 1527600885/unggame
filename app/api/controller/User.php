@@ -603,9 +603,9 @@ class User  extends BaseController
 			$data['water']=round(GameBetLog::where(['user_id'=>$userInfo->id])->whereDay('betTime')->sum('betAmount'),2);
 			// echo CapitalFlowmodel::getLastSql();exit;
 			// 今日股息
-			$data['dividend']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->whereDay('add_time')->value("SUM(CAST(amount as DECIMAL (18,3))) as amount");
+			$data['dividend']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->whereDay('add_time')->value("SUM(CAST(amount as DECIMAL (18,3))) as amount") ?? 0;
 			// 总获得的股息
-			$data['dividends']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->value("SUM(CAST(amount as DECIMAL (18,3))) as amount");
+			$data['dividends']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->value("SUM(CAST(amount as DECIMAL (18,3))) as amount") ?? 0;
             $withdrawConfig =  ConfigModel::getVal('withdraw');
 			$data['miniwithrawal'] = $withdrawConfig['minprice'];
 			$data['rate'] = $withdrawConfig['rate'];
