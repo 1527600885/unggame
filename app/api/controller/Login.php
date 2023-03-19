@@ -304,7 +304,7 @@ class Login extends BaseController
 			$ret  = json_decode($result,true);
             $userInfo['game_account']=$game_account;
             $userInfo['id']=$registerInfo->id;
-            $ungewm = \create_qrcode($ungaddress,$userInfo);
+            $ungewm = \create_qrcode( $registerInfo->id,$userInfo);
             UserModel::where('id',$registerInfo->id)->update(['QR_code'=>$ungewm]);
             // 创建ung账户
             $unguser['uid'] = $registerInfo->id;
