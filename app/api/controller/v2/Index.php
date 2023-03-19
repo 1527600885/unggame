@@ -60,9 +60,11 @@ class Index extends BaseController
             $profit = mt_rand(10,100000);
             $avartnum = mt_rand(1,2);
             $payout = bcmul(mt_rand(12,200),0.1,1);
-            $gameName=$gamelist[array_rand($gamelist)]['gameName'];
+            $game = $gamelist[array_rand($gamelist)];
+            $gameName=$game['gameName'];
+            $game_id = $gameName;
             $data[] = [
-                "id"=>$id,
+                "id"=>$game_id,
                 "username"=>$hashids->encode($id),
                 'profit'=> $profit,
                 'payout'=>$payout.'x',
