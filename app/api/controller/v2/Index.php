@@ -62,7 +62,7 @@ class Index extends BaseController
             $payout = bcmul(mt_rand(12,200),0.1,1);
             $game = $gamelist[array_rand($gamelist)];
             $gameName=$game['gameName'];
-            $game_id = $gameName;
+            $game_id = $game['id'];
             $data[] = [
                 "id"=>$game_id,
                 "username"=>$hashids->encode($id),
