@@ -8,6 +8,7 @@ use think\Model;
 
 class Order extends Model
 {
+    protected $type = ["time"=>"timestamp"];
     public function getTypeTextAttr($value,$data)
     {
         if(isset($data['type'])&& !empty($data['type'])){
