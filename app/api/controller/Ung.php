@@ -188,6 +188,7 @@ class Ung extends BaseController
 		$insert_log['uid'] = $userinfo['id'];
 		$insert_log['type'] = 1;//操作类型
 		$insert_log['num'] = $quantity;//数量
+		$insert_log['allnum'] = bcsub($userUng['num'],$quantity,5);//余额
 		$insert_log['price'] = $ungset['price'];//价格
 		$insert_log['touserid'] = $touser['uid'];//收入方ID
 		$insert_log['orderno'] = $orderno;//订单编号
@@ -198,6 +199,7 @@ class Ung extends BaseController
         $touser_log['uid'] = $touser['uid'];
 		$touser_log['type'] = 2;//操作类型
 		$touser_log['num'] = bcsub((string)$quantity,(string)$insert_log['actual'],5);//数量
+		$insert_log['srtotalnum'] = bcadd($touser['num'],$touser_log['num'],5);//余额
 		$touser_log['price'] = $ungset['price'];//价格
 		$touser_log['touserid'] = $userinfo['id'];//转入方ID
 		$touser_log['orderno'] = $orderno;//订单编号
