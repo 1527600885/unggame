@@ -13,7 +13,7 @@ class GameList extends Model
     {
         $gameName=json_decode($data['gameName'],true);
         global $lang;
-        return croppstring($gameName[$lang],6);
+        return croppstring($gameName[$lang],12);
     }
     public function getGameImageAttr($value,$data){
         $gameImage=json_decode($data['gameImage'],true);
