@@ -106,6 +106,8 @@ class MkGamelist extends BaseController
                         "MS" =>"https://image.unggame.com".$postarr['gameImage'],
                         "JA" =>"https://image.unggame.com".$postarr['gameImage'],
                         "KO" =>"https://image.unggame.com".$postarr['gameImage']]);
+            }else if(stripos($postarr['gameImage'],"https://image.unggame.com") !== false){
+                unset($postarr['gameImage']);
             }
 
             MkGamelistModel::update($postarr);
