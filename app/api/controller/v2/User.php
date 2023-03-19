@@ -7,6 +7,7 @@ namespace app\api\controller\v2;
 use app\api\BaseController;
 use app\api\model\User as UserModel;
 use app\api\model\v2\AccountType;
+use app\api\model\v2\Order;
 use think\facade\Validate;
 use think\response\Json;
 
@@ -110,6 +111,7 @@ class User extends BaseController
     }
     public function getOrderList()
     {
-
+      $lists =  Order::where("uid",$this->request->userInfo['id'])->order("id desc")->paginate(10);
+      $this->success("获取成功",$lists);
     }
 }
