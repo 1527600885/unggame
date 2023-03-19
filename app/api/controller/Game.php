@@ -459,6 +459,8 @@ class Game extends BaseController
                         $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.$amount.'{capital.money}';
                         $admin_content='用户'.$userInfo->nickname.'游玩游戏'.$game_name.'资金减少'.$amount.'美元';
                         capital_flow($userInfo->id,$gamelog->gid,3,$money_type,$amount,$userbalance,$content,$admin_content,$gamelog['id']);
+                    }else{
+                        $amount = 0;
                     }
                     $redis->set("user_wait_recapture_{$userInfo->id}",0);
                     $this->success(lang('system.operation_succeeded'),["amount"=>$amount,"result_type"=>$result_type,'tcgGameCode'=>$game_info['tcgGameCode'],"balance"=>$userbalance]);
