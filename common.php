@@ -557,15 +557,15 @@ function create_qrcode($data,$userInfo){
 	    ->setBackgroundColor(new Color(255, 255, 255));
 	
 	// Create generic logo
-	$logo = Logo::create($userInfo['cover'])
-	    ->setResizeToWidth(50)
-		->setResizeToHeight(50);
+	// $logo = Logo::create($userInfo['cover'])
+	//     ->setResizeToWidth(50)
+	// 	->setResizeToHeight(50);
 	
 	// Create generic label
 	// $label = Label::create('Label')
 	//     ->setTextColor(new Color(255, 0, 0));
 	
-	$result = $writer->write($qrCode, $logo);
+	$result = $writer->write($qrCode);
 	// header('Content-Type: '.$result->getMimeType());
 	
 	$aaa=$result->saveToFile($qrcodefile.'/'.$userInfo['game_account'].'.png');
