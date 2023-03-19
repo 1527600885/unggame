@@ -119,10 +119,10 @@ class User extends BaseController
         $last = UserSign::where("user_id",$this->request->userInfo['id'])
             ->order("id desc")
             ->find();
-        if(!$last || $last['last_sign_time']+3600 < time()){
+        if(!$last || (($last['last_sign_time']+3600) < time())){
             $signData = ["canSign"=>1];
         }else{
-            $signData = ["canSign"=>0,["signTime"=>$last['last_sign_time']+3600 - time()]];
+            $signData = ["canSign"=>0,["signTime"=>($last['last_sign_time']+3600 - time())]];
         }
         $this->success("success",$signData);
     }
