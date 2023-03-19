@@ -111,7 +111,7 @@ class User extends BaseController
     }
     public function getOrderList()
     {
-      $lists =  Order::where("uid",$this->request->userInfo['id'])->order("id desc")->paginate(10);
+      $lists =  Order::where("uid",$this->request->userInfo['id'])->append(["type_text","status_text"])->order("id desc")->paginate(10);
       $this->success("获取成功",$lists);
     }
 }
