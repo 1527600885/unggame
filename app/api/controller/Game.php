@@ -462,6 +462,7 @@ class Game extends BaseController
                     }else{
                         $amount = 0;
                         $result_type = 0;
+                        $userbalance = $this->request->userInfo['balance'];
                     }
                     $redis->set("user_wait_recapture_{$userInfo->id}",0);
                     $this->success(lang('system.operation_succeeded'),["amount"=>$amount,"result_type"=>$result_type,'tcgGameCode'=>$game_info['tcgGameCode'],"balance"=>$userbalance]);
