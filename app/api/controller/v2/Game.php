@@ -82,17 +82,9 @@ class Game extends BaseController
         }else{
             $topThree = json_decode($topThree,true);
         }
-        $last = UserSign::where("user_id",$this->request->userInfo['id'])
-            ->order("id desc")
-            ->find();
-        if(!$last || strtotime(date("YmdH"))>=$last['last_sign_time']+3600){
-            $signData = ["canSign"=>1];
-        }else{
-            $signData = ["canSign"=>0,["signTime"=>strtotime(date("YmdH"))+3600-time()]];
-        }
 
 //        $topThree = array_slice($topList,0,3);
-        $this->success("success",compact("topGame","topThree","topList","signData"));
+        $this->success("success",compact("topGame","topThree","topList"));
     }
     public function getRandData()
     {

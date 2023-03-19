@@ -6,6 +6,7 @@ namespace app\api\controller\v2;
 
 use app\api\BaseController;
 use app\api\model\User as UserModel;
+use app\api\model\UserSign;
 use app\api\model\v2\AccountType;
 use app\api\model\v2\Order;
 use think\facade\Validate;
@@ -113,5 +114,16 @@ class User extends BaseController
     {
       $lists =  Order::where("uid",$this->request->userInfo['id'])->append(["type_text","status_text"])->order("id desc")->paginate(10);
       $this->success("获取成功",$lists);
+    }
+    public function getSignData(){
+        $last = UserSign::where("user_id",$this->request->userInfo['id'])
+            ->order("id desc")
+            ->find();
+        if(!$last || strtotime(date("YmdH"))>=$last['last_sign_time']+3600){
+            $signData = ["canSign"=>1];
+        }else{
+            $signData = ["canSign"=>0,["signTime"=>strtotime(date("YmdH"))+3600-time()]];
+        }
+        $this->success("success",$signData);
     }
 }
