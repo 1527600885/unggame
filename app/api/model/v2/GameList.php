@@ -29,4 +29,8 @@ class GameList extends Model
     public function getImagesAttr($value){
         return json_decode($value,true);
     }
+    public function getAuthorAttr($value)
+    {
+        return explode(",",$value);
+    }
 }
