@@ -1,0 +1,69 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+			ref="curd"
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		:search-keyword="false"
+		:search-date="false"
+		@query-search = "querySearch($event)"
+		@select-back = "handleSelect($event)"
+	>
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'gamename',
+						label: '游戏名称',
+						table: {
+							sort: false,
+						},
+						form: {
+							is: 'el-autocomplete',
+						}
+					},
+					{
+						prop: 'gameImage',
+						label: '游戏图片',
+						table: {
+							is:"image",
+							width:"80px"
+						},
+						form: false
+					}
+				],
+			}
+		},
+		methods:{
+			querySearch(data)
+			{
+				request.post("numberone/getGameList",{key:data.queryString},function (res){
+					var results = res.data;
+					data.cb(results);
+				})
+			},
+			handleSelect(data)
+			{
+				this.$refs.curd.drawerForm.gameImage = data.item.gameImage
+				this.$refs.curd.drawerData.gameImage =  data.item.gameImage
+				this.$refs.curd.drawerData.game_id =  data.item.id
+			}
+		}
+	})
+</script>
+{include file="common/footer"}
