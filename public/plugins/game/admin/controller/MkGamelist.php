@@ -31,7 +31,7 @@ class MkGamelist extends BaseController
 			$data  = MkGamelistModel::withSearch($search, $input)->order($input["prop"], $input["order"])->page($input["page"], $input["pageSize"])->select();
             foreach($data as $k=>$v){
             	$gameImage=json_decode($v->gameImage,true);
-            	$v->gameImage=$gameImage['EN'];
+            	$v->gameImage=$gameImage['EN'] ?? '';
 				$gameName=json_decode($v->gameName,true);
 				// $v->gameName='英文：'.$gameName['EN'].'<br>印尼语：'.$gameName['ID'].'<br>泰语：'.$gameName['TH'].'<br>越南语：'.$gameName['VI'].'<br>柬埔寨：'.$gameName['KM'].'<br>马来语：'.$gameName['MS'].'<br>日语：'.$gameName['JA'].'<br>韩语：'.$gameName['KO'];
 				$v->gameName=$gameName['EN'];
@@ -93,8 +93,17 @@ class MkGamelist extends BaseController
             // 	return json(["status" => "error", "message" => "请先推荐品牌"]);
             // }
             unset($postarr['gameType']);
-            unset($postarr['gameName']);
-            //unset($postarr['gameImage']);
+//            unset($postarr['gameName']);
+            $postarr['gameName'] = json_encode([
+                "EN" =>$postarr['gameName'],
+                "TH" =>$postarr['gameName'],
+                "VI" =>$postarr['gameName'],
+                "ID" =>$postarr['gameName'],
+                "KM" =>$postarr['gameName'],
+                "MS" =>$postarr['gameName'],
+                "JA" =>$postarr['gameName'],
+                "KO" =>$postarr['gameName'],
+            ]);
             if(stripos($postarr['gameImage'],"http") === false){
                 $postarr['gameImage'] =
                     json_encode([
@@ -106,10 +115,9 @@ class MkGamelist extends BaseController
                         "MS" =>"https://image.unggame.com".$postarr['gameImage'],
                         "JA" =>"https://image.unggame.com".$postarr['gameImage'],
                         "KO" =>"https://image.unggame.com".$postarr['gameImage']]);
-            }else if(stripos($postarr['gameImage'],"https://image.unggame.com") !== false){
+            }else if(stripos($postarr['gameImage'],"https://image") !== false){
                 unset($postarr['gameImage']);
             }
-
             MkGamelistModel::update($postarr);
             return json(["status" => "success", "message" => "修改成功"]);
         }
