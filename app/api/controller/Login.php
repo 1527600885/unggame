@@ -297,7 +297,7 @@ class Login extends BaseController
 
 			
 			// $hashids = new Hashids();
-			$hashids = new Hashids(env('hashids'), 8,env('hashids_write'));
+			$hashids = new Hashids(env('hashids'), 6,env('hashids_write'));
 			$game_account=$hashids->encode($registerInfo->id);
 			$apigame=new ApiGame();
 			$result=$apigame->create_user($game_account,$input['password']);
