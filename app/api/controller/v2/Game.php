@@ -10,6 +10,7 @@ use app\api\model\UserSign;
 use app\api\model\v2\GameList;
 use app\api\model\RankList;
 use app\api\model\v2\TopGame;
+use app\api\model\v2\TopLivegame;
 use app\common\game\ApiGame;
 use app\common\lib\Redis;
 use Hashids\Hashids;
@@ -40,11 +41,12 @@ class Game extends BaseController
      */
     public function liveList()
     {
-        $where[] = ["gameType", "=", "LIVE"];
-        $where[] = ['displayStatus','=',1];
-        $where[] = ['is_groom','=',1];//是否首页推荐
-        $where[] = ['groom_sort','>',0];//排序序列号>0
-        $this->success("success",$this->getList($where));
+//        $where[] = ["gameType", "=", "LIVE"];
+//        $where[] = ['displayStatus','=',1];
+//        $where[] = ['is_groom','=',1];//是否首页推荐
+//        $where[] = ['groom_sort','>',0];//排序序列号>0
+        $lists = TopLivegame::select();
+        $this->success("success",$lists);
     }
 
     /**

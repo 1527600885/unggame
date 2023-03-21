@@ -1,4 +1,4 @@
-<?php /*a:3:{s:71:"E:/project/unggame/public/plugins/top/admin/view/mk_top_game/index.html";i:1679108520;s:52:"E:\project\unggame\app\admin\view\common\header.html";i:1673339169;s:52:"E:\project\unggame\app\admin\view\common\footer.html";i:1672902372;}*/ ?>
+<?php /*a:3:{s:71:"E:/project/unggame/public/plugins/top/admin/view/mk_top_game/index.html";i:1679366521;s:52:"E:\project\unggame\app\admin\view\common\header.html";i:1673339169;s:52:"E:\project\unggame\app\admin\view\common\footer.html";i:1672902372;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +59,8 @@
 						prop: 'gameImage',
 						label: '游戏图片',
 						table: {
-							is:'image'
+							is:'image',
+							width:'80px'
 						},
 						form: false
 					},
