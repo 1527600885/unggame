@@ -620,14 +620,37 @@ class User  extends BaseController
 			}
 			if($userInfo['id'] == "656")
 			{
-			    $data['balance'] = 402301.58;
-			    $data['profit'] = 23575.54;
-			    $data['water'] =  8616.52;
-			    $data['dividend'] = 12532.24;
-                $data['dividends'] = 150696.58;
-                $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"UNG coin dividend $12532.24","amount"=>"12532.24","add_times"=>date("Y-m-d"),"balance"=>"402301.58"];
-                $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"Play game HEIST Tossand earn $5350","amount"=>"5350.68","add_times"=>date("Y-m-d"),"balance"=>"389769.34"];
-                $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"Play game HEIST Tossand earn $8305.5","amount"=>"8305.5","add_times"=>date("Y-m-d"),"balance"=>"384418.66"];
+			    $rand = mt_rand(1,3);
+			    if($rand == 1){
+                    $data['balance'] = 402301.58;
+                    $data['profit'] = 23575.54;
+                    $data['water'] =  8616.52;
+                    $data['dividend'] = 12532.24;
+                    $data['dividends'] = 150696.58;
+                    unset($data['list']);
+                    $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"UNG coin dividend $12532.24","amount"=>"12532.24","add_times"=>date("Y-m-d"),"balance"=>"402301.58"];
+                    $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"Play game HEIST Tossand earn $5350","amount"=>"5350.68","add_times"=>date("Y-m-d"),"balance"=>"389769.34"];
+                    $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"Play game HEIST Tossand earn $8305.5","amount"=>"8305.5","add_times"=>date("Y-m-d"),"balance"=>"384418.66"];
+                }else if($rand == 2){
+			        $data['balance'] = 20562.21;
+                    $data['profit'] = 320.00;
+                    $data['water'] = 50.00;
+                    $data['dividend'] = 230.1;
+                    $data['dividends'] = 5231.21;
+                    unset($data['list']);
+                    $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"Play game Minesweeper and earn $320.00","amount"=>"320.00","add_times"=>date("Y-m-d"),"balance"=>"20562.21"];
+                    $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"User sign-in rewards $20.00","amount"=>"20.00","add_times"=>date("Y-m-d"),"balance"=>"20242.21"];
+                }else{
+                    $data['balance'] = 4523.51;
+                    $data['profit'] = 1532.1;
+                    $data['water'] = 634.12;
+                    $data['dividend'] = 23.1;
+                    $data['dividends'] = 450.21;
+                    unset($data['list']);
+                    $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"Play game Monster Hunterand and earn $610.00","amount"=>"610.00","add_times"=>date("Y-m-d"),"balance"=>"4523.51"];
+                    $data['list'][] = ["id"=>1,"money_type"=>1,"content"=>"Play game Oneshot Fishingand and earn $120.2","amount"=>"120.2","add_times"=>date("Y-m-d"),"balance"=>"3913.51"];
+                }
+
             }
 			$this->success(lang('system.operation_succeeded'),$data);
 		}
