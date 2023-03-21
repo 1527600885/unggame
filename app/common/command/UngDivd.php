@@ -72,7 +72,7 @@
 					        		
 			        	}
 			        }
-		        }{
+		        }else{
 		        	// 从数据库中写入redis
 		        	$ung_data = Db::name('ung_user')->select()->toArray();
 		        	foreach ($ung_data as $key => $value) {
