@@ -10,7 +10,7 @@ return array (
     array (
       0 => 
       array (
-        'title' => '未命名管理',
+        'title' => '帮助与支持',
         'path' => 'mkHelplist/index',
         'ifshow' => 1,
         'children' => 
