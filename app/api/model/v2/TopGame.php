@@ -30,9 +30,9 @@ class TopGame extends Model
         if(!$price){
             if($data['type'] == 1)
             {
-                $price = mt_rand(50000,5000000);
+                $price = mt_rand(1000,1000000);
             }else{
-                $price = mt_rand(10000,1000000);
+                $price = mt_rand(1000,1000000);
             }
             $price = bcmul($price,0.01,2);
             $redis->set($key,$price,600);

@@ -102,7 +102,7 @@ class Game extends BaseController
         for($i=0;$i<3;$i++)
         {
             $id =  mt_rand(1,10000);
-            $profit = mt_rand(10,100000);
+            $profit = bcmul(mt_rand(1000000,3000000),0.01,2);
             $payout_rate = bcmul(mt_rand(1,2000),0.01,2);
             $gameName=$gamelist[array_rand($gamelist)]['gameName'];
             $headerNumber = mt_rand(1,8);

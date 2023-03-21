@@ -57,7 +57,7 @@ class Index extends BaseController
         for($i=0;$i<10;$i++)
         {
             $id =  mt_rand(1,10000);
-            $profit = mt_rand(10,100000);
+            $profit = bcmul(mt_rand(10,1000000),0.01,2);
             $avartnum = mt_rand(1,2);
             $payout = bcmul(mt_rand(12,200),0.1,1);
             $game = $gamelist[array_rand($gamelist)];
