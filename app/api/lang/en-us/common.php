@@ -53,6 +53,7 @@ return array(
     	'describeError'=> 'The number of signatures cannot exceed 255',
     	'passwordEmpty'=> 'Please fill in the password',
     	'passwordconfirm'=> 'Password is different',
+    	'userverify'=>'Please verify your account first',
     	'passwordMin'=> 'Passwords cannot be less than 6',
     	'passwordMax'=> 'Passwords cannot be more than 12',
 		'passwordAlphaNum'=>'Only numbers and English account can be entered',

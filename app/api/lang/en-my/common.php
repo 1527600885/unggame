@@ -92,6 +92,7 @@ return array(
         'quantityempty'   =>'Quantity cannot be empty',
         'quantitynumber'  =>'Quantity must be numeric',
         'quantityerror'   =>'quantity error',
+        'userverify'=>'Please verify your account first',
 	],
 	'game'=>[
 		'money_funds'=>'Dana tidak cukup',

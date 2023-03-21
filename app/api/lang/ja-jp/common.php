@@ -77,7 +77,8 @@ return array(
 		'safetylow'=>'低い',
 		'safetycommonly'=>'ありふれた',
 		'safetyhigh'=>'高い',
-		'safetyperfect'=>'完璧な'
+		'safetyperfect'=>'完璧な',
+		'userverify'=>'Please verify your account first',
 	],
 	'game'=>[
 		'money_funds'=>'資金不足',

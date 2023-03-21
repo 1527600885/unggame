@@ -144,8 +144,8 @@ class Ung extends BaseController
 	}
 	// 转赠
 	public function transfer(){
-	    $redis = (new Redis())->getRedis();
-	    $counts = $redis->keys('ung_user_divd*');
+	    // $redis = (new Redis())->getRedis();
+	    // $counts = $redis->keys('ung_user_divd*');
 
 	    try{
 	        $input = input('post.');
@@ -157,6 +157,9 @@ class Ung extends BaseController
 	     
 		$userinfo = Db::name("user")->where("id", $this->request->userInfo->id)->find();
 		$userUng =  Db::name("ung_user")->where("uid", $this->request->userInfo->id)->find();
+		if($userinfo['is_check']==0){
+			$this->error(lang('user.userverify'),['code'=>3]);
+		}
 		if($userinfo['pay_paasword']==0){
 		    $this->error(lang('user.pay_paasword_empty'),['code'=>2]);
 		}
@@ -170,6 +173,9 @@ class Ung extends BaseController
             $this->error(lang('user.pay_paasword_error'));
         }
 		$touser = Db::name("user")->alias('a')->where("a.ungaddress",$ungaddress)->join('mk_ung_user b ','b.uid= a.id')->find();
+		if($touser['is_check']==0){
+			$this->error(lang('user.userverify'),['code'=>3]);
+		}
 		if(!$touser){
 		    $this->error(lang('user.addresseror'));
 		}
