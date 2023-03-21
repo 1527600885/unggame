@@ -45,7 +45,7 @@ return array (
         'title' => '排行游戏',
         'sort' => 0,
         'path' => 'mkTopGame/index',
-        'ifshow' => 0,
+        'ifshow' => 1,
         'logwriting' => 0,
         'children' =>
             array (
