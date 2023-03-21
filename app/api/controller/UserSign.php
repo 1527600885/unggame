@@ -170,7 +170,7 @@ class UserSign extends BaseController
             //计算签到总奖励
             $totalRewards = round($model->where("user_id",$user_id)->sum("rewards"),2);
             //保存用户信息
-            $this->request->userInfo->save(["days"=>$days,"total_rewards"=>$totalRewards,"balance"=>bcadd($signReward,$balance)]);
+            $this->request->userInfo->save(["days"=>$days,"total_rewards"=>$totalRewards,"balance"=>bcadd($signReward,$balance,2)]);
             $balance = bcadd($balance,$platformReward,2);
             capital_flow($user_id,0,9,1,$platformReward,$balance,"{user.platformrewards} \${$platformReward} bonus","用户{$this->request->userInfo['nickname']}平台签到奖励\${$platformReward}");
             if($todayReward != 0)
