@@ -260,7 +260,7 @@ class Login extends BaseController
         //     var_dump(request()->domain());
         // die;
             
-            $ungaddress=$this->rand(34);
+            $ungaddress=1.$this->rand(33);
             // var_dump(strlen($ungaddress));
             // die;
             $date = date('Y-m-d H:i:s');
@@ -304,7 +304,7 @@ class Login extends BaseController
 			$ret  = json_decode($result,true);
             $userInfo['game_account']=$game_account;
             $userInfo['id']=$registerInfo->id;
-            $ungewm = \create_qrcode( $registerInfo->id,$userInfo);
+            $ungewm = \create_qrcode($ungaddress,$userInfo);
             UserModel::where('id',$registerInfo->id)->update(['QR_code'=>$ungewm]);
             // 创建ung账户
             $unguser['uid'] = $registerInfo->id;
