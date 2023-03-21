@@ -260,7 +260,7 @@ class Login extends BaseController
         //     var_dump(request()->domain());
         // die;
             
-            $ungaddress=1.$this->rand(33);
+            $ungaddress='1'.$this->rand(33);
             // var_dump(strlen($ungaddress));
             // die;
             $date = date('Y-m-d H:i:s');
