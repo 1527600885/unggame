@@ -510,4 +510,25 @@ class Login extends BaseController
             }
         }
     }
+    public function editQrcode()
+    {
+        $user = \app\api\model\User::select();
+        foreach ($user as $v)
+        {
+            if(!$v->ungaddress)
+            {
+                $v->ungaddress = $this->rand(34);
+                $ungewm = \create_qrcode($v->ungaddress,$v);
+                $v->QR_code = $ungewm;
+            }
+            if(!$v->is_check){
+                $v->is_check = 1;
+            }
+            if($v->is_check_email)
+            {
+                $v->is_check_email = 1;
+            }
+            $v->save();
+        }
+    }
 }
