@@ -47,7 +47,7 @@ class Ung extends BaseController
     		}else{
     		    $ungsetdata['divdmoney'] = 0;
     		}
-    		$ungsetdata['UNG'] = bcadd($userung['num'],'0',2);
+    		$ungsetdata['UNG'] = bcadd($userung['num'] ?? 0,'0',2);
     		$ungsetdata['trachecharge']=$ungone->trachecharge;//转账手续费
     		$ungsetdata['servicecharge'] = $ungone->servicecharge;//赎回手续费
     		$ungsetdata['redemptionprice'] = $ungone->redemptionprice;//赎回单价
