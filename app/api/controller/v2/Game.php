@@ -46,6 +46,9 @@ class Game extends BaseController
 //        $where[] = ['is_groom','=',1];//是否首页推荐
 //        $where[] = ['groom_sort','>',0];//排序序列号>0
         $lists = TopLivegame::select();
+        foreach ($lists as &$v){
+            $v['id'] = $v['game_id'];
+        }
         $this->success("success",$lists);
     }
 
