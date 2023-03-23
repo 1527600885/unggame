@@ -7,6 +7,7 @@ namespace app\api\controller\v2;
 use app\api\BaseController;
 use app\api\model\Helplist;
 use app\api\model\v2\AccountType;
+use app\api\model\v2\AppVersions;
 use app\api\model\v2\GameList;
 use app\common\lib\Redis;
 use Hashids\Hashids;
@@ -73,5 +74,9 @@ class Index extends BaseController
             ];
         }
         return $data;
+    }
+    public function appVersion($type="andriod")
+    {
+        $this->success("success",AppVersions::where("platform",$type)->where("status",1)->order("version_code desc,id desc")->find());
     }
 }
