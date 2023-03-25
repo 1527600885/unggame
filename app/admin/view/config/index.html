@@ -215,6 +215,12 @@
 						<el-form-item label="官方邮箱：" prop="email">
 							<el-input v-model="ungForm.email" placeholder="如：xxxx@qq.com"></el-input>
 						</el-form-item>
+						<el-form-item label="用户协议：" prop="ung_user_agreement">
+							<el-input v-model="ungForm.ung_user_agreement" type="textarea" placeholder="请填写用户协议"></el-input>
+						</el-form-item>
+						<el-form-item label="隐私政策：" prop="ung_privacy_olicy">
+							<el-input v-model="ungForm.ung_privacy_olicy" type="textarea" placeholder="请填写隐私政策"></el-input>
+						</el-form-item>
 					</el-form>
 					<div class="el-bottom">
 						<el-button
