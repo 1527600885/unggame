@@ -281,7 +281,7 @@ class Login extends BaseController
                 'birthday'         => date('Y-m-d'),
                 'now_integral'     => $integral,
                 'history_integral' => $integral,
-                'balance'          => 10,
+                'balance'          => 0,
                 'whatsapp'         => isset($input['whatsApp']) ? $input['whatsApp'] : '',
                 'login_ip'         => $this->request->ip(),
                 'login_count'      => 1,
