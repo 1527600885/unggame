@@ -91,7 +91,7 @@ class Game extends BaseController
         if(!$topThree)
         {
             $topThree = $this->getRandData();
-            $redis->set("top_three_{$date}",json_encode($topThree),24*60*60*60);
+            $redis->set("top_three_{$date}",json_encode($topThree),24*60*60);
         }else{
             $topThree = json_decode($topThree,true);
         }
