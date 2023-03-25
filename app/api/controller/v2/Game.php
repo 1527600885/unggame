@@ -110,10 +110,12 @@ class Game extends BaseController
             $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->order("groom_sort asc,hot desc")->paginate($size)->toArray()['data'];
             Cache::set($key, $gamelist, 600);
         }
+        $randData = [bcmul(mt_rand(1000000,3000000),0.01,2),bcmul(mt_rand(1000000,3000000),0.01,2),bcmul(mt_rand(1000000,3000000),0.01,2)];
+        rsort($randData);
         for($i=0;$i<3;$i++)
         {
             $id =  mt_rand(1,10000);
-            $profit = bcmul(mt_rand(1000000,3000000),0.01,2);
+            $profit = $randData[$i];
             $payout_rate = bcmul(mt_rand(1,2000),0.01,2);
             $gameName=$gamelist[array_rand($gamelist)]['gameName'];
             $headerNumber = mt_rand(1,8);
