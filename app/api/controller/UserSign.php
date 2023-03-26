@@ -184,7 +184,7 @@ class UserSign extends BaseController
             Db::rollBack();
             $this->error($e->getMessage());
         }
-        $this->success("Sign in successfully");
+        $this->success($signReward);
     }
     public function signIn()
     {

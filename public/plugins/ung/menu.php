@@ -10,7 +10,7 @@ return array (
     array (
       0 => 
       array (
-        'title' => '虚拟币设置管理',
+        'title' => 'UNG设置管理',
         'path' => 'mkUngSet/index',
         'ifshow' => 1,
         'children' => 
@@ -74,7 +74,7 @@ return array (
       ),
       2 => 
       array (
-        'title' => '虚拟币记录管理',
+        'title' => 'UNG记录管理',
         'path' => 'mkUngUserLog/index',
         'ifshow' => 1,
         'children' => 

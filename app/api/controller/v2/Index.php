@@ -7,6 +7,7 @@ namespace app\api\controller\v2;
 use app\api\BaseController;
 use app\api\model\Helplist;
 use app\api\model\v2\AccountType;
+use app\api\model\v2\AppVersions;
 use app\api\model\v2\GameList;
 use app\common\lib\Redis;
 use Hashids\Hashids;
@@ -57,7 +58,7 @@ class Index extends BaseController
         for($i=0;$i<10;$i++)
         {
             $id =  mt_rand(1,10000);
-            $profit = mt_rand(10,100000);
+            $profit = bcmul(mt_rand(10,1000000),0.01,2);
             $avartnum = mt_rand(1,2);
             $payout = bcmul(mt_rand(12,200),0.1,1);
             $game = $gamelist[array_rand($gamelist)];
@@ -73,5 +74,9 @@ class Index extends BaseController
             ];
         }
         return $data;
+    }
+    public function appVersion($type="andriod")
+    {
+        $this->success("success",AppVersions::where("platform",$type)->where("status",1)->order("version_code desc,id desc")->find());
     }
 }

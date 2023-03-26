@@ -556,7 +556,7 @@ class Game extends BaseController
             $gametype=$this->gametype[$type];
             $gamelog_count=$this->GamelogModel->withJoin([
                 'gamelist'=>['gameName','gameImage','tcgGameCode']
-            ])->where(['trialSupport'=>1,'uid'=>$userInfo['id'],'gameType'=>$gametype])
+            ])->where(['uid'=>$userInfo['id'],'gameType'=>$gametype])
                 ->whereTime('gamelog.add_time','between',$range)->count();
 
             $gamelog_list=$this->GamelogModel->withJoin([

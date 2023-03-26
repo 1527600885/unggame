@@ -46,6 +46,9 @@ class Game extends BaseController
 //        $where[] = ['is_groom','=',1];//是否首页推荐
 //        $where[] = ['groom_sort','>',0];//排序序列号>0
         $lists = TopLivegame::select();
+        foreach ($lists as &$v){
+            $v['id'] = $v['game_id'];
+        }
         $this->success("success",$lists);
     }
 
@@ -70,8 +73,16 @@ class Game extends BaseController
     }
     public function getRankData()
     {
-        $wow = array_chunk(TopGame::where("type",1)->append(["nickname","price"])->order("id desc")->select()->toArray(),2);
-        $top =  array_chunk(TopGame::where("type",2)->append(["nickname","price"])->order("id desc")->select()->toArray(),2);
+        $wowList = TopGame::where("type",1)->append(["nickname","price"])->order("id desc")->select()->toArray();
+        foreach ($wowList as &$item){
+            $item["id"] = $item['game_id'];
+        }
+        $wow = array_chunk($wowList,2);
+        $topList = TopGame::where("type",2)->append(["nickname","price"])->order("id desc")->select()->toArray();
+        foreach ($topList as &$value){
+            $value['id'] = $value['game_id'];
+        }
+        $top =  array_chunk($topList,2);
         $topGame = compact("wow","top");
         $topList = RankList::order("profit desc,update_time desc,id desc")->select()->toArray();
         $redis = (new Redis())->getRedis();
@@ -80,7 +91,7 @@ class Game extends BaseController
         if(!$topThree)
         {
             $topThree = $this->getRandData();
-            $redis->set("top_three_{$date}",json_encode($topThree),24*60*60*60);
+            $redis->set("top_three_{$date}",json_encode($topThree),24*60*60);
         }else{
             $topThree = json_decode($topThree,true);
         }
@@ -99,10 +110,12 @@ class Game extends BaseController
             $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->order("groom_sort asc,hot desc")->paginate($size)->toArray()['data'];
             Cache::set($key, $gamelist, 600);
         }
+        $randData = [bcmul(mt_rand(1000000,3000000),0.01,2),bcmul(mt_rand(1000000,3000000),0.01,2),bcmul(mt_rand(1000000,3000000),0.01,2)];
+        rsort($randData);
         for($i=0;$i<3;$i++)
         {
             $id =  mt_rand(1,10000);
-            $profit = mt_rand(10,100000);
+            $profit = $randData[$i];
             $payout_rate = bcmul(mt_rand(1,2000),0.01,2);
             $gameName=$gamelist[array_rand($gamelist)]['gameName'];
             $headerNumber = mt_rand(1,8);
