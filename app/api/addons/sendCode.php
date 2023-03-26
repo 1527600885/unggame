@@ -29,8 +29,8 @@ class sendCode
      */
     public static function email(string $email, string $name, string $operation): array
     {
-        $title = $code.lang('system.code');
         $code  = rand(1000,9999);
+        $title = $code.lang('system.code');
         $operation ="Your";
         // $body  = $operation . lang('system.code')."<br/>".lang('system.hi') . $email . "!<br/>" . $title . "，".lang('system.code') . $operation . lang('system.page')."。<br/>".lang('system.code')."：" . $code . "";
         $font_size1 = "style='font-size:12px;font-weight: bolder'";
