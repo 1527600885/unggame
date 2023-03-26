@@ -361,6 +361,10 @@ class Ung extends BaseController
 	    }catch( ValidateException $e ){
 	        $this->error($e->getError());
 	    }
+	    $useridcard =  Db::name("user_idcard")->where("user_id", $this->request->userInfo->id)->find();
+		if(!$useridcard || $useridcard['status']!=1){
+			$this->error(lang('user.realnameverification'),['code'=>2]);
+		}
 		$userinfo=$this->request->userInfo;
 		$userdata = Db::name("user")->alias('a')->where("a.id", $this->request->userInfo->id)->join('mk_ung_user b ','b.uid= a.id')->find();
         if($userdata['pay_paasword']==0){
