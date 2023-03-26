@@ -79,6 +79,7 @@ return array(
 		'safetyhigh'=>'高い',
 		'safetyperfect'=>'完璧な',
 		'userverify'=>'Please verify your account first',
+		"realnameverification" =>"You have not completed real-name verification."
 	],
 	'game'=>[
 		'money_funds'=>'資金不足',

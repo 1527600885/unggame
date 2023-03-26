@@ -157,6 +157,10 @@ class Ung extends BaseController
 	     
 		$userinfo = Db::name("user")->where("id", $this->request->userInfo->id)->find();
 		$userUng =  Db::name("ung_user")->where("uid", $this->request->userInfo->id)->find();
+		$useridcard =  Db::name("user_idcard")->where("user_id", $this->request->userInfo->id)->find();
+		if(!$useridcard || $useridcard['status']!=1){
+			$this->error(lang('user.realnameverification'),['code'=>3]);
+		}
 		if($userinfo['is_check']==0){
 			$this->error(lang('user.userverify'),['code'=>3]);
 		}

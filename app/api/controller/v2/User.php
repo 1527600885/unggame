@@ -58,7 +58,7 @@ class User extends BaseController
                 $save['balance'] = bcadd($this->request->userInfo->balance,$amount,4);
                 $save['is_check'] = 1;
                 capital_flow($this->request->userInfo->id,$this->request->userInfo->id,7,1,$amount,$save['balance'],$content,$admin_content);
-                $amount=2;
+                $amount=5;
                 if($invite_one_uid= $this->request->userInfo['invite_one_uid']){
                     //更新一级邀请人数
                     $one_count = UserModel::where("id",$invite_one_uid)->count();

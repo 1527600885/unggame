@@ -92,6 +92,7 @@ return array(
         'quantitynumber'  =>'Quantity must be numeric',
         'quantityerror'   =>'quantity error',
         'userverify'=>'Please verify your account first',
+        "realnameverification" =>"You have not completed real-name verification."
     ],
 	'game'=>[
 		'money_funds'=>'រូបភាព​មិន​គ្រប់គ្រាន់',
