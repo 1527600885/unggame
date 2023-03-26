@@ -79,7 +79,7 @@ return array(
 		'safetyhigh'=>'高い',
 		'safetyperfect'=>'完璧な',
 		'userverify'=>'Please verify your account first',
-		"realnameverification" =>"You have not completed real-name verification."
+		"realnameverification" =>"Real-name authentication required for UNG transfer and redemption."
 	],
 	'game'=>[
 		'money_funds'=>'資金不足',

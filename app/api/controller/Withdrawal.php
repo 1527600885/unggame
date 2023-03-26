@@ -71,6 +71,10 @@ class Withdrawal extends BaseController
 	//提交提现
 	public function setwithdrawal_log(){
 		$userInfo=$this->request->userInfo;
+		$useridcard =  Db::name("user_idcard")->where("user_id", $userInfo->id)->find();
+		if(!$useridcard || $useridcard['status']!=1){
+			$this->error('Real-name authentication required for account cash withdrawal.');
+		}
 		$input=input("post.");
 		$payment_name  = $input['payment_name'];
 		$w_info=$this->setwithdrawal_info($input);

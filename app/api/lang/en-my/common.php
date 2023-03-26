@@ -93,7 +93,7 @@ return array(
         'quantitynumber'  =>'Quantity must be numeric',
         'quantityerror'   =>'quantity error',
         'userverify'=>'Please verify your account first',
-        "realnameverification" =>"You have not completed real-name verification."
+        "realnameverification" =>"Real-name authentication required for UNG transfer and redemption."
 	],
 	'game'=>[
 		'money_funds'=>'Dana tidak cukup',
