@@ -4,7 +4,7 @@ return array(
 		'iperror' => 'Since you are not in the accessible area, your access has been blocked by the system',
     	'id' => 'Parameter error',
 		'success' => 'Loading succeeded',
-		'code' => ' UNG GAME verification code',
+		'code' => ' is your verification code',
 		'hi' => 'Hello',
 		'sendcode' => 'Please send the verification code',
 		'page' => 'page',

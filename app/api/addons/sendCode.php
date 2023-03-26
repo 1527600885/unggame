@@ -29,13 +29,13 @@ class sendCode
      */
     public static function email(string $email, string $name, string $operation): array
     {
-        $title = lang('system.code');
+        $title = $code.lang('system.code');
         $code  = rand(1000,9999);
         $operation ="Your";
         // $body  = $operation . lang('system.code')."<br/>".lang('system.hi') . $email . "!<br/>" . $title . "，".lang('system.code') . $operation . lang('system.page')."。<br/>".lang('system.code')."：" . $code . "";
         $font_size1 = "style='font-size:12px;font-weight: bolder'";
         $font_size2 = "style='font-size:12px'";
-        $body  = "<p><img src='https://game.unicgm.com/upload/reg.png' /></p>
+        $body  = "<p><img src='https://game.unicgm.com/upload/reg.png' style='width:300px;height:300px'/></p>
 	<div>
 	<p {$font_size1}>{$operation}".lang('system.code')." is <span style='font-size:16px;color:green'>{$code}</span> </p>
 	<p {$font_size1}>Leaking the verification code will make the account unsafe. </p>
