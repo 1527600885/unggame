@@ -28,7 +28,7 @@
 	    		$userdataid = $redis->Smembers('ung_user_id');
 		        if(count($userdataid)>0){
 			        	$ungset = Db::name('ung_set')->order('id asc')->find();
-			        	$ungset['realinterest'] = (string)$ungset['realinterest'];
+			        	$ungset['realinterest'] = $ungset['realinterest'].'';
 			        	foreach ($userdataid as $key => $value) {
 			        		$isexists = $redis->hExists('ung_user_divd:ung_user_'.$value,'num');
 			        		if($isexists){
