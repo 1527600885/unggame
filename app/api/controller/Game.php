@@ -290,7 +290,7 @@ class Game extends BaseController
         if($rungame){
             $this->error(lang("frequent_operation") ,null,405);
         }else{
-            $redis->set($key,1,5);
+            $redis->set($key,1,10);
         }
 
         $tcgGameCode=input('tcgGameCode');
@@ -420,6 +420,7 @@ class Game extends BaseController
                     if($ret['balance'] > 0){
                         //将资金回笼到平台
                         $result=$this->apigame->user_all_transfer($userInfo->game_account,$game_info->productType,"game_withdrawal_".$userInfo->game_account.time());
+
                         $ret=json_decode($result,true);
                         $balance=$ret['amount'];
                         $this->UserModel->where('id',$userInfo->id)->update(['balance'=>$balance]);
