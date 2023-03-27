@@ -28,6 +28,7 @@
 	    		$userdataid = $redis->Smembers('ung_user_id');
 		        if(count($userdataid)>0){
 			        	$ungset = Db::name('ung_set')->order('id asc')->find();
+			        	$ungset['realinterest'] = $ungset['realinterest'].'';
 			        	foreach ($userdataid as $key => $value) {
 			        		$isexists = $redis->hExists('ung_user_divd:ung_user_'.$value,'num');
 			        		if($isexists){
@@ -36,7 +37,7 @@
 			        			if($ungdata['num']>0 && time()>=$ungdata['divd_time']+3600){
 			        			    $userinfo = Db::name('user')->where('id',$value)->find();
 			        			    if($userinfo){
-			        			        $divd = bcmul($ungdata['num']."",$ungset['realinterest']."",5)/100;
+			        			        $divd = bcmul(bcmul($ungdata['num']."",$ungset['realinterest']."",5),0.01,5);
 			        			        // var_dump($divd);
     					    			$data['balance']=bcadd($divd."",$userinfo['balance']."",5);
     					    			Db::name('user')->where('id',$value)->update($data);
