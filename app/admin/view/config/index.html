@@ -216,10 +216,10 @@
 							<el-input v-model="ungForm.email" placeholder="如：xxxx@qq.com"></el-input>
 						</el-form-item>
 						<el-form-item label="用户协议：" prop="ung_user_agreement">
-							<el-tooltip v-model="ungForm.ung_user_agreement"  placeholder="请填写用户协议"></el-tooltip>
+							<el-editor v-model="ungForm.ung_user_agreement"  placeholder="请填写用户协议"></el-editor>
 						</el-form-item>
 						<el-form-item label="隐私政策：" prop="ung_privacy_olicy">
-							<el-tooltip v-model="ungForm.ung_privacy_olicy"  placeholder="请填写隐私政策"></el-tooltip>
+							<el-editor v-model="ungForm.ung_privacy_olicy"  placeholder="请填写隐私政策"></el-editor>
 						</el-form-item>
 					</el-form>
 					<div class="el-bottom">

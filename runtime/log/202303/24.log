@@ -1,0 +1,11 @@
+{"time":"2023-03-24 10:21:03","type":"error","msg":"[0]Call to undefined method app\\api\\model\\v2\\ChatUser::find()"}
+{"time":"2023-03-24 10:21:09","type":"error","msg":"[0]Call to undefined method app\\api\\model\\v2\\ChatUser::find()"}
+{"time":"2023-03-24 10:27:06","type":"error","msg":"[0]Call to undefined method think\\Db::name()"}
+{"time":"2023-03-24 10:29:33","type":"error","msg":"[10501]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'game_log.mk_chat_user' doesn't exist"}
+{"time":"2023-03-24 10:30:09","type":"error","msg":"[10501]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'game_log.mk_chat_user' doesn't exist"}
+{"time":"2023-03-24 10:30:26","type":"error","msg":"[0]Undefined db config:mysql_img"}
+{"time":"2023-03-24 16:45:32","type":"error","msg":"[10501]SQLSTATE[HY000]: General error: 1366 Incorrect integer value: 'ywzlvvzl' for column 'fid' at row 1"}
+{"time":"2023-03-24 16:45:54","type":"error","msg":"[10501]SQLSTATE[HY000]: General error: 1366 Incorrect integer value: 'ywzlvvzl' for column 'fid' at row 1"}
+{"time":"2023-03-24 16:46:26","type":"error","msg":"[10501]SQLSTATE[HY000]: General error: 1366 Incorrect integer value: 'ywzlvvzl' for column 'fid' at row 1"}
+{"time":"2023-03-24 16:47:29","type":"error","msg":"[10501]SQLSTATE[HY000]: General error: 1366 Incorrect integer value: 'ywzlvvzl' for column 'fid' at row 1"}
+{"time":"2023-03-24 16:48:13","type":"error","msg":"[10501]SQLSTATE[HY000]: General error: 1366 Incorrect integer value: 'ywzlvvzl' for column 'fid' at row 1"}

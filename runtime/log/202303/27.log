@@ -1,0 +1,2 @@
+{"time":"2023-03-27 17:13:09","type":"error","msg":"[0]Too few arguments to function think\\db\\BaseQuery::column(), 0 passed and at least 1 expected"}
+{"time":"2023-03-27 17:20:51","type":"error","msg":"[0]Argument 2 passed to think\\response\\View::__construct() must be an instance of think\\View, instance of onekey\\ThinkView given"}

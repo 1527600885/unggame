@@ -1,0 +1,6 @@
+{"time":"2023-03-21 10:46:07","type":"error","msg":"[0]Too few arguments to function think\\db\\BaseQuery::column(), 0 passed and at least 1 expected[E:\\project\\unggame\\vendor\\topthink\\think-orm\\src\\db\\BaseQuery.php:278]"}
+{"time":"2023-03-21 10:47:13","type":"error","msg":"[8]Trying to access array offset on value of type null[E:\\project\\unggame\\public\\plugins\\game\\admin\\controller\\MkGamelist.php:34]"}
+{"time":"2023-03-21 10:47:15","type":"error","msg":"[8]Trying to access array offset on value of type null[E:\\project\\unggame\\public\\plugins\\game\\admin\\controller\\MkGamelist.php:34]"}
+{"time":"2023-03-21 10:53:41","type":"error","msg":"[8]Undefined index: gameName[E:\\project\\unggame\\public\\plugins\\game\\admin\\controller\\MkGamelist.php:98]"}
+{"time":"2023-03-21 10:54:56","type":"error","msg":"[8]Trying to access array offset on value of type null[E:\\project\\unggame\\public\\plugins\\game\\admin\\controller\\MkGamelist.php:34]"}
+{"time":"2023-03-21 10:55:11","type":"error","msg":"[8]Trying to access array offset on value of type null[E:\\project\\unggame\\public\\plugins\\game\\admin\\controller\\MkGamelist.php:34]"}
