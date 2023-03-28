@@ -159,7 +159,7 @@ class Ung extends BaseController
 		$userUng =  Db::name("ung_user")->where("uid", $this->request->userInfo->id)->find();
 		$useridcard =  Db::name("user_idcard")->where("user_id", $this->request->userInfo->id)->find();
 		if(!$useridcard || $useridcard['status']!=1){
-			$this->error(lang('user.realnameverification'),['code'=>3]);
+			$this->error(lang('user.realnameverification'),['code'=>4]);
 		}
 		if($userinfo['is_check']==0){
 			$this->error(lang('user.userverify'),['code'=>3]);
@@ -181,13 +181,13 @@ class Ung extends BaseController
 			$this->error(lang('user.userverify'),['code'=>3]);
 		}
 		if(!$touser){
-		    $this->error(lang('user.addresseror'));
+		    $this->error(lang('user.addresseror'),['code'=>8]);
 		}
 		if($userinfo["ungaddress"]==$ungaddress){
-		    $this->error(lang('user.toyouself'));
+		    $this->error(lang('user.toyouself'),['code'=>5]);
 		}
 		if($quantity>$userUng['num']){
-		    $this->error(lang('user.UNGinsufficient'));
+		    $this->error(lang('user.UNGinsufficient'),['code'=>6]);
 		}
         //获取数字资产设置
         $ungset = Db::name("ung_set")->order('id asc')->find();
@@ -252,11 +252,11 @@ class Ung extends BaseController
             // if(!$redis->get('ung_user_id_pop'.$touser['uid'])){
             //     $redis->set('ung_user_id_pop'.$touser['uid'],$touser['uid']);
             // }
-            $this->success(lang('system.success'));
+            $this->success(lang('system.success'),['code'=>1]);
             // Db::name("ung_user_log")->insert($touser_log);
         } catch (Exception $e) {
             Db::rollback();
-            $this->error(lang('user.emailerror'));
+            $this->error(lang('user.emailerror'),['code'=>7]);
         }
        
 	}
