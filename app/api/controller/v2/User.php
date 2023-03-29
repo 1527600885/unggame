@@ -8,6 +8,7 @@ use app\api\BaseController;
 use app\api\model\User as UserModel;
 use app\api\model\UserSign;
 use app\api\model\v2\AccountType;
+use app\api\model\v2\ChatRecord;
 use app\api\model\v2\Order;
 use think\facade\Validate;
 use think\response\Json;
@@ -150,6 +151,8 @@ class User extends BaseController
         }else{
             $signData = ["canSign"=>0,["signTime"=>($last['last_sign_time']+3600 - time())]];
         }
+        $message_num = ChatRecord::where("ftoid",$this->request->userInfo['game_account'])->where("state",0)->count();
+        $signData['message_num'] = $message_num;
         $this->success("success",$signData);
     }
 }

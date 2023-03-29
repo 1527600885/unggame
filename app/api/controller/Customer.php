@@ -49,7 +49,15 @@ class Customer extends BaseController
         } else {
             $count = 0;
         }
-        $data['chat_record'] = ChatRecord::where("ftoid",$this->request->userInfo['game_account'])->where("foid",$data['customer']['name'])->limit($count,200)->order("id asc")->select();
+        ChatRecord::where("ftoid",$this->request->userInfo['game_account'])
+            ->where("foid",$data['customer']['name'])
+            ->where("state",0)
+            ->update(['state'=>1]);
+        $data['chat_record'] = ChatRecord::where("ftoid",$this->request->userInfo['game_account'])
+            ->where("foid",$data['customer']['name'])
+            ->limit($count,200)
+            ->order("id asc")
+            ->select();
         $this->success(lang('system.success'),$data);
     }
     public function saveMessage()
@@ -77,5 +85,11 @@ class Customer extends BaseController
         }
         $lists = ChatRecord::where("ftoid",$this->request->userInfo['game_account'])->where("foid",$kefu_id)->paginate(12);
         $this->success("success",$lists);
+    }
+    public function readMessage()
+    {
+        ChatRecord::where("ftoid",$this->request->userInfo['game_account'])
+            ->where("state",0)
+            ->update(['state'=>1]);
     }
 }
