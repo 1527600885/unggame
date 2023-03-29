@@ -48,6 +48,7 @@ class Customer extends BaseController
                 {
                     $redis->sAdd("kefu_list_{$date}",$v);
                 }
+                $redis->expire("kefu_list_{$date}",24*60*60);
                 $kefu_id = $redis->sPop("kefu_list_{$date}");
             }
             $data['customer']=ChatUser::where("name",$kefu_id)->find();
@@ -100,6 +101,7 @@ class Customer extends BaseController
                 {
                     $redis->sAdd("kefu_list_{$date}",$v);
                 }
+                $redis->expire("kefu_list_{$date}",24*60*60);
                 $kefu_id = $redis->sPop("kefu_list_{$date}");
             }
             ChatKefuUser::create(["fid"=>$this->request->userInfo['game_account'],"kefu_id"=>$kefu_id]);
