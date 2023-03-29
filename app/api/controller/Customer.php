@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\api\model\v2\ChatKefuUser;
 use app\api\model\v2\ChatRecord;
 use app\api\model\v2\ChatUser;
+use app\common\lib\Redis;
 use think\Request;
 use app\api\BaseController;
 use think\facade\Db;
@@ -38,7 +39,18 @@ class Customer extends BaseController
         if($kefu_id){
             $data['customer']=ChatUser::where("name",$kefu_id)->find();
         }else{
-            $data['customer']=ChatUser::find(1);
+            $redis = (new Redis())->getRedis();
+            $date = date("Y-m-d");
+            $kefu_id = $redis->sPop("kefu_list_{$date}");
+            if(!$kefu_id){
+                $kefu_id_list =  ChatUser::where("state",0)->column("name");
+                foreach ($kefu_id_list as $v)
+                {
+                    $redis->sAdd("kefu_list_{$date}",$v);
+                }
+                $kefu_id = $redis->sPop("kefu_list_{$date}");
+            }
+            $data['customer']=ChatUser::where("name",$kefu_id)->find();
             ChatKefuUser::create(["fid"=>$this->request->userInfo['game_account'],"kefu_id"=>$data['customer']['name']]);
 
         }
@@ -79,8 +91,17 @@ class Customer extends BaseController
     {
         $kefu_id = ChatKefuUser::where("fid",$this->request->userInfo['game_account'])->where("status",1)->value("kefu_id");
         if(!$kefu_id){
-            $chatUser = ChatUser::find(1);
-            $kefu_id = $chatUser['name'];
+            $redis = (new Redis())->getRedis();
+            $date = date("Y-m-d");
+            $kefu_id = $redis->sPop("kefu_list_{$date}");
+            if(!$kefu_id){
+                $kefu_id_list =  ChatUser::where("state",0)->column("name");
+                foreach ($kefu_id_list as $v)
+                {
+                    $redis->sAdd("kefu_list_{$date}",$v);
+                }
+                $kefu_id = $redis->sPop("kefu_list_{$date}");
+            }
             ChatKefuUser::create(["fid"=>$this->request->userInfo['game_account'],"kefu_id"=>$kefu_id]);
         }
         $lists = ChatRecord::where("ftoid",$this->request->userInfo['game_account'])->where("foid",$kefu_id)->paginate(12);
