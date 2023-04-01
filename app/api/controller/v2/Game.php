@@ -172,4 +172,5 @@ class Game extends BaseController
         }
         $this->success('success',$data);
     }
+
 }
