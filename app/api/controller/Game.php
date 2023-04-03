@@ -275,6 +275,13 @@ class Game extends BaseController
         $userInfo=$this->request->userInfo;
         $redis = (new Redis())->getRedis();
         $log = $redis->get("user_wait_recapture_{$userInfo->id}");
+        $tcgGameCode=input('tcgGameCode');
+        $gameinfo=$this->GameListModel->where('tcgGameCode',$tcgGameCode)->find();
+        $gamename=json_decode($gameinfo->gameName,true)[$this->gamelang];
+        if($gameinfo['type'] == 1)
+        {
+            $this->success(lang('game.run_game'),['game_url'=>$gameinfo['game_url'],'gamename'=>$gamename]);
+        }
         if($log){
             try{
                 $this->recapture();
@@ -293,9 +300,8 @@ class Game extends BaseController
             $redis->set($key,1,10);
         }
 
-        $tcgGameCode=input('tcgGameCode');
-        $gameinfo=$this->GameListModel->where('tcgGameCode',$tcgGameCode)->find();
-        $gamename=json_decode($gameinfo->gameName,true)[$this->gamelang];
+
+
 
         try{
             Db::startTrans();
