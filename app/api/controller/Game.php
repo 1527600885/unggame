@@ -280,7 +280,7 @@ class Game extends BaseController
         $gamename=json_decode($gameinfo->gameName,true)[$this->gamelang];
         if($gameinfo['type'] == 1)
         {
-            $this->success(lang('game.run_game'),['game_url'=>$gameinfo['game_url'],'gamename'=>$gamename]);
+            $this->success(lang('game.run_game'),['game_url'=>$gameinfo['game_url']."?token=".$this->request->header('Accept-Token'),'gamename'=>$gamename]);
         }
         if($log){
             try{

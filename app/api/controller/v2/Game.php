@@ -134,6 +134,9 @@ class Game extends BaseController
     {
         $id = input("param.id");
         $gameData = GameList::where("id",$id)->find();
+        if($gameData && $gameData['type'] == 1){
+            $this->success(lang('game.run_game'),["gamename"=>$gameData->gameName,"game_url"=>$gameData['trygameurl']]);
+        }
         $redis = (new Redis())->getRedis();
         $ip = request()->ip();
         $key = "try_game_account_{$ip}";
