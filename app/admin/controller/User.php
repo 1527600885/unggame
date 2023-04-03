@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\api\model\UngUser;
 use think\facade\View;
 use think\exception\ValidateException;
 use app\admin\BaseController;
@@ -47,6 +48,7 @@ class User extends BaseController
                 $item['invite_two_num'] = "<a   style='color: red' href='/game_admin/user/index?invite_two_uid={$item['id']}'>{$item['invite_two_num']}</a>";
                 $item['invite_three_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_three_uid={$item['id']}'>{$item['invite_three_num']}</a>";
                 $item['balance'] = "<a style='color:darkgreen' onclick='app.showEditBalance({$item['id']})'>{$item['balance']}<a/>";
+                $item['UNG'] = UngUser::where("uid",$item['id'])->value("num");
             });
 			return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
