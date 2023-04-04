@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 use app\api\BaseController;
+use app\api\model\v2\PlatgameLog;
 use app\common\lib\Redis;
 use think\exception\HttpResponseException;
 use think\facade\Cache;
@@ -280,7 +281,8 @@ class Game extends BaseController
         $gamename=json_decode($gameinfo->gameName,true)[$this->gamelang];
         if($gameinfo['type'] == 1)
         {
-            $this->success(lang('game.run_game'),['game_url'=>$gameinfo['game_url']."?token=".$this->request->header('Accept-Token'),'gamename'=>$gamename]);
+            \app\api\model\Gamelog::create(["uid"=>$this->request->userInfo->id,"gid"=>$gameinfo['id'],"type"=>1,"add_time"=>time()]);
+            $this->success(lang('game.run_game'),['game_url'=>$gameinfo['gameurl']."?token=".$this->request->header('Accept-Token'),'gamename'=>$gamename]);
         }
         if($log){
             try{
@@ -418,6 +420,13 @@ class Game extends BaseController
             $gamelog=$this->GamelogModel->where(['uid'=>$userInfo->id,'type'=>1])->lock(true)->order('id desc')->find();
             if($gamelog){
                 $game_info=$this->GameListModel->where('id',$gamelog->gid)->find();
+                if($game_info['type'] == 1){
+                    $result = PlatgameLog::where("log_id",$gamelog->id)->sum("profit");
+                    $gamelog->type = 2;
+                    $gamelog->save();
+                    $result_type = $result > 0 ? 1 : ($result < 0 ? 2 : 0);
+                    $this->success(lang('system.operation_succeeded'),["amount"=>abs($result),"result_type"=>$result_type,'tcgGameCode'=>$game_info['tcgGameCode'],"balance"=>$userInfo->balance]);
+                }
                 //查询上一个游戏的资金情况
                 $result=$this->apigame->get_balance($userInfo->game_account,$game_info->productType);
                 $ret=json_decode($result,true);

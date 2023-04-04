@@ -5,6 +5,9 @@ namespace app\api\controller\v2;
 
 
 use app\api\BaseController;
+use app\api\model\GameBetLog;
+use app\api\model\Gamelog;
+use app\api\model\v2\GameList;
 use app\api\model\v2\Platgame;
 use app\api\model\v2\PlatgameLog;
 use app\api\model\v2\PlatgameLogDetail;
@@ -25,9 +28,10 @@ class GameCreate extends BaseController
             {
                 $this->error("Insufficient balance.");
             }
+            $log_id = Gamelog::where("gid",$game_id)->where("uid",$this->request->userInfo->id)->where("type",1)->value("id");
             $this->request->userInfo->balance = bcadd($this->request->userInfo->balance,-$bet);
             $this->request->userInfo->save();
-            $game_log  = PlatgameLog::create(["game_id"=>$game_id,"bet"=>$bet,"create_time"=>time(),"user_id"=>$this->request->userInfo['id']]);
+            $game_log  = PlatgameLog::create(["game_id"=>$game_id,"bet"=>$bet,"create_time"=>time(),"user_id"=>$this->request->userInfo['id'],"log_id"=>$log_id]);
         }
         $win = PlatgameLog::where("user_id",$this->request->userInfo['id'])->where("game_id",$game_id)->field("sum(awards-bet) as total")->find();
         $win = $win['total'];
@@ -46,11 +50,15 @@ class GameCreate extends BaseController
             $game_log->save();
             $user = $this->request->userInfo;
             $user->balance = bcadd($user->balance,$game_log->awards,2);
-            $game_name = Platgame::where("id",$game_id)->value("name");
+            $game = GameList::where("id",$game_id)->find();
+            $game_name  = $game->gameName;
             if($game_log->profit == 0){
                 $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentf}';
                 $admin_content='用户'.$user->nickname.'游玩游戏'.$game_name.'资金不变';
                 $money_type=0;
+                GameBetLog::create([
+                    "tcgGameCode"=>$game->tcgGameCode
+                ]);
             }else if($game_log->profit > 0){
                 $money_type=1;
                 $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentt}'.$game_log['profit'].'{capital.money}';
