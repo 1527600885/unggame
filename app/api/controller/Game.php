@@ -282,7 +282,7 @@ class Game extends BaseController
         if($gameinfo['type'] == 1)
         {
             \app\api\model\Gamelog::create(["uid"=>$this->request->userInfo->id,"gid"=>$gameinfo['id'],"type"=>1,"add_time"=>time()]);
-            $this->success(lang('game.run_game'),['game_url'=>$gameinfo['gameurl']."?token=".$this->request->header('Accept-Token'),'gamename'=>$gamename]);
+            $this->success(lang('game.run_game'),['game_url'=>$gameinfo['gameurl']."?token=".$this->request->header('Accept-Token')."&game_id=".$gameinfo->id,'gamename'=>$gamename]);
         }
         if($log){
             try{
