@@ -31,7 +31,11 @@ class BoardGame extends GameBaseService
 
 
     }
-
+    public static function allPayout()
+    {
+        $static = new static();
+        return $static->payoutList;
+    }
     public function getPayOut($times)
     {
         return $this->payoutList[$this->level][$times - 1];
