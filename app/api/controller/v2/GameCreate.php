@@ -31,7 +31,7 @@ class GameCreate extends BaseController
             $log_id = Gamelog::where("gid",$game_id)->where("uid",$this->request->userInfo->id)->where("type",1)->value("id");
             $this->request->userInfo->balance = bcadd($this->request->userInfo->balance,-$bet);
             $this->request->userInfo->save();
-            $game_log  = PlatgameLog::create(["game_id"=>$game_id,"bet"=>$bet,"create_time"=>time(),"user_id"=>$this->request->userInfo['id'],"log_id"=>$log_id]);
+            $game_log  = PlatgameLog::create(["game_id"=>$game_id,"bet"=>$bet,"create_time"=>time(),"user_id"=>$this->request->userInfo['id'],"log_id"=>$log_id,"bet_level"=>$bet_level]);
         }
         $win = PlatgameLog::where("user_id",$this->request->userInfo['id'])->where("game_id",$game_id)->field("sum(awards-bet) as total")->find();
         $win = $win['total'];
