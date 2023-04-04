@@ -56,9 +56,7 @@ class GameCreate extends BaseController
                 $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentf}';
                 $admin_content='用户'.$user->nickname.'游玩游戏'.$game_name.'资金不变';
                 $money_type=0;
-                GameBetLog::create([
-                    "tcgGameCode"=>$game->tcgGameCode
-                ]);
+
             }else if($game_log->profit > 0){
                 $money_type=1;
                 $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentt}'.$game_log['profit'].'{capital.money}';
@@ -68,6 +66,17 @@ class GameCreate extends BaseController
                 $content='{capital.gamecontento}'.$game_name.'{capital.gamecontenth}'.abs($game_log['profit']).'{capital.money}';
                 $admin_content='用户'.$user->nickname.'游玩游戏'.$game_name.'资金减少'.abs($game_log['profit']).'美元';
             }
+            GameBetLog::create([
+                "tcgGameCode"=>$game->tcgGameCode,
+                "game_id"=>$game->id,
+                "betTime"=>time(),
+                "endTime"=>time(),
+                "productType"=>0,
+                "betAmount"=>$game_log->bet,
+                "game_account"=>$this->request->userInfo->game_account,
+                "netPnl"=>$game_log->profit,
+                "user_id"=>$this->request->userInfo->id
+            ]);
             capital_flow($user->id,$game_id,3,$money_type,abs($game_log->profit),$user->balance,$content,$admin_content,$game_log->id);
         }
         PlatgameLogDetail::create([
@@ -103,10 +112,22 @@ class GameCreate extends BaseController
         $this->request->userInfo->balance = bcadd($this->request->userInfo->balance,$awards,2);
         $this->request->userInfo->save();
         $money_type=1;
-        $game_name = Platgame::where("id",$game_id)->value("name");
+        $game = GameList::where("id",$game_id)->find();
+        $game_name = $game->game_name;
         $user = $this->request->userInfo;
         $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentt}'.$game_log['profit'].'{capital.money}';
         $admin_content='用户'.$user->nickname.'游玩游戏'.$game_name.'资金增加'.$game_log['profit'].'美元';
+        GameBetLog::create([
+            "tcgGameCode"=>$game->tcgGameCode,
+            "game_id"=>$game->id,
+            "betTime"=>time(),
+            "endTime"=>time(),
+            "productType"=>0,
+            "betAmount"=>$game_log->bet,
+            "game_account"=>$this->request->userInfo->game_account,
+            "netPnl"=>$game_log->profit,
+            "user_id"=>$this->request->userInfo->id
+        ]);
         capital_flow($user->id,$game_id,3,$money_type,$game_log->profit,$user->balance,$content,$admin_content);
         $this->success("success",["awards"=>$awards,"balance"=>$this->request->userInfo->balance]);
     }
@@ -122,8 +143,8 @@ class GameCreate extends BaseController
         $next = ["nextPayout"=>$gameClass->getPayOut($nextTime),"nextPrice"=>bcmul($gameClass->getPayOut($nextTime),$game_log['bet'],2)];
         $this->success("success",["balance"=>$this->request->userInfo->balance,"history"=>compact("next","list","bet")]);
     }
-    public function getGameList()
+    public function getPayoutList()
     {
-
+        $this->success("success",BoardGame::allPayout());
     }
 }
