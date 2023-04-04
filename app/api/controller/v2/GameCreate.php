@@ -142,7 +142,8 @@ class GameCreate extends BaseController
         $bet = $game_log['bet'];
         $bet_level = $game_log['bet_level'];
         $next = ["nextPayout"=>$gameClass->getPayOut($nextTime),"nextPrice"=>bcmul($gameClass->getPayOut($nextTime),$game_log['bet'],2)];
-        $this->success("success",["balance"=>$this->request->userInfo->balance,"history"=>compact("next","list","bet","bet_level")]);
+        $awards = end($list)[0]['awards'];
+        $this->success("success",["balance"=>$this->request->userInfo->balance,"history"=>compact("next","list","bet","bet_level","awards")]);
     }
     public function getPayoutList()
     {
