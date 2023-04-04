@@ -11,14 +11,14 @@ use app\api\model\v2\GameList;
 use app\api\model\v2\Platgame;
 use app\api\model\v2\PlatgameLog;
 use app\api\model\v2\PlatgameLogDetail;
-use app\common\lib\Game\BoardGame;
 
 class GameCreate extends BaseController
 {
     public function getResult($game_id = 1,$bet_level = 1,$level =1,$position = 1)
     {
         $game_log = PlatgameLog::where("game_id",$game_id)->where("result",0)->where("user_id",$this->request->userInfo['id'])->find();
-        $gameClass = new BoardGame();
+        $game = GameList::where("id",$game_id)->find();
+        $gameClass = new $game->game_class();
         $bet = $gameClass->getBetPrice($bet_level);
         $balance = $this->request->userInfo->balance;
 
@@ -50,7 +50,7 @@ class GameCreate extends BaseController
             $game_log->save();
             $user = $this->request->userInfo;
             $user->balance = bcadd($user->balance,$game_log->awards,2);
-            $game = GameList::where("id",$game_id)->find();
+
             $game_name  = $game->gameName;
             if($game_log->profit == 0){
                 $content='{capital.gamecontento}'.$game_name.'{capital.gamecontentf}';
@@ -136,7 +136,8 @@ class GameCreate extends BaseController
         $game_log = PlatgameLog::where("game_id",$game_id)->where("result",0)->where("user_id",$this->request->userInfo['id'])->find();
         if(!$game_log) $this->success("success",["balance"=>$this->request->userInfo->balance,"history"=>""]);
         $list = PlatgameLogDetail::where("log_id",$game_log['id'])->field("game_id,result,awards,user_id,level,bet_level,times,position")->order("times asc")->select();
-        $gameClass = new BoardGame();
+        $game = GameList::where("id",$game_id)->find();
+        $gameClass = new $game->game_class();
         $nextTime = end($list)[0]['times']+1;
         $gameClass->setLevel(end($list)[0]['level']);
         $bet = $game_log['bet'];
@@ -145,8 +146,10 @@ class GameCreate extends BaseController
         $awards = end($list)[0]['awards'];
         $this->success("success",["balance"=>$this->request->userInfo->balance,"history"=>compact("next","list","bet","bet_level","awards")]);
     }
-    public function getPayoutList()
+    public function getPayoutList($game_id)
     {
-        $this->success("success",BoardGame::allPayout());
+        $game = GameList::where("id",$game_id)->find();
+        $gameClass = new $game->game_class();
+        $this->success("success",$gameClass->allPayout());
     }
 }

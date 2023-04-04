@@ -25,100 +25,19 @@ class BoardGame extends GameBaseService
         3=>[0.9, 1, 1.44, 1.67, 1.95, 2.29, 2.72, 3.26, 3.96, 4.88, 6.1, 7.47, 9.77, 12.88, 16.94, 22.29, 29.34, 38.75, 56.19, 78.47, 98.55, 200.64],
         4=>[0.95,1,1.65,1.96,2.32,3.04,4.96,6.28,8.24,10.68,13.51,17.28,21.63,25.85,31.69,39.54,48.29,58.27,84.5,125.6,230.9]
     ];
-
+    protected  $max_level = 25;
     public function __construct()
     {
 
 
     }
-    public static function allPayout()
-    {
-        $static = new static();
-        return $static->payoutList;
-    }
-    public function getPayOut($times)
-    {
-        return $this->payoutList[$this->level][$times - 1];
-    }
 
-    public function times($rate)
-    {
-//        $decrease = 0.91 - bcmul($this->times, bcmul(0.01, $this->times, 2), 2);
-//        $rate = bcmul($rate, $decrease, 8);
-        $rate = bcmul(pow(1-bcmul($this->times,0.01,2),$this->times),$rate,8);
-        return $rate;
-    }
 
-    public function setTimes($times)
-    {
-        $this->times = $times;
-        return $this;
-    }
-    public function setLevel($level)
-    {
-        $this->level = $level;
-        return $this;
-    }
-    public function pricetype($rate)
-    {
-//        $decrease = 0.91 - bcmul($this->bet_level, bcmul(0.01, $this->bet_level, 2), 2);
-//        $rate = bcmul($rate, $decrease, 8);
-        $rate = bcmul(pow(1-bcmul($this->bet_level,0.01,2),$this->bet_level),$rate,8);
-        return $rate;
-    }
-
-    public function setBetLevel($bet_level)
-    {
-        $this->bet_level = $bet_level;
-        return $this;
-    }
-
-    public function setWin($win)
-    {
-        $this->win = $win;
-        return $this;
-    }
-    public function level($rate)
-    {
-        $level = $this->level;
-        $rate = bcmul(pow(1-bcmul($level,0.01,2),$level),$rate,8);
-        return $rate;
-    }
-    public function win($rate)
-    {
-
-        $base_rate =  $this->win < 0 ? 1.005 : 0.9;
-        $win = abs($this->win);
-        $result = intval($win / $this->getBetPrice($this->bet_level));
-        for ($i = $result; $i > 1; $i--) {
-            $rate = bcmul($rate, $base_rate, 8);
-        }
-        return $rate;
-    }
 
     public function getBetPrice($bet_level)
     {
         $list = [1 => 5, 2 => 10, 3 => 15, 4 => 20, 5 => 30, 6 => 40];
         return $list[$bet_level];
     }
-    public function getGameResult()
-    {
-        $rate = $this->getRate();
-        $rand_end = bcmul($rate,10000000);
-        $rand = mt_rand(1,10000000);
-        if($rand <= $rand_end)
-        {
-            $result = 1;
-            if( $this->times+$this->level == 25){
-                $is_over = true;
-            }else{
-                $is_over = false;
-            }
-        }else{
-            $result = 2;
-            $is_over = true;
-        }
-        return compact("result","is_over","rate");
 
-    }
 }
