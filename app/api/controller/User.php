@@ -35,6 +35,7 @@ use think\facade\Db;
  */
 class User  extends BaseController
 {
+    protected $noNeedLogin = ['chatUpload'];
     /**
      * 用户鉴权
      */
@@ -330,7 +331,10 @@ class User  extends BaseController
 			$this->success(lang('success'),$data);
 		}
 	}
-
+    public function chatUpload()
+    {
+        $this->upload();
+    }
     /**
      * 上传图片
      */
