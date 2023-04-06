@@ -84,7 +84,7 @@ class Customer extends BaseController
         $message['type'] =$data['type'];
         $message['foid'] =$data['toid'];
         $message['ftoid'] =$data['room_id'];
-
+        $message['source_type'] = $data['source_type'] ?? 1;
         ChatRecord::create($message);
         $this->success("success");
     }
