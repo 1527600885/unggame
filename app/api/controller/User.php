@@ -35,7 +35,7 @@ use think\facade\Db;
  */
 class User  extends BaseController
 {
-    protected $noNeedLogin = ['chatUpload'];
+    protected $noNeedLogin = ['chatupload'];
     /**
      * 用户鉴权
      */
