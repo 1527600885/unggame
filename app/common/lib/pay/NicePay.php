@@ -10,19 +10,19 @@ class NicePay extends Pay
     private  $app = "MCH9350";
     private static $key = "f0b094e9ae89d299d67e5203c37795ae";
     private  $api_server = "http://merchant.nicepay.pro";
-    public  function run($type, $param)
+    public  function run($type, $params)
     {
         $domain =  request()->domain();
         $param = array(
             'app_key'=>$this->app,
-            'balance'=>$param['trade_amount'],//支付金额，元
+            'balance'=>$params['trade_amount'],//支付金额，元
             'notify_url'=>$domain.$this->notifyUrl."?currency_type=".$this->currency_type,//回调地址
-            'ord_id'=>$param['mch_order_no'],//商户自己的订单号
+            'ord_id'=>$params['mch_order_no'],//商户自己的订单号
         );
         $param["sign"] = self::sign($param,self::$key);
         $ret_code = self::fetch_page_json($this->api_server."/api/recharge",$param);
         $ret = json_decode($ret_code,true);
-        return ["orderNo"=>$param['mch_order_no'],"oriAmount"=>$param['trade_amount'],"payInfo"=>$ret['url']];
+        return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$ret['url']];
     }
     private static function fetch_page_json ($url, $params = null)
     {
