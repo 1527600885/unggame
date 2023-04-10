@@ -30,10 +30,11 @@ class User extends BaseController
     {
         if ($this->request->isPost()) {
             $input  = input('post.');
+            $input['invite_uid'] = input("param.invite_uid",0);
             $input['invite_one_uid'] = input("param.invite_one_uid",0);
             $input['invite_two_uid'] = input("param.invite_two_uid",0);
             $input['invite_three_uid'] = input("param.invite_three_uid",0);
-            $search = ['keyword','date','status','invite_one_uid','invite_three_uid','invite_two_uid'];;
+            $search = ['keyword','date','status','invite_one_uid','invite_three_uid','invite_two_uid',"invite_uid"];;
             $append = ['url'];
             $order  = [$input['prop'] => $input['order']];
             $count  = UserModel::withSearch($search, $input)->count();
@@ -43,7 +44,7 @@ class User extends BaseController
                 $item['country'] = $address['country'];
                 $item['province'] = $address['province'];
                 $item['city'] = $address['city'];
-                $item['invite_name'] = "<a  style='color: #0000FF' href='/game_admin/user/index?invite_one_uid={$item['invite_one_uid']}'>{$item['invite_name']}</a>";
+                $item['invite_name'] = "<a  style='color: #0000FF' href='/game_admin/user/index?invite_uid={$item['invite_one_uid']}'>{$item['invite_name']}</a>";
                 $item['invite_one_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_one_uid={$item['id']}'>{$item['invite_one_num']}</a>";
                 $item['invite_two_num'] = "<a   style='color: red' href='/game_admin/user/index?invite_two_uid={$item['id']}'>{$item['invite_two_num']}</a>";
                 $item['invite_three_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_three_uid={$item['id']}'>{$item['invite_three_num']}</a>";
@@ -55,7 +56,9 @@ class User extends BaseController
             $group = UserGroup::where('status', 1)->order('integral', 'asc')->select();
             $invite_one_uid = input("param.invite_one_uid") ?? input("param.invite_two_uid") ??  input("param.invite_three_uid",0);
             $assign = ['group'=>$group,"invite_one_uid"=>$invite_one_uid];
-            if($invite_one_uid){
+            if(input("param.invite_uid")) $assign['invite_uid'] = input("param.invite_uid");
+            if($invite_one_uid || input("param.invite_uid")){
+                $invite_one_uid = $invite_one_uid ?: input("param.invite_uid");
                 $invite_data  = UserModel::where("id",$invite_one_uid)->field('invite_one_num,invite_two_num,invite_three_num')->find();
                 $assign['invite_data'] = $invite_data;
             }
@@ -209,5 +212,17 @@ class User extends BaseController
             capital_flow($post['id'],$this->request->userInfo->id,8,$post['money_type'],$post['amount'],$balance,$content,$admin_content);
             return json(['status' => 'success', 'message' => '操作成功']);
         }
+    }
+    public function queryUserList($key ="")
+    {
+        $map = [];
+        if($key){
+            $map[] = ["nickname","like","%{$key}%"];
+        }
+        $data = UserModel::where($map)->field("id,nickname as value")->order("id desc")->limit(100)->select()->toArray();
+        if(!$key){
+            $data = array_merge([["id"=>0,"value"=>"所有人"]],$data);
+        }
+        return json(["code"=>0,"data"=>$data]);
     }
 }

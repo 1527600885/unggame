@@ -1,7 +1,7 @@
 {include file="common/header"}
 <div id="app" v-cloak>
     <el-curd
-            index-url="user/index?invite_one_uid={:input('param.invite_one_uid',0)}&invite_two_uid={:input('param.invite_two_uid',0)}&invite_three_uid={:input('param.invite_three_uid',0)}"
+            index-url="user/index?invite_one_uid={:input('param.invite_one_uid',0)}&invite_two_uid={:input('param.invite_two_uid',0)}&invite_three_uid={:input('param.invite_three_uid',0)}&invite_uid={:input('param.invite_uid',0)}"
         :field="field"
         :search-date="false"
         :table-operation-width="0"
@@ -10,7 +10,7 @@
         variable="userInfo" @one-key-data="oneKeyData($event)"
             ref="el_curd"
         preview>
-        {if condition="$invite_one_uid"}
+        {if condition="$invite_one_uid || isset($invite_uid)"}
             <template v-slot:button>
                 <el-button type="info" icon="el-icon-back" onclick="history.back()">返回</el-button>
             </template>

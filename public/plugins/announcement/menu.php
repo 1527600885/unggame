@@ -2,46 +2,44 @@
 return array (
   0 => 
   array (
-    'title' => '公告',
-    'path' => 'notice',
+    'title' => '公告管理',
+    'path' => 'announcement',
     'icon' => 'menu.png',
-    'ifshow' => 0,
+    'ifshow' => 1,
     'children' => 
     array (
       0 => 
       array (
         'title' => '公告管理',
-        'path' => 'mkNotice/index',
+        'path' => 'mkAnnouncement/index',
         'ifshow' => 1,
         'children' => 
         array (
           0 => 
           array (
             'title' => '查看',
-            'path' => 'mkNotice/index',
+            'path' => 'mkAnnouncement/index',
           ),
           1 => 
           array (
             'title' => '发布',
-            'path' => 'mkNotice/save',
+            'path' => 'mkAnnouncement/save',
             'logwriting' => 1,
           ),
           2 => 
           array (
             'title' => '编辑',
-            'path' => 'mkNotice/update',
+            'path' => 'mkAnnouncement/update',
             'logwriting' => 1,
           ),
           3 => 
           array (
             'title' => '删除',
-            'path' => 'mkNotice/delete',
+            'path' => 'mkAnnouncement/delete',
             'logwriting' => 1,
           ),
         ),
       ),
     ),
-    'sort' => 1,
-    'logwriting' => 0,
   ),
 );

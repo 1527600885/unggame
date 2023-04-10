@@ -40,6 +40,12 @@ class User extends Model
             $this->set('password', $password);
         }
     }
+    public function searchInviteUidAttr($query,$value,$array)
+    {
+        if(!empty($value)){
+            $query->where("id",$value);
+        }
+    }
     public function searchInviteOneUidAttr($query, $value, $array){
         if (! empty($value)) {
             $query->where("invite_one_uid",$value);

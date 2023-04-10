@@ -360,6 +360,7 @@ class User  extends BaseController
             // return json(['status' => 'error', 'message' => $e->getError()]);
         }
     }
+
     public function bindEmail(){
         $input = input("post.");
         if(! $input['is_fill']  || empty($input['email']))
