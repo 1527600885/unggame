@@ -511,7 +511,7 @@ function randStr($len = 6, $format = 'default')
  * @throws \think\exception\DbException
  */
 function getipcountry($ip){
-    return $address=["country"=>"未知","province"=>"未知","city"=>"未知"];
+//    return $address=["country"=>"未知","province"=>"未知","city"=>"未知"];
      $redis = isset($GLOBALS['SPREDIS']) ? $GLOBALS['SPREDIS']  : (new \app\common\lib\Redis())->getRedis();
      $address = $redis->get("ip_address_detail_{$ip}") ? :'';
      try{
