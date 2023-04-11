@@ -24,4 +24,16 @@ class Announcement extends Model
         }
         return $value;
     }
+    public function getTitleAttr($value,$data)
+    {
+        switch ($data['type']){
+            case 1:
+                $value = "System notification";
+                break;
+            case 2:
+                $value = "Game notification";
+                break;
+        }
+        return $value;
+    }
 }
