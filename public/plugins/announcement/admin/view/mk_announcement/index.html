@@ -1,0 +1,132 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+			ref="curd"
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		@query-search = "querySearch($event)"
+		@select-back = "handleSelect($event)"
+		:search-date="false">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'type',
+						label: '类型',
+						table: {
+							prop:'type_text',
+							sort: true,
+						},
+						form: {
+							is: 'el-select',
+							placeholder: '',
+							default: [],
+							child: {
+								value: [{"title":"游戏通知","value":"2"},{"title":"系统通知","value":"1"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+					{
+						prop: 'thumb_image',
+						label: '缩略图',
+						table: {
+							 is: 'image',width: '70px'
+						},
+						form: {
+							is: 'el-file-select',
+							type: 'image',
+							filterable: 1,
+							multiple: 1,
+						}
+					},
+					{
+						prop: 'desc',
+						label: '简介',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'status',
+						label: '状态',
+						table: {
+							prop: "status_text",
+							sort: true,
+						},
+						form: {
+							is: 'el-radio-group',
+							default: '1',
+							child: {
+								value: [{"title":"隐藏","value":"0"},{"title":"显示","value":"1"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+					{
+						prop: 'user',
+						label: '用户ID',
+						table: {
+							prop: "user_name",
+							sort: true,
+							label: '用户',
+						},
+						form: {
+							is: 'el-autocomplete',
+							default: '0',
+						}
+					},
+					{
+						prop: 'content',
+						label: '内容',
+						table: false,
+						form: {
+							is: 'el-editor',
+							placeholder: '',
+						}
+					},
+					{
+						prop: 'create_time',
+						label: '创建时间',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+				],
+			}
+		},
+		methods:{
+			querySearch(data)
+			{
+				request.post("user/queryUserList",{key:data.queryString},function (res){
+					var results = res.data;
+					data.cb(results);
+				})
+			},
+			handleSelect(data)
+			{
+				this.$refs.curd.drawerForm.user_id = data.item.id
+				this.$refs.curd.drawerData.user_id = data.item.id
+				// this.$refs.curd.drawerData.gameImage =  data.item.gameImage
+				// this.$refs.curd.drawerData.game_id =  data.item.id
+			}
+		}
+	})
+</script>
+{include file="common/footer"}
