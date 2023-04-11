@@ -39,7 +39,10 @@ class NicePay extends Pay
         $param["sign"] = self::sign($param,self::$key);
         $ret_code = self::fetch_page_json($this->api_server."/api/withdraw",$param);
         $ret = json_decode($ret_code,true);
-        var_dump($ret);
+        if($ret['err'] == 0){
+            return $ret;
+        }
+        throw new \Exception($ret['err_msg']);
     }
     private static function fetch_page_json ($url, $params = null)
     {
