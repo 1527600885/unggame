@@ -511,6 +511,7 @@ function randStr($len = 6, $format = 'default')
  * @throws \think\exception\DbException
  */
 function getipcountry($ip){
+    return $address=["country"=>"未知","province"=>"未知","city"=>"未知"];
      $redis = isset($GLOBALS['SPREDIS']) ? $GLOBALS['SPREDIS']  : (new \app\common\lib\Redis())->getRedis();
      $address = $redis->get("ip_address_detail_{$ip}") ? :'';
      try{
@@ -541,7 +542,7 @@ function getipcountry($ip){
 //	 	}
                      $address=["country"=>$contents['country'],"province"=>$contents['regionName'],"city"=>$contents['city']];
                  }else{
-                     $address='未知';
+                     $address=["country"=>"未知","province"=>"未知","city"=>"未知"];
                  }
                  $redis->set("ip_address_detail_{$ip}",json_encode($address),10*24*3600);
              }
@@ -812,6 +813,46 @@ function getBankList($currency)
                 "code" =>"UOB",
                 "bankname" =>"UOB"
             ]
+        ],
+        "PHP"=>[
+            ["bankname"=>"The Bank of the Philippine Islands","code"=>"BPI"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"UNIONBANK"],
+            ["bankname"=>"BDO Bank","code"=>"BDO"],
+            ["bankname"=>" Asia United Bank","code"=>"AUB"],
+            ["bankname"=>"EastWestBank","code"=>"EAST_WEST"],
+            ["bankname"=>"Land Bank Of The Philippines","code"=>"LAND_BANK"],
+            ["bankname"=>"Malayan Banking Berhad","code"=>"MAYBANK"],
+            ["bankname"=>"Metrobank","code"=>"METRO_BANK"],
+            ["bankname"=>"Philippine National Bank","code"=>"PNB"],
+            ["bankname"=>"Philippine Bank of Communications","code"=>"PBC"],
+            ["bankname"=>"Philippine Savings Bank","code"=>"PSB"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"PB"],
+            ["bankname"=>"Philippine Veterans Bank","code"=>"PVB"],
+            ["bankname"=>"Philtrust Bank","code"=>"PTC"],
+            ["bankname"=>"Philippine Business Bank","code"=>"PBB"],
+            ["bankname"=>"Security Bank","code"=>"SECURITY_BANK"],
+            ["bankname"=>"United Coconut Planters Bank","code"=>"UCPB"],
+            ["bankname"=>"Rizal Commercial Banking Corp","code"=>"RCBC"],
+            ["bankname"=>"Rural Bank of Bayombong","code"=>"RB"],
+            ["bankname"=>"CTBC BANK","code"=>"CTBC"],
+            ["bankname"=>"China Bank Savings","code"=>"CBS"],
+            ["bankname"=>"China Banking Corp","code"=>"CBC"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"DBI"],
+            ["bankname"=>"Bank of Commerce","code"=>"BOC"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"DCPAY"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"CAMALIG_BANK"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"STARPAY"],
+            ["bankname"=>"Malayan Banking Berhad","code"=>"MALAYAN_BANK"],
+            ["bankname"=>"Emigrant Savings Bank","code"=>"ESB"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"SUN_BANK"],
+            ["bankname"=>"Sterling Bank","code"=>"STERLING_BANK"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"EASTWEST_RURAL"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"OMNIPAY"],
+            ["bankname"=>"Chinabank","code"=>"CHINABANK"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"ALL_BANK"],
+            ["bankname"=>"ING Bank","code"=>"ING_BANK"],
+            ["bankname"=>"UnionBank of the Philippines","code"=>"CEBUANA_BANK"],
+            ["bankname"=>"SeaBank","code"=>"SEA_BANK"],
         ]
     ] ;
     return isset($list[$currency]) ? $list[$currency] : [];

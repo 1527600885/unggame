@@ -24,6 +24,23 @@ class NicePay extends Pay
         $ret = json_decode($ret_code,true);
         return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$ret['url']];
     }
+    public function transfer($data)
+    {
+        $param = array(
+            'app_key'=>$this->app,
+            'balance'=>$data['transfer_amount'],//请求代付的金额
+            'card'=>$data['receive_account'],
+            'name'=>$data['receive_name'],
+            'bank'=>$data['bank_code'],
+            'ord_id'=>$data['mch_transferId'],//代付订单号，用于查询
+            'notify_url'=>''
+        );
+
+        $param["sign"] = self::sign($param,self::$key);
+        $ret_code = self::fetch_page_json($this->api_server."/api/withdraw",$param);
+        $ret = json_decode($ret_code,true);
+        var_dump($ret);
+    }
     private static function fetch_page_json ($url, $params = null)
     {
         $ch = curl_init();
@@ -79,6 +96,49 @@ class NicePay extends Pay
         }else{
             return true;
         }
+    }
+    public function getBankList()
+    {
+        $lists  = [
+            ["bankName"=>"The Bank of the Philippine Islands","short"=>"BPI"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"UNIONBANK"],
+            ["bankNmae"=>"BDO Bank","short"=>"BDO"],
+            ["bankNmae"=>" Asia United Bank","short"=>"AUB"],
+            ["bankNmae"=>"EastWestBank","short"=>"EAST_WEST"],
+            ["bankNmae"=>"Land Bank Of The Philippines","short"=>"LAND_BANK"],
+            ["bankNmae"=>"Malayan Banking Berhad","short"=>"MAYBANK"],
+            ["bankNmae"=>"Metrobank","short"=>"METRO_BANK"],
+            ["bankNmae"=>"Philippine National Bank","short"=>"PNB"],
+            ["bankNmae"=>"Philippine Bank of Communications","short"=>"PBC"],
+            ["bankNmae"=>"Philippine Savings Bank","short"=>"PSB"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"PB"],
+            ["bankNmae"=>"Philippine Veterans Bank","short"=>"PVB"],
+            ["bankNmae"=>"Philtrust Bank","short"=>"PTC"],
+            ["bankNmae"=>"Philippine Business Bank","short"=>"PBB"],
+            ["bankNmae"=>"Security Bank","short"=>"SECURITY_BANK"],
+            ["bankNmae"=>"United Coconut Planters Bank","short"=>"UCPB"],
+            ["bankNmae"=>"Rizal Commercial Banking Corp","short"=>"RCBC"],
+            ["bankNmae"=>"Rural Bank of Bayombong","short"=>"RB"],
+            ["bankNmae"=>"CTBC BANK","short"=>"CTBC"],
+            ["bankNmae"=>"China Bank Savings","short"=>"CBS"],
+            ["bankNmae"=>"China Banking Corp","short"=>"CBC"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"DBI"],
+            ["bankNmae"=>"Bank of Commerce","short"=>"BOC"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"DCPAY"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"CAMALIG_BANK"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"STARPAY"],
+            ["bankNmae"=>"Malayan Banking Berhad","short"=>"MALAYAN_BANK"],
+            ["bankNmae"=>"Emigrant Savings Bank","short"=>"ESB"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"SUN_BANK"],
+            ["bankNmae"=>"Sterling Bank","short"=>"STERLING_BANK"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"EASTWEST_RURAL"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"OMNIPAY"],
+            ["bankNmae"=>"Chinabank","short"=>"CHINABANK"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"ALL_BANK"],
+            ["bankNmae"=>"ING Bank","short"=>"ING_BANK"],
+            ["bankNmae"=>"UnionBank of the Philippines","short"=>"CEBUANA_BANK"],
+            ["bankNmae"=>"SeaBank","short"=>"SEA_BANK"],
+        ];
     }
 
 }
