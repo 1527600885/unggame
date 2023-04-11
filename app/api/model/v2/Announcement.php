@@ -8,6 +8,10 @@ use think\Model;
 
 class Announcement extends Model
 {
+    public function getTimeAttr($value,$data)
+    {
+        return date("H:i",$data['create_time']);
+    }
     public function getIconAttr($value,$data)
     {
         switch ($data['type']){
