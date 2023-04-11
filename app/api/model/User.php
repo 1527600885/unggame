@@ -11,9 +11,12 @@
 namespace app\api\model;
 
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class User extends Model
 {
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
     // 设置json类型字段
     protected $json = ['field','other_accounts'];
     protected $jsonAssoc = true;
@@ -25,7 +28,7 @@ class User extends Model
             'group_title' => 'title'
         ]);
     }
-    
+
     // 获取器
     public function getUrlAttr($value, $array)
     {

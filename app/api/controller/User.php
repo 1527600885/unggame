@@ -748,4 +748,9 @@ class User  extends BaseController
     {
         return $this->success("success",UserIdcard::where(["user_id"=>$this->request->userInfo['id']])->find());
     }
+    public function logoff()
+    {
+        UserModel::destroy($this->request->userInfo['id']);
+        $this->success("success");
+    }
 }
