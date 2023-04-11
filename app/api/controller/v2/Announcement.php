@@ -31,7 +31,7 @@ class Announcement extends BaseController
             $start = 0;
         }
        $list =  \app\api\model\v2\Announcement::where("status",1)
-           ->append(["icon"])
+           ->append(["icon","time"])
             ->where($map)
             ->order("id asc")
             ->limit($start,15)
