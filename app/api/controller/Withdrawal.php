@@ -73,7 +73,7 @@ class Withdrawal extends BaseController
 		$userInfo=$this->request->userInfo;
 		$useridcard =  Db::name("user_idcard")->where("user_id", $userInfo->id)->find();
 		if(!$useridcard || $useridcard['status']!=1){
-			$this->error('Real-name authentication required for account cash withdrawal.');
+			$this->error('Real-name authentication required for account cash withdrawal.',"",412);
 		}
 		$input=input("post.");
 		$payment_name  = $input['payment_name'];
