@@ -21,13 +21,13 @@ class RainbowPay extends Pay
             "orderNo"=>$params["mch_order_no"],
             "notify_url"=>$domain.$this->notifyUrl."?currency_type=".$this->currency_type,//回调地址
         ];
-        $sign = $this->getSign($params,$this->key);
+        $sign = $this->getSign($data,$this->key);
         $data['sign'] = $sign;
         $result_json = curl($this->apiUrl."/collect/create",$data);
         $result = json_decode($result_json,true);
         if($result['code'] == 200)
         {
-            return $result;
+            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payInfo']];
         }else{
             throw new \Exception($result['msg']);
         }
