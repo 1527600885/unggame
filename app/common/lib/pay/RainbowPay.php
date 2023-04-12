@@ -19,7 +19,8 @@ class RainbowPay extends Pay
             "passageId"=>$this->passageId,
             "amount"=>$params['trade_amount'],
             "orderNo"=>$params["mch_order_no"],
-            "notify_url"=>$domain.$this->notifyUrl."?currency_type=".$this->currency_type,//回调地址
+            "notify_url"=>$domain.$this->notifyUrl,//回调地址,
+            "otherData"=>$this->currency_type
         ];
         $sign = $this->getSign($data,$this->key);
         $data['sign'] = $sign;
