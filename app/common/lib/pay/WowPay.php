@@ -88,20 +88,7 @@ class WowPay extends Pay
         }
     }
 
-    /**
-     * 签名
-     * @param $param
-     * @param $key
-     * @return string
-     */
-    public function getSign($param, $key)
-    {
-        ksort($param);
-        $str = http_build_query($param);
-        $str.="&key=".$key;
-        $str = urldecode($str);
-        return md5($str);
-    }
+
 
     /**
      * @param $bankName
