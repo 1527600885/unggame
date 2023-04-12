@@ -27,10 +27,13 @@ class RainbowPay extends Pay
         $result = json_decode($result_json,true);
         if($result['code'] == 200)
         {
-            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payInfo']];
+            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payUrl']];
         }else{
             throw new \Exception($result['msg']);
         }
     }
-
+    public function getKey()
+    {
+        return $this->key;
+    }
 }
