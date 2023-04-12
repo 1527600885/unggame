@@ -4,7 +4,7 @@
 namespace app\api\controller\notify;
 
 
-class RainbowPay extends Pay
+class Rainbowpay extends Pay
 {
     public function callback()
     {
