@@ -9,8 +9,10 @@ class Rainbowpay extends Pay
     public function callback()
     {
         $result = input("param.");
-        $currency_type = $result['currency_type'];
-        unset($result['currency_type']);
+        $file = fopen(__DIR__."/1.txt","w");
+        fwrite($file,json_encode($result));
+        fclose($file);
+        $currency_type = $result['otherData'];
         $pay = new \app\common\lib\pay\RainbowPay("");
         $result_sign = $result['sign'];
         unset($result['sign']);
