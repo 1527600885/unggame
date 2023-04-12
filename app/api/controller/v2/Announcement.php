@@ -25,8 +25,8 @@ class Announcement extends BaseController
         }
         $count =   \app\api\model\v2\Announcement::where("status",1)
             ->where($map)->count();
-        if($count > 15){
-            $start = $count - 15;
+        if($count > 10){
+            $start = $count - 10;
         }else{
             $start = 0;
         }
@@ -34,7 +34,7 @@ class Announcement extends BaseController
            ->append(["icon","time","title"])
             ->where($map)
             ->order("id asc")
-            ->limit($start,15)
+            ->limit($start,10)
             ->select();
         $this->success("success",$list);
     }
