@@ -8,7 +8,7 @@ class AxPay extends Pay
 {
     protected $AccessKey = "MX8ZY9JBeoFn9GVapP46C2lp5a5";
     protected $PayChannelId = "103";
-    protected $CallbackUrl = "";
+    protected $CallbackUrl = "/api/notify.axpay/callback";
     protected $SecretKey = "JkKEA3eNZ2TlAeBbKpeJHR52znkJ5XhqkJBw2mKP";
     protected $apiUrl = "https://merchant.axpay.vip";
     public  function run($type, $params)
