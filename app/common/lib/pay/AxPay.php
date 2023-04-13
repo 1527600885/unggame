@@ -7,7 +7,7 @@ namespace app\common\lib\pay;
 class AxPay extends Pay
 {
     protected $AccessKey = "MX8ZY9JBeoFn9GVapP46C2lp5a5";
-    protected $PayChannelId = "";
+    protected $PayChannelId = "103";
     protected $CallbackUrl = "";
     protected $SecretKey = "JkKEA3eNZ2TlAeBbKpeJHR52znkJ5XhqkJBw2mKP";
     public  function run($type, $params)
