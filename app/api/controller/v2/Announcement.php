@@ -31,12 +31,13 @@ class Announcement extends BaseController
             $start = 0;
         }
        $list =  \app\api\model\v2\Announcement::where("status",1)
-           ->append(["icon","time","title"])
+            ->append(["icon","time","title"])
             ->where($map)
             ->order("id asc")
             ->limit($start,10)
-            ->select();
-        $this->success("success",$list);
+            ->select()->toArray();
+        $first = current($list);
+        $this->success("success",["list"=>$list,"first_id"=>$first['id']]);
     }
     public function detail($id)
     {
