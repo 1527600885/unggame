@@ -83,6 +83,7 @@ class File extends BaseController
 			$fileName = $files->hash() . '.' . $extension;
 			$files->move($savePath,$savePath.$fileName);
 			$url='image/'.date('Ymd').'/'.$fileName;
+			$saveUrl = '/upload/' . str_replace('\\', '/', $url);
             $save = FileModel::create([
                 'title'       => $file->getOriginalName(),
                 'size'        => $filesize,
@@ -96,13 +97,13 @@ class File extends BaseController
                 $suffix = pathinfo($file->getOriginalName())['extension'];
                 if ($suffix != 'ico' && $suffix != 'gif') {
                     // 封面图片
-                    thumbnail($save['url'],100,100);
+                    thumbnail($saveUrl,100,100);
 					// dd($save['url']);
                     // 水印图片
                     $config = $this->request->watermark;
                     if (!empty($config)) {
                         if ($config['open'] === 1) {
-                            $file     = str_replace('\/', '/', public_path() . $save->url);
+                            $file     = str_replace('\/', '/', public_path() . $saveUrl);
                             $image    = Image::open($file);
                             $scale    = (int)$config['scale'] / 100;
                             $position = (int)$config['position'];
