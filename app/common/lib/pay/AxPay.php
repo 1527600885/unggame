@@ -10,6 +10,7 @@ class AxPay extends Pay
     protected $PayChannelId = "103";
     protected $CallbackUrl = "";
     protected $SecretKey = "JkKEA3eNZ2TlAeBbKpeJHR52znkJ5XhqkJBw2mKP";
+    protected $apiUrl = "https://merchant.axpay.vip";
     public  function run($type, $params)
     {
         $domain =  request()->domain();
@@ -24,7 +25,7 @@ class AxPay extends Pay
         ];
         $sign = $this->getSign($data,$this->SecretKey,"SecretKey");
         $data['sign'] = $sign;
-        $result_json = curl($this->apiUrl."/collect/create",$data);
+        $result_json = curl($this->apiUrl."/api/PayV2/submit",$data);
         $result = json_decode($result_json,true);
         if($result['code'] == 200)
         {

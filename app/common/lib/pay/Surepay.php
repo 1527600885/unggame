@@ -22,12 +22,12 @@ class Surepay extends Pay
             "currency"=>$this->currency_type,
             "post_url"=>$domain.$this->post_url,//回调地址,
             "bankcode"=>input("param.bankcode"),
-            "clientip"=>request()->ip(),
+            "clientip"=>"52.55.100.240",
             "destbankaccname"=>input("param.destbankaccname"),
             "destbankcode"=>input("param.destbankcode"),
             "destbankaccno"=>input("param.destbankaccno")
         ];
-        $token = md5($data['merchant'].$data['amount'].$data['refid'].$data['customer'].$this->apikey.$this->currency_type.request()->ip());
+        $token = md5($data['merchant'].$data['amount'].$data['refid'].$data['customer'].$this->apikey.$this->currency_type."52.55.100.240");
         $data['token'] = $token;
         $result_json = curl($this->apiUrl."/payout",$data);
         $result = json_decode($result_json,true);

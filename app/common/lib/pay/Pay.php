@@ -26,11 +26,11 @@ class Pay
      * @param $key
      * @return string
      */
-    public function getSign($param, $key)
+    public function getSign($param, $key,$keyName = "key")
     {
         ksort($param);
         $str = http_build_query($param);
-        $str.="&key=".$key;
+        $str.="&{$keyName}=".$key;
         $str = urldecode($str);
         return md5($str);
     }
