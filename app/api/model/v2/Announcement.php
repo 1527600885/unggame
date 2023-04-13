@@ -12,6 +12,10 @@ class Announcement extends Model
     {
         return date("H:i",$data['create_time']);
     }
+    public function getDateTimeAttr($value,$data)
+    {
+        return date("Y-m-d H:i:s",$data['create_time']);
+    }
     public function getIconAttr($value,$data)
     {
         switch ($data['type']){
