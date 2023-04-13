@@ -20,18 +20,17 @@ class AxPay extends Pay
             "PayChannelId"=>$this->PayChannelId,
             "OrderNo"=>$params["mch_order_no"],
             "Amount"=>$params['trade_amount'],
-            "otherData"=>$this->currency_type,
             "CallbackUrl"=>$domain.$this->CallbackUrl,//回调地址,
         ];
         $sign = $this->getSign($data,$this->SecretKey,"SecretKey");
         $data['sign'] = $sign;
         $result_json = curl_json($this->apiUrl."/api/PayV2/submit",$data);
         $result = json_decode($result_json,true);
-        if($result['code'] == 200)
+        if($result['Code'] == 0)
         {
-            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payUrl']];
+            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['Data']['PayeeInfo']['CashUrl']];
         }else{
-            throw new \Exception($result['msg']);
+            throw new \Exception($result['Message']);
         }
     }
 }
