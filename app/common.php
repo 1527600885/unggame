@@ -272,34 +272,27 @@ function curl(string $api_url, $post_data = [], $header = [], $referer_url = '')
     }
 }
 function curl_json(string $api_url, $post_data = [], $header = [], $referer_url = ''){
-    $ch = curl_init();
-    curl_setopt( $ch, CURLOPT_URL, $api_url);
-    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt( $ch, CURLOPT_HEADER, 0);
-    curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10);
-    curl_setopt( $ch, CURLOPT_TIMEOUT, 60);
-    curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt( $ch, CURLOPT_MAXREDIRS, 10);
-    curl_setopt( $ch, CURLOPT_AUTOREFERER, 1);
-    $header[] = "CLIENT-IP:".request()->ip();
-    $header[] = "X-FORWARDED-FOR:".request()->ip();
-    curl_setopt( $ch, CURLOPT_HTTPHEADER, $header);
-    curl_setopt( $ch, CURLOPT_ENCODING, "");
-    curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; Baiduspider/2.0; +" . request()->domain() . ")" );
-    curl_setopt( $ch, CURLOPT_REFERER, request()->domain());
-    if($post_data && is_array($post_data)) {
-        curl_setopt( $ch, CURLOPT_POST, 1 );
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($post_data));
-    }
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    $data = curl_exec( $ch );
-    if (curl_errno($ch)) {
-        return ['status' => 'error', 'message' => curl_error($ch)];
-    } else {
-        curl_close($ch);
-        return $data;
-    }
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $api_url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS =>json_encode($post_data),
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    return $response;
 }
 /**
  * 插件列表
