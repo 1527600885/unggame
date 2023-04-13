@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\api\controller;
 use app\api\BaseController;
 use app\api\model\GameList;
+use app\common\lib\pay\Surepay;
 use app\common\lib\Redis;
 use Endroid\QrCode\Writer\PngWriter;
 use Hashids\Hashids;
@@ -18,7 +19,15 @@ class Index extends BaseController
 	}
     public function index()
     {
-        User::column();
+        $model = new Surepay("MYR");
+        $model->run("",[
+            "trade_amount"=>"100.00",
+            "mch_order_no"=>"order25655854",
+            "token"=>"6c1a65ba0bfc16c821a51a59d8f45458",
+            "customer"=>"cust001",
+            "currency"=>"MYR",
+            "bankcode"=>"10002493",
+        ]);
     }
     public function error503()
     {
