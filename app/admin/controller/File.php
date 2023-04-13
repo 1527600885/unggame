@@ -86,7 +86,7 @@ class File extends BaseController
             $save = FileModel::create([
                 'title'       => $file->getOriginalName(),
                 'size'        => $filesize,
-                'url'         => '/upload/' . str_replace('\\', '/', $url),
+                'url'         => 'https://image.unggame.com/upload/' . str_replace('\\', '/', $url),
                 'type'        => $type,
                 'create_time' => date('Y-m-d H:i:s'),
                 'status'      => 1,
