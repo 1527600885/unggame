@@ -25,7 +25,7 @@ class AxPay extends Pay
         ];
         $sign = $this->getSign($data,$this->SecretKey,"SecretKey");
         $data['sign'] = $sign;
-        $result_json = curl($this->apiUrl."/api/PayV2/submit",$data);
+        $result_json = curl_json($this->apiUrl."/api/PayV2/submit",$data);
         $result = json_decode($result_json,true);
         if($result['code'] == 200)
         {
