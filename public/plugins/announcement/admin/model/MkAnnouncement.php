@@ -35,7 +35,7 @@ class MkAnnouncement extends Model
     public function getTypeTextAttr($value,$data)
     {
         $list = [1=>"系统通知",2=>"游戏通知"];
-        return $list[$data['type']];
+        return $list[$data['type']] ?? $value;
     }
     public function getStatusTextAttr($value,$data)
     {
