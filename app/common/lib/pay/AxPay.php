@@ -34,4 +34,28 @@ class AxPay extends Pay
             throw new \Exception($result['Message']);
         }
     }
+    public function transfer($param)
+    {
+        $domain =  request()->domain();
+        $data = [
+            "Timestamp"=>time(),
+            "AccessKey"=>$this->AccessKey,
+            "PayChannelId"=>$this->PayChannelId,
+            "OrderNo"=>$param['mch_transferId'],
+            "Amount"=>$param['transfer_amount'],
+            "Ext"=>$this->currency_type,
+            "CallbackUrl"=>$domain.$this->CallbackUrl,//回调地址,
+            "Payload"=>"IndiaBank_AccountName={$param['receive_name']}&IndiaBank_AccountNo={$param['receive_account']}&IndiaBank_BankName=SBI&IndiaBank_Ifsc={$param['ifsc']}"
+        ];
+        $sign = $this->getSign($data,$this->SecretKey,"SecretKey");
+        $data['sign'] = $sign;
+        $reuslt_json = curl_json($this->apiUrl."/api/WithdrawalV2/submit",$data);
+        $result = json_decode($reuslt_json,true);
+        if($result['Code'] == 0)
+        {
+            return $result;
+        }else{
+            throw new \Exception($result['Message']);
+        }
+    }
 }

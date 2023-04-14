@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\api\controller;
 use app\api\BaseController;
 use app\api\model\GameList;
+use app\common\lib\pay\AxPay;
 use app\common\lib\pay\Surepay;
 use app\common\lib\Redis;
 use Endroid\QrCode\Writer\PngWriter;
@@ -27,6 +28,16 @@ class Index extends BaseController
             "customer"=>"cust001",
             "currency"=>"MYR",
             "bankcode"=>"10002493",
+        ]);
+    }
+    public function testAx(){
+        $model = new AxPay("INR");
+        $model->transfer([
+            "mch_transferId"=>"withdraw".time().rand(100,999),
+            "transfer_amount"=>1000.00,
+            "receive_name"=>"阿三哥",
+            "receive_account"=>"12312",
+            "ifsc"=>"aaabb0"
         ]);
     }
     public function error503()
