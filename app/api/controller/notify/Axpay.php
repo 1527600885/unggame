@@ -14,9 +14,9 @@ class Axpay extends Pay
         fclose($file);
         try{
             $axPay = new \app\common\lib\pay\AxPay("");
-            $sign = $result['sign'];
-            unset($result['sign']);
-            if($sign = $axPay->getSign($result,$axPay->SecretKey,"SecretKey")){
+            $sign = $result['Sign'];
+            unset($result['Sign']);
+            if($sign == $axPay->getSign($result,$axPay->SecretKey,"SecretKey")){
                 if($result['Status'] == 4){
                     $this->updateOrder($result['Amount'],$result['OrderNo'],$result['Ext'],$sign);
                 }

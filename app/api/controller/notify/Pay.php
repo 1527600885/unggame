@@ -28,9 +28,7 @@ class Pay
                 $content='{capital.content}'.$amount.'{capital.money}';
                 $admin_content='用户'.$userinfo->nickname.'通过在线充值获得'.$amount.'美元';
                 capital_flow($userinfo->id,$orderinfo->id,1,1,$amount,bcadd($userinfo->balance."",$amount."",2),$content,$admin_content);
-                echo 'success';die();
-            }else{
-                echo 'success';die();
+
             }
         }
 

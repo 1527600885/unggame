@@ -23,6 +23,7 @@ class Wowpay extends Pay
             $key =  $wowPay->payConfig['debug'] ?  $wowPay->payConfig['testconfig'][$result['merRetMsg']]['key'] : $wowPay->payConfig['config'][$result['merRetMsg']]["key"];
             if($sign == $wowPay->getSign($result,$key)){
                 $this->updateOrder($result['amount'],$result['mchOrderNo'],$result['merRetMsg'],$sign);
+                echo 'success';die();
             }
 
         }else{

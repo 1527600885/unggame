@@ -15,6 +15,7 @@ class Nicepay extends Pay
         try{
             if(\app\common\lib\pay\NicePay::check_sign($result)){
                 $this->updateOrder($result['amount'],$result['order'],$currency_type,$result['sign']);
+                echo 'success';die();
             }else{
                 echo "fail";
             }
