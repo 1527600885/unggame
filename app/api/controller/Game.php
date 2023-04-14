@@ -421,7 +421,7 @@ class Game extends BaseController
             if($gamelog){
                 $game_info=$this->GameListModel->where('id',$gamelog->gid)->find();
                 if($game_info['type'] == 1){
-                    $result = PlatgameLog::where("log_id",$gamelog->id)->sum("profit");
+                    $result = PlatgameLog::where("id",$gamelog->id)->sum("profit");
                     $gamelog->type = 2;
                     $gamelog->save();
                     $result_type = $result > 0 ? 1 : ($result < 0 ? 2 : 0);
