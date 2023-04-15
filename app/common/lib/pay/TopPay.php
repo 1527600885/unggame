@@ -26,7 +26,7 @@ class TopPay extends Pay
             'expiryPeriod' => 1200,
             'productDetail' => "UNGGame Recharge"
         );
-       $sign = $this->getSigns($params);
+       $sign = $this->getSigns($data);
        $data['sign'] = $sign;
        $result_json = curl_json($this->apiUrl."/gateway/pay",$data);
        echo json_encode($result_json);die();
@@ -52,6 +52,22 @@ class TopPay extends Pay
         }
 
         return base64_encode($crypto);
+    }
+    public function checkSign($params)
+    {
+        $platSign = $params['platSign'];
+        unset($params['platSign']);
+        $decryptSign = $this->public_key_decrypt($platSign,$this->public_key);
+        ksort($params);
+        $params_str = '';
+        foreach ($params as $key => $val) {
+            $params_str = $params_str . $val;
+        }
+        if($params_str == $decryptSign) {
+            return true;
+        }else{
+            return false;
+        }
     }
     private function public_key_decrypt($data, $public_key)
     {
