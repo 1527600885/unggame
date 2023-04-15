@@ -4,7 +4,7 @@
 namespace app\common\lib\pay;
 
 
-class Surepay extends Pay
+class SurePay extends Pay
 {
     protected $merchant = "Surepay88";
     protected $post_url = "/api/notify.surepay/callback";
