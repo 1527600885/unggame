@@ -26,12 +26,12 @@ class TopPay extends Pay
             'expiryPeriod' => 1200,
             'productDetail' => "UNGGame Recharge"
         );
-       $sign = $this->getSign($params);
+       $sign = $this->getSigns($params);
        $data['sign'] = $sign;
        $result_json = curl_json($this->apiUrl."/gateway/pay",$data);
        echo json_encode($result_json);die();
     }
-    public function getSign($params)
+    public function getSigns($params)
     {
         ksort($params);
         $params_str = '';
