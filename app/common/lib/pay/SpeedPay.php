@@ -6,7 +6,7 @@ namespace app\common\lib\pay;
 
 class SpeedPay extends Pay
 {
-    protected $secret = "c44b0631bb6b4ae2a189f29951351e90";
+    public $secret = "c44b0631bb6b4ae2a189f29951351e90";
     protected $merchantId = "PM10178";
     protected $channel="spay";
     protected $callbackUrl = "/api/notify.speedpay/callback";
