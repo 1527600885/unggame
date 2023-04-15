@@ -8,7 +8,7 @@ use think\facade\Db;
 use think\Request;
 class Order extends BaseController
 {
-	protected $noNeedLogin = ['notify',"directData"];
+	protected $noNeedLogin = ['notify',"directdata"];
 	public function initialize(){
 		parent::initialize();
 		$this->PaymentModel = new \app\api\model\Payment;//支付设置模型
