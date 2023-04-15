@@ -251,8 +251,8 @@ function curl(string $api_url, $post_data = [], $header = [], $referer_url = '')
     curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt( $ch, CURLOPT_MAXREDIRS, 10);
     curl_setopt( $ch, CURLOPT_AUTOREFERER, 1);
-//    $header[] = "CLIENT-IP:".request()->ip();
-//    $header[] = "X-FORWARDED-FOR:".request()->ip();
+    $header[] = "CLIENT-IP:".request()->ip();
+    $header[] = "X-FORWARDED-FOR:".request()->ip();
     curl_setopt( $ch, CURLOPT_HTTPHEADER, $header);
     curl_setopt( $ch, CURLOPT_ENCODING, "");
     curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; Baiduspider/2.0; +" . request()->domain() . ")" );
