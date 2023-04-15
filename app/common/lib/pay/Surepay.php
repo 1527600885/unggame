@@ -47,7 +47,7 @@ class Surepay extends Pay
                 "return_url"=>$domain
             ];
             $data2['token'] = $token;
-            $result_json = curlNoIpSet($this->apiUrl."/payout",$data2);
+            $result_json = curlNoIpSet($this->apiUrl."/fundtransfer",$data2);
             echo $result_json;die();
             $result = json_decode($result_json,true);
             return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payUrl']];
