@@ -14,11 +14,12 @@ class Surepay extends Pay
     public  function run($type, $params)
     {
         $domain =  request()->domain();
+        $customer = "cust".time().rand(100,999);
         $data = [
             "merchant"=>$this->merchant,
             "amount"=>$params['trade_amount'],
             "refid"=>$params["mch_order_no"],
-            "customer"=>"cust".time().rand(100,999),
+            "customer"=>$customer,
             "currency"=>$this->currency_type,
             "post_url"=>$domain.$this->post_url,//回调地址,
             "bankcode"=>input("param.bankcode"),
@@ -31,8 +32,24 @@ class Surepay extends Pay
         $data['token'] = $token;
         $result_json = curlNoIpSet($this->apiUrl."/payout",$data);
         $result = json_decode($result_json,true);
-        if($result['status'] == 0)
+        if($result['status'] == 1)
         {
+            $data2 = [
+                "Merchant"=>$this->merchant,
+                "amount"=>$params['trade_amount'],
+                "refid"=>$params['mch_order_no'],
+                "customer"=>$customer,
+                "currency"=>$this->currency_type,
+                "bankcode"=>input("param.bankcode"),
+                "clientip"=>"52.55.100.240",
+                "post_url"=>$domain.$this->post_url,//回调地址,
+                "failed_return_url"=>$domain,
+                "return_url"=>$domain
+            ];
+            $data2['token'] = $token;
+            $result_json = curlNoIpSet($this->apiUrl."/payout",$data2);
+            echo $result_json;die();
+            $result = json_decode($result_json,true);
             return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payUrl']];
         }else{
             throw new \Exception($result['msg']);
