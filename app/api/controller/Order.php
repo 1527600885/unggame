@@ -19,7 +19,7 @@ class Order extends BaseController
 	}
 	//订单分类
 	public function classification(){
-		$data=input('post.');
+		$data=input('param.');
 		$userInfo=$this->request->userInfo;
 		if(!$data['id']){
 			$this->error(lang('system.id'));
