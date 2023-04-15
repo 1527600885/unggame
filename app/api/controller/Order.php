@@ -8,7 +8,7 @@ use think\facade\Db;
 use think\Request;
 class Order extends BaseController
 {
-	protected $noNeedLogin = ['notify'];
+	protected $noNeedLogin = ['notify',"directData"];
 	public function initialize(){
 		parent::initialize();
 		$this->PaymentModel = new \app\api\model\Payment;//支付设置模型
@@ -17,6 +17,11 @@ class Order extends BaseController
 		$this->pay = new \app\common\pay\PayService;//在线支付的接口
 		$this->CurrencyAllModel = new \app\api\model\CurrencyAll;//货币设置相关
 	}
+	public function directData(){
+	    $token  = input("param.token");
+	    $this->request->userInfo = $this->getuserinfo($token);
+	    $this->classification();
+    }
 	//订单分类
 	public function classification(){
 		$data=input('param.');
