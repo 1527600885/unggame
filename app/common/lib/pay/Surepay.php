@@ -19,21 +19,6 @@ class Surepay extends Pay
         $data = [
             "merchant"=>$this->merchant,
             "amount"=>$params['trade_amount'],
-            "refid"=>$params["mch_order_no"],
-            "customer"=>$customer,
-            "currency"=>$this->currency_type,
-            "post_url"=>$domain.$this->post_url,//回调地址,
-            "bankcode"=>input("param.bankcode"),
-            "clientip"=>"52.55.100.240",
-            "destbankaccname"=>input("param.destbankaccname"),
-            "destbankcode"=>input("param.destbankcode"),
-            "destbankaccno"=>input("param.destbankaccno")
-        ];
-        $token = md5($data['merchant'].$data['amount'].$data['refid'].$data['customer'].$this->apikey.$this->currency_type."52.55.100.240");
-        $data['token'] = $token;
-        $data2 = [
-            "merchant"=>$this->merchant,
-            "amount"=>$params['trade_amount'],
             "refid"=>$params['mch_order_no'],
             "customer"=>$customer,
             "currency"=>$this->currency_type,
@@ -43,19 +28,20 @@ class Surepay extends Pay
             "failed_return_url"=>$domain,
             "return_url"=>$domain
         ];
-        $data2['token'] = $token;
-        $result_json = curlNoIpSet($this->apiUrl."/fundtransfer",$data2);
-        echo $result_json;die();
-        $result_json = curlNoIpSet($this->apiUrl."/payout",$data);
-        $result = json_decode($result_json,true);
-        if($result['status'] == 1)
-        {
-
-            $result = json_decode($result_json,true);
-            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payUrl']];
-        }else{
-            throw new \Exception($result['msg']);
-        }
+        $token = md5($data['merchant'].$data['amount'].$data['refid'].$data['customer'].$this->apikey.$this->currency_type."52.55.100.240");
+        $data['token'] = $token;
+        $result_json = curlNoIpSet($this->apiUrl."/fundtransfer",$data);
+//        echo $result_json;die();
+//        $result_json = curlNoIpSet($this->apiUrl."/payout",$data);
+//        $result = json_decode($result_json,true);
+//        if($result['status'] == 1)
+//        {
+//
+//            $result = json_decode($result_json,true);
+//            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payUrl']];
+//        }else{
+//            throw new \Exception($result['msg']);
+//        }
     }
     public function getToken()
     {
