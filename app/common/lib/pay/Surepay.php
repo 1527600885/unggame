@@ -31,7 +31,7 @@ class Surepay extends Pay
         $token = md5($data['merchant'].$data['amount'].$data['refid'].$data['customer'].$this->apikey.$this->currency_type."52.55.100.240");
         $data['token'] = $token;
         $result_json = curlNoIpSet($this->apiUrl."/fundtransfer",$data);
-        echo $result_json;
+        echo $result_json;die();
 //        echo $result_json;die();
 //        $result_json = curlNoIpSet($this->apiUrl."/payout",$data);
 //        $result = json_decode($result_json,true);
