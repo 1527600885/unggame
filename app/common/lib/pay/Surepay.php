@@ -35,7 +35,7 @@ class Surepay extends Pay
         if($result['status'] == 1)
         {
             $data2 = [
-                "Merchant"=>$this->merchant,
+                "merchant"=>$this->merchant,
                 "amount"=>$params['trade_amount'],
                 "refid"=>$params['mch_order_no'],
                 "customer"=>$customer,
