@@ -23,7 +23,7 @@ class Index extends BaseController
         $model = new Surepay("MYR");
         $model->run("",[
             "trade_amount"=>"100.00",
-            "mch_order_no"=>"order25655854",
+            "mch_order_no"=>"order".time().rand(100,999),
             "token"=>"6c1a65ba0bfc16c821a51a59d8f45458",
             "customer"=>"cust001",
             "currency"=>"MYR",

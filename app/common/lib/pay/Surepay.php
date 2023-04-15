@@ -31,7 +31,7 @@ class Surepay extends Pay
         $data['token'] = $token;
         $result_json = curlNoIpSet($this->apiUrl."/payout",$data);
         $result = json_decode($result_json,true);
-        if($result['code'] == 200)
+        if($result['status'] == 0)
         {
             return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']['payUrl']];
         }else{
