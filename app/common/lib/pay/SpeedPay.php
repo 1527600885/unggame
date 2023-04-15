@@ -23,7 +23,7 @@ class SpeedPay extends Pay
             "timeMillis" =>bcmul(microtime(true),1000)
         ];
         $sign = $this->getSign($data,$this->secret,"secret");
-        $data['sign'] = $sign;
+        $data['sign'] = strtoupper($sign);
         $result_json = curl_json($this->apiUrl."/api/payment/recharge",$data);
         $result = json_decode($result_json,true);
         if($result['code'] == 1){
