@@ -44,7 +44,7 @@ class Index extends BaseController
     }
     public function testJm()
     {
-        $model = new JmPay("INE");
+        $model = new JmPay("bdt");
         $model->run("",[
             "trade_amount"=>"100.00",
             "mch_order_no"=>"order".time().rand(100,999),
