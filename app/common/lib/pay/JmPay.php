@@ -22,8 +22,9 @@ class JmPay extends Pay
             "mchId" =>$this->mchId,
             "notifyUrl" => $domain.$this->CallbackUrl,
             "paytype" =>"bdt",
-            "returnUrl" =>"https://unggame.com",
+//            "returnUrl" =>"https://unggame.com",
             "traceno" =>$params["mch_order_no"],
+            "totalFee"=> $params['trade_amount']
 //            "sign" =>"16B8F4CE18C3BB1246F2DBB73366503D"
         ];
         $sign = $this->getSign($data,$this->SecretKey,"sign");
