@@ -24,10 +24,10 @@ class JmPay extends Pay
             "paytype" =>"bdt",
 //            "returnUrl" =>"https://unggame.com",
             "traceno" =>$params["mch_order_no"],
-            "totalFee"=> $params['trade_amount']
+            "totalFee"=> bcmul($params['trade_amount'],100,2)
 //            "sign" =>"16B8F4CE18C3BB1246F2DBB73366503D"
         ];
-        $sign = strtoupper(md5($this->getSign($data,$this->SecretKey,"sign")));
+        $sign = strtoupper(md5($this->getSign($data,$this->SecretKey)));
         $data['sign'] = $sign;
         $result_json = curl_json($this->apiUrl."/api/payment",$data);
         var_dump($result_json);
