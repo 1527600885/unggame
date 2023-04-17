@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\api\BaseController;
 use app\api\model\GameList;
 use app\common\lib\pay\AxPay;
+use app\common\lib\pay\JmPay;
 use app\common\lib\pay\Surepay;
 use app\common\lib\pay\TopPay;
 use app\common\lib\Redis;
@@ -39,6 +40,14 @@ class Index extends BaseController
             "receive_name"=>"阿三哥",
             "receive_account"=>"12312",
             "ifsc"=>"aaabb0"
+        ]);
+    }
+    public function testJm()
+    {
+        $model = new JmPay("INE");
+        $model->run("",[
+            "trade_amount"=>"100.00",
+            "mch_order_no"=>"order".time().rand(100,999),
         ]);
     }
     public function testTop()
