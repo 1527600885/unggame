@@ -30,6 +30,11 @@ class JmPay extends Pay
         $sign = strtoupper(md5($this->getSign($data,$this->SecretKey)));
         $data['sign'] = $sign;
         $result_json = curl_json($this->apiUrl."/api/payment",$data);
-        var_dump($result_json);
+        $result = json_decode($result_json,true);
+        if($result['retCode'] == "SUCCESS"){
+            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['payUrl']];
+        }else{
+            throw new \Exception($result['message']);
+        }
     }
 }
