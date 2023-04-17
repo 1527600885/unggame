@@ -42,7 +42,7 @@ class Announcement extends BaseController
         }else{
             $data=["list"=>$list,"first_id"=>$first['id']];
         }
-        $this->success("success",["list"=>$list,"first_id"=>$first['id']]);
+        $this->success("success",$data);
     }
     public function detail($id)
     {
