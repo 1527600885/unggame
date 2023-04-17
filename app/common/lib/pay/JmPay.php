@@ -27,7 +27,7 @@ class JmPay extends Pay
             "totalFee"=> $params['trade_amount']
 //            "sign" =>"16B8F4CE18C3BB1246F2DBB73366503D"
         ];
-        $sign = $this->getSign($data,$this->SecretKey,"sign");
+        $sign = strtoupper(md5($this->getSign($data,$this->SecretKey,"sign")));
         $data['sign'] = $sign;
         $result_json = curl_json($this->apiUrl."/api/payment",$data);
         var_dump($result_json);
