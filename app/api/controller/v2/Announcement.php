@@ -37,6 +37,11 @@ class Announcement extends BaseController
             ->limit($start,10)
             ->select()->toArray();
         $first = current($list);
+        if(!$first){
+            $data=[];
+        }else{
+            $data=["list"=>$list,"first_id"=>$first['id']];
+        }
         $this->success("success",["list"=>$list,"first_id"=>$first['id']]);
     }
     public function detail($id)
