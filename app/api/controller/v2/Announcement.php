@@ -17,7 +17,7 @@ class Announcement extends BaseController
        $list =  \app\api\model\v2\Announcement::where("status",1)->column("distinct type");
         foreach ($list as $v)
         {
-            $data[] = \app\api\model\v2\Announcement::append(["icon","time","title","date_time"])->where("status",1)->where("type",$v)->order("id desc")->find();
+            $data[] = \app\api\model\v2\Announcement::where("status",1)->where("type",$v)->append(["icon","time","title","date_time"])->order("id desc")->find();
         }
         $this->success("success",["list"=>$data,"fist_id"=>1]);
 
