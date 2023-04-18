@@ -34,7 +34,10 @@ class File extends BaseController
             $search = ['keyword','type'];
             $order  = [$input['prop'] => $input['order']];
             $count  = FileModel::withSearch($search, $input)->count();
-            $data   = FileModel::withSearch($search, $input)->order($order)->page($input['page'], 20)->select();
+            $data   = FileModel::withSearch($search, $input)->order($order)->page($input['page'], 20)->select()->each(function ($item,$key){
+                return $item['url'] = env('aws.imgurl').$item['url'];
+                // var_dump(env('aws.imgurl').$item['url']);
+            });
             return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
             return View::fetch();
