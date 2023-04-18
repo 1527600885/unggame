@@ -125,13 +125,19 @@ class Image
             //JPEG图像设置隔行扫描
             imageinterlace($this->im, $interlace);
             imagejpeg($this->im, $pathname, $quality);
+            upimage($this->im,$pathname);
+            unlink($pathname);
         } elseif ('gif' == $type && !empty($this->gif)) {
             $this->gif->save($pathname);
+            upimage($this->im,$pathname);
+            unlink($pathname);
         } elseif ('png' == $type) {
             //设定保存完整的 alpha 通道信息
             imagesavealpha($this->im, true);
             //ImagePNG生成图像的质量范围从0到9的
             imagepng($this->im, $pathname, min((int) ($quality / 10), 9));
+            upimage($this->im,$pathname);
+            unlink($pathname);
         } else {
             $fun = 'image' . $type;
             $fun($this->im, $pathname);

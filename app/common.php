@@ -25,6 +25,34 @@ use Endroid\QrCode\Writer\ValidationException;
 use GeoIp2\Database\Reader;
 use app\api\model\CapitalFlow as CapitalFlowmodel;
 use think\facade\Db;
+
+
+function upimage($filePath,$savepath){
+        $bucket = env('aws.bucket'); // 容器名称[调整填写自己的容器名称]
+        $key = $filePath; // 要上传的文件
+        $region = env('aws.region');//地区
+    // $endpoint = 'https://obs-hazz.cucloud.cn';//
+        $ak = env('aws.ak');// ak
+        $sk = env('aws.sk');// sk
+        $s3 = new \Aws\S3\S3Client([
+            'version' => 'latest',
+            's3ForcePathStyle' => true,
+            'region' => $region,
+            // 'endpoint' => $endpoint,
+            'credentials' => [
+                'key' => $ak,
+                'secret' => $sk,
+            ],
+        // 'scheme' => 'http',
+        // 'debug' => true,
+        ]);
+       
+        $s3->putObject([
+            'Bucket' => $bucket,
+            'Key'    => $savePath,
+            'Body'   => fopen($key,"r"),
+        ]);
+}
 /**
  * 生成缩略图
  * @param 图片连接
@@ -660,7 +688,32 @@ function create_qrcode($data,$userInfo){
 	// header('Content-Type: '.$result->getMimeType());
 	
 	$result->saveToFile($qrcodefile.'/'.$userInfo['id'].$userInfo['game_account'].'.png');
-    $filename='/upload/qrcode/'.date('Y').date('m').date('d').'/'.$userInfo['id'].$userInfo['game_account'].'.png';
+    $filename='upload/qrcode/'.date('Y').date('m').date('d').'/'.$userInfo['id'].$userInfo['game_account'].'.png';
+    $bucket = env('aws.bucket'); // 容器名称[调整填写自己的容器名称]
+    $key = root_path().'public/'.$filename; // 要上传的文件
+    $region = env('aws.region');//地区
+// $endpoint = 'https://obs-hazz.cucloud.cn';//
+    $ak = env('aws.ak');// ak
+    $sk = env('aws.sk');// sk
+    $s3 = new \Aws\S3\S3Client([
+        'version' => 'latest',
+        's3ForcePathStyle' => true,
+        'region' => $region,
+        // 'endpoint' => $endpoint,
+        'credentials' => [
+            'key' => $ak,
+            'secret' => $sk,
+        ],
+    // 'scheme' => 'http',
+    // 'debug' => true,
+    ]);
+   
+    $s3->putObject([
+        'Bucket' => $bucket,
+        'Key'    => $filename,
+        'Body'   => fopen($key,"r"),
+    ]);
+    unlink($key);
     UserModel::where('id',$userInfo['id'])->update(['QR_code'=>$filename]);
     return $filename;
 }
