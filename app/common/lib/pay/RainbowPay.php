@@ -37,4 +37,28 @@ class RainbowPay extends Pay
     {
         return $this->key;
     }
+    public function transfer($param)
+    {
+        $domain =  request()->domain();
+        $data = [
+            "mchId"=>$this->mchId,
+            "passageId"=>$this->passageId,
+            "orderNo"=>$param['mch_transferId'],
+            "account"=>$param['receive_account'],
+            "userName"=>$param['receive_name'],
+            "amount"=>$param['transfer_amount'],
+            "notifyUrl"=>"",
+        ];
+        $sign = $this->getSign($data,$this->key);
+        $data['sign'] = $sign;
+        $reuslt_json = curl($this->apiUrl."/pay/create",$data);
+        $result = json_decode($reuslt_json,true);
+        if($result['code'] == 200)
+        {
+            return $result;
+        }else{
+            throw new \Exception($result['Message']);
+        }
+    }
+
 }
