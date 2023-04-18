@@ -6,7 +6,7 @@ use app\api\BaseController;
 use app\api\model\GameList;
 use app\common\lib\pay\AxPay;
 use app\common\lib\pay\JmPay;
-use app\common\lib\pay\Surepay;
+use app\common\lib\pay\SurePay;
 use app\common\lib\pay\TopPay;
 use app\common\lib\Redis;
 use Endroid\QrCode\Writer\PngWriter;
@@ -22,7 +22,7 @@ class Index extends BaseController
 	}
     public function index()
     {
-        $model = new Surepay("MYR");
+        $model = new SurePay("MYR");
         $model->run("",[
             "trade_amount"=>"100.00",
             "mch_order_no"=>"order".time().rand(100,999),
