@@ -27,7 +27,7 @@ use app\api\model\CapitalFlow as CapitalFlowmodel;
 use think\facade\Db;
 
 
-function upimage($filePath,$savepath){
+function upimage($filePath,$savePath){
         require root_path() .'extend/Aws/aws-autoloader.php';
         $bucket = env('aws.bucket'); // 容器名称[调整填写自己的容器名称]
         $key = $filePath; // 要上传的文件
