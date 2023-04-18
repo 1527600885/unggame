@@ -341,15 +341,48 @@ class User  extends BaseController
     public function upload()
     {
         try {
+            require root_path() .'extend/Aws/aws-autoloader.php';
             $file = $this->request->file('file');
             validate([ 'file' => [ 'fileExt'=>config('upload.ext')['image'], 'fileSize' =>config('upload.size')['image'] ]])->check(['file' => $file]);
             $fileInfo = pathinfo($file);
 			$extension = strtolower($file->getOriginalExtension());
             $filePath = $fileInfo['dirname'] . '/' . $fileInfo['basename'];
             $files = new Fileupload($filePath);
-            $savePath = public_path() . 'upload/user/'.date('Ymd').'/';
+            $savePath = 'upload/user/'.date('Ymd').'/';
             $fileName = $files->hash() . '.' . $extension;
-            $files->move($savePath,$savePath.$fileName);
+            $bucket = env('aws.bucket'); // 容器名称[调整填写自己的容器名称]
+            $key = $_FILES['file']['tmp_name']; // 要上传的文件
+            $region = env('aws.region');//地区
+        // $endpoint = 'https://obs-hazz.cucloud.cn';//
+            $ak = env('aws.ak');// ak
+            $sk = env('aws.sk');// sk
+            $s3 = new \Aws\S3\S3Client([
+                'version' => 'latest',
+                's3ForcePathStyle' => true,
+                'region' => $region,
+                // 'endpoint' => $endpoint,
+                'credentials' => [
+                    'key' => $ak,
+                    'secret' => $sk,
+                ],
+            // 'scheme' => 'http',
+            // 'debug' => true,
+            ]);
+           
+            $s3->putObject([
+                'Bucket' => $bucket,
+                'Key'    => $savePath.$fileName,
+                'Body'   => fopen($key,"r"),
+            ]);
+//             $file = $this->request->file('file');
+//             validate([ 'file' => [ 'fileExt'=>config('upload.ext')['image'], 'fileSize' =>config('upload.size')['image'] ]])->check(['file' => $file]);
+//             $fileInfo = pathinfo($file);
+// 			$extension = strtolower($file->getOriginalExtension());
+//             $filePath = $fileInfo['dirname'] . '/' . $fileInfo['basename'];
+//             $files = new Fileupload($filePath);
+//             $savePath = public_path() . 'upload/user/'.date('Ymd').'/';
+//             $fileName = $files->hash() . '.' . $extension;
+//             $files->move($savePath,$savePath.$fileName);
 			// $url = Filesystem::putFile('user', $file); //Tp6.0上传方法
 			$url='user/'.date('Ymd').'/'.$fileName;
             $url = '/upload/' . str_replace('\\', '/', $url);

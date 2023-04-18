@@ -67,6 +67,7 @@ class File extends BaseController
      */
     public function upload()
     {
+        
         $file = $this->request->file('file');
         $limitExt = config('upload.ext');
         $limitSize = config('upload.size');
@@ -81,7 +82,10 @@ class File extends BaseController
 			$files = new Fileupload($filePath);
 			$savePath = public_path() . 'upload/image/'.date('Ymd').'/';
 			$fileName = $files->hash() . '.' . $extension;
-			$files->move($savePath,$savePath.$fileName);
+            $files->move($savePath,$savePath.$fileName);
+
+            upimage($savePath.$fileName,$savePath.$fileName);
+
 			$url='image/'.date('Ymd').'/'.$fileName;
 			$saveUrl = '/upload/' . str_replace('\\', '/', $url);
             $save = FileModel::create([
@@ -142,6 +146,7 @@ class File extends BaseController
             }
             // 钩子
             event('UploadEnd', $save);
+            unlink($savePath.$fileName);
             return json(['status' => 'success', 'message' => '上传成功', 'data' => $save]);
         } catch (ValidateException $e) {
             return json(['status' => 'error', 'message' => $e->getMessage()]);
