@@ -57,7 +57,7 @@ class RainbowPay extends Pay
         {
             return $result;
         }else{
-            throw new \Exception($result['Message']);
+            throw new \Exception($result['msg']);
         }
     }
 
