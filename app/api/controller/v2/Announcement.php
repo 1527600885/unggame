@@ -8,6 +8,20 @@ use app\api\BaseController;
 
 class Announcement extends BaseController
 {
+    public function news()
+    {
+        $map = [];
+        if($this->request->userInfo){
+            $map[] = ["user_id","in",[0,$this->request->userInfo->id]];
+        }
+       $list =  \app\api\model\v2\Announcement::where("status",1)->column("distinct type");
+        foreach ($list as $v)
+        {
+            $data[] = \app\api\model\v2\Announcement::append(["icon","time","title","date_time"])->where("status",1)->where("type",$v)->order("id desc")->find();
+        }
+        $this->success("success",["list"=>$data,"fist_id"=>1]);
+
+    }
     public function index()
     {
         $map = [];
