@@ -51,7 +51,7 @@ class RainbowPay extends Pay
         ];
         $sign = $this->getSign($data,$this->key);
         $data['sign'] = $sign;
-        $reuslt_json = curl($this->apiUrl."/pay/create",$data);
+        $reuslt_json = curlNoIpSet($this->apiUrl."/pay/create",$data);
         $result = json_decode($reuslt_json,true);
         if($result['code'] == 200)
         {
