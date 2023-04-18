@@ -67,7 +67,7 @@ class File extends BaseController
      */
     public function upload()
     {
-        
+
         $file = $this->request->file('file');
         $limitExt = config('upload.ext');
         $limitSize = config('upload.size');
@@ -91,7 +91,7 @@ class File extends BaseController
             $save = FileModel::create([
                 'title'       => $file->getOriginalName(),
                 'size'        => $filesize,
-                'url'         => 'https://image.unggame.com/upload/' . str_replace('\\', '/', $url),
+                'url'         => '/upload/' . str_replace('\\', '/', $url),
                 'type'        => $type,
                 'create_time' => date('Y-m-d H:i:s'),
                 'status'      => 1,
