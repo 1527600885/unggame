@@ -67,6 +67,7 @@ class File extends BaseController
      */
     public function upload()
     {
+        
         $file = $this->request->file('file');
         $limitExt = config('upload.ext');
         $limitSize = config('upload.size');

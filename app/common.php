@@ -28,6 +28,7 @@ use think\facade\Db;
 
 
 function upimage($filePath,$savepath){
+        require root_path() .'extend/Aws/aws-autoloader.php';
         $bucket = env('aws.bucket'); // 容器名称[调整填写自己的容器名称]
         $key = $filePath; // 要上传的文件
         $region = env('aws.region');//地区
@@ -659,6 +660,7 @@ function getipcountry($ip){
  * @throws \think\exception\DbException
  */
 function create_qrcode($data,$userInfo){
+    require root_path() .'extend/Aws/aws-autoloader.php';
 	$qrcodefile=public_path().'upload/qrcode/'.date('Y').date('m').date('d');
 	if (!is_dir($qrcodefile)) {
 	    mkdir($qrcodefile);
