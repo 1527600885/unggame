@@ -61,7 +61,7 @@ class Index extends BaseController
     }
     public function testOepay()
     {
-        $model = new OePay("");
+        $model = new OePay("IDR");
         $model->run("",[ "trade_amount"=>"100.00",
             "mch_order_no"=>"order".time().rand(100,999)]);
     }
