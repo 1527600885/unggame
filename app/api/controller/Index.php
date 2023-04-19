@@ -6,6 +6,7 @@ use app\api\BaseController;
 use app\api\model\GameList;
 use app\common\lib\pay\AxPay;
 use app\common\lib\pay\JmPay;
+use app\common\lib\pay\OePay;
 use app\common\lib\pay\SurePay;
 use app\common\lib\pay\TopPay;
 use app\common\lib\Redis;
@@ -57,6 +58,12 @@ class Index extends BaseController
             "trade_amount"=>"100.00",
             "mch_order_no"=>"order".time().rand(100,999),
         ]);
+    }
+    public function testOepay()
+    {
+        $model = new OePay("");
+        $model->run("",[ "trade_amount"=>"100.00",
+            "mch_order_no"=>"order".time().rand(100,999)]);
     }
     public function error503()
     {

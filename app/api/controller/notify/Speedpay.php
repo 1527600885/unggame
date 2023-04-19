@@ -16,7 +16,7 @@ class Speedpay extends Pay
             $axPay = new \app\common\lib\pay\SpeedPay("");
             $sign = $result['sign'];
             unset($result['sign']);
-            if($sign == $axPay->getSign($result,$axPay->secret,"secret")){
+            if($sign == strtoupper($axPay->getSign($result,$axPay->secret,"secret"))){
                 if($result['status'] == 1){
                     $this->updateOrder($result['orderAmount'],$result['merchantOrderId'],$result['param'],$sign);
                 }
