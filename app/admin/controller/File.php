@@ -34,7 +34,10 @@ class File extends BaseController
             $search = ['keyword','type'];
             $order  = [$input['prop'] => $input['order']];
             $count  = FileModel::withSearch($search, $input)->count();
-            $data   = FileModel::withSearch($search, $input)->order($order)->page($input['page'], 20)->select();
+            $data   = FileModel::withSearch($search, $input)->order($order)->page($input['page'], 20)->select()->each(function ($item,$key){
+                return $item['url'] = env('aws.imgurl').$item['url'];
+                // var_dump(env('aws.imgurl').$item['url']);
+            });
             return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
             return View::fetch();
@@ -67,7 +70,7 @@ class File extends BaseController
      */
     public function upload()
     {
-        
+
         $file = $this->request->file('file');
         $limitExt = config('upload.ext');
         $limitSize = config('upload.size');
@@ -91,7 +94,7 @@ class File extends BaseController
             $save = FileModel::create([
                 'title'       => $file->getOriginalName(),
                 'size'        => $filesize,
-                'url'         => 'https://image.unggame.com/upload/' . str_replace('\\', '/', $url),
+                'url'         => '/upload/' . str_replace('\\', '/', $url),
                 'type'        => $type,
                 'create_time' => date('Y-m-d H:i:s'),
                 'status'      => 1,
