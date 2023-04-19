@@ -57,7 +57,7 @@ class JmPay extends Pay
         ];
         $sign = strtoupper(md5($this->getSign($data,$this->SecretKey)));
         $data['sign'] = $sign;
-        $result_json = curl_json($this->apiUrl."/api/payment",$data);
+        $result_json = curl_json($this->apiUrl."/api/paid/issued",$data);
         echo $result_json;die();
         $result = json_decode($result_json,true);
     }
