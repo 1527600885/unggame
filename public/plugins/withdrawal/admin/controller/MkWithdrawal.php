@@ -131,9 +131,9 @@ class MkWithdrawal extends BaseController
         $transData = array_merge($other,[
             "mch_transferId"=>$mch_transferId,
             "transfer_amount"=>$data->money,
-            "bank_code"=>$other['bank'],
-            "receive_name"=>$other['receive name'],
-            "receive_account"=>$other['card number'],
+            "bank_code"=>$other['bank'] ?? '',
+            "receive_name"=>$other['receive name'] ?? '',
+            "receive_account"=>$other['card number'] ?? '',
         ]);
         $pay->transfer($transData);
         $data->online_status = 1;
