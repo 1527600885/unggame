@@ -48,6 +48,7 @@ class JmPay extends Pay
             "mchId" =>$this->mchId,
             "notifyUrl" =>$domain.$this->CallbackUrl,
             "paytype" =>"bdt",
+            'mode'=>"bdt",
             "realname" =>$params['realname'],
             "timestamp" =>time(),
             "totalFee" =>$params['transfer_amount'],
