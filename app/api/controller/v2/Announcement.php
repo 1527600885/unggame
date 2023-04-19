@@ -15,6 +15,7 @@ class Announcement extends BaseController
             $map[] = ["user_id","in",[0,$this->request->userInfo->id]];
         }
        $list =  \app\api\model\v2\Announcement::where("status",1)->column("distinct type");
+        $data = [];
         foreach ($list as $v)
         {
             $data[] = \app\api\model\v2\Announcement::where("status",1)->where("type",$v)->append(["icon","time","title","date_time"])->order("id desc")->find();

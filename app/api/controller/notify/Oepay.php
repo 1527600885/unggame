@@ -12,6 +12,5 @@ class Oepay extends Pay
         $file = fopen(__DIR__."/1.txt","w");
         fwrite($file,json_encode($result));
         fclose($file);
-
     }
 }

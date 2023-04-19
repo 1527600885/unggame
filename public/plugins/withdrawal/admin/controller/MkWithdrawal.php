@@ -128,13 +128,14 @@ class MkWithdrawal extends BaseController
         $userInfo = User::where("id",$data->uid)->find();
         $mch_transferId = 'order'.$userInfo['game_account'].time();
         $other = json_decode($data->other,true);
-        $pay->transfer([
+        $transData = array_merge($other,[
             "mch_transferId"=>$mch_transferId,
             "transfer_amount"=>$data->money,
             "bank_code"=>$other['bank'],
             "receive_name"=>$other['receive name'],
             "receive_account"=>$other['card number'],
         ]);
+        $pay->transfer($transData);
         $data->online_status = 1;
         $data->status_time = time();
         $data->merTransferId = $mch_transferId;
