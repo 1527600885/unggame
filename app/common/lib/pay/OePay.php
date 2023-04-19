@@ -166,4 +166,34 @@ class OePay extends Pay
         return join('&', $urlStr);
 
     }
+    public function transfer($params)
+    {
+        $domain =  request()->domain();
+        $data = [
+            'orderNo' => $params['mch_transferId'],
+            'amount' => $params['transfer_amount'],
+            'upi'=>$params['upi'],
+            'beneficiaryName'=>$params['beneficiaryName'],
+            'beneficiaryMobile'=>$params['beneficiaryMobile'],
+            'bankAccount'=>$params['bankAccount'],
+            'ifsc'=>$params['ifsc'],
+            'beneficiaryEmail'=>$params['beneficiaryEmail'],
+            'remark'=>"UNGGame withdraw",
+        ];
+        $data_str = $this->getUrlStr($data);
+
+        $sign = $this->sign($data_str, $this->secret);
+
+        $header = [
+
+            'Content-Type: application/json; charset=utf-8',
+
+            'X-SIGN: ' . $sign,
+
+            'X-SERVICE-CODE: ' . $this->key
+
+        ];
+        $result_json = $this->curl_post_content($this->apiUrl."/gold-pay/portal/createH5PayLink", $data, $header);
+        echo $result_json;
+    }
 }
