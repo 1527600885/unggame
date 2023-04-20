@@ -43,9 +43,10 @@ class Withdrawal extends BaseController
 		foreach($ol as $k=>$v){
 			$currency_name=explode(',',$v->currency);
 			foreach($currency_name as $key=>$value){
-				$currency_data[$key]['type']=$v->type;
-				$currency_data[$key]['currency']=$value;
-				$currency_data[$key]['rate']=$this->CurrencyAllModel->where(['name'=>$value])->value('rate');
+                $currency_data[] = ["type"=>$v->type,"currency"=>$value,"rate"=>$this->CurrencyAllModel->where(['name'=>$value])->value('rate')];
+//				$currency_data[$key]['type']=$v->type;
+//				$currency_data[$key]['currency']=$value;
+//				$currency_data[$key]['rate']=$this->CurrencyAllModel->where(['name'=>$value])->value('rate');
 			}
 		}
 		$currency_data=remove_duplicate($currency_data);
@@ -61,11 +62,11 @@ class Withdrawal extends BaseController
 	// 获取当前选择提现所需要提交的内容参数
 	public function form_countent(){
 		$data=input("post.");
-		$content=$this->WithdrawalSettingsModel->field('`id`,`other1`')->where('id',$data['id'])->find();
+		$content=$this->WithdrawalSettingsModel->field('`id`,`other1`,`name`')->where('id',$data['id'])->find();
 		$other_content=json_decode($content->other1,true)[$data['currency']];
 		$other_arr=explode(',',$other_content);
 		$content->other1=$other_arr;
-		$content->bankList = getBankList($data['currency']);
+		$content->bankList = getBankList($data['currency'],$content->name);
 		$this->success(lang('system.success'),$content);
 	}
 	//提交提现
