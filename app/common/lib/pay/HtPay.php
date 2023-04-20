@@ -34,11 +34,10 @@ class HtPay extends Pay
         $data = $this->encrypt($data,$this->mchPrivateKey);
         $data=json_encode($data, JSON_UNESCAPED_UNICODE);
         $result_json = $this->globalpay_http_post_res_json($this->apiUrl."/ty/orderPay",$data);
-        echo $result_json;die();
         $result = json_decode($result_json,true);
-        if($result['Code'] == 0)
+        if(isset($result['status']) && $result['status'] == 'SUCCESS')
         {
-            return ["orderNo"=>$param['mch_order_no'],"oriAmount"=>$param['trade_amount'],"payInfo"=>$result['Data']['PayeeInfo']['CashUrl']];
+            return ["orderNo"=>$param['mch_order_no'],"oriAmount"=>$param['trade_amount'],"payInfo"=>$result['order_data']];
         }else{
             throw new \Exception($result['Message']);
         }
