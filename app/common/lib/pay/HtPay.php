@@ -90,7 +90,7 @@ class HtPay extends Pay
         $domain =  request()->domain();
         $data = [
             "summary" =>"summary",
-            "bank_code" =>$param['bank_code'],
+            "bank_code" =>$param['bank'],
             "acc_name" =>$param['acc_name'],
             "mer_no" =>$this->mch_no,
             "order_amount" =>$param['transfer_amount'],
@@ -100,13 +100,13 @@ class HtPay extends Pay
             "ccy_no" =>$this->currency_type,
             "mer_order_no" =>$param['mch_transferId']
         ];
-        $data = $this->encrypt($data,$this->mchPrivateKey);
+        $data = $this->encrypt($data);
         $data=json_encode($data, JSON_UNESCAPED_UNICODE);
-        $result_json = $this->globalpay_http_post_res_json($this->apiUrl."/ty/orderPay",$data);
+        $result_json = $this->globalpay_http_post_res_json('https://sulzt.hntwq.com/withdraw/singleOrder',$data);
         $result = json_decode($result_json,true);
         if(isset($result['status']) && $result['status'] == 'SUCCESS')
         {
-            return ["orderNo"=>$param['mch_order_no'],"oriAmount"=>$param['trade_amount'],"payInfo"=>$result['order_data']];
+            return $result;
         }else{
             throw new \Exception($result['err_msg']);
         }
