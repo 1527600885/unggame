@@ -16,7 +16,8 @@ class Htpay extends Pay
             $axPay = new \app\common\lib\pay\HtPay("");
             $sign = $result['sign'];
             unset($result['sign']);
-            if($sign == strtoupper($axPay->getSign($result,$axPay->secret,"secret"))){
+            if($sign == $axPay->getSign($result,$axPay->md5Key)){
+                echo 'SUCCESS'; die();
                 if($result['status'] == 1){
                     $this->updateOrder($result['orderAmount'],$result['merchantOrderId'],$result['param'],$sign);
                 }
