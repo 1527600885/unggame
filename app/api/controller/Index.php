@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\api\BaseController;
 use app\api\model\GameList;
 use app\common\lib\pay\AxPay;
+use app\common\lib\pay\HtPay;
 use app\common\lib\pay\JmPay;
 use app\common\lib\pay\OePay;
 use app\common\lib\pay\SurePay;
@@ -62,6 +63,12 @@ class Index extends BaseController
     public function testOepay()
     {
         $model = new OePay("IDR");
+        $model->run("",[ "trade_amount"=>"100.00",
+            "mch_order_no"=>"order".time().rand(100,999)]);
+    }
+    public function testHtpay()
+    {
+        $model = new HtPay("PHP");
         $model->run("",[ "trade_amount"=>"100.00",
             "mch_order_no"=>"order".time().rand(100,999)]);
     }
