@@ -790,10 +790,10 @@ function getlang($content){
 	$langcontent = str_replace(['{','}'],'',$langcontent);
 	return $langcontent;
 }
-function getBankList($currency)
+function getBankList($currency,$name)
 {
     $list =[
-        "MYR"=>[
+        "WowPay_MYR"=>[
             [
                 "code" =>"AAAA",
                 "bankname" =>"Bank of america"
@@ -927,7 +927,7 @@ function getBankList($currency)
                 "bankname" =>"UOB"
             ]
         ],
-        "PHP"=>[
+        "NicePay_PHP"=>[
             ["bankname"=>"The Bank of the Philippine Islands","code"=>"BPI"],
             ["bankname"=>"UnionBank of the Philippines","code"=>"UNIONBANK"],
             ["bankname"=>"BDO Bank","code"=>"BDO"],
@@ -966,7 +966,219 @@ function getBankList($currency)
             ["bankname"=>"ING Bank","code"=>"ING_BANK"],
             ["bankname"=>"UnionBank of the Philippines","code"=>"CEBUANA_BANK"],
             ["bankname"=>"SeaBank","code"=>"SEA_BANK"],
-        ]
+        ],
+        "HtPay_PHP"=>[[
+            "code" =>"GCASH",
+            "bankname" =>"GCASH"
+        ],
+            [
+                "code" =>"AUB",
+                "bankname" =>"Asia United Bank"
+            ],
+            [
+                "code" =>"UnionBankEON",
+                "bankname" =>"UnionBank EON"
+            ],
+            [
+                "code" =>"Starpay",
+                "bankname" =>"Starpay"
+            ],
+            [
+                "code" =>"EB",
+                "bankname" =>"Eastwest Bank"
+            ],
+            [
+                "code" =>"ESB",
+                "bankname" =>"Equicom Savings Bank"
+            ],
+            [
+                "code" =>"MB",
+                "bankname" =>"Malayan Bank"
+            ],
+            [
+                "code" =>"ERB",
+                "bankname" =>"EastWest Rural Bank"
+            ],
+            [
+                "code" =>"PB",
+                "bankname" =>"Producers Bank"
+            ],
+            [
+                "code" =>"PBC",
+                "bankname" =>"Philippine Bank of Communications"
+            ],
+            [
+                "code" =>"PBB",
+                "bankname" =>"Philippine Business Bank"
+            ],
+            [
+                "code" =>"PNB",
+                "bankname" =>"Philippine National Bank"
+            ],
+            [
+                "code" =>"PSB",
+                "bankname" =>"Philippine Savings Bank"
+            ],
+            [
+                "code" =>"PTC",
+                "bankname" =>"Philippine Trust Company"
+            ],
+            [
+                "code" =>"PVB",
+                "bankname" =>"Philippine Veterans Bank"
+            ],
+            [
+                "code" =>"RBG",
+                "bankname" =>"Rural Bank of Guinobatan, Inc."
+            ],
+            [
+                "code" =>"RCBC",
+                "bankname" =>"Rizal Commercial Banking Corporation"
+            ],
+            [
+                "code" =>"RB",
+                "bankname" =>"Robinsons Bank"
+            ],
+            [
+                "code" =>"SBC",
+                "bankname" =>"Security Bank Corporation"
+            ],
+            [
+                "code" =>"SBA",
+                "bankname" =>"Sterling Bank Of Asia"
+            ],
+            [
+                "code" =>"SSB",
+                "bankname" =>"Sun Savings Bank"
+            ],
+            [
+                "code" =>"UCPBSAVINGSBANK",
+                "bankname" =>"UCPB SAVINGS BANK"
+            ],
+            [
+                "code" =>"QCDBI",
+                "bankname" =>"Queen City Development Bank, Inc."
+            ],
+            [
+                "code" =>"UCPB",
+                "bankname" =>"United Coconut Planters Bank"
+            ],
+            [
+                "code" =>"WDBI",
+                "bankname" =>"Wealth Development Bank, Inc."
+            ],
+            [
+                "code" =>"YSBI",
+                "bankname" =>"Yuanta Savings Bank, Inc."
+            ],
+            [
+                "code" =>"GrabPay",
+                "bankname" =>"GrabPay Philippines"
+            ],
+            [
+                "code" =>"BDOUI",
+                "bankname" =>"Banco De Oro Unibank, Inc."
+            ],
+            [
+                "code" =>"BMI",
+                "bankname" =>"Bangko Mabuhay (A Rural Bank), Inc."
+            ],
+            [
+                "code" =>"BOC",
+                "bankname" =>"Bank Of Commerce"
+            ],
+            [
+                "code" =>"CTBC",
+                "bankname" =>"CTBC Bank (Philippines), Inc."
+            ],
+            [
+                "code" =>"Chinabank",
+                "bankname" =>"Chinabank"
+            ],
+            [
+                "code" =>"CBS",
+                "bankname" =>"Chinabank Savings"
+            ],
+            [
+                "code" =>"CBC",
+                "bankname" =>"Chinatrust Banking Corp"
+            ],
+            [
+                "code" =>"ALLBANK",
+                "bankname" =>"ALLBANK (A Thrift Bank), Inc."
+            ],
+            [
+                "code" =>"BNBI",
+                "bankname" =>"BDO Network Bank, Inc."
+            ],
+            [
+                "code" =>"BRBI",
+                "bankname" =>"Binangonan Rural Bank Inc"
+            ],
+            [
+                "code" =>"Camalig",
+                "bankname" =>"Camalig Bank"
+            ],
+            [
+                "code" =>"DBI",
+                "bankname" =>"Dungganun Bank, Inc."
+            ],
+            [
+                "code" =>"GlobeGcash",
+                "bankname" =>"Globe Gcash"
+            ],
+            [
+                "code" =>"CLRBI",
+                "bankname" =>"Cebuana Lhuillier Rural Bank, Inc."
+            ],
+            [
+                "code" =>"ISLABANK",
+                "bankname" =>"ISLA Bank (A Thrift Bank), Inc."
+            ],
+            [
+                "code" =>"LOTP",
+                "bankname" =>"Landbank of the Philippines"
+            ],
+            [
+                "code" =>"MPI",
+                "bankname" =>"Maybank Philippines, Inc."
+            ],
+            [
+                "code" =>"MBATC",
+                "bankname" =>"Metropolitan Bank and Trust Co"
+            ],
+            [
+                "code" =>"Omnipay",
+                "bankname" =>"Omnipay"
+            ],
+            [
+                "code" =>"PRBI",
+                "bankname" =>"Partner Rural Bank (Cotabato), Inc."
+            ],
+            [
+                "code" =>"PPI",
+                "bankname" =>"Paymaya Philippines, Inc."
+            ],
+            [
+                "code" =>"AlliedBankingCorp",
+                "bankname" =>"Allied Banking Corp"
+            ],
+            [
+                "code" =>"ING",
+                "bankname" =>"ING Bank N.V."
+            ],
+            [
+                "code" =>"BDBIASB",
+                "bankname" =>"BPI Direct Banko, Inc., A Savings Bank"
+            ],
+            [
+                "code" =>"CSB",
+                "bankname" =>"Citystate Savings Bank Inc."
+            ],
+            [
+                "code" =>"BPI",
+                "bankname" =>"Bank Of The Philippine Islands"
+            ]]
     ] ;
-    return isset($list[$currency]) ? $list[$currency] : [];
+    return isset($list[$name."_".$currency]) ? $list[$name."_".$currency] : [];
 }

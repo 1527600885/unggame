@@ -15,6 +15,7 @@ class HtPay extends Pay
     protected $CallbackUrl = "/api/notify.htpay/callback";
     protected $busi_code = "101202";
     protected $apiUrl = "https://cksax.hntwq.com";
+    public $md5Key = "F94464C64353F068C3E970B3CC41FA58";
     public function run($type,$param)
     {
         $domain =  request()->domain();
@@ -39,7 +40,7 @@ class HtPay extends Pay
         {
             return ["orderNo"=>$param['mch_order_no'],"oriAmount"=>$param['trade_amount'],"payInfo"=>$result['order_data']];
         }else{
-            throw new \Exception($result['Message']);
+            throw new \Exception($result['err_msg']);
         }
     }
     //支付加密
@@ -83,5 +84,31 @@ class HtPay extends Pay
         $context = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
         return $result;
+    }
+    public function transfer($param)
+    {
+        $domain =  request()->domain();
+        $data = [
+            "summary" =>"summary",
+            "bank_code" =>$param['bank_code'],
+            "acc_name" =>$param['acc_name'],
+            "mer_no" =>$this->mch_no,
+            "order_amount" =>$param['transfer_amount'],
+            "mobile_no" =>$param['mobile_no'],
+            "acc_no" =>$param['acc_no'],
+            "notifyUrl" =>$domain.$this->CallbackUrl,
+            "ccy_no" =>$this->currency_type,
+            "mer_order_no" =>$param['mch_transferId']
+        ];
+        $data = $this->encrypt($data,$this->mchPrivateKey);
+        $data=json_encode($data, JSON_UNESCAPED_UNICODE);
+        $result_json = $this->globalpay_http_post_res_json($this->apiUrl."/ty/orderPay",$data);
+        $result = json_decode($result_json,true);
+        if(isset($result['status']) && $result['status'] == 'SUCCESS')
+        {
+            return ["orderNo"=>$param['mch_order_no'],"oriAmount"=>$param['trade_amount'],"payInfo"=>$result['order_data']];
+        }else{
+            throw new \Exception($result['err_msg']);
+        }
     }
 }
