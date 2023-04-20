@@ -24,7 +24,7 @@ class User extends Validate
         'code'          => 'require',
         'nickname'      => 'require|max:40',
         'describe'      => 'max:255',
-        'password'      => ['alphaNum', 'min' => 6, 'max' => 12],
+        'password'      => [ 'min' => 6, 'max' => 12],
         'phone'         =>['alphaNum', 'min' => 5, 'max' => 20],
 		'sex'           => 'require',
 		'pay_paasword'  => ['number','length'=>6],
