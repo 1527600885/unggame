@@ -31,9 +31,10 @@ class HtPay extends Pay
             "busi_code" =>$this->busi_code,
             "mer_order_no" =>$param["mch_order_no"]
         ];
-        $data['sign'] = $this->sign($data,$this->mchPrivateKey);
-        $result_json = curl_json($this->apiUrl."/ty/orderPay",$data);
-        echo $result_json;
+        $data = $this->encrypt($data,$this->mchPrivateKey);
+        $data=json_encode($data, JSON_UNESCAPED_UNICODE);
+        $result_json = $this->globalpay_http_post_res_json($this->apiUrl."/ty/orderPay",$data);
+        echo $result_json;die();
         $result = json_decode($result_json,true);
         if($result['Code'] == 0)
         {
@@ -42,29 +43,46 @@ class HtPay extends Pay
             throw new \Exception($result['Message']);
         }
     }
-    private function pivate_key_encrypt($data, $pivate_key)
-    {
-        $pivate_key = '-----BEGIN PRIVATE KEY-----'."\n".$pivate_key."\n".'-----END PRIVATE KEY-----';
-        $pi_key = openssl_pkey_get_private($pivate_key);
+    //支付加密
+    private function encrypt($data){
+        $mch_private_key = $this->mchPrivateKey;
+        ksort($data);
+        $str = '';
+        foreach ($data as $k => $v){
+            if(!empty($v)){
+                $str .=(string) $k.'='.$v.'&';
+            }
+        }
+        $str = rtrim($str,'&');
+        $encrypted = '';
+        //替换成自己的私钥
+        $pem = chunk_split($mch_private_key, 64, "\n");
+        $pem = "-----BEGIN PRIVATE KEY-----\n" . $pem . "-----END PRIVATE KEY-----\n";
+        $private_key = openssl_pkey_get_private($pem);
         $crypto = '';
-        foreach (str_split($data, 117) as $chunk) {
-            openssl_private_encrypt($chunk, $encryptData, $pi_key);
+        foreach (str_split($str, 117) as $chunk) {
+            openssl_private_encrypt($chunk, $encryptData, $private_key);
             $crypto .= $encryptData;
         }
+        $encrypted = base64_encode($crypto);
+        $encrypted = str_replace(array('+','/','='),array('-','_',''),$encrypted);
 
-        return base64_encode($crypto);
+        $data['sign']=$encrypted;
+        return $data;
     }
-    private function sign($data,$priKey) {
-        ksort($data);
-        $data = http_build_query($data);
-        $priKey = '-----BEGIN PRIVATE KEY-----'."\n".$priKey."\n".'-----END PRIVATE KEY-----';
-        $res = openssl_get_privatekey($priKey);
-        //调用openssl内置签名方法，生成签名$sign
-        openssl_sign($data, $sign, $res);
-        //释放资源
-        openssl_free_key($res);
-        //base64编码
-        $sign = urlencode(base64_encode($sign));
-        return $sign;
+    //请求
+    private function globalpay_http_post_res_json($url, $postData)
+    {
+        $options = array(
+            'http' => array(
+                'method' => 'POST',
+                'header' => 'Content-type:application/json',
+                'content' => $postData,
+                'timeout' => 15 * 60 // 超时时间（单位:s）
+            )
+        );
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        return $result;
     }
 }
