@@ -31,8 +31,9 @@ class HtPay extends Pay
             "busi_code" =>$this->busi_code,
             "mer_order_no" =>$param["mch_order_no"]
         ];
-        $data['sign'] = $this->sign($data);
+        $data['sign'] = $this->sign($data,$this->mchPrivateKey);
         $result_json = curl_json($this->apiUrl."/ty/orderPay",$data);
+        echo $result_json;
         $result = json_decode($result_json,true);
         if($result['Code'] == 0)
         {
@@ -54,6 +55,8 @@ class HtPay extends Pay
         return base64_encode($crypto);
     }
     private function sign($data,$priKey) {
+        ksort($data);
+        $data = http_build_query($data);
         $priKey = '-----BEGIN PRIVATE KEY-----'."\n".$priKey."\n".'-----END PRIVATE KEY-----';
         $res = openssl_get_privatekey($priKey);
         //调用openssl内置签名方法，生成签名$sign
@@ -61,7 +64,7 @@ class HtPay extends Pay
         //释放资源
         openssl_free_key($res);
         //base64编码
-        $sign = base64_encode($sign);
+        $sign = urlencode(base64_encode($sign));
         return $sign;
     }
 }
