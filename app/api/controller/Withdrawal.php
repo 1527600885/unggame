@@ -107,7 +107,7 @@ class Withdrawal extends BaseController
 			$rateamount=round($input['amount']*$rate,2);
 			$charge=round($rateamount*($feel/100),2);
 			$money=bcadd($rateamount."",-$charge."",2);
-			$splicedata=array_splice($input,7);
+			$splicedata=array_splice($input,9);
 			$data['other']=json_encode($splicedata);
 		}
 		$data['sid']=$input['id'];
