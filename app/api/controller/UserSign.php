@@ -176,7 +176,7 @@ class UserSign extends BaseController
             if($todayReward != 0)
             {
                 //记录账单
-                capital_flow($user_id,0,9,1,$todayReward,bcadd($balance,$todayReward,2),"{user.platformrewards} \${$platformReward} bonus","用户{$this->request->userInfo['nickname']}签到奖励\${$todayReward}");
+                capital_flow($user_id,0,9,1,$todayReward,bcadd($balance,$todayReward,2),"{user.platformrewards} \${$todayReward} bonus","用户{$this->request->userInfo['nickname']}签到奖励\${$todayReward}");
             }
             Db::commit();
         }catch (\Exception $e)
