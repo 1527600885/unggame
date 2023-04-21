@@ -32,4 +32,28 @@ class SpeedPay extends Pay
             echo $result_json;die();
         }
     }
+    public function transfer($param)
+    {
+        $domain =  request()->domain();
+        $data = [
+            "amount" =>$param['transfer_amount'],
+            "callbackUrl" =>$domain.$this->callbackUrl,
+            "cardNo" =>$param['cardNo'],
+            "ifsc" =>$param['ifsc'],
+            "merchantId" =>$this->merchantId,
+            "merchantOrderId" =>$param['mch_transferId'],
+            "param" =>"UPI",
+            "personName" =>$param['personName'],
+            "timeMillis" =>time()
+        ];
+        $sign = $this->getSign($data,$this->secret,"secret");
+        $data['sign'] = strtoupper($sign);
+        $result_json = curl_json($this->apiUrl."/api/payment/withdrawal",$data);
+        $result = json_decode($result_json,true);
+        if($result['code'] == 1){
+            return $result;
+        }else{
+            echo $result_json;die();
+        }
+    }
 }
