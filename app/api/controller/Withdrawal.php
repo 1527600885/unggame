@@ -56,7 +56,7 @@ class Withdrawal extends BaseController
 	// 获取在线提现对应货币支持的服务商
 	public function business(){
 		$data=input("post.");
-		$businesslist=$this->WithdrawalSettingsModel->field('`id`,`name`,`other1`')->where('currency','like','%'.$data['currency'].'%')->select();
+		$businesslist=$this->WithdrawalSettingsModel->field('`id`,`name`,`other1`')->where('currency','like','%'.$data['currency'].'%')->where("is_show",1)->select();
 		$this->success(lang('system.success'),$businesslist);
 	}
 	// 获取当前选择提现所需要提交的内容参数
