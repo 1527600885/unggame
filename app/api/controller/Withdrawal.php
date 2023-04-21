@@ -66,7 +66,7 @@ class Withdrawal extends BaseController
 		$other_content=json_decode($content->other1,true)[$data['currency']];
 		$other_arr=explode(',',$other_content);
 		$content->other1=$other_arr;
-		$content->bankList = getBankList($data['currency'],$content->name);
+		$content->bankList = getBankList($data['currency'],$data['payment_name']);
 		$this->success(lang('system.success'),$content);
 	}
 	//提交提现
