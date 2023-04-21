@@ -82,4 +82,28 @@ class TopPay extends Pay
 
         return $crypto;
     }
+    public function transfer($params)
+    {
+        $domain =  request()->domain();
+        $data = array(
+            'merchantCode' => $this->merchantCode,
+            'orderType' =>"0",
+            'method' => 'Transfer',
+            'orderNum' => $params['mch_transferId'],
+            'money' => $params['transfer_amount'],
+            'feeType' => '0',
+            'dateTime' => date("YmdHis"),
+            'number' => $params['number'],
+            'bankCode' => $params['bank'],
+            'name' => $params['name'],
+            'mobile' => $params['mobile'],
+            'email' => $params['email'],
+            'notifyUrl' => $domain.$this->CallbackUrl,
+            'description' => "withdrawal"
+        );
+        $sign = $this->getSigns($data);
+        $data['sign'] = $sign;
+        $result_json = curl_json($this->apiUrl."/gateway/prepaidOrder",$data);
+        echo json_encode($result_json);die();
+    }
 }
