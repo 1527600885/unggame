@@ -12,6 +12,7 @@ class JmPay extends Pay
     private $CallbackUrl = "/api/notify.jmpay/callback";
 //    private $SecretKey = "cdDecdFDC86d1Ec0119976856Fb40c94087207A7cF83b5214ccd0180071b83a222970143aA52dD8169e56a2715577ddd";
     private $SecretKey = "320B0303C39ac9FD3Ee1bA6b8ce31B558747413765Ac48587828Ea45B5e7233e0fa453d90585467A28694CFaC137584c";
+    private $topayKey ="E83B078Ec5da7F840091D774a5d55736930c28baa81b861Bd3E7Ad4e76278BafcCF9883bDb2bb78E547123eA9Ed1363636C4bF9FfFae4b83D60E3225500D522D";
     private $apiUrl = "https://web.9mpay.club";
     public  function run($type, $params)
     {
@@ -56,7 +57,7 @@ class JmPay extends Pay
             "userEmail" =>$params['userEmail'],
             "userMobile" =>$params['userMobile']
         ];
-        $sign = strtoupper(md5($this->getSign($data,$this->SecretKey)));
+        $sign = strtoupper(md5($this->getSign($data,$this->topayKey)));
         $data['sign'] = $sign;
         $result_json = curl_json($this->apiUrl."/api/paid/issued",$data);
         echo $result_json;die();
