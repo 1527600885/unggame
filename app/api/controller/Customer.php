@@ -76,16 +76,20 @@ class Customer extends BaseController
     public function saveMessage()
     {
         $data = input("post.");
-        $message['fid']=$data['room_id'];
-        $message['toid']=$data['toid'];
-        $message['content']=$data['content'];
-        $message['time']=$data['time'];
-        $message['isonline']=$data['isonline'];
-        $message['type'] =$data['type'];
-        $message['foid'] =$data['toid'];
-        $message['ftoid'] =$data['room_id'];
-        $message['source_type'] = $data['source_type'] ?? 1;
-        ChatRecord::create($message);
+        $isExit  = ChatRecord::where("token",$data['token'])->value("id");
+        if(!$isExit){
+            $message['fid']=$data['room_id'];
+            $message['toid']=$data['toid'];
+            $message['content']=$data['content'];
+            $message['time']=$data['time'];
+            $message['isonline']=$data['isonline'];
+            $message['type'] =$data['type'];
+            $message['foid'] =$data['toid'];
+            $message['ftoid'] =$data['room_id'];
+            $message['source_type'] = $data['source_type'] ?? 1;
+            $message['token'] = $data['token'];
+            ChatRecord::create($message);
+        }
         $this->success("success");
     }
     public function chatRecord()
