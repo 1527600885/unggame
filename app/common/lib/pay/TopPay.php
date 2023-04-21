@@ -95,7 +95,7 @@ class TopPay extends Pay
             'dateTime' => date("YmdHis"),
             'number' => $params['number'],
             'bankCode' => $params['bank'],
-            'name' => $params['name'],
+            'name' => $params['realname'],
             'mobile' => $params['mobile'],
             'email' => $params['email'],
             'notifyUrl' => $domain.$this->CallbackUrl,
