@@ -3,7 +3,9 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 use app\api\BaseController;
+use app\api\model\GameBrand;
 use app\api\model\GameList;
+use app\common\game\ApiGame;
 use app\common\lib\pay\AxPay;
 use app\common\lib\pay\HtPay;
 use app\common\lib\pay\JmPay;
@@ -71,6 +73,42 @@ class Index extends BaseController
         $model = new HtPay("PHP");
         $model->run("",[ "trade_amount"=>"100.00",
             "mch_order_no"=>"order".time().rand(100,999)]);
+    }
+    public function testGetGame()
+    {
+        $game = new ApiGame();
+        $lists = GameBrand::select();
+        foreach ($lists as $v){
+            $gameTypeList = explode(",",$v['gametype']);
+            foreach ($gameTypeList as $vv){
+               $ret = $game->getGameList("EN",$v->code,"all","all",$vv,1,10);
+               if($ret['games']){
+                    foreach($ret['games'] as $k=>$v){
+                        $v['gameImage']=json_encode([
+                            'EN'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/EN/'.$v['tcgGameCode'].'.png',
+                            'TH'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/TH/'.$v['tcgGameCode'].'.png',
+                            'VI'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/VI/'.$v['tcgGameCode'].'.png',
+                            'ID'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/ID/'.$v['tcgGameCode'].'.png',
+                            'KM'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/KM/'.$v['tcgGameCode'].'.png',
+                            'MS'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/MS/'.$v['tcgGameCode'].'.png',
+                            'JA'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/JA/'.$v['tcgGameCode'].'.png',
+                            'KO'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/KO/'.$v['tcgGameCode'].'.png'
+                        ]);
+                        if($v['displayStatus']==0){
+                            $v['displayStatus']=1;
+                        }else{
+                            $v['displayStatus']=0;
+                        }
+                        $v['add_time']=time();
+                        $v['gameType']=$vv;
+                        unset($v['gameName']);
+                        $gamelists[]=$v;
+                    }
+                }
+            }
+            break;
+        }
+        var_dump($gamelists);
     }
     public function error503()
     {
