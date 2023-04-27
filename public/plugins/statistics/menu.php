@@ -5,7 +5,7 @@ return array (
     'title' => '流量统计',
     'path' => 'index/index',
     'icon' => 'menu.png',
-    'ifshow' => 1,
+    'ifshow' => 0,
     'children' => 
     array (
       0 => 

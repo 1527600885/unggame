@@ -5,7 +5,7 @@ return array (
     'title' => '数字货币',
     'path' => 'ungcoin',
     'icon' => 'menu.png',
-    'ifshow' => 1,
+    'ifshow' => 0,
     'children' => 
     array (
       0 => 
@@ -41,5 +41,7 @@ return array (
         ),
       ),
     ),
+    'sort' => 1,
+    'logwriting' => 0,
   ),
 );

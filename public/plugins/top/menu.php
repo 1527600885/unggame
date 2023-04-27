@@ -10,7 +10,7 @@ return array (
     array (
       0 => 
       array (
-        'title' => '直播游戏管理',
+        'title' => 'tablegame 管理',
         'path' => 'mkTopLivegame/index',
         'ifshow' => 1,
         'children' => 
@@ -39,40 +39,42 @@ return array (
             'logwriting' => 1,
           ),
         ),
+        'sort' => 2,
+        'logwriting' => 0,
       ),
       1 => 
       array (
-        'title' => '排行游戏',
+        'title' => '游戏排行管理',
         'sort' => 0,
         'path' => 'mkTopGame/index',
         'ifshow' => 1,
         'logwriting' => 0,
-        'children' =>
-            array (
-                0 =>
-                    array (
-                        'title' => '查看',
-                        'path' => 'mkTopGame/index',
-                    ),
-                1 =>
-                    array (
-                        'title' => '发布',
-                        'path' => 'mkTopGame/save',
-                        'logwriting' => 1,
-                    ),
-                2 =>
-                    array (
-                        'title' => '编辑',
-                        'path' => 'mkTopGame/update',
-                        'logwriting' => 1,
-                    ),
-                3 =>
-                    array (
-                        'title' => '删除',
-                        'path' => 'mkTopGame/delete',
-                        'logwriting' => 1,
-                    ),
-            ),
+        'children' => 
+        array (
+          0 => 
+          array (
+            'title' => '查看',
+            'path' => 'mkTopGame/index',
+          ),
+          1 => 
+          array (
+            'title' => '发布',
+            'path' => 'mkTopGame/save',
+            'logwriting' => 1,
+          ),
+          2 => 
+          array (
+            'title' => '编辑',
+            'path' => 'mkTopGame/update',
+            'logwriting' => 1,
+          ),
+          3 => 
+          array (
+            'title' => '删除',
+            'path' => 'mkTopGame/delete',
+            'logwriting' => 1,
+          ),
+        ),
       ),
     ),
   ),

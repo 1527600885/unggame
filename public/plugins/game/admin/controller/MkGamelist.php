@@ -32,6 +32,9 @@ class MkGamelist extends BaseController
             foreach($data as $k=>$v){
             	$gameImage=json_decode($v->gameImage,true);
             	$v->gameImage=$gameImage['EN'] ?? '';
+            	if(stripos($v->gameImage,"images.b51613.com") !== false){
+            	    $v->gameImage = "";
+                }
 				$gameName=json_decode($v->gameName,true);
 				// $v->gameName='英文：'.$gameName['EN'].'<br>印尼语：'.$gameName['ID'].'<br>泰语：'.$gameName['TH'].'<br>越南语：'.$gameName['VI'].'<br>柬埔寨：'.$gameName['KM'].'<br>马来语：'.$gameName['MS'].'<br>日语：'.$gameName['JA'].'<br>韩语：'.$gameName['KO'];
 				$v->gameName=$gameName['EN'];
