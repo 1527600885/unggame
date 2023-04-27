@@ -79,39 +79,7 @@ class Console
                                 :time="timeActive">
                             </el-statistics-overview-chart>
                         </el-col>
-                        <el-col :md="24" :lg="12">
-                            <el-statistics-overview-chart
-                                chart="province"
-                                title="地域分布" 
-                                type="province"
-                                link="statistics/visitor/area"
-                                :time="timeActive">
-                            </el-statistics-overview-chart>
-                        </el-col>
-                        <el-col :md="24" :lg="12">
-                            <el-statistics-overview-table
-                                title="受访页面" 
-                                type="url" 
-                                link="statistics/visit/url"
-                                :time="timeActive">
-                            </el-statistics-overview-table>
-                        </el-col>
-                        <el-col :md="24" :lg="12">
-                            <el-statistics-overview-table
-                                title="入口页面" 
-                                type="entryUrl" 
-                                link="statistics/visit/entryUrl"
-                                :time="timeActive">
-                            </el-statistics-overview-table>
-                        </el-col>
-                        <el-col :md="24" :lg="12">
-                            <el-statistics-overview-table
-                                title="来源网站" 
-                                type="referrer" 
-                                link="statistics/source/referrer"
-                                :time="timeActive">
-                            </el-statistics-overview-table>
-                        </el-col>
+
                     </el-row>
                 </div>
             </div>
@@ -126,5 +94,38 @@ class Console
             })
             </script>
         ';
+//        <el-col :md="24" :lg="12">
+//                            <el-statistics-overview-chart
+//                                chart="province"
+//                                title="地域分布"
+//                                type="province"
+//                                link="statistics/visitor/area"
+//                                :time="timeActive">
+//                            </el-statistics-overview-chart>
+//                        </el-col>
+//                        <el-col :md="24" :lg="12">
+//                            <el-statistics-overview-table
+//                                title="受访页面"
+//                                type="url"
+//                                link="statistics/visit/url"
+//                                :time="timeActive">
+//                            </el-statistics-overview-table>
+//                        </el-col>
+//                        <el-col :md="24" :lg="12">
+//                            <el-statistics-overview-table
+//                                title="入口页面"
+//                                type="entryUrl"
+//                                link="statistics/visit/entryUrl"
+//                                :time="timeActive">
+//                            </el-statistics-overview-table>
+//                        </el-col>
+//                        <el-col :md="24" :lg="12">
+//                            <el-statistics-overview-table
+//                                title="来源网站"
+//                                type="referrer"
+//                                link="statistics/source/referrer"
+//                                :time="timeActive">
+//                            </el-statistics-overview-table>
+//                        </el-col>
     }   
 }
