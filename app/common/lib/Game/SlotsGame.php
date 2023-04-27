@@ -30,9 +30,9 @@ class SlotsGame
         }
         shuffle($data);
         $result = [];
-        for($i=0;$i<=5;$i++)
+        for($i=0;$i<5;$i++)
         {
-            $result[] = array_slice($data,0,5);
+            $result[] = array_slice($data,$i*5,5);
         }
         return $result;
     }
