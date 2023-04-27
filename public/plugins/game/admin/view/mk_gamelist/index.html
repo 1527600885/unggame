@@ -7,24 +7,24 @@
 		:table-page-size="20"
 		:table-page-sizes="[20, 50, 100, 200, 500]"
 		:search-date="false">
-		<template v-slot:search>
-		   <el-select v-if="brandlist" v-model="brandvalue" clearable placeholder="请选择游戏品牌" size="small" @change="getgamecode">
-		       <el-option
-		         v-for="item in brandlist"
-		         :key="item.value"
-		         :label="item.label"
-		         :value="item.value">
-		       </el-option>
-		     </el-select>
-			 <el-select v-model="value" placeholder="请选择游戏类型" size="small" @change="getgametype">
-			     <el-option
-			       v-for="item in options"
-			       :key="item.value"
-			       :label="item.label"
-			       :value="item.value">
-			     </el-option>
-			   </el-select>
-		</template>
+<!--		<template v-slot:search>-->
+<!--		   <el-select v-if="brandlist" v-model="brandvalue" clearable placeholder="请选择游戏品牌" size="small" @change="getgamecode">-->
+<!--		       <el-option-->
+<!--		         v-for="item in brandlist"-->
+<!--		         :key="item.value"-->
+<!--		         :label="item.label"-->
+<!--		         :value="item.value">-->
+<!--		       </el-option>-->
+<!--		     </el-select>-->
+<!--			 <el-select v-model="value" placeholder="请选择游戏类型" size="small" @change="getgametype">-->
+<!--			     <el-option-->
+<!--			       v-for="item in options"-->
+<!--			       :key="item.value"-->
+<!--			       :label="item.label"-->
+<!--			       :value="item.value">-->
+<!--			     </el-option>-->
+<!--			   </el-select>-->
+<!--		</template>-->
 	</el-curd>
 </div>
 <script>
@@ -53,16 +53,16 @@
 							default: 0,
 						}
 					},
-					{
-						prop: 'gameType',
-						label: '游戏类型',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
+					// {
+					// 	prop: 'gameType',
+					// 	label: '游戏类型',
+					// 	table: {
+					// 		sort: true,
+					// 	},
+					// 	form: {
+					// 		is: 'el-input',
+					// 	}
+					// },
 					{
 						prop: 'gameName',
 						label: '游戏名称',
@@ -96,9 +96,10 @@
 					{
 						prop: 'productCode',
 						label: '品牌简称',
-						form: {
-							is: 'el-input',
-						}
+						form: false,
+						// form: {
+						// 	is: 'el-input',
+						// },
 					},
 					// {
 					// 	prop: 'productType',
@@ -126,13 +127,13 @@
 						},
 						form: false
 					},
-					{
-						prop: 'hot',
-						label: '热度',
-						form: {
-							is: 'el-input',
-						}
-					},
+					// {
+					// 	prop: 'hot',
+					// 	label: '热度',
+					// 	form: {
+					// 		is: 'el-input',
+					// 	}
+					// },
 					{
 						prop: 'is_groom',
 						label: '游戏推荐',
@@ -169,26 +170,26 @@
 							default: 0,
 						}
 					},
-					{
-						prop: 'category_sort',
-						label: '类型排位',
-						table: {
-							is: 'el-input',
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-							default: 0,
-						}
-					},
-					{
-						prop:'game_release_date',
-						label: '发行日期',
-						table: false,
-						form: {
-							is:'el-date-picker',
-						}
-					},
+					// {
+					// 	prop: 'category_sort',
+					// 	label: '类型排位',
+					// 	table: {
+					// 		is: 'el-input',
+					// 		sort: true,
+					// 	},
+					// 	form: {
+					// 		is: 'el-input',
+					// 		default: 0,
+					// 	}
+					// },
+					// {
+					// 	prop:'game_release_date',
+					// 	label: '发行日期',
+					// 	table: false,
+					// 	form: {
+					// 		is:'el-date-picker',
+					// 	}
+					// },
 					{
 						prop:'author',
 						label: '标签',
