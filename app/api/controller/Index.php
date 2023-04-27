@@ -6,6 +6,7 @@ use app\api\BaseController;
 use app\api\model\GameBrand;
 use app\api\model\GameList;
 use app\common\game\ApiGame;
+use app\common\lib\Game\SlotsGame;
 use app\common\lib\pay\AxPay;
 use app\common\lib\pay\HtPay;
 use app\common\lib\pay\JmPay;
@@ -76,39 +77,53 @@ class Index extends BaseController
     }
     public function testGetGame()
     {
-        $game = new ApiGame();
-        $lists = GameBrand::select();
-        foreach ($lists as $v){
-            $gameTypeList = explode(",",$v['gametype']);
-            foreach ($gameTypeList as $vv){
-               $ret = $game->getGameList("EN",$v->code,"all","all",$vv,1,10);
-               if($ret['games']){
-                    foreach($ret['games'] as $k=>$v){
-                        $v['gameImage']=json_encode([
-                            'EN'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/EN/'.$v['tcgGameCode'].'.png',
-                            'TH'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/TH/'.$v['tcgGameCode'].'.png',
-                            'VI'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/VI/'.$v['tcgGameCode'].'.png',
-                            'ID'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/ID/'.$v['tcgGameCode'].'.png',
-                            'KM'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/KM/'.$v['tcgGameCode'].'.png',
-                            'MS'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/MS/'.$v['tcgGameCode'].'.png',
-                            'JA'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/JA/'.$v['tcgGameCode'].'.png',
-                            'KO'=>'https://images.b51613.com:42666/TCG_GAME_ICONS/'.$v['productCode'].'/KO/'.$v['tcgGameCode'].'.png'
-                        ]);
-                        if($v['displayStatus']==0){
-                            $v['displayStatus']=1;
-                        }else{
-                            $v['displayStatus']=0;
-                        }
-                        $v['add_time']=time();
-                        $v['gameType']=$vv;
-                        unset($v['gameName']);
-                        $gamelists[]=$v;
-                    }
-                }
+        $file = file_get_contents(__DIR__."/s.txt");
+        $data = json_decode($file,true);
+        foreach ($data['value'] as $v){
+            $isExit = GameList::where("tcgGameCode",$v['roomId'])->find();
+            if(!$isExit){
+                $list[] = $v;
+                $gameName = [
+                    "EN" =>$v['description'],
+                    "TH" =>$v['description'],
+                    "VI" =>$v['description'],
+                    "ID" =>$v['description'],
+                    "KM" =>$v['description'],
+                    "MS" =>$v['description'],
+                    "JA" =>$v['description'],
+                    "KO" =>$v['description']
+                ];
+                $gameImage = [
+                    "EN" =>$v['showIcon'],
+                    "TH" =>$v['showIcon'],
+                    "VI" =>$v['showIcon'],
+                    "ID" =>$v['showIcon'],
+                    "KM" =>$v['showIcon'],
+                    "MS" =>$v['showIcon'],
+                    "JA" =>$v['showIcon'],
+                    "KO" =>$v['showIcon']
+                ];
+                $productType = GameList::where("productCode",$v['vassalage'])->value("productType");
+                $save[] = [
+                    "displayStatus"=>$v['displayStatus'],
+                    "gameType"=>$v['gameType'],
+                    "gameName"=>json_encode($gameName),
+                    "gameImage"=>$gameImage,
+                    "tcgGameCode"=>$v['roomId'],
+                    "productCode"=>$v['vassalage'],
+                    "productType"=>$productType,
+                    "platform"=>$v['platform'],
+                    "trialSupport"=>$v['supportPlay'],
+                    "add_time"=>time(),
+                ];
             }
-            break;
         }
-        var_dump($gamelists);
+        var_dump($list);
+    }
+    public function testSlots()
+    {
+        $game = new SlotsGame();
+        $game->getlists();
     }
     public function error503()
     {
