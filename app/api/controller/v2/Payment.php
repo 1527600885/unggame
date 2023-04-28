@@ -13,6 +13,7 @@ class Payment extends BaseController
     public function getRate($type = 2)
     {
         $type=input("post.type/d");
+        $data = [];
         if($type== 2)
         {
             $list= \app\api\model\v2\Payment::where(['is_show'=>1,'type'=>$type])->order('id asc')->column("currency_name");
@@ -21,7 +22,7 @@ class Payment extends BaseController
             {
                 $currency_list = array_merge($currency_list,explode(",",$v));
             }
-            $data = [];
+
             $rateList = $this->cacheRate();
             foreach ($currency_list as $vv)
             {
