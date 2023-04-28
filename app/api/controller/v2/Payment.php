@@ -66,7 +66,7 @@ class Payment extends BaseController
         ));
 
         $response = curl_exec($curl); // Send the request, save the response
-        print_r(json_decode($response)); // print json decoded response
+        print_r(json_decode($response,true)); // print json decoded response
         curl_close($curl); // Close request
     }
     public function cacheRate()
