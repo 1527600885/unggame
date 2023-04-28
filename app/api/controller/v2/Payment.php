@@ -52,7 +52,7 @@ class Payment extends BaseController
                     $response = json_decode($response_json,true);
                     if($response['success'] === true){
                         $rateList = $response['rates'];
-                        $redis->set($key,$rateList,3600);
+                        $redis->set($key,json_encode($rateList),3600);
                     }else{
                         throw new Exception("System error");
                     }
@@ -60,6 +60,8 @@ class Payment extends BaseController
                     throw new Exception($e->getMessage());
                 }
             }
+        }else{
+            $rateList = json_decode($rateList,true);
         }
         return $rateList;
 
