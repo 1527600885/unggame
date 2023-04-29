@@ -6,19 +6,34 @@ namespace app\common\lib\Game;
 
 class SlotsGame
 {
+    protected $bet = 5;
+    protected $total_win = 0;
     protected $goodsList = [
         1 => 5,//城堡
-        2 => 9,//苹果
-        3 => 10,//任意
-        4 => 11,
-        5 => 12,
-        6 => 13,
-        7 => 14,
-        8 => 15,
-        9 => 20,
+        2 => 8,//苹果
+        3 => 1,//金苹果
+        4 => 10,//任意
+        5 => 10,
+        6 => 12,
+        7 => 13,
+        8 => 14,
+        9 => 15,
         10 => 20,
         11 => 20,
-        12 => 20
+        12 => 20,
+        13 => 20
+    ];
+    protected $rate = [
+        4 => [3 => 1, 4 => 2.5, 5 => 12.5],
+        5 => [3 => 1, 4 => 2.5, 5 => 12.5],
+        6 => [3 => 0.5, 4 => 2, 5 => 10],
+        7 => [3 => 0.25, 4 => 1.5, 5 => 7.5],
+        8 => [3 => 0.25, 4 => 1.25, 5 => 6],
+        9 => [3 => 0.25, 4 => 1, 5 => 5],
+        10 => [3 => 0.25, 4 => 0.5, 5 => 2.5],
+        11 => [3 => 0.25, 4 => 0.5, 5 => 2.5],
+        12 => [3 => 0.25, 4 => 0.5, 5 => 2.5],
+        13 => [3 => 0.25, 4 => 0.5, 5 => 2.5],
     ];
     protected $win_lines = [
         1 => [
@@ -96,7 +111,30 @@ class SlotsGame
 
     ];
 
-    public function getlists()
+    public function getResult()
+    {
+        $board = $this->getBoard();
+        $winlines = $this->getWinLines($board);
+        $bs = $this->getBs($board);
+        $total_win = $this->total_win;
+        return compact("board","bs","winlines","total_win");
+    }
+
+    public function getBs($result)
+    {
+        foreach ($result as &$v) {
+            foreach ($v as &$vv) {
+                if ($vv != 2 && $vv != 3) {
+                    $vv = 0;
+                } else {
+                    $vv = mt_rand(1, 8) * 0.5 * $this->bet;
+                }
+            }
+        }
+        return $result;
+    }
+
+    public function getBoard()
     {
         $data = [];
         $count = 0;
@@ -137,24 +175,41 @@ class SlotsGame
     //]
     public function getWinLines($result)
     {
-        foreach ($this->win_lines as $v)
-        {
-            $typeList = [];
+        $winlines = [];
+        foreach ($this->win_lines as $k => $v) {
+            $s = [];
             $first = "";
-            foreach ($v as $vv)
-            {
-                $type  = $result[$vv[0]][$vv[1]];
-                $typeList[] = $type;
-                if(!$first && $type >3)
-                {
-                    $first = $type;
+            foreach ($v as $vv) {
+                $type = $result[$vv[0]][$vv[1]];
+                if ($type <= 3) {
+                    break;
                 }
-            }
-            if($typeList[0] <= 2)
-            {
-                continue;
-            }
+                if (!$first) {
+                    $s[] = $vv;
+                    if ($type > 4) {
+                        $first = $type;
+                    }
+                    continue;
+                }
+                if ($first) {
+                    if ($type == $first || $type == 4) {
+                        $s[] = $vv;
+                    } else {
+                        break;
+                    }
+                }
 
+            }
+            $count = count($s);
+            if ($count >= 3) {
+                if (!$first) {
+                    $first = 4;
+                }
+                $amounts = $this->rate[$first][$count]*$this->bet;
+                $this->total_win += $amounts;
+                $winlines[] = ['amount' => $amounts, "line" => $k, "occurrences" => $count, "symbol" => $first, "positions" => $s, "type" => "lb"];
+            }
         }
+        return $winlines;
     }
 }

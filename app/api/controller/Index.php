@@ -123,7 +123,7 @@ class Index extends BaseController
     public function testSlots()
     {
         $game = new SlotsGame();
-        echo json_encode($game->getlists());
+        echo json_encode($game->getResult());
     }
     public function error503()
     {
