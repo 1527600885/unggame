@@ -26,10 +26,10 @@ class TopPay extends Pay
             'expiryPeriod' => 1200,
             'productDetail' => "UNGGame Recharge"
         );
-       $sign = $this->getSigns($data);
-       $data['sign'] = $sign;
-       $result_json = curl_json($this->apiUrl."/gateway/pay",$data);
-       echo json_encode($result_json);die();
+        $sign = $this->getSigns($data);
+        $data['sign'] = $sign;
+        $result_json = curl_json($this->apiUrl."/gateway/pay",$data);
+        echo json_encode($result_json);die();
     }
     public function getSigns($params)
     {
@@ -90,7 +90,7 @@ class TopPay extends Pay
             'orderType' =>"0",
             'method' => 'Transfer',
             'orderNum' => $params['mch_transferId'],
-            'money' => $params['transfer_amount'],
+            'payMoney' => $params['transfer_amount'],
             'feeType' => '0',
             'dateTime' => date("YmdHis"),
             'number' => $params['number'],
@@ -99,10 +99,12 @@ class TopPay extends Pay
             'mobile' => $params['mobile'],
             'email' => $params['email'],
             'notifyUrl' => $domain.$this->CallbackUrl,
+            'productDetail'=> "withdrawal",
             'description' => "withdrawal"
         );
         $sign = $this->getSigns($data);
         $data['sign'] = $sign;
+
         $result_json = curl_json($this->apiUrl."/gateway/prepaidOrder",$data);
         echo json_encode($result_json);die();
     }

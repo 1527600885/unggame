@@ -42,7 +42,7 @@ class SpeedPay extends Pay
             "ifsc" =>$param['ifsc'],
             "merchantId" =>$this->merchantId,
             "merchantOrderId" =>$param['mch_transferId'],
-            "param" =>"UPI",
+            "param" =>$param['param'],
             "personName" =>$param['personName'],
             "timeMillis" =>time()
         ];

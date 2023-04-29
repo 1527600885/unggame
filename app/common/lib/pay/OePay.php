@@ -193,7 +193,7 @@ class OePay extends Pay
             'X-SERVICE-CODE: ' . $this->key
 
         ];
-        $result_json = $this->curl_post_content($this->apiUrl."/gold-pay/portal/createH5PayLink", $data, $header);
+        $result_json = $this->curl_post_content($this->apiUrl."/gold-pay/portal/transfer", $data, $header);
         echo $result_json;
     }
 }
