@@ -32,7 +32,8 @@ class Payment extends BaseController
 
             foreach ($list as $v)
             {
-                $data[] = ['name'=>$v,"rate"=> $this->getCoinMarketCap($v['name'])];
+                $v['rate'] =  $this->getCoinMarketCap($v['name']);
+                $data[] = $v;
             }
         }
         $this->success(lang('system.success'),$data);
@@ -67,9 +68,10 @@ class Payment extends BaseController
 
             $response = curl_exec($curl); // Send the request, save the response
             $data = json_decode($response,true); // print json decoded response
+            //echo $response;die();
             curl_close($curl); // Close request
             if($data['status']['error_code'] == 0){
-                $rate = $data['data']['quote']['USD']['price'];
+                $rate = $data['data'][0]['quote']['USD']['price'];
                 $redis->set($key,$rate,300);
             }else{
                 throw new Exception($data['status']['error_message']);
