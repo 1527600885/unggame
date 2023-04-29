@@ -184,28 +184,28 @@ class User extends BaseController
             switch ($post['type'])
             {
                 case 5:
-                    $content = "{user.inviteusers}{user.inviteregister}{$post['amount']}{capital.money}";
+                    $content = "{user.inviteusers}{user.inviteregister}{capital.money}{$post['amount']}";
                     $admin_content = "邀请注册奖励{$post['amount']}美元";
                     break;
                 case 6:
-                    $content = "{Friend's recharge} reward {$post['amount']}{capital.money}";
+                    $content = "{Friend's recharge} reward {capital.money}{$post['amount']}";
                     $admin_content = "好友充值奖励{$post['amount']}美元";
                     break;
                 case 7:
-                    $content = "{admin's reward} {$post['amount']}{capital.money}";
+                    $content = "{admin's reward} {capital.money}{$post['amount']}";
                     $admin_content = "管理员后台添加 {$post['amount']}美元";
                     break;
                 case 2:
-                    $content = "{withdrawal.text}{$post['amount']}{capital.money}";
+                    $content = "{withdrawal.text}{capital.money}{$post['amount']}";
                     $admin_content = "提现{$post['amount']}美元";
                     break;
                 case 3:
                     if($post['money_type'] == 1){
-                        $content = "UNG Game reward {$post['amount']}{capital.money}";
-                        $admin_content = "用户{$user['nickname']}玩游戏资金增加{$post['amount']}{capital.money}";
+                        $content = "UNG Game reward {capital.money}{$post['amount']}";
+                        $admin_content = "用户{$user['nickname']}玩游戏资金增加{capital.money}{$post['amount']}";
                     }else{
-                        $content = "{capital.gamecontento}{$user['nickname']}{capital.gamecontenth}{$post['amount']}{capital.money}";
-                        $admin_content = "用户{$user['nickname']}玩游戏资金减少{$post['amount']}{capital.money}";
+                        $content = "{capital.gamecontento}{$user['nickname']}{capital.gamecontenth}{capital.money}{$post['amount']}";
+                        $admin_content = "用户{$user['nickname']}玩游戏资金减少{capital.money}{$post['amount']}";
                     }
                     break;
             }
