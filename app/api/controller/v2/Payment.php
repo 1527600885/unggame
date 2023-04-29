@@ -32,7 +32,7 @@ class Payment extends BaseController
 
             foreach ($list as $v)
             {
-                $data[] = ['name'=>$v,"rate"=> $this->getCoinMarketCap()];
+                $data[] = ['name'=>$v,"rate"=> $this->getCoinMarketCap($v['name'])];
             }
         }
         $this->success(lang('system.success'),$data);
