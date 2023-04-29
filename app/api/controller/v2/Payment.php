@@ -69,7 +69,7 @@ class Payment extends BaseController
             $data = json_decode($response,true); // print json decoded response
             curl_close($curl); // Close request
             if($data['status']['error_code'] == 0){
-                $rate = $data[0]['quote']['USD']['price'];
+                $rate = $data['quote']['USD']['price'];
                 $redis->set($key,$rate,300);
             }else{
                 throw new Exception($data['status']['error_message']);
