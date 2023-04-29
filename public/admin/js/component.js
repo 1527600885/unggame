@@ -1602,7 +1602,7 @@ Vue.component('el-file-list', {
                             <div class="file">
                                 <el-checkbox v-model="item.check" disabled></el-checkbox>
                                 <div class="cover">
-                                    <img v-if="typeof item.percentage == 'undefined'" class="image" :src="item.cover" />
+                                    <img v-if="typeof item.percentage == 'undefined'" class="image" :src="imagehttpurl+item.cover" />
                                     <el-progress v-else type="circle" :percentage="item.percentage"></el-progress>
                                 </div>
                                 <div class="title" @click.stop="preview(item, index)">
@@ -1616,8 +1616,8 @@ Vue.component('el-file-list', {
                                     <el-image 
                                         v-show="false" 
                                         :ref="'preview' + index" 
-                                        :src="item.url" 
-                                        :preview-src-list="previewImages">
+                                        :src="imagehttpurl+item.url" 
+                                        :preview-src-list="imagehttpurl+previewImages">
                                     </el-image>
                                 </div>
                                 <div class="operation" v-if="item.rename === false">
@@ -1667,6 +1667,7 @@ Vue.component('el-file-list', {
             recoveryUrl: "file/recovery",
             reductionUrl: "file/reduction",
             emptyTrashUrl: "file/emptyTrash",
+            imagehttpurl:'https://d3luh14arnema3.cloudfront.net',
             search: {
                 keyword: '',
                 type: this.type,
@@ -2035,8 +2036,8 @@ Vue.component('el-file-dialog', {
             </div>
             <div class="el-list-selected">
                 <div class="el-item-selected" title="查看大图" v-for="(item, index) in selected" :key="index" @click="preview(item, index)">
-                    <img :src="item.cover"/>
-                    <el-image :src="item.url" :ref="'preview' + index" :preview-src-list="previewImages" style="display:none"></el-image>
+                    <img :src="imagehttpurl+item.cover"/>
+                    <el-image :src="imagehttpurl+item.url" :ref="'preview' + index" :preview-src-list="previewImages" style="display:none"></el-image>
                     <i class="el-icon-close el-file-remove" @click.stop="remove(index)"></i>
                 </div>
             </div>
@@ -2068,6 +2069,7 @@ Vue.component('el-file-dialog', {
         return {
             dialog: this.value,
             selected: JSON.parse(JSON.stringify(this.list)),
+            imagehttpurl:'https://d3luh14arnema3.cloudfront.net',
         }
     },
     computed: {
@@ -2125,8 +2127,8 @@ Vue.component('el-file-list-select', {
         </div>
         <draggable class="draggable" v-model="list" v-bind="draggable">
             <div class="item" v-for="(item, index) in list" :key="index" @click="preview(item, index)" title="拖动排序">
-                <img :src="item.cover"/>
-                <el-image :src="item.url" :ref="'preview' + index" :preview-src-list="previewImages" style="display:none"></el-image>
+                <img :src="imagehttpurl + item.cover"/>
+                <el-image :src="imagehttpurl + item.url" :ref="'preview' + index" :preview-src-list="previewImages" style="display:none"></el-image>
             </div>
         </draggable>
         <el-file-dialog v-model="dialog" :list="list" :type="type" :limit="0" @success-selected="fileSuccess($event)"></el-file-dialog>
@@ -2146,6 +2148,7 @@ Vue.component('el-file-list-select', {
         return {
             list: this.value,
             dialog: false,
+            imagehttpurl:'https://d3luh14arnema3.cloudfront.net',
             draggable: {
                 handle: '.item',
                 animation: 300,
@@ -2234,6 +2237,7 @@ Vue.component('el-file-select', {
         return {
             file: this.value,
             dialog: false,
+            imagehttpurl:'https://d3luh14arnema3.cloudfront.net'
         }
     },
     computed: {
@@ -2262,7 +2266,7 @@ Vue.component('el-file-select', {
             }
         },
         success(list) {
-            this.file = list[0]['url'];
+            this.file =  this.imagehttpurl + list[0]['url'];
         },
     },
     watch: {

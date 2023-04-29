@@ -36,4 +36,7 @@ class MkCarouselChart extends Model
             $query->where("status",$value);
         }
     }
+    public function getImageAttr($value){
+        return env('aws.imgurl').$value;
+    }
 }

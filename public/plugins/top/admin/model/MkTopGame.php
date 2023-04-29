@@ -34,4 +34,7 @@ class MkTopGame extends Model
     {
         return [1=>"Much wow Win",2=>"Top Win"][$data['type']];
     }
+    public function getGameImageAttr($value){
+        return env('aws.imgurl').$value;
+    }
 }

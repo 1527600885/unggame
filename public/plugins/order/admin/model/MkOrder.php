@@ -30,4 +30,7 @@ class MkOrder extends Model
             $query->whereBetweenTime("", $value[0], $value[1]);
         }
     }
+    public function getImgurlAttr($value){
+        return env('aws.imgurl').$value;
+    }
 }

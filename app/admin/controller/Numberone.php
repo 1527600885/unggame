@@ -30,10 +30,10 @@ class Numberone extends Config
         $gameList = GameList::where("gameName","like","%{$key}%")->order("id desc")->field("id,gameName as value,gameImage")
             ->select()->each(function ($item,$index){
                 $item['value'] = json_decode($item['value'],true)['EN'];
-                $item['gameImage'] = json_decode($item['gameImage'],true)['EN'];
                 return $item;
             });
 
         return json(["code"=>0,"data"=>$gameList]);
     }
+     
 }

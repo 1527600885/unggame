@@ -30,4 +30,7 @@ class MkTopLivegame extends Model
             $query->whereBetweenTime("", $value[0], $value[1]);
         }
     }
+    public function getGameImageAttr($value){
+        return env('aws.imgurl').$value;
+    }
 }

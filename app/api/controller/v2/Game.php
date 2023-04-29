@@ -40,16 +40,34 @@ class Game extends BaseController
      *获取真人游戏列表
      */
     public function liveList()
-    {
+      {
 //        $where[] = ["gameType", "=", "LIVE"];
 //        $where[] = ['displayStatus','=',1];
 //        $where[] = ['is_groom','=',1];//是否首页推荐
 //        $where[] = ['groom_sort','>',0];//排序序列号>0
-        $lists = TopLivegame::select();
-        foreach ($lists as &$v){
+        $list=[];
+        $gamelist = TopLivegame::select();
+        foreach ($gamelist as &$v){
             $v['id'] = $v['game_id'];
         }
-        $this->success("success",$lists);
+        foreach ($gamelist as $key => $value){
+               
+              if(count($list)<4){
+                  $list[]=$value;
+              }else{
+                //   var_dump($key);
+                //   die;
+                $lists[]=$list;
+                $list=[];
+                $list[]=$value;
+              }
+          }
+          if(count($list)>0){
+              $lists[]=$list;
+          }
+          $data['data']=$lists;
+          $data['count']=count($gamelist);
+        $this->success("success",$data);
     }
 
     /**
@@ -62,14 +80,33 @@ class Game extends BaseController
     {
         $page = input("param.page");
         $whereKey = json_encode($where);
-        $size = 24;
+        $size = 1000;
         $key = "gamelist_{$whereKey}_{$size}_{$page}";
+        $list=[];
         $gamelist = Cache::get($key);
+        $gamelist=false;
         if (!$gamelist) {
             $gamelist = GameList::field('*,if(groom_sort is null,2000000,groom_sort) as groom_sorts')->where($where)->order("groom_sort asc,hot desc")->paginate($size);
-            Cache::set($key, $gamelist, 300);
+          foreach ($gamelist as $key => $value){
+               
+              if(count($list)<4){
+                  $list[]=$value;
+              }else{
+                //   var_dump($key);
+                //   die;
+                $lists[]=$list;
+                $list=[];
+                $list[]=$value;
+              }
+          }
+          if(count($list)>0){
+              $lists[]=$list;
+          }
+          $data['data']=$lists;
+          $data['count']=count($gamelist);
+            // Cache::set($key, $gamelist, 300);
         }
-        return $gamelist;
+        return $data;
     }
     public function getRankData()
     {

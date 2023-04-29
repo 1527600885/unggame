@@ -30,4 +30,10 @@ class MkPayment extends Model
             $query->whereBetweenTime("", $value[0], $value[1]);
         }
     }
+    public function getImageAttr($value){
+        return env('aws.imgurl').$value;
+    }
+    public function getLogoAttr($value){
+        return env('aws.imgurl').$value;
+    }
 }

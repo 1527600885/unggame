@@ -30,4 +30,7 @@ class MkGamebrand extends Model
             $query->whereBetweenTime("", $value[0], $value[1]);
         }
     }
+    public function getLogoAttr($value){
+        return env('aws.imgurl').$value;
+    }
 }
