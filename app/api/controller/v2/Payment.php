@@ -43,7 +43,7 @@ class Payment extends BaseController
         $redis = (new Redis(['select'=>2]))->getRedis();
         $rate = $redis->get($key);
         if(!$rate){
-            $url = 'https://sandbox-api.coinmarketcap.com/v2/cryptocurrency/quotes/historical';
+            $url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
             $parameters = [
                 'amount' => '1',
                 "symbol" => $type,
