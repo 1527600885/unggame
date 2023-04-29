@@ -12,7 +12,6 @@ class Payment extends BaseController
 {
     public function getRate($type = 2)
     {
-        $type=input("post.type/d");
         $data = [];
         if($type== 2)
         {
