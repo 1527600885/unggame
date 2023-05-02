@@ -84,10 +84,11 @@ class File extends BaseController
 			$fileName = $files->hash() . '.' . $extension;
             $files->move($savePath,$savePath.$fileName);
 
-            upimage($savePath.$fileName,$savePath.$fileName);
+            $url='image/'.date('Ymd').'/'.$fileName;
+            $saveUrl = 'upload/' . str_replace('\\', '/', $url);
+            upimage($savePath.$fileName,$savePath.$fileName,true,$saveUrl);
 
-			$url='image/'.date('Ymd').'/'.$fileName;
-			$saveUrl = '/upload/' . str_replace('\\', '/', $url);
+			
             $save = FileModel::create([
                 'title'       => $file->getOriginalName(),
                 'size'        => $filesize,
@@ -101,7 +102,7 @@ class File extends BaseController
                 $suffix = pathinfo($file->getOriginalName())['extension'];
                 if ($suffix != 'ico' && $suffix != 'gif') {
                     // 封面图片
-                    thumbnail($saveUrl,100,100);
+                    // thumbnail($saveUrl,100,100);
 					// dd($save['url']);
                     // 水印图片
                     $config = $this->request->watermark;
