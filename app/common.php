@@ -48,20 +48,17 @@ function upimage($filePath,$savePath,$istrumb=false,$nopubpath=''){
         // 'debug' => true,
         ]);
        
-        $aa = $s3->putObject([
+        $s3->putObject([
             'Bucket' => $bucket,
             'Key'    => $savePath,
             'Body'   => fopen($key,"r"),
         ]);
+
         // 生成缩略图
         if($istrumb){
-            $fullthumbpath = thumbnail($nopubpath,100,100);
-            
+            $fullthumbpath = createThumbImg($nopubpath,100,100);
             $fileName = pathinfo($nopubpath, PATHINFO_FILENAME);
             $thumbpath = str_replace($fileName, $fileName.'100x100', $nopubpath);
-            // var_dump($fullthumbpath);
-            // var_dump($thumbpath);
-            // die;
             $s3->putObject([
             'Bucket' => $bucket,
             'Key'    => $thumbpath,
@@ -71,6 +68,83 @@ function upimage($filePath,$savePath,$istrumb=false,$nopubpath=''){
         }
         
 }
+
+
+/**
+  * 生成缩略图
+  * $imgSrc     图片源路径
+  * $thumbWidth   缩略图宽度
+  * $thumbHeight  缩略图高度
+  * $thumbSrc    缩略图路径
+  * $isCut     是否剪切图片
+  */
+  function createThumbImg($imgSrc, $thumbWidth, $thumbHeight, $isCut = false) {
+      
+    $imgSrc = str_replace('\/', '/', public_path() . $imgSrc);
+    $fileName = pathinfo($imgSrc, PATHINFO_FILENAME);
+    $thumbSrc = str_replace($fileName, $fileName.$thumbWidth.'x'.$thumbHeight, $imgSrc);
+    //1.获取图片的类型
+    $type = substr(strrchr($imgSrc, "."), 1);
+    //2.初始化图象
+    if ($type == "jpg" || $type == "jpeg") {
+            //创建一块画布，并从JPEG文件或URL地址载入一副图像
+      $sourceImg = imagecreatefromjpeg($imgSrc);
+    }elseif ($type == "gif") {
+            //创建一块画布，并从GIF文件或URL地址载入一副图像
+      $sourceImg = imagecreatefromgif($imgSrc);
+    }elseif ($type == "png") {
+            //创建一块画布，并从PNG文件或URL地址载入一副图像
+      $sourceImg = imagecreatefrompng($imgSrc);
+    }
+        elseif ($type == "wbmp") {
+            //创建一块画布，并从WBMP文件或URL地址载入一副图像
+      $sourceImg = imagecreatefromwbmp($imgSrc);
+    }
+        //取得图像宽度
+    $width = imagesx($sourceImg);
+        //取得图像高度
+    $height = imagesy($sourceImg);
+ 
+    //3.生成图象
+    //缩略图的图象比例
+    $scale =intval(($thumbWidth) / ($thumbHeight));
+    
+    //源图片的图象比例
+    $ratio =round(($width) / ($height));
+    if (($isCut) == 1) {
+            //高度优先
+      if ($ratio >= $scale) {        
+                //创建真彩图像资源（imagecreatetruecolor()函数使用GDLibrary创建新的真彩色图像）
+                
+        $newimg = imagecreatetruecolor($thumbWidth, $thumbHeight);
+        
+                //图像处理
+        imagecopyresampled($newimg, $sourceImg, 0, 0, 0, 0, $thumbWidth, $thumbHeight, (($height) * $scale), $height);
+        //以JPEG格式将图像输出到浏览器或文件
+                ImageJpeg($newimg, $thumbSrc);
+      }
+             //宽度优先
+      if ($ratio < $scale) {       
+        $newimg = imagecreatetruecolor($thumbWidth, $thumbHeight);
+        imagecopyresampled($newimg, $sourceImg, 0, 0, 0, 0, $thumbWidth, $thumbHeight, $width, (($width) / $scale));
+        ImageJpeg($newimg, $thumbSrc);
+      }
+    } else {
+      if ($ratio >= $scale) {
+        $newimg = imagecreatetruecolor($thumbWidth, intval(round(($thumbWidth) / $ratio)) );
+        imagecopyresampled($newimg, $sourceImg, 0, 0, 0, 0, $thumbWidth, intval(round(($thumbWidth) / $ratio)), $width, $height);
+        ImageJpeg($newimg, $thumbSrc);
+      }
+      if ($ratio < $scale) {
+        $newimg = imagecreatetruecolor(intval(round(($thumbHeight) * $ratio)), $thumbHeight);
+        imagecopyresampled($newimg, $sourceImg, 0, 0, 0, 0, intval(round(($thumbHeight) * $ratio)), $thumbHeight, $width, $height);
+        ImageJpeg($newimg, $thumbSrc);
+      }
+    }
+        //销毁图像
+    ImageDestroy($sourceImg);
+    return $thumbSrc;
+  }
 /**
  * 生成缩略图
  * @param 图片连接
@@ -83,20 +157,27 @@ function thumbnail(string $url, $width = 100, $height = 100, $crop = false)
     $file = str_replace('\/', '/', public_path() . $url);
     // $file = substr($url,1);
     $fileName = pathinfo($url, PATHINFO_FILENAME);
-     
     $thumbName = str_replace($fileName, $fileName.$width.'x'.$height, $file);
+    // var_dump($thumbName);
     if (! is_file($thumbName)) {
-        $image = Image::open($file);
-        if ($crop) {
-            $image->crop($width, $height,100,30)->save($thumbName);
-        } else {
-            $image->thumb($width, $height)->save($thumbName);
-        }
+        $image = \think\Image::open($file);
+        
+        $aa = $image->thumb(150, 150)->save($thumbName);
+        var_dump($aa);
+        die;
+        // $image = Image::open($file);
+        // var_dump(123155);
+        // var_dump($image);
+        // if ($crop) {
+        //     $image->crop($width, $height,100,30)->save($thumbName);
+        // } else {
+        //     $image->thumb($width, $height)->save($thumbName);
+        // }
     }
     
     // $thumbpath = str_replace($fileName, $fileName.$width.'x'.$height, $url);
     // upimage($file,$thumbpath);
-    
+    var_dump($thumbName);
     return $thumbName;
 }
 
@@ -478,37 +559,37 @@ function api_post(string $func, $data = []): array
 /* 生成证书 */
 function exportOpenSSLFile(){
 
-	$config = array(
+    $config = array(
 
-	"digest_alg"    => "sha512",
+    "digest_alg"    => "sha512",
 
-	"private_key_bits" => 512,           //字节数  512 1024 2048  4096 等
+    "private_key_bits" => 512,           //字节数  512 1024 2048  4096 等
 
-	"private_key_type" => OPENSSL_KEYTYPE_RSA,   //加密类型
+    "private_key_type" => OPENSSL_KEYTYPE_RSA,   //加密类型
 
-	);
+    );
 
-	$res = openssl_pkey_new($config);
+    $res = openssl_pkey_new($config);
 
-	if($res == false) return false;
+    if($res == false) return false;
 
-	openssl_pkey_export($res, $private_key);
+    openssl_pkey_export($res, $private_key);
 
-	$public_key = openssl_pkey_get_details($res);
+    $public_key = openssl_pkey_get_details($res);
 
-	$public_key = $public_key["key"];
+    $public_key = $public_key["key"];
 
-	// file_put_contents("./cert/cert_public.key",$public_key);
+    // file_put_contents("./cert/cert_public.key",$public_key);
 
-	// file_put_contents("./cert/cert_private.pem",$private_key);
-	
-	// openssl_free_key($res);
-	
-	// 将证书以字符串的形式展现出来，方便把公钥下发给客户端
-	$public_key=strtr($public_key,['-----BEGIN PUBLIC KEY-----'=>'','-----END PUBLIC KEY-----'=>'',"\n"=>'']);
-	$private_key=strtr($private_key,['-----BEGIN PRIVATE KEY-----'=>'','-----END PRIVATE KEY-----'=>'',"\n"=>'']);
-	
-	return json_encode(['public'=>$public_key,'private'=>$private_key]);
+    // file_put_contents("./cert/cert_private.pem",$private_key);
+    
+    // openssl_free_key($res);
+    
+    // 将证书以字符串的形式展现出来，方便把公钥下发给客户端
+    $public_key=strtr($public_key,['-----BEGIN PUBLIC KEY-----'=>'','-----END PUBLIC KEY-----'=>'',"\n"=>'']);
+    $private_key=strtr($private_key,['-----BEGIN PRIVATE KEY-----'=>'','-----END PRIVATE KEY-----'=>'',"\n"=>'']);
+    
+    return json_encode(['public'=>$public_key,'private'=>$private_key]);
 }
 
 /*加密解密
@@ -516,70 +597,70 @@ function exportOpenSSLFile(){
 */
 
 function authcode($string,$ssl_public,$ssl_private, $operation = 'D') {
-	// 以文件的方式加密和解密
-	// $ssl_public = file_get_contents("./cert/cert_public.key");
+    // 以文件的方式加密和解密
+    // $ssl_public = file_get_contents("./cert/cert_public.key");
 
-	// $ssl_private = file_get_contents("./cert/cert_private.pem");
-	
-	// 以字符串的方式加密和解密
-	$ssl_public = chunk_split($ssl_public, 64, "\n");
-	
-	$ssl_public = "-----BEGIN PUBLIC KEY-----\n" . $ssl_public . "-----END PUBLIC KEY-----\n";
-	
-	$ssl_private = chunk_split($ssl_private, 64, "\n");
-	
-	$ssl_private = "-----BEGIN PRIVATE KEY-----\n" . $ssl_private . "-----END PRIVATE KEY-----\n";
+    // $ssl_private = file_get_contents("./cert/cert_private.pem");
+    
+    // 以字符串的方式加密和解密
+    $ssl_public = chunk_split($ssl_public, 64, "\n");
+    
+    $ssl_public = "-----BEGIN PUBLIC KEY-----\n" . $ssl_public . "-----END PUBLIC KEY-----\n";
+    
+    $ssl_private = chunk_split($ssl_private, 64, "\n");
+    
+    $ssl_private = "-----BEGIN PRIVATE KEY-----\n" . $ssl_private . "-----END PRIVATE KEY-----\n";
 
-	$pi_key = openssl_pkey_get_private($ssl_private);//这个函数可用来判断私钥是否是可用的，可用返回资源id Resource id
+    $pi_key = openssl_pkey_get_private($ssl_private);//这个函数可用来判断私钥是否是可用的，可用返回资源id Resource id
 
-	$pu_key = openssl_pkey_get_public($ssl_public);//这个函数可用来判断公钥是否是可用的
+    $pu_key = openssl_pkey_get_public($ssl_public);//这个函数可用来判断公钥是否是可用的
 
-	if(false == ($pi_key || $pu_key)) return false;//证书错误的情况
+    if(false == ($pi_key || $pu_key)) return false;//证书错误的情况
 
-	$data = "";
+    $data = "";
 
-	if($operation=='D'){
+    if($operation=='D'){
 
-	openssl_private_decrypt(base64_decode($string),$data,$pi_key);//私钥解密
+    openssl_private_decrypt(base64_decode($string),$data,$pi_key);//私钥解密
 
-	}elseif($operation=='E'){
+    }elseif($operation=='E'){
 
-	openssl_public_encrypt($string,$data,$pu_key);//公钥加密
+    openssl_public_encrypt($string,$data,$pu_key);//公钥加密
 
-	$data = base64_encode($data);
+    $data = base64_encode($data);
 
-	}
+    }
 
-	return $data;
+    return $data;
 
 }
 
 //随机生成安全码
 function createsalt(){
-	// 生成字母和数字组成的6位字符串
-	
-	$str = range('A', 'Z');
-	// 去除大写的O，以防止与0混淆 
-	unset($str[array_search('O', $str)]);
-	$arr = array_merge(range(0, 9), $str);
-	shuffle($arr);
-	$invitecode = '';
-	$arr_len = count($arr);
-	for ($i = 0; $i < 6; $i++) {
-		$rand = mt_rand(0, $arr_len - 1);
-		$invitecode .= $arr[$rand];
-	}
+    // 生成字母和数字组成的6位字符串
+    
+    $str = range('A', 'Z');
+    // 去除大写的O，以防止与0混淆 
+    unset($str[array_search('O', $str)]);
+    $arr = array_merge(range(0, 9), $str);
+    shuffle($arr);
+    $invitecode = '';
+    $arr_len = count($arr);
+    for ($i = 0; $i < 6; $i++) {
+        $rand = mt_rand(0, $arr_len - 1);
+        $invitecode .= $arr[$rand];
+    }
 
-	return $invitecode;
+    return $invitecode;
 }
 
 // 对字符串进行裁剪
 function croppstring($str,$leng){
-	$strlen=strlen($str);
-	if($strlen>$leng){
-		$str=mb_substr($str,0,$leng)."...";
-	}
-	return $str;
+    $strlen=strlen($str);
+    if($strlen>$leng){
+        $str=mb_substr($str,0,$leng)."...";
+    }
+    return $str;
 }
 /**
  * @description：随机生成邮箱
@@ -646,9 +727,9 @@ function getipcountry($ip){
                  curl_close($curl);
                  $contents=json_decode($response,true);
                  if($contents['status']=='success'){
-//	 	if($contents['country']=='香港' || $contents['country']=='澳门'){
-//	 		$contents['country']='中国';
-//	 	}
+//      if($contents['country']=='香港' || $contents['country']=='澳门'){
+//          $contents['country']='中国';
+//      }
                      $address=["country"=>$contents['country'],"province"=>$contents['regionName'],"city"=>$contents['city']];
                  }else{
                      $address=["country"=>"未知","province"=>"未知","city"=>"未知"];
@@ -664,14 +745,14 @@ function getipcountry($ip){
      }
 
 
-//	$reader = new Reader(root_path().'GeoIp2_data/GeoLite2-Country.mmdb');
-//	// HK=>香港，TW=>台湾，MO=>澳门
-//	$record = $reader->country($ip);
-//	$country = $record->country->isoCode;
-//	if($country=='HK' || $country=='TW' || $country=='MO'){
-//		$country='中';
-//	}
-	return $address;
+//  $reader = new Reader(root_path().'GeoIp2_data/GeoLite2-Country.mmdb');
+//  // HK=>香港，TW=>台湾，MO=>澳门
+//  $record = $reader->country($ip);
+//  $country = $record->country->isoCode;
+//  if($country=='HK' || $country=='TW' || $country=='MO'){
+//      $country='中';
+//  }
+    return $address;
 }
 /**
  * @description：生成二维码
@@ -683,35 +764,35 @@ function getipcountry($ip){
  */
 function create_qrcode($data,$userInfo){
     require root_path() .'extend/Aws/aws-autoloader.php';
-	$qrcodefile=public_path().'upload/qrcode/'.date('Y').date('m').date('d');
-	if (!is_dir($qrcodefile)) {
-	    mkdir($qrcodefile);
-	}
-	$writer = new PngWriter();
-	
-	// Create QR code
-	$qrCode = QrCode::create($data)
-	    ->setEncoding(new Encoding('UTF-8'))
-	    ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
-	    ->setSize(300)
-	    ->setMargin(10)
-	    ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
-	    ->setForegroundColor(new Color(0, 0, 0))
-	    ->setBackgroundColor(new Color(255, 255, 255));
-	
-	// Create generic logo
-	// $logo = Logo::create($userInfo['cover'])
-	//     ->setResizeToWidth(50)
-	// 	->setResizeToHeight(50);
-	
-	// Create generic label
-	// $label = Label::create('Label')
-	//     ->setTextColor(new Color(255, 0, 0));
-	
-	$result = $writer->write($qrCode);
-	// header('Content-Type: '.$result->getMimeType());
-	
-	$result->saveToFile($qrcodefile.'/'.$userInfo['id'].$userInfo['game_account'].'.png');
+    $qrcodefile=public_path().'upload/qrcode/'.date('Y').date('m').date('d');
+    if (!is_dir($qrcodefile)) {
+        mkdir($qrcodefile);
+    }
+    $writer = new PngWriter();
+    
+    // Create QR code
+    $qrCode = QrCode::create($data)
+        ->setEncoding(new Encoding('UTF-8'))
+        ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+        ->setSize(300)
+        ->setMargin(10)
+        ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+        ->setForegroundColor(new Color(0, 0, 0))
+        ->setBackgroundColor(new Color(255, 255, 255));
+    
+    // Create generic logo
+    // $logo = Logo::create($userInfo['cover'])
+    //     ->setResizeToWidth(50)
+    //  ->setResizeToHeight(50);
+    
+    // Create generic label
+    // $label = Label::create('Label')
+    //     ->setTextColor(new Color(255, 0, 0));
+    
+    $result = $writer->write($qrCode);
+    // header('Content-Type: '.$result->getMimeType());
+    
+    $result->saveToFile($qrcodefile.'/'.$userInfo['id'].$userInfo['game_account'].'.png');
     $filename='upload/qrcode/'.date('Y').date('m').date('d').'/'.$userInfo['id'].$userInfo['game_account'].'.png';
     $bucket = env('aws.bucket'); // 容器名称[调整填写自己的容器名称]
     $key = root_path().'public/'.$filename; // 要上传的文件
@@ -750,29 +831,29 @@ function create_qrcode($data,$userInfo){
  * @throws \think\exception\DbException
  */
 function capital_flow($uid,$other_id,$type,$money_type,$amount,$balance,$content,$admin_content,$game_log_id = 0){
-	if($amount>0){
-		$data=[
-			'uid'=>$uid,
-			'other_id'=>$other_id,
-			'type'=>$type,
-			'money_type'=>$money_type,
-			'amount'=>$amount,
-			'balance'=>$balance,
-			'content'=>$content,
-			'admin_content'=>$admin_content,
-			'add_time'=>time(),
+    if($amount>0){
+        $data=[
+            'uid'=>$uid,
+            'other_id'=>$other_id,
+            'type'=>$type,
+            'money_type'=>$money_type,
+            'amount'=>$amount,
+            'balance'=>$balance,
+            'content'=>$content,
+            'admin_content'=>$admin_content,
+            'add_time'=>time(),
             'add_ip'=>request()->ip(),
             'game_log_id'=>$game_log_id
-		];
-		$cId =CapitalFlowmodel::insertGetId($data);
-		if($cId){
-			return true;
-		}else{
-			return false;
-		}
-	}else{
-		return false;
-	}
+        ];
+        $cId =CapitalFlowmodel::insertGetId($data);
+        if($cId){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
 }
 
 /**
@@ -785,14 +866,14 @@ function capital_flow($uid,$other_id,$type,$money_type,$amount,$balance,$content
  */
 
 function remove_duplicate($array){
-	$result=array();
-	for($i=0;$i<count($array);$i++){
-		$source=$array[$i];
-		if(array_search($source,$array)==$i && $source<>"" ){
-			$result[]=$source;
-		}
-	}
-	return $result;
+    $result=array();
+    for($i=0;$i<count($array);$i++){
+        $source=$array[$i];
+        if(array_search($source,$array)==$i && $source<>"" ){
+            $result[]=$source;
+        }
+    }
+    return $result;
 }
 /**
  * @description：处理内容语言包
@@ -803,14 +884,14 @@ function remove_duplicate($array){
  * @throws \think\exception\DbException
  */
 function getlang($content){
-	preg_match_all('/(?:\{)(.*?)(?:\})/i', $content, $match );
-	$lang=[];
-	foreach($match[1] as $k=>$v){
-		$lang[$k]=lang($v)." ";
-	}
-	$langcontent = str_replace($match[1],$lang,$content);
-	$langcontent = str_replace(['{','}'],'',$langcontent);
-	return $langcontent;
+    preg_match_all('/(?:\{)(.*?)(?:\})/i', $content, $match );
+    $lang=[];
+    foreach($match[1] as $k=>$v){
+        $lang[$k]=lang($v)." ";
+    }
+    $langcontent = str_replace($match[1],$lang,$content);
+    $langcontent = str_replace(['{','}'],'',$langcontent);
+    return $langcontent;
 }
 function getBankList($currency,$name)
 {
