@@ -49,7 +49,6 @@ class Payment extends BaseController
                 $data['symbol'] = "$";
                 $data['country_amount'] = $data['balance'];
             }
-            $v->hidden(["url_list","country",'type']);
 
         }
         $this->success(lang('system.operation_succeeded'), $data);
