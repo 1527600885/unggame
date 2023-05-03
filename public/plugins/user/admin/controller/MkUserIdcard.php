@@ -24,9 +24,15 @@ class MkUserIdcard extends BaseController
     public function index()
     {
         if ($this->request->isPost()) {
+            
             $input = input("post.");
             $count = MkUserIdcardModel::withSearch(["keyword"], $input)->count();
-            $data  = MkUserIdcardModel::withSearch(["keyword"], $input)->append(["status_text"])->order($input["prop"], $input["order"])->page($input["page"], $input["pageSize"])->select();
+             
+            $data  = MkUserIdcardModel::withSearch(["keyword"], $input)->append(["status_text"])->order($input["prop"], $input["order"])->page($input["page"], $input["pageSize"])->select()->each(function($item){
+                $item['idCard_image'] = env('aws.imgurl').$item['idCard_image'];
+                $item['idCard_image_with_hand'] = env('aws.imgurl').$item['idCard_image_with_hand'];
+                return $item;
+            });
             return json(["status" => "success", "message" => "请求成功", "data" => $data, "count" => $count]);
         } else {
             return View::fetch();

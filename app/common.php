@@ -27,7 +27,7 @@ use app\api\model\CapitalFlow as CapitalFlowmodel;
 use think\facade\Db;
 
 
-function upimage($filePath,$savePath){
+function upimage($filePath,$savePath,$istrumb=false,$nopubpath=''){
         require root_path() .'extend/Aws/aws-autoloader.php';
         $bucket = env('aws.bucket'); // 容器名称[调整填写自己的容器名称]
         $key = $filePath; // 要上传的文件
@@ -48,11 +48,28 @@ function upimage($filePath,$savePath){
         // 'debug' => true,
         ]);
        
-        $s3->putObject([
+        $aa = $s3->putObject([
             'Bucket' => $bucket,
             'Key'    => $savePath,
             'Body'   => fopen($key,"r"),
         ]);
+        // 生成缩略图
+        if($istrumb){
+            $fullthumbpath = thumbnail($nopubpath,100,100);
+            
+            $fileName = pathinfo($nopubpath, PATHINFO_FILENAME);
+            $thumbpath = str_replace($fileName, $fileName.'100x100', $nopubpath);
+            // var_dump($fullthumbpath);
+            // var_dump($thumbpath);
+            // die;
+            $s3->putObject([
+            'Bucket' => $bucket,
+            'Key'    => $thumbpath,
+            'Body'   => fopen($fullthumbpath,"r"),
+        ]);
+
+        }
+        
 }
 /**
  * 生成缩略图
@@ -64,17 +81,22 @@ function upimage($filePath,$savePath){
 function thumbnail(string $url, $width = 100, $height = 100, $crop = false)
 {
     $file = str_replace('\/', '/', public_path() . $url);
-	// $file = substr($url,1);
+    // $file = substr($url,1);
     $fileName = pathinfo($url, PATHINFO_FILENAME);
+     
     $thumbName = str_replace($fileName, $fileName.$width.'x'.$height, $file);
-	if (! is_file($thumbName)) {
-		$image = Image::open($file);
+    if (! is_file($thumbName)) {
+        $image = Image::open($file);
         if ($crop) {
             $image->crop($width, $height,100,30)->save($thumbName);
         } else {
             $image->thumb($width, $height)->save($thumbName);
         }
     }
+    
+    // $thumbpath = str_replace($fileName, $fileName.$width.'x'.$height, $url);
+    // upimage($file,$thumbpath);
+    
     return $thumbName;
 }
 

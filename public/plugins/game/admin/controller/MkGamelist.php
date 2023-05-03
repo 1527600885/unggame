@@ -30,11 +30,7 @@ class MkGamelist extends BaseController
             $count = MkGamelistModel::withSearch($search, $input)->count();
 			$data  = MkGamelistModel::withSearch($search, $input)->order($input["prop"], $input["order"])->page($input["page"], $input["pageSize"])->select();
             foreach($data as $k=>$v){
-            	$gameImage=json_decode($v->gameImage,true);
-            	$v->gameImage=$gameImage['EN'] ?? '';
-            	if(stripos($v->gameImage,"images.b51613.com") !== false){
-            	    $v->gameImage = "";
-                }
+            	
 				$gameName=json_decode($v->gameName,true);
 				// $v->gameName='英文：'.$gameName['EN'].'<br>印尼语：'.$gameName['ID'].'<br>泰语：'.$gameName['TH'].'<br>越南语：'.$gameName['VI'].'<br>柬埔寨：'.$gameName['KM'].'<br>马来语：'.$gameName['MS'].'<br>日语：'.$gameName['JA'].'<br>韩语：'.$gameName['KO'];
 				$v->gameName=$gameName['EN'];
@@ -90,10 +86,10 @@ class MkGamelist extends BaseController
         if ($this->request->isPost()) {
             $postarr=input("post.");
             // if($postarr['is_groom']==0){
-            // 	return json(["status" => "error", "message" => "请先推荐首页"]);
+            //  return json(["status" => "error", "message" => "请先推荐首页"]);
             // }
             // if($postarr['category_put']==0){
-            // 	return json(["status" => "error", "message" => "请先推荐品牌"]);
+            //  return json(["status" => "error", "message" => "请先推荐品牌"]);
             // }
             unset($postarr['gameType']);
 //            unset($postarr['gameName']);
@@ -107,20 +103,19 @@ class MkGamelist extends BaseController
                 "JA" =>$postarr['gameName'],
                 "KO" =>$postarr['gameName'],
             ]);
-            if(stripos($postarr['gameImage'],"http") === false){
+         
+            $postarr['gameImage'] = str_replace(env('aws.imgurl'), "", $postarr['gameImage']);
                 $postarr['gameImage'] =
                     json_encode([
-                        "EN" =>"https://image.unggame.com".$postarr['gameImage'],
-                        "TH" =>"https://image.unggame.com".$postarr['gameImage'],
-                        "VI" =>"https://image.unggame.com".$postarr['gameImage'],
-                        "ID" =>"https://image.unggame.com".$postarr['gameImage'],
-                        "KM" =>"https://image.unggame.com".$postarr['gameImage'],
-                        "MS" =>"https://image.unggame.com".$postarr['gameImage'],
-                        "JA" =>"https://image.unggame.com".$postarr['gameImage'],
-                        "KO" =>"https://image.unggame.com".$postarr['gameImage']]);
-            }else if(stripos($postarr['gameImage'],"https://image") !== false){
-                unset($postarr['gameImage']);
-            }
+                        "EN" =>$postarr['gameImage'],
+                        "TH" =>$postarr['gameImage'],
+                        "VI" =>$postarr['gameImage'],
+                        "ID" =>$postarr['gameImage'],
+                        "KM" =>$postarr['gameImage'],
+                        "MS" =>$postarr['gameImage'],
+                        "JA" =>$postarr['gameImage'],
+                        "KO" =>$postarr['gameImage']]);
+            
             MkGamelistModel::update($postarr);
             return json(["status" => "success", "message" => "修改成功"]);
         }

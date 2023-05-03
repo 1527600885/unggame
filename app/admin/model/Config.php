@@ -51,7 +51,16 @@ class Config extends Model
      */
     public static function getVal($name)
     {
-        $config = self::where('name', $name)->cache($name)->find();
-        return $config ? json_decode($config->value, true) : [];
+        $config = self::where('name', $name)->find();
+        
+        if($config){
+            $data = json_decode($config->value, true);
+            if(isset($data['gameImage'])){
+                $data['gameImage'] =  env('aws.imgurl').$data['gameImage'];
+            }
+        }else{
+            $data = [];
+        }
+        return $data;
     }
 }

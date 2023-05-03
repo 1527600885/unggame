@@ -34,10 +34,7 @@ class File extends BaseController
             $search = ['keyword','type'];
             $order  = [$input['prop'] => $input['order']];
             $count  = FileModel::withSearch($search, $input)->count();
-            $data   = FileModel::withSearch($search, $input)->order($order)->page($input['page'], 20)->select()->each(function ($item,$key){
-                return $item['url'] = env('aws.imgurl').$item['url'];
-                // var_dump(env('aws.imgurl').$item['url']);
-            });
+            $data   = FileModel::withSearch($search, $input)->order($order)->page($input['page'], 20)->select();
             return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
             return View::fetch();
@@ -87,10 +84,11 @@ class File extends BaseController
 			$fileName = $files->hash() . '.' . $extension;
             $files->move($savePath,$savePath.$fileName);
 
-            upimage($savePath.$fileName,$savePath.$fileName);
+            $url='image/'.date('Ymd').'/'.$fileName;
+            $saveUrl = 'upload/' . str_replace('\\', '/', $url);
+            upimage($savePath.$fileName,$savePath.$fileName,true,$saveUrl);
 
-			$url='image/'.date('Ymd').'/'.$fileName;
-			$saveUrl = '/upload/' . str_replace('\\', '/', $url);
+			
             $save = FileModel::create([
                 'title'       => $file->getOriginalName(),
                 'size'        => $filesize,
@@ -104,7 +102,7 @@ class File extends BaseController
                 $suffix = pathinfo($file->getOriginalName())['extension'];
                 if ($suffix != 'ico' && $suffix != 'gif') {
                     // 封面图片
-                    thumbnail($saveUrl,100,100);
+                    // thumbnail($saveUrl,100,100);
 					// dd($save['url']);
                     // 水印图片
                     $config = $this->request->watermark;

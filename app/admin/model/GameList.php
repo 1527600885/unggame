@@ -12,4 +12,8 @@ class GameList extends Model
 {
     //
 	protected $name = 'gamelist';
+
+    public function getGameImageAttr($value){
+        return env('aws.imgurl').json_decode($value,true)['EN'];
+     }
 }

@@ -57,4 +57,7 @@ class MkAnnouncement extends Model
         }
         return $value;
     }
+    public function getThumbImageAttr($value){
+            return env('aws.imgurl').$value;
+    }
 }

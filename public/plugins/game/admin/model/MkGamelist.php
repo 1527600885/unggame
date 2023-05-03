@@ -42,4 +42,18 @@ class MkGamelist extends Model
     {
         return json_decode($value,true);
     }
+    public function getGameImageAttr($value)
+    {
+        if(!empty($value)){
+            $gameImage=json_decode($value,true);
+                $v=$gameImage['EN'] ?? '';
+                if(stripos($v,"images.b51613.com") !== false){
+                   return $v;
+                }else{
+                    return env('aws.imgurl').json_decode($value,true)['EN'];
+                }
+            
+        }
+        
+    }
 }

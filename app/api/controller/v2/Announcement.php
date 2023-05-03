@@ -14,12 +14,12 @@ class Announcement extends BaseController
         if($this->request->userInfo){
             $map[] = ["user_id","in",[0,$this->request->userInfo->id]];
         }
-       $list =  \app\api\model\v2\Announcement::where("status",1)->where($map)->column("distinct type");
+    //   $list =  \app\api\model\v2\Announcement::where("status",1)->where($map)->column("distinct type");
         $data = [];
-        foreach ($list as $v)
-        {
-            $data[] = \app\api\model\v2\Announcement::where("status",1)->where($map)->where("type",$v)->append(["icon","time","title","date_time"])->order("id desc")->find();
-        }
+        // foreach ($list as $v)
+        // {
+            $data = \app\api\model\v2\Announcement::where("status",1)->where($map)->append(["icon","time","title","date_time"])->order("id desc")->select();
+        // }
         $this->success("success",["list"=>$data,"fist_id"=>1]);
 
     }
