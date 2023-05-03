@@ -209,7 +209,6 @@ Vue.component('el-editor', {
                 case 'image':
                     list.forEach(function (item, index){
                         let iamgeurl = 'https://d3luh14arnema3.cloudfront.net'+`${item.url}`;
-                        alert(iamgeurl);
                         html += `<img src="${iamgeurl}">`;
                     })
                     break;
