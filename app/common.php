@@ -48,7 +48,7 @@ function upimage($filePath,$savePath,$istrumb=false,$nopubpath=''){
         // 'debug' => true,
         ]);
        
-        $s3->putObject([
+        $aa = $s3->putObject([
             'Bucket' => $bucket,
             'Key'    => $savePath,
             'Body'   => fopen($key,"r"),
@@ -59,7 +59,9 @@ function upimage($filePath,$savePath,$istrumb=false,$nopubpath=''){
             
             $fileName = pathinfo($nopubpath, PATHINFO_FILENAME);
             $thumbpath = str_replace($fileName, $fileName.'100x100', $nopubpath);
-
+            // var_dump($fullthumbpath);
+            // var_dump($thumbpath);
+            // die;
             $s3->putObject([
             'Bucket' => $bucket,
             'Key'    => $thumbpath,
@@ -67,6 +69,7 @@ function upimage($filePath,$savePath,$istrumb=false,$nopubpath=''){
         ]);
 
         }
+        
 }
 /**
  * 生成缩略图
