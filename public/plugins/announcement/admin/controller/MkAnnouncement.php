@@ -59,6 +59,7 @@ class MkAnnouncement extends BaseController
 //                $update['user_id'] == 0;
 //            }
             unset($update['create_time']);
+            $update['thumb_image'] = str_replace(env('aws.imgurl'), "", $update['thumb_image']);
             MkAnnouncementModel::update($update);
             return json(["status" => "success", "message" => "修改成功"]);
         }
