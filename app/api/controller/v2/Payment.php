@@ -82,17 +82,17 @@ class Payment extends BaseController
         }
         $this->success(lang('system.success'),$data);
     }
-    public function getCoinMarketCap($type)
+    public function getCoinMarketCap($type,$change = "USD")
     {
-        $key = "virtualRate_{$type}";
+        $key = "virtualRate_{$type}_{$change}";
         $redis = (new Redis(['select'=>2]))->getRedis();
         $rate = $redis->get($key);
         if(!$rate){
             $url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
             $parameters = [
                 'amount' => '1',
-                "symbol" => $type,
-                'convert' => 'USD'
+                "symbol" => $change,
+                'convert' => $type
             ];
 
             $headers = [
