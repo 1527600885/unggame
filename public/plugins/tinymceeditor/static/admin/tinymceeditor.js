@@ -208,8 +208,8 @@ Vue.component('el-editor', {
             switch(this.fileType) {
                 case 'image':
                     list.forEach(function (item, index){
-                        // let iamgeurl = 'https://d3luh14arnema3.cloudfront.net'+`${item.url}`;
-                        html += `<img src="${item.url}">`;
+                        let iamgeurl = 'https://d3luh14arnema3.cloudfront.net'+`${item.url}`;
+                        html += `<img src="${iamgeurl}">`;
                     })
                     break;
                 case 'video':
