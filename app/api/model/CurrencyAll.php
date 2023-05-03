@@ -12,10 +12,5 @@ class CurrencyAll extends Model
 {
     //
 	protected $name = 'currency_all';
-	public function getUrlListAttr($value)
-    {
-        if($value){
-            return json_decode($value,true);
-        }
-    }
+	protected $type = ['url_list'=>'json'];
 }
