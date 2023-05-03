@@ -46,7 +46,7 @@ class Payment extends BaseController
                 }
                 $v['rate'] = number_format($v['rate'],4);
             }
-            if(isset($data['country_amount'])){
+            if(!isset($data['country_amount'])){
                 $data['symbol'] = "$";
                 $data['country_amount']  = $data['balance'];
             }
