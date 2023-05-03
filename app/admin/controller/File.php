@@ -86,7 +86,7 @@ class File extends BaseController
 
             $url='image/'.date('Ymd').'/'.$fileName;
             $saveUrl = 'upload/' . str_replace('\\', '/', $url);
-            upimage($savePath.$fileName,$savePath.$fileName,true,$saveUrl);
+            upimage($savePath.$fileName,'upload/image/'.date('Ymd').'/'.$fileName,true,$saveUrl);
 
 			
             $save = FileModel::create([
