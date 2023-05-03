@@ -37,7 +37,7 @@ class Payment extends BaseController
                     if($v['type'] == 2){
                         $v['rate'] = $rateList[$v['name']];
                     }else{
-                        $v['rate'] = $this->getCoinMarketCap($v['name']);
+                        $v['rate'] = bcdiv('1',$this->getCoinMarketCap('USD',$v['name']),5);
                     }
                     $v['amount'] = bcmul($v['rate'],$data['balance'],4);
                     if(!empty($v['country']) && $v['country'] == $country)
