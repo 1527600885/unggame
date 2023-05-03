@@ -32,24 +32,29 @@ class Payment extends BaseController
             $data['currency'] = CurrencyAll::where("is_show",1)->field("id,name,type,country,symbol,thumb_img")->select();
             $country = getipcountry($this->request->ip());
             $rateList = $this->cacheRate();
-            foreach ($data['currency'] as $v){
-                if($v['type'] == 2){
-                    $v['rate'] = $rateList[$v['name']];
-                }else{
-                    $v['rate'] = $this->getCoinMarketCap($v['name']);
+            try{
+                foreach ($data['currency'] as $v){
+                    if($v['type'] == 2){
+                        $v['rate'] = $rateList[$v['name']];
+                    }else{
+                        $v['rate'] = $this->getCoinMarketCap($v['name']);
+                    }
+                    $v['amount'] = bcmul($v['rate'],$data['balance'],4);
+                    if(!empty($v['country']) && $v['country'] == $country)
+                    {
+                        $data['symbol'] = $v['symbol'];
+                        $data['country_amount']  = $v['amount'];
+                    }
+                    $v['rate'] = number_format($v['rate'],4);
                 }
-                $v['amount'] = bcmul($v['rate'],$data['balance'],4);
-                if(!empty($v['country']) && $v['country'] == $country)
-                {
-                    $data['symbol'] = $v['symbol'];
-                    $data['country_amount']  = $v['amount'];
+                if(!isset($data['country_amount'])){
+                    $data['symbol'] = "$";
+                    $data['country_amount']  = $data['balance'];
                 }
-                $v['rate'] = number_format($v['rate'],4);
+            }catch (\Exception $e){
+                var_dump($v['rate']);
             }
-            if(!isset($data['country_amount'])){
-                $data['symbol'] = "$";
-                $data['country_amount']  = $data['balance'];
-            }
+
         }
         $this->success(lang('system.operation_succeeded'),$data);
 
