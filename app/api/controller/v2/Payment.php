@@ -44,6 +44,7 @@ class Payment extends BaseController
                     $data['symbol'] = $v['symbol'];
                     $data['country_amount']  = $v['amount'];
                 }
+                $v['rate'] = number_format($v['rate'],4);
             }
         }
         $this->success(lang('system.operation_succeeded'),$data);
