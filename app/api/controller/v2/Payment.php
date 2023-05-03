@@ -115,7 +115,7 @@ class Payment extends BaseController
             //echo $response;die();
             curl_close($curl); // Close request
             if($data['status']['error_code'] == 0){
-                $rate = $data['data'][0]['quote']['USD']['price'];
+                $rate = $data['data'][0]['quote'][$type]['price'];
                 $redis->set($key,$rate,300);
             }else{
                 throw new Exception($data['status']['error_message']);
