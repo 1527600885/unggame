@@ -4,12 +4,51 @@
 namespace app\api\controller\v2;
 
 
+use app\admin\model\Config as ConfigModel;
 use app\api\BaseController;
+use app\api\model\CapitalFlow as CapitalFlowmodel;
+use app\api\model\CurrencyAll;
+use app\api\model\GameBetLog;
 use app\common\lib\Redis;
 use think\Exception;
 
 class Payment extends BaseController
 {
+    public function getWallet()
+    {
+        $userInfo=$this->request->userInfo;
+        if($userInfo){
+            $data['balance'] = $userInfo->balance;
+            // 今日股息
+            $data['dividend']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->whereDay('add_time')->value("SUM(CAST(amount as DECIMAL (18,3))) as amount") ?? 0;
+            // 总获得的股息
+            $data['dividends']=CapitalFlowmodel::where(['uid'=>$userInfo->id,'type'=>4,'money_type'=>1])->value("SUM(CAST(amount as DECIMAL (18,3))) as amount") ?? 0;
+            //最小提现金额
+            $withdrawConfig =  ConfigModel::getVal('withdraw');
+            $data['miniwithrawal'] = $withdrawConfig['minprice'];
+            // 今日流水
+            $data['water']=round(GameBetLog::where(['user_id'=>$userInfo->id])->whereDay('betTime')->sum('betAmount'),2);
+            //要显示的货币
+            $data['currency'] = CurrencyAll::where("is_show",1)->field("id,name,type,country,symbol,thumb_img")->select();
+            $country = getipcountry($this->request->ip());
+            $rateList = $this->cacheRate();
+            foreach ($data['currency'] as $v){
+                if($v['type'] == 2){
+                    $v['rate'] = $rateList[$v['name']];
+                }else{
+                    $v['rate'] = $this->getCoinMarketCap($v['name']);
+                }
+                $v['amount'] = bcmul($v['rate'],$data['balance'],4);
+                if(!empty($v['country']) && $v['country'] == $country)
+                {
+                    $data['symbol'] = $v['symbol'];
+                    $data['country_amount']  = $v['amount'];
+                }
+            }
+        }
+        $this->success(lang('system.operation_succeeded'),$data);
+
+    }
     public function getRate($type = 2)
     {
         $data = [];
