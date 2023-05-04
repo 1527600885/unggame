@@ -31,6 +31,16 @@ class MkTopLivegame extends Model
         }
     }
     public function getGameImageAttr($value){
-        return env('aws.imgurl').$value;
+        if(!empty($value)){
+                if(stripos($value,"images.b51613.com") !== false){
+                   return $value;
+                }else if(stripos($value,"images.b728484.com:42666") !== false){
+                    
+                    return $value;
+                }else{
+                    return env('aws.imgurl').$value;
+                }
+            
+        }
     }
 }
