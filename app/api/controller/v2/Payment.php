@@ -63,7 +63,7 @@ class Payment extends BaseController
         $data = $lists[$param['type']];
         $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards")->select();
         foreach ($awardsList as $k=>&$v){
-            $v['max'] = isset($awardsList[$k+1]) ? $awardsList[$k+1]['amount'] : 99999999999999;
+            $v['max'] = isset($awardsList[$k+1]) ? $awardsList[$k+1]['amount'] : -1;
         }
         $data['awards'] = $awardsList;
         $this->success(lang('system.operation_succeeded'), $data);
