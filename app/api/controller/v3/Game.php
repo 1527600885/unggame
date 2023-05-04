@@ -6,7 +6,6 @@ namespace app\api\controller\v3;
 
 use app\api\BaseController;
 use app\api\model\v2\GameList;
-use think\facade\Cache;
 
 class Game extends BaseController
 {
