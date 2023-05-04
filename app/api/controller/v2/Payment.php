@@ -61,7 +61,12 @@ class Payment extends BaseController
         $currency = CurrencyAll::where("is_show", 1)->cache("currency_all_show")->field("id,name,type,country,symbol,thumb_img,url_list")->select()->toArray();
         $lists = array_column($currency,NULL,"name");
         $data = $lists[$param['type']];
-        $data['awards'] = PaymentAwards::order("sort asc")->cache("payment_awards")->select()->column("award_rate","amount");
+        $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards")->select();
+        foreach ($awardsList as $k=>&$v){
+            $v['amount'];
+            $v['max'] = isset($awardsList[$k+1]) ? $awardsList[$k+1] : 99999999999999;
+        }
+        $data['awards'] = $awardsList;
         $this->success(lang('system.operation_succeeded'), $data);
     }
     public function getRate($type = 2)
