@@ -9,6 +9,7 @@ use app\api\BaseController;
 use app\api\model\CapitalFlow as CapitalFlowmodel;
 use app\api\model\CurrencyAll;
 use app\api\model\GameBetLog;
+use app\api\model\v2\PaymentAwards;
 use app\common\lib\Redis;
 use think\Exception;
 
@@ -60,6 +61,7 @@ class Payment extends BaseController
         $currency = CurrencyAll::where("is_show", 1)->cache("currency_all_show")->field("id,name,type,country,symbol,thumb_img,url_list")->select()->toArray();
         $lists = array_column($currency,NULL,"name");
         $data = $lists[$param['type']];
+        $data['awards'] = PaymentAwards::order("sort asc")->cache("payment_awards")->select()->column("award_rate","amount");
         $this->success(lang('system.operation_succeeded'), $data);
     }
     public function getRate($type = 2)
