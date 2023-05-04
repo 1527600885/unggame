@@ -30,7 +30,7 @@ class Game extends BaseController
     }
     public function getList($where, $sort)
     {
-        $key = "gamelist_{$where}_{$sort}";
+        $key = "gamelist_{:json_encode($where)}_{$sort}";
         $lists = GameList::where($where)->order($sort)->cache($key)->select();
         $count = count($lists);
         $lists = array_chunk($lists, 4);
