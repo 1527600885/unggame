@@ -57,8 +57,8 @@ class Payment extends BaseController
     public function getPaymentInfo()
     {
         $param = input("param.");
-        $currency = CurrencyAll::where("is_show", 1)->cache("currency_all_show")->field("id,name,type,country,symbol,thumb_img,url_list")->select();
-        $lists = $currency->column("thumb_img,url_list","name");
+        $currency = CurrencyAll::where("is_show", 1)->cache("currency_all_show")->field("id,name,type,country,symbol,thumb_img,url_list")->select()->toArray();
+        $lists = array_column($currency,NULL,"name");
         $data = $lists[$param['type']];
         $this->success(lang('system.operation_succeeded'), $data);
     }
