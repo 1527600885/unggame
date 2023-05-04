@@ -75,20 +75,21 @@ class File extends BaseController
         if (empty($type)) return json(['status' => 'error', 'message' => '此类型的文件不支持上传！']);
         try {
             validate([ 'file' => ['fileSize' => $limitSize[$type], 'fileExt' => $limitExt[$type]] ])->check(['file' => $file]);
-			$fileInfo = pathinfo($file);
-			$extension = strtolower($file->getOriginalExtension());
-			$filesize=$file->getSize();
-			$filePath = $fileInfo['dirname'] . '/' . $fileInfo['basename'];
-			$files = new Fileupload($filePath);
-			$savePath = public_path() . 'upload/image/'.date('Ymd').'/';
-			$fileName = $files->hash() . '.' . $extension;
-            $files->move($savePath,$savePath.$fileName);
-
+            $fileInfo = pathinfo($file);
+            $extension = strtolower($file->getOriginalExtension());
+            $filesize=$file->getSize();
+            $filePath = $fileInfo['dirname'] . '/' . $fileInfo['basename'];
+            $files = new Fileupload($filePath);
+            $savePath = public_path() . 'upload/image/'.date('Ymd').'/';
+            $fileName = $files->hash() . '.' . $extension;
+            $result  = $files->move($savePath,$savePath.$fileName);
+            // var_dump($result);
+            // var_dump($filePath);die;/tmp/php4fUtWc
             $url='image/'.date('Ymd').'/'.$fileName;
             $saveUrl = 'upload/' . str_replace('\\', '/', $url);
             upimage($savePath.$fileName,'upload/image/'.date('Ymd').'/'.$fileName,true,$saveUrl);
 
-			
+            
             $save = FileModel::create([
                 'title'       => $file->getOriginalName(),
                 'size'        => $filesize,
@@ -102,8 +103,9 @@ class File extends BaseController
                 $suffix = pathinfo($file->getOriginalName())['extension'];
                 if ($suffix != 'ico' && $suffix != 'gif') {
                     // 封面图片
+                    // createThumbImg($saveUrl,100,100);
                     // thumbnail($saveUrl,100,100);
-					// dd($save['url']);
+                    // dd($save['url']);
                     // 水印图片
                     $config = $this->request->watermark;
                     if (!empty($config)) {
@@ -126,7 +128,7 @@ class File extends BaseController
                                         $thumb->thumb($width*$scale, $height*$scale)->save($waterThumb);
                                         $image->water($waterThumb, $position, $opacity)->save($file);
                                         if (is_file($waterThumb)) {
-                                            unlink($waterThumb);
+                                            // unlink($waterThumb);
                                         }
                                     } else {
                                         // 按实际大小
