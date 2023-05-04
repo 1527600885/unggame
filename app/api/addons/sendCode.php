@@ -83,10 +83,9 @@ class sendCode
     public static function singleSend($mobile) {
         $code = rand(1000,9999);
         $text = '[UNGGAME] The verification code is '. $code;
-//        if(!self::niuxinyunCode($mobile,$text)){
-//            return false;
-//        }
-        var_dump($code);
+        if(!self::niuxinyunCode($mobile,$text)){
+            return false;
+        }
         cache::set($mobile,$code,300);
         $result=['status' => 'success','message' => lang('system.success'), 'code' => 0];
         return $result;
