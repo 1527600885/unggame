@@ -1,11 +1,11 @@
 {include file="common/header"}
 <div id="app" v-cloak>
 	<el-curd
-		:field="field"
-		:table-export="false"
-		:table-page-size="20"
-		:table-page-sizes="[20, 50, 100, 200, 500]"
-		:search-date="false">
+			:field="field"
+			:table-export="false"
+			:table-page-size="20"
+			:table-page-sizes="[20, 50, 100, 200, 500]"
+			:search-date="false">
 	</el-curd>
 </div>
 <script>
@@ -18,6 +18,7 @@
 						prop: 'id',
 						label: '主键',
 						table: {
+							width:'50px',
 							sort: true,
 						},
 						form: false
@@ -40,16 +41,18 @@
 						prop: 'type',
 						label: '支付类型',
 						table: {
+							width:'100px',
 							sort: true,
+							prop: "type_text",
 						},
 						form: {
 							is: 'el-radio-group',
 							default: '1',
 							rules: [
-								{required: true, message: '请输入'},
+								{required: true},
 							],
 							child: {
-								value: [{"title":"在线支付","value":"2"},{"title":"数字货币","value":"1"}],
+								value: [{"title":"数字货币","value":"1"},{"title":"在线支付","value":"2"},{"title":"信用卡支付","value":"3"}],
 								props: {label: 'title', value: 'value'}},
 						}
 					},
@@ -57,6 +60,8 @@
 						prop: 'logo',
 						label: '支付logo',
 						table: {
+							is: 'image',
+							width:'80px'
 						},
 						form: {
 							is: 'el-file-select',
@@ -69,6 +74,8 @@
 						prop: 'image',
 						label: '支付二维码',
 						table: {
+							is: 'image',
+							width:'80px'
 						},
 						form: {
 							is: 'el-file-select',
@@ -82,6 +89,7 @@
 						prop: 'url',
 						label: '支付地址',
 						table: {
+							is:'el-input'
 						},
 						form: {
 							is: 'el-input',
@@ -95,6 +103,8 @@
 						prop: 'country',
 						label: '支付国家',
 						table: {
+							prop: 'country_text',
+							width:'100px',
 							sort: true,
 						},
 						form: {
@@ -114,6 +124,7 @@
 						label: '支付商户号',
 						table: {
 							label: '商户号',
+							is:'el-input'
 						},
 						form: {
 							is: 'el-input',
@@ -125,6 +136,7 @@
 						prop: 'md5key',
 						label: '支付key',
 						table: {
+							is:'el-input'
 						},
 						form: {
 							is: 'el-input',
@@ -133,9 +145,22 @@
 						}
 					},
 					{
+						prop: 'hashkey',
+						label: '支付hashkey',
+						table: {
+							is:'el-input'
+						},
+						form: {
+							is: 'el-input',
+							placeholder: '请输入在线支付hashkey',
+							tips: '在线支付必填',
+						}
+					},
+					{
 						prop: 'publickey',
 						label: '支付公钥',
 						table: {
+							is:'el-input'
 						},
 						form: {
 							is: 'el-input',
@@ -147,6 +172,7 @@
 						prop: 'privatekey',
 						label: '支付私钥',
 						table: {
+							is:'el-input'
 						},
 						form: {
 							is: 'el-input',
@@ -155,163 +181,49 @@
 						}
 					},
 					{
-						prop: 'en-us',
-						label: '数字货币兑换美元汇率',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'en-id',
-						label: '数字货币兑换印尼汇率',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'en-my',
-						label: '数字货币兑换马来汇率',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'ja-jp',
-						label: '数字货币兑换日元汇率',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'km-km',
-						label: '数字货币兑换柬埔寨汇率',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'ko-kr',
-						label: '数字货币兑换韩元汇率',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'th-th',
-						label: '数字货币兑换泰国铢汇率',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'vi-vn',
-						label: '数字货币兑换越南盾汇率',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'is_show',
-						label: '是否显示:0=>隐藏1=>显示',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'update_time',
-						label: '修改时间',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'add_time',
-						label: '添加事件',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
-						}
-					},
-					{
 						prop: 'channel',
 						label: '支付通道',
 						table: {
-							sort: true,
 						},
 						form: {
 							is: 'el-input',
+							placeholder: '请填写在线支付通道,多个请用英文逗号隔开',
+							tips: '支付通道必填，支付通道必须跟货币名称个数相对应',
 						}
 					},
 					{
 						prop: 'currency_name',
 						label: '货币名称',
 						table: {
-							sort: true,
 						},
 						form: {
 							is: 'el-input',
+							placeholder: '请填写在线货币名称,多个请用英文逗号隔开',
+							tips: '货币名称必填',
 						}
 					},
 					{
 						prop: 'busi_code',
 						label: '支付类型编码',
 						table: {
-							sort: true,
+							is:'el-input'
 						},
 						form: {
 							is: 'el-input',
+							placeholder: '请填写在线支付类型编码',
+							tips: '支付类型编码必填',
 						}
 					},
 					{
-						prop: 'rate',
-						label: '各种汇率',
+						prop: 'is_show',
+						label: '是否显示',
 						table: {
+							is: 'el-switch',
 							sort: true,
 						},
 						form: {
-							is: 'el-input',
-						}
-					},
-					{
-						prop: 'hashkey',
-						label: '在线支付hashkey',
-						table: {
-							sort: true,
-						},
-						form: {
-							is: 'el-input',
+							is: 'el-switch',
+							default: 1,
 						}
 					},
 				],
