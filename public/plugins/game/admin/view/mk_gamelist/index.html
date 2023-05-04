@@ -134,21 +134,45 @@
 					// 		is: 'el-input',
 					// 	}
 					// },
+					// {
+					// 	prop: 'is_groom',
+					// 	label: '游戏推荐',
+					// 	table: {
+					// 		is: 'el-switch',
+					// 		sort: true,
+					// 	},
+					// 	form: {
+					// 		is: 'el-switch',
+					// 		default: 0,
+					// 	}
+					// },
 					{
-						prop: 'is_groom',
-						label: '游戏推荐',
+						prop: 'topgame_sort',
+						label: '顶部推荐栏位排序',
 						table: {
-							is: 'el-switch',
+							is: 'el-input',
 							sort: true,
 						},
 						form: {
-							is: 'el-switch',
+							is: 'el-input',
 							default: 0,
 						}
 					},
 					{
 						prop: 'groom_sort',
-						label: '推荐排位',
+						label: 'slots Game排序',
+						table: {
+							is: 'el-input',
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+							default: 0,
+						}
+					},
+					{
+						prop: 'tablegame_sort',
+						label: 'tablegame排序',
 						table: {
 							is: 'el-input',
 							sort: true,
