@@ -109,11 +109,8 @@ class Game extends BaseController
         return $data;
     }
     public function getbigwin(){
-         $wowList = TopGame::where("type",1)->append(["nickname","price"])->order("id desc")->select()->toArray();
-        foreach ($wowList as &$item){
-            $item["id"] = $item['game_id'];
-        }
-        $this->success("success",$wowList);
+        $list = GameList::where("topgame_sort",">",0)->cache("topgame_list")->append(["nickname","price"])->order("topgame_sort desc")->select();
+        $this->success("success",$list);
     }
     public function getRankData()
     {
