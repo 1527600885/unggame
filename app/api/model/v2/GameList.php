@@ -40,7 +40,7 @@ class GameList extends Model
         $nickname = $redis->get($key);
         if(!$nickname){
             $hashids = new Hashids(env('hashids'), 6,env('hashids_write'));
-            $nickname = $hashids->encode($data['game_id']);
+            $nickname = $hashids->encode($data['id']);
             $redis->set($key,$nickname,600);
         }
         return $nickname;
