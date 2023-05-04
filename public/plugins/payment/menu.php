@@ -10,7 +10,39 @@ return array (
     array (
       0 => 
       array (
-        'title' => '支付设置',
+        'title' => '充值奖励设置',
+        'path' => 'mkPaymentAwards/index',
+        'ifshow' => 1,
+        'children' => 
+        array (
+          0 => 
+          array (
+            'title' => '查看',
+            'path' => 'mkPaymentAwards/index',
+          ),
+          1 => 
+          array (
+            'title' => '发布',
+            'path' => 'mkPaymentAwards/save',
+            'logwriting' => 1,
+          ),
+          2 => 
+          array (
+            'title' => '编辑',
+            'path' => 'mkPaymentAwards/update',
+            'logwriting' => 1,
+          ),
+          3 => 
+          array (
+            'title' => '删除',
+            'path' => 'mkPaymentAwards/delete',
+            'logwriting' => 1,
+          ),
+        ),
+      ),
+      1 => 
+      array (
+        'title' => '支付设置管理',
         'path' => 'mkPayment/index',
         'ifshow' => 1,
         'children' => 
@@ -39,8 +71,6 @@ return array (
             'logwriting' => 1,
           ),
         ),
-        'sort' => 1,
-        'logwriting' => 0,
       ),
     ),
   ),

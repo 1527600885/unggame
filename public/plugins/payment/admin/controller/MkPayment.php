@@ -111,7 +111,6 @@ class MkPayment extends BaseController
 			if(count($channel)!=count($currency_name)){
 				return json(["status" => "error", "message" => "修改失败"]);
 			}
-			$channelarr;
 			foreach($currency_name as $k=>$v){
 				$channelarr[$v]=$channel[$k];
 			}
