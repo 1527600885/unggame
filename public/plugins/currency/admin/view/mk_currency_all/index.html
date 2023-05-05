@@ -1,0 +1,94 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		:search-keyword="false"
+		:search-date="false">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					// {
+					// 	prop: 'type',
+					// 	label: '类型',
+					// 	table: {
+					// 		sort: true,
+					// 	},
+					// 	form: {
+					// 		is: 'el-radio-group',
+					// 		child: {
+					// 			value: [{"title":"现金","value":"2"},{"title":"数字货币","value":"1"}],
+					// 			props: {label: 'title', value: 'value'}},
+					// 	}
+					// },
+					{
+						prop: 'name',
+						label: '货币简称',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'thumb_img',
+						label: '缩略图',
+						table: {
+						},
+						form: false
+					},
+					{
+						prop: 'country',
+						label: '国家',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'symbol',
+						label: '符号',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					// {
+					// 	prop: 'url_list',
+					// 	label: '支付链接',
+					// 	table: false,
+					// 	form: {
+					// 		is: 'el-parameter',
+					// 	}
+					// },
+					{
+						prop: 'awards',
+						label: '奖励设置',
+						table: false,
+						form: {
+							is: 'el-parameter',
+						}
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}

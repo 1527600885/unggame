@@ -214,4 +214,9 @@ class Payment extends BaseController
         Order::create($data);
         $this->success(lang('system.success'));
     }
+    public function getPayAwards($type)
+    {
+        $list = CurrencyAll::where("name",$type)->where("is_show",1)->field("id,symbol,awards")->find();
+        $this->success(lang('system.success'),$list);
+    }
 }

@@ -12,5 +12,5 @@ class CurrencyAll extends Model
 {
     //
 	protected $name = 'currency_all';
-	protected $type = ['url_list'=>'json'];
+	protected $type = ['url_list'=>'json',"awards"=>"json"];
 }
