@@ -181,7 +181,7 @@ class Payment extends BaseController
         {
             $this->error($validate->getError());
         }
-        $rate  = $this->getCoinMarketCap($param['type']);
+        $rate  = $this->getCoinMarketCap("USD",$param['type']);
 
         $data=[
             'uid'=>$this->request->userInfo['id'],
