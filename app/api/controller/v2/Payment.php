@@ -63,7 +63,8 @@ class Payment extends BaseController
         $currency = CurrencyAll::where("is_show", 1)->cache("currency_all_show")->field("id,name,type,country,symbol,thumb_img,url_list")->select()->toArray();
         $lists = array_column($currency,NULL,"name");
         $data = $lists[$param['type']];
-        $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards")->select();
+        $currency_type = $param['currency_type'];
+        $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards_{$currency_type}")->select();
         foreach ($awardsList as $k=>&$v){
             $v['max'] = isset($awardsList[$k+1]) ? $awardsList[$k+1]['amount'] : -1;
         }
@@ -186,9 +187,11 @@ class Payment extends BaseController
         $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards")->select();
         $awards_rate = 100;
         foreach ($awardsList as $k=>$v){
-            if($doller > $v['amount'])
+            if($doller >= $v['amount'])
             {
                 $awards_rate = $v['award_rate'];
+            }else{
+                break;
             }
         }
         $data=[
