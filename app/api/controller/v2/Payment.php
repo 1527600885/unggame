@@ -9,9 +9,11 @@ use app\api\BaseController;
 use app\api\model\CapitalFlow as CapitalFlowmodel;
 use app\api\model\CurrencyAll;
 use app\api\model\GameBetLog;
+use app\api\model\v2\Order;
 use app\api\model\v2\PaymentAwards;
 use app\common\lib\Redis;
 use think\Exception;
+use think\Validate;
 
 class Payment extends BaseController
 {
@@ -161,5 +163,40 @@ class Payment extends BaseController
         }
         return $rateList;
 
+    }
+    public function vpay()
+    {
+        $param = input("param.");
+        $validate = new Validate([
+            "amount"=>"require|number|>:0",
+            "image"=>"require",
+            "type"=>"require"
+        ],[
+            "amount.require"=>"Please enter the correct amount for recharging.",
+            "amount.number"=>"Please enter the correct amount for recharging.",
+            "amount.>"=>"Please enter the correct amount for recharging.",
+            "image.require"=>"Please upload your recharge screenshot first."
+        ]);
+        if(!$validate->check($param))
+        {
+            $this->error($validate->getError());
+        }
+        $rate  = $this->getCoinMarketCap($param['type']);
+
+        $data=[
+            'uid'=>$this->request->userInfo['id'],
+            'mer_order_no'=>'order'.$this->request->userInfo['game_account'].time(),
+            'pid'=> 0 ,
+            'money'=>bcmul($rate,$param['amount'],8),
+            'money2'=>$param['amount'],
+            'type'=>1,
+            'time'=>time(),
+            'imgurl'=>$param['image'],
+            'pname'=>$this->request->userInfo['nickname'],
+            'pemail'=>$this->request->userInfo['email'],
+            'currency_type'=>$param['type'],
+        ];
+        Order::create($data);
+        $this->success(lang('system.success'));
     }
 }
