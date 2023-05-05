@@ -109,7 +109,7 @@ class Game extends BaseController
         return $data;
     }
     public function getbigwin(){
-        $list = GameList::where("topgame_sort",">",0)->cache("topgame_list")->append(["nickname","price"])->order("topgame_sort desc")->select();
+        $list = GameList::where("topgame_sort",">",0)->cache("topgame_list",300)->append(["nickname","price"])->order("topgame_sort desc")->select();
         $this->success("success",$list);
     }
     public function getRankData()
