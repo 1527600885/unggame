@@ -182,12 +182,20 @@ class Payment extends BaseController
             $this->error($validate->getError());
         }
         $rate  = $this->getCoinMarketCap("USD",$param['type']);
-
+        $doller  = bcmul($rate,$param['amount'],8);
+        $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards")->select();
+        $awards_rate = 100;
+        foreach ($awardsList as $k=>$v){
+            if($doller > $v['amount'])
+            {
+                $awards_rate = $v['award_rate'];
+            }
+        }
         $data=[
             'uid'=>$this->request->userInfo['id'],
             'mer_order_no'=>'order'.$this->request->userInfo['game_account'].time(),
             'pid'=> 0 ,
-            'money'=>bcmul($rate,$param['amount'],8),
+            'money'=>$doller,
             'money2'=>$param['amount'],
             'type'=>1,
             'time'=>time(),
@@ -195,6 +203,7 @@ class Payment extends BaseController
             'pname'=>$this->request->userInfo['nickname'],
             'pemail'=>$this->request->userInfo['email'],
             'currency_type'=>$param['type'],
+            'total'=> bcmul($doller,bcmul($awards_rate,0.01,2),8)
         ];
         Order::create($data);
         $this->success(lang('system.success'));
