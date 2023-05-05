@@ -2705,17 +2705,22 @@ Vue.component('el-parameter', {
         searchList() {
             let list = [];
             let self = this;
-            self.list.forEach(function (item, index) {
-                if (item.title.indexOf(self.keyword) != -1 || item.value.indexOf(self.keyword) != -1) {
-                    list.push(item)
-                }
-            });
+            if(self.list){
+                self.list.forEach(function (item, index) {
+                    if (item.title.indexOf(self.keyword) != -1 || item.value.indexOf(self.keyword) != -1) {
+                        list.push(item)
+                    }
+                });
+            }
             return list;
         },
     },
     methods: {
         pushData(index = "") {
             let row = {title: '', value: ''};
+            if(!this.list){
+                this.list = [];
+            }
             index === "" ? this.list.unshift(row) : this.list.splice(index + 1, 0, row);
         },
         removeData(index) {
