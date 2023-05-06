@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace plugins\currency\admin\controller;
 
+use app\common\lib\Redis;
 use think\facade\View;
 use app\admin\BaseController;
 use plugins\currency\admin\model\MkCurrencyAll as MkCurrencyAllModel;
@@ -51,6 +52,8 @@ class MkCurrencyAll extends BaseController
     {
         if ($this->request->isPost()) {
             $data= input("post.");
+            $redis = (new Redis())->getRedis();
+            $redis->del("currency_all_show");
             if(isset($data['payment_ids'])) unset($data['payment_ids']);
             MkCurrencyAllModel::update($data);
             return json(["status" => "success", "message" => "修改成功"]);
