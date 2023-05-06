@@ -32,7 +32,7 @@ class Payment extends BaseController
             // 今日流水
             $data['water'] = round(GameBetLog::where(['user_id' => $userInfo->id])->whereDay('betTime')->sum('betAmount'), 2);
             //要显示的货币
-            $data['currency'] = CurrencyAll::where("is_show", 1)->cache("currency_all_show")->field("id,name,type,country,symbol,thumb_img,url_list")->select();
+            $data['currency'] = CurrencyAll::where("is_show", 1)->cache("currency_all_show",600)->field("id,name,type,country,symbol,thumb_img,url_list,payment_ids")->select();
             $country = getipcountry($this->request->ip());
             $rateList = $this->cacheRate();
 
