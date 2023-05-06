@@ -66,7 +66,7 @@ class Payment extends BaseController
         $currency_type = $param['currency_type'];
         $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards_{$currency_type}",600)->select();
         if($currency_type == 2){
-            $data['paymentList'] = \app\api\model\v2\Payment::where("id",'in',$data['payment_ids'])->field("id,name,logo,min,max")->select();
+            $data['paymentList'] = \app\api\model\v2\Payment::where("id",'in',$data['payment_ids'])->field("id,name,logo,min,max,others")->select();
         }
         foreach ($awardsList as $k=>&$v){
             $v['max'] = isset($awardsList[$k+1]) ? $awardsList[$k+1]['amount'] : -1;
