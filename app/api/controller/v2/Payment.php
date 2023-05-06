@@ -214,9 +214,10 @@ class Payment extends BaseController
         Order::create($data);
         $this->success(lang('system.success'));
     }
-    public function getPayAwards($type)
+    public function getPayAwards($type,$currency_id)
     {
         $list = CurrencyAll::where("name",$type)->where("is_show",1)->field("id,symbol,awards")->find();
-        $this->success(lang('system.success'),$list);
+        $others = \app\api\model\v2\Payment::where("id",$currency_id)->value("others");
+        $this->success(lang('system.success'),compact("list","others"));
     }
 }
