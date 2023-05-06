@@ -50,7 +50,9 @@ class MkCurrencyAll extends BaseController
     public function update()
     {
         if ($this->request->isPost()) {
-            MkCurrencyAllModel::update(input("post."));
+            $data= input("post.");
+            if(isset($data['payment_ids'])) unset($data['payment_ids']);
+            MkCurrencyAllModel::update($data);
             return json(["status" => "success", "message" => "修改成功"]);
         }
     }
