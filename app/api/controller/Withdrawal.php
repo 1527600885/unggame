@@ -77,6 +77,11 @@ class Withdrawal extends BaseController
 			$this->error('Real-name authentication required for account cash withdrawal.',"",412);
 		}
 		$input=input("post.");
+		if(isset($input['method']) && $input['method'] == 2)
+		{
+		    $rate = getCoinMarketCap("USD",$input['currency']);
+		    $input['amount'] = bcmul($input['amount'],$rate,8);
+        }
 		$payment_name  = $input['payment_name'];
 		$w_info=$this->setwithdrawal_info($input);
 		if($w_info==false){
