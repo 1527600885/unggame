@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 declare (strict_types = 1);
 
+use app\common\lib\Redis;
 use think\Image;
 
 use app\api\model\User as UserModel;
@@ -68,7 +69,47 @@ function upimage($filePath,$savePath,$istrumb=false,$nopubpath=''){
         }
         
 }
+function getCoinMarketCap($type, $change = "USD")
+{
+    $key = "virtualRate_{$type}_{$change}";
+    $redis = (new Redis(['select' => 2]))->getRedis();
+    $rate = $redis->get($key);
+    if (!$rate) {
+        $url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
+        $parameters = [
+            'amount' => '1',
+            "symbol" => $change,
+            'convert' => $type
+        ];
 
+        $headers = [
+            'Accepts: application/json',
+            'X-CMC_PRO_API_KEY: 9511b77d-1c7b-4875-b8a4-f8531580f328'
+        ];
+        $qs = http_build_query($parameters); // query string encode the parameters
+        $request = "{$url}?{$qs}"; // create the request URL
+
+
+        $curl = curl_init(); // Get cURL resource
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $request,            // set the request URL
+            CURLOPT_HTTPHEADER => $headers,     // set the headers
+            CURLOPT_RETURNTRANSFER => 1         // ask for raw response instead of bool
+        ));
+
+        $response = curl_exec($curl); // Send the request, save the response
+        $data = json_decode($response, true); // print json decoded response
+        //echo $response;die();
+        curl_close($curl); // Close request
+        if ($data['status']['error_code'] == 0) {
+            $rate = $data['data'][0]['quote'][$type]['price'];
+            $redis->set($key, $rate, 300);
+        } else {
+            throw new Exception($data['status']['error_message']);
+        }
+    }
+    return $rate;
+}
 
 /**
   * 生成缩略图
