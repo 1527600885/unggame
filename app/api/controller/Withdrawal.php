@@ -80,7 +80,7 @@ class Withdrawal extends BaseController
 		if(isset($input['method']) && $input['method'] == 2)
 		{
 		    $rate = getCoinMarketCap("USD",$input['currency']);
-		    $input['amount'] = bcmul($input['amount'],$rate,8);
+		    $input['amount'] = bcmul($input['amount']."",$rate."",8);
         }
 		$payment_name  = $input['payment_name'];
 		$w_info=$this->setwithdrawal_info($input);
