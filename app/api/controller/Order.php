@@ -43,7 +43,8 @@ class Order extends BaseController
 			}
 			$mobile=$this->UserModel->where('id',$userInfo['id'])->value('mobile');
 			if($mobile){
-				$this->online($paymentinfo,$data);
+                $new = isset($data['new']) ? $data['new']: false;
+				$this->online($paymentinfo,$data,$new);
 			}else{
 				$this->error(lang('order.mobileEmpty'),'',404);
 			}
@@ -99,9 +100,14 @@ class Order extends BaseController
 		}
 	}
 	//在线支付
-	public function online($paymentinfo,$data){
+	public function online($paymentinfo,$data,$new = false){
 		$rate=$this->CurrencyAllModel->where('name',$data['currencyvalue'])->value('rate');
-		$ratemoney=round($data['money']*$rate,2);
+		if(!$new){
+            $ratemoney=round($data['money']*$rate,2);
+        }else{
+            $ratemoney=$data['money'];
+        }
+
 		$userInfo=$this->request->userInfo;
 		$result = false;
 		$orderNo = 'order'.$userInfo['game_account'].time();
