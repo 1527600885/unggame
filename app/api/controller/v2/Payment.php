@@ -32,7 +32,7 @@ class Payment extends BaseController
             // 今日流水
             $data['water'] = round(GameBetLog::where(['user_id' => $userInfo->id])->whereDay('betTime')->sum('betAmount'), 2);
             //要显示的货币
-            $data['currency'] = CurrencyAll::where("is_show", 1)->cache("currency_all_show",600)->field("id,name,type,country,symbol,thumb_img,url_list,payment_ids")->select();
+            $data['currency'] = CurrencyAll::where("is_show", 1)->cache("currency_all_show",600)->field("id,name,type,country,symbol,thumb_img,url_list,payment_ids,withdrawl_ids")->select();
             $country = getipcountry($this->request->ip());
             $rateList = cacheRate();
 
@@ -60,11 +60,9 @@ class Payment extends BaseController
     public function getPaymentInfo()
     {
         $param = input("param.");
-        $currency = CurrencyAll::where("is_show", 1)->cache("currency_all_show",600)->field("id,name,type,country,symbol,thumb_img,url_list,payment_ids")->select()->toArray();
-        $lists = array_column($currency,NULL,"name");
-        $data = $lists[$param['type']];
+        $data = CurrencyAll::getDataByName($param['type']);
         $currency_type = $param['currency_type'];
-        $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards_{$currency_type}",600)->select();
+        $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards",600)->select();
         if($currency_type == 2){
             $data['paymentList'] = \app\api\model\v2\Payment::where("id",'in',$data['payment_ids'])->field("id,name,logo,min,max,others")->select();
         }
@@ -117,7 +115,7 @@ class Payment extends BaseController
         }
         $rate  = getCoinMarketCap("USD",$param['type']);
         $doller  = bcmul($rate,$param['amount'],8);
-        $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards")->select();
+        $awardsList = PaymentAwards::order("sort asc")->cache("payment_awards",600)->select();
         $awards_rate = 100;
         foreach ($awardsList as $k=>$v){
             if($doller >= $v['amount'])
