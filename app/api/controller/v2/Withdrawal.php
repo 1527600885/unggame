@@ -62,6 +62,12 @@ class Withdrawal extends BaseController
     public function getWithdrawalDetail($settings_id, $type)
     {
         $setting = WithdrawalSettings::where("id",$settings_id)->field("id,other1")->find();
+        $setting['others'] = [];
+        if($setting['other1'] && isset($setting['other1'][$type]))
+        {
+            $setting['others'] = explode(",",$setting['other1'][$type]);
+            unset($setting['other1']);
+        }
         $data = CurrencyAll::getDataByName($type);
         $thumb_img = $data['thumb_img'];
         $this->success(lang('system.operation_succeeded'), compact("setting", "thumb_img"));
