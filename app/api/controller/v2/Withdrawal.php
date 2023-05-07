@@ -128,6 +128,7 @@ class Withdrawal extends BaseController
             $rateamount=round($input['amount']*$rate,2);
             $charge=round($rateamount*($feel/100),2);
             $money=bcadd($rateamount."",-$charge."",2);
+            $data['other'] = json_encode($input['other']);
         }
         $data['sid']=$input['id'];
         $data['uid']=$userInfo->id;
