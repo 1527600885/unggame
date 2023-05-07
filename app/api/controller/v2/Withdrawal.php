@@ -9,7 +9,7 @@ use app\api\BaseController;
 use app\api\model\CurrencyAll;
 use app\api\model\GameBetLog;
 use app\api\model\v2\UserIdcard;
-use app\api\model\WithdrawalSettings;
+use app\api\model\v2\WithdrawalSettings;
 
 class Withdrawal extends BaseController
 {
