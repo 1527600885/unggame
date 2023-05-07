@@ -26,8 +26,8 @@ class Withdrawal extends BaseController
         if($type)
         {
             $water = round(GameBetLog::where(['user_id' => $userInfo->id])->whereDay('betTime')->sum('betAmount'), 2);
-            $rate = cacheRate();
-            $water = bcmul($rate[$type], $water, 8);
+            $rateList = cacheRate();
+            $water = bcmul($rateList[$type], $water, 8);
         }
         $this->success(lang('system.operation_succeeded'),compact("rate","minPrice","water","balance"));
     }
