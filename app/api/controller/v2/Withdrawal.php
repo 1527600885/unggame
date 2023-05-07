@@ -6,6 +6,7 @@ namespace app\api\controller\v2;
 
 use app\admin\model\Config as ConfigModel;
 use app\api\BaseController;
+use app\api\model\GameBetLog;
 use app\api\model\v2\UserIdcard;
 
 class Withdrawal extends BaseController
@@ -19,8 +20,9 @@ class Withdrawal extends BaseController
         }
         $withdrawConfig =  ConfigModel::getVal('withdraw');
         $rate = $this->getRate($withdrawConfig);
+        $water = round(GameBetLog::where(['user_id' => $userInfo->id])->whereDay('betTime')->sum('betAmount'), 2);
         $minPrice = $withdrawConfig['minprice'];
-        $this->success(lang('system.operation_succeeded'),compact("rate","minPrice"));
+        $this->success(lang('system.operation_succeeded'),compact("rate","minPrice","water"));
     }
     /**
      * 获取后台配置的提现费率(要求邀请人数从小到大排列)
