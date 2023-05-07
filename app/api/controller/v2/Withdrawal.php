@@ -56,7 +56,7 @@ class Withdrawal extends BaseController
         $lists = array_column($currency,NULL,"name");
         $data = $lists[$param['type']];
         $withdrawalList = WithdrawalSettings::where("id","in",$data['withdrawl_ids'])->where("is_show",1)->field("id,name,image,min_amount,max_amount")->select();
-        $symbol = $data['symbol'];
-        $this->success(lang('system.operation_succeeded'),compact("withdrawalList","symbol"));
+        $currency_data = ['symbol'=>$data['symbol'],"thumb_img"=>$data['thumb_img']];
+        $this->success(lang('system.operation_succeeded'),compact("withdrawalList","currency_data"));
     }
 }
