@@ -22,7 +22,8 @@ class Withdrawal extends BaseController
         $rate = $this->getRate($withdrawConfig);
         $water = round(GameBetLog::where(['user_id' => $userInfo->id])->whereDay('betTime')->sum('betAmount'), 2);
         $minPrice = $withdrawConfig['minprice'];
-        $this->success(lang('system.operation_succeeded'),compact("rate","minPrice","water"));
+        $balance = $userInfo['balance'];
+        $this->success(lang('system.operation_succeeded'),compact("rate","minPrice","water","balance"));
     }
     /**
      * 获取后台配置的提现费率(要求邀请人数从小到大排列)
