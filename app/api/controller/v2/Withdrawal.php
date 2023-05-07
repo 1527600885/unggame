@@ -117,7 +117,7 @@ class Withdrawal extends BaseController
         }
         $rate=$this->CurrencyAllModel->where(['name'=>$input['currency']])->value('rate');
 //		$feel=$this->feel($userInfo->id);
-        $feel = $this->getRate($withdrawConfig['tableData']);
+        $feel = $this->getRate($withdrawConfig);
         if($input['type']==1){
             $rateamount=round($input['amount']/$rate,7);
             $charge=round($rateamount*($feel/100),7);
