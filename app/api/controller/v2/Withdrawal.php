@@ -11,7 +11,7 @@ use app\api\model\v2\UserIdcard;
 
 class Withdrawal extends BaseController
 {
-    public function getWithdrawalInfo()
+    public function getWithdrawalInfo($type = "")
     {
         $userInfo=$this->request->userInfo;
         $useridcard = UserIdcard::where("user_id", $userInfo->id)->find();
@@ -20,9 +20,15 @@ class Withdrawal extends BaseController
         }
         $withdrawConfig =  ConfigModel::getVal('withdraw');
         $rate = $this->getRate($withdrawConfig);
-        $water = round(GameBetLog::where(['user_id' => $userInfo->id])->whereDay('betTime')->sum('betAmount'), 2);
         $minPrice = $withdrawConfig['minprice'];
         $balance = $userInfo['balance'];
+        $water = 0;
+        if($type)
+        {
+            $water = round(GameBetLog::where(['user_id' => $userInfo->id])->whereDay('betTime')->sum('betAmount'), 2);
+            $rate = cacheRate();
+            $water = bcmul($rate[$type], $water, 8);
+        }
         $this->success(lang('system.operation_succeeded'),compact("rate","minPrice","water","balance"));
     }
     /**
