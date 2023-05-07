@@ -63,7 +63,7 @@ class Withdrawal extends BaseController
     {
         $setting = WithdrawalSettings::where("id",$settings_id)->field("id,other1")->find();
         $rateList = cacheRate();
-        $min_amount =  bcmul(ConfigModel::getVal('withdraw')['min_price'],$rateList[$type],8);
+        $min_amount =  bcmul(ConfigModel::getVal('withdraw')['minprice'],$rateList[$type],8);
         $max_amount = bcmul($this->request->userInfo['balance'],$rateList[$type],8);
         $setting['others'] = [];
         if($setting['other1'] && isset($setting['other1'][$type]))
