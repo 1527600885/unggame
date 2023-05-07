@@ -69,6 +69,33 @@ function upimage($filePath,$savePath,$istrumb=false,$nopubpath=''){
         }
         
 }
+function cacheRate()
+{
+    $key = "cashRateList";
+    $redis = (new Redis(['select' => 2]))->getRedis();
+    $rateList = $redis->get($key);
+    if (!$rateList) {
+        $req_url = 'https://api.exchangerate.host/latest?base=USD';
+        $response_json = file_get_contents($req_url);
+        if (false !== $response_json) {
+            try {
+                $response = json_decode($response_json, true);
+                if ($response['success'] === true) {
+                    $rateList = $response['rates'];
+                    $redis->set($key, json_encode($rateList), 3600);
+                } else {
+                    throw new Exception("System error");
+                }
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
+            }
+        }
+    } else {
+        $rateList = json_decode($rateList, true);
+    }
+    return $rateList;
+
+}
 function getCoinMarketCap($type, $change = "USD")
 {
     $key = "virtualRate_{$type}_{$change}";
