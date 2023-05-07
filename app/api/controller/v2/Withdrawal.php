@@ -61,7 +61,7 @@ class Withdrawal extends BaseController
 
     public function getWithdrawalDetail($settings_id, $type)
     {
-        $setting = WithdrawalSettings::where("id",$settings_id)->field("id,other1")->find();
+        $setting = WithdrawalSettings::where("id",$settings_id)->field("id,min_amount,max_amount,other1")->find();
         $setting['others'] = [];
         if($setting['other1'] && isset($setting['other1'][$type]))
         {
