@@ -17,7 +17,7 @@ class WowPay extends Pay
      * @var array
      */
     public $payConfig = [
-        "debug"=>false,
+        "debug"=>true,
 
         "testconfig"=>[
             "MYR"=>[
@@ -156,7 +156,7 @@ class WowPay extends Pay
         {
             return $result;
         }else{
-            throw new Exception($result['tradeMsg']);
+            throw new Exception($result['errorMsg']);
         }
     }
 }
