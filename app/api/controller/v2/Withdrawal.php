@@ -71,7 +71,7 @@ class Withdrawal extends BaseController
 
     public function getWithdrawalDetail($settings_id, $type)
     {
-        $setting = WithdrawalSettings::where("id",$settings_id)->field("id,other1")->find();
+        $setting = WithdrawalSettings::where("id",$settings_id)->field("id,other1,ischoosebank,name")->find();
         $rateList = cacheRate();
         $min_amount =  bcmul(ConfigModel::getVal('withdraw')['minprice'],$rateList[$type],2);
         $max_amount = bcmul($this->request->userInfo['balance'],$rateList[$type],2);
@@ -80,6 +80,12 @@ class Withdrawal extends BaseController
         {
             $setting['others'] = explode(",",$setting['other1'][$type]);
             unset($setting['other1']);
+        }
+        $bankList = [];
+        if($setting['ischoosebank'])
+        {
+            $bankList = getBankList($type,$setting['name']);
+            unset($setting['others']['bank']);
         }
         $data = CurrencyAll::getDataByName($type);
         $thumb_img = $data['thumb_img'];
