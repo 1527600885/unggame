@@ -35,8 +35,10 @@ class OePay extends Pay
 
         ];
         $result_json = $this->curl_post_content($this->apiUrl."/gold-pay/portal/createH5PayLink", $data, $header);
-        echo $result_json;
-        $result = json_decode($result_json, true);
+        if($result_json['code'] == '0000')
+        {
+            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result_json['data']['linkUrl']];
+        }
     }
 
     public function sign($data, $extra)
