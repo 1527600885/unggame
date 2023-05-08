@@ -81,11 +81,11 @@ class Withdrawal extends BaseController
             $setting['others'] = explode(",",$setting['other1'][$type]);
             unset($setting['other1']);
         }
-        $bankList = [];
         if($setting['ischoosebank'])
         {
             $bankList = getBankList($type,$setting['name']);
-            unset($setting['others']['bank']);
+            $setting['others'] = array_diff($setting['others'],['bank']);
+            $setting['bankList'] = $bankList;
         }
         $data = CurrencyAll::getDataByName($type);
         $thumb_img = $data['thumb_img'];
