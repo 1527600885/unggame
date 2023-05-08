@@ -964,1268 +964,1268 @@ function getlang($content){
 function getBankList($currency,$name)
 {
     $list =[
-        "TopPay_IDR"=>[
+            "TopPay_IDR"=>[
             [
                 "bankshort" =>"ACEH",
-                "bankname" =>"Bank Aceh Syariah",
+                "name" =>"Bank Aceh Syariah",
                 "code" =>"116"
             ],
             [
                 "bankshort" =>"ACEH_UUS",
-                "bankname" =>"Bank Agris UUS",
+                "name" =>"Bank Agris UUS",
                 "code" =>"1160"
             ],
             [
                 "bankshort" =>"ACEH_SYR",
-                "bankname" =>"BPD ISTIMEWA ACEH SYARIAH",
+                "name" =>"BPD ISTIMEWA ACEH SYARIAH",
                 "code" =>"1161"
             ],
             [
                 "bankshort" =>"AGRIS",
-                "bankname" =>"Bank IBK Indonesia",
+                "name" =>"Bank IBK Indonesia",
                 "code" =>"945"
             ],
             [
                 "bankshort" =>"AMAR",
-                "bankname" =>"BANK AMAR INDONESIA",
+                "name" =>"BANK AMAR INDONESIA",
                 "code" =>"1162"
             ],
             [
                 "bankshort" =>"AGRONIAGA",
-                "bankname" =>"Bank Agroniaga",
+                "name" =>"Bank Agroniaga",
                 "code" =>"494"
             ],
             [
                 "bankshort" =>"ANDARA",
-                "bankname" =>"Bank Andara",
+                "name" =>"Bank Andara",
                 "code" =>"466"
             ],
             [
                 "bankshort" =>"ANGLOMAS",
-                "bankname" =>"Anglomas International Bank",
+                "name" =>"Anglomas International Bank",
                 "code" =>"531"
             ],
             [
                 "bankshort" =>"ANTAR_DAERAH",
-                "bankname" =>"BANK ANTAR DAERAH",
+                "name" =>"BANK ANTAR DAERAH",
                 "code" =>"1163"
             ],
             [
                 "bankshort" =>"ANZ",
-                "bankname" =>"Bank ANZ Indonesia",
+                "name" =>"Bank ANZ Indonesia",
                 "code" =>"061"
             ],
             [
                 "bankshort" =>"ANZ_PANIN",
-                "bankname" =>"Bank ANZ PANIN",
+                "name" =>"Bank ANZ PANIN",
                 "code" =>"0610"
             ],
             [
                 "bankshort" =>"ARTAJASA",
-                "bankname" =>"ARTAJASA PEMBAYARAN ELEKTRONIK",
+                "name" =>"ARTAJASA PEMBAYARAN ELEKTRONIK",
                 "code" =>"987"
             ],
             [
                 "bankshort" =>"ARTA_NIAGA_KENCANA",
-                "bankname" =>"Bank Arta Niaga Kencana",
+                "name" =>"Bank Arta Niaga Kencana",
                 "code" =>"020"
             ],
             [
                 "bankshort" =>"ARTHA",
-                "bankname" =>"Bank Artha Graha Internasional",
+                "name" =>"Bank Artha Graha Internasional",
                 "code" =>"037"
             ],
             [
                 "bankshort" =>"ARTOS",
-                "bankname" =>"Bank ARTOS/ Bank Jago",
+                "name" =>"Bank ARTOS/ Bank Jago",
                 "code" =>"542"
             ],
             [
                 "bankshort" =>"BALI",
-                "bankname" =>"BPD Bali",
+                "name" =>"BPD Bali",
                 "code" =>"129"
             ],
             [
                 "bankshort" =>"BISNIS_INTERNASIONAL",
-                "bankname" =>"Bank Bisnis Internasional",
+                "name" =>"Bank Bisnis Internasional",
                 "code" =>"459"
             ],
             [
                 "bankshort" =>"BANGKOK",
-                "bankname" =>"Bangkok Bank",
+                "name" =>"Bangkok Bank",
                 "code" =>"040"
             ],
             [
                 "bankshort" =>"BANTEN",
-                "bankname" =>"BPD Banten",
+                "name" =>"BPD Banten",
                 "code" =>"558"
             ],
             [
                 "bankshort" =>"BARCLAYS",
-                "bankname" =>"BANK BARCLAYS INDONESIA",
+                "name" =>"BANK BARCLAYS INDONESIA",
                 "code" =>"525"
             ],
             [
                 "bankshort" =>"BCA",
-                "bankname" =>"Bank Central Asia",
+                "name" =>"Bank Central Asia",
                 "code" =>"014"
             ],
             [
                 "bankshort" =>"BCA_SYR",
-                "bankname" =>"Bank Central Asia (BCA) Syariah",
+                "name" =>"Bank Central Asia (BCA) Syariah",
                 "code" =>"536"
             ],
             [
                 "bankshort" =>"BENGKULU",
-                "bankname" =>"Bank Bengkulu",
+                "name" =>"Bank Bengkulu",
                 "code" =>"133"
             ],
             [
                 "bankshort" =>"BJB",
-                "bankname" =>"Bank Jawa Barat(BJB)",
+                "name" =>"Bank Jawa Barat(BJB)",
                 "code" =>"110"
             ],
             [
                 "bankshort" =>"BJB_SYR",
-                "bankname" =>"Bank BJB Syariah",
+                "name" =>"Bank BJB Syariah",
                 "code" =>"425"
             ],
             [
                 "bankshort" =>"BNI",
-                "bankname" =>"Bank Negara Indonesia(BNI)",
+                "name" =>"Bank Negara Indonesia(BNI)",
                 "code" =>"009"
             ],
             [
                 "bankshort" =>"BNI_SYR",
-                "bankname" =>"Bank BNI Syariah",
+                "name" =>"Bank BNI Syariah",
                 "code" =>"427"
             ],
             [
                 "bankshort" =>"BOC",
-                "bankname" =>"BANK OF CHINA LIMITED",
+                "name" =>"BANK OF CHINA LIMITED",
                 "code" =>"069"
             ],
             [
                 "bankshort" =>"BRI",
-                "bankname" =>"Bank Rakyat Indonesia(BRI)",
+                "name" =>"Bank Rakyat Indonesia(BRI)",
                 "code" =>"002"
             ],
             [
                 "bankshort" =>"BRI_SYR",
-                "bankname" =>"Bank BRI Syariah",
+                "name" =>"Bank BRI Syariah",
                 "code" =>"422"
             ],
             [
                 "bankshort" =>"BNP_PARIBAS",
-                "bankname" =>"Bank BNP Paribas",
+                "name" =>"Bank BNP Paribas",
                 "code" =>"1450"
             ],
             [
                 "bankshort" =>"BOA",
-                "bankname" =>"BANK OF AMERICA NA",
+                "name" =>"BANK OF AMERICA NA",
                 "code" =>"033"
             ],
             [
                 "bankshort" =>"BPRKS",
-                "bankname" =>"BPR KS",
+                "name" =>"BPR KS",
                 "code" =>"688"
             ],
             [
                 "bankshort" =>"BSI",
-                "bankname" =>"Bank Syariah Indonesia(BSI)",
+                "name" =>"Bank Syariah Indonesia(BSI)",
                 "code" =>"4510"
             ],
             [
                 "bankshort" =>"BTN",
-                "bankname" =>"Bank Tabungan Negara (BTN)",
+                "name" =>"Bank Tabungan Negara (BTN)",
                 "code" =>"200"
             ],
             [
                 "bankshort" =>"BTN_UUS",
-                "bankname" =>"Bank Tabungan Negara (BTN) UUS",
+                "name" =>"Bank Tabungan Negara (BTN) UUS",
                 "code" =>"2000"
             ],
             [
                 "bankshort" =>"BTPN",
-                "bankname" =>"Bank BTPN",
+                "name" =>"Bank BTPN",
                 "code" =>"213"
             ],
             [
                 "bankshort" =>"BTPN_SYARIAH",
-                "bankname" =>"BTPN Syariah",
+                "name" =>"BTPN Syariah",
                 "code" =>"5470"
             ],
             [
                 "bankshort" =>"BTPN_SYR",
-                "bankname" =>"Bank BTPN Syariah",
+                "name" =>"Bank BTPN Syariah",
                 "code" =>"547"
             ],
             [
                 "bankshort" =>"BUKOPIN",
-                "bankname" =>"Wokee/Bukopin",
+                "name" =>"Wokee/Bukopin",
                 "code" =>"441"
             ],
             [
                 "bankshort" =>"BUKOPIN_SYR",
-                "bankname" =>"Bank Bukopin Syariah",
+                "name" =>"Bank Bukopin Syariah",
                 "code" =>"521"
             ],
             [
                 "bankshort" =>"BUMI_ARTA",
-                "bankname" =>"Bank Bumi Arta",
+                "name" =>"Bank Bumi Arta",
                 "code" =>"076"
             ],
             [
                 "bankshort" =>"BUMIPUTERA",
-                "bankname" =>"BANK BUMIPUTERA",
+                "name" =>"BANK BUMIPUTERA",
                 "code" =>"4850"
             ],
             [
                 "bankshort" =>"CAPITAL",
-                "bankname" =>"Bank Capital Indonesia",
+                "name" =>"Bank Capital Indonesia",
                 "code" =>"054"
             ],
             [
                 "bankshort" =>"CENTRATAMA",
-                "bankname" =>"Centratama Nasional Bank",
+                "name" =>"Centratama Nasional Bank",
                 "code" =>"5590"
             ],
             [
                 "bankshort" =>"CHINACONS",
-                "bankname" =>"BANK CHINA CONSTRUCTION",
+                "name" =>"BANK CHINA CONSTRUCTION",
                 "code" =>"9490"
             ],
             [
                 "bankshort" =>"CHINATRUST",
-                "bankname" =>"CTBC Indonesia",
+                "name" =>"CTBC Indonesia",
                 "code" =>"949"
             ],
             [
                 "bankshort" =>"CNB",
-                "bankname" =>"Centratama Nasional Bank(CNB)",
+                "name" =>"Centratama Nasional Bank(CNB)",
                 "code" =>"559"
             ],
             [
                 "bankshort" =>"CIMB",
-                "bankname" =>"Bank CIMB Niaga",
+                "name" =>"Bank CIMB Niaga",
                 "code" =>"022"
             ],
             [
                 "bankshort" =>"CIMB_UUS",
-                "bankname" =>"Bank CIMB Niaga UUS",
+                "name" =>"Bank CIMB Niaga UUS",
                 "code" =>"0220"
             ],
             [
                 "bankshort" =>"CIMB_REKENING_PONSEL",
-                "bankname" =>"Bank CIMB Niaga REKENING PONSEL",
+                "name" =>"Bank CIMB Niaga REKENING PONSEL",
                 "code" =>"0221"
             ],
             [
                 "bankshort" =>"CITIBANK",
-                "bankname" =>"Citibank",
+                "name" =>"Citibank",
                 "code" =>"031"
             ],
             [
                 "bankshort" =>"COMMONWEALTH",
-                "bankname" =>"Bank Commonwealth",
+                "name" =>"Bank Commonwealth",
                 "code" =>"950"
             ],
             [
                 "bankshort" =>"BPD_DIY",
-                "bankname" =>"BPD DIY",
+                "name" =>"BPD DIY",
                 "code" =>"112"
             ],
             [
                 "bankshort" =>"BPD_DIY_SYR",
-                "bankname" =>"BANK PEMBANGUNAN DAERAH DIY UNIT USAHA SYARIAH",
+                "name" =>"BANK PEMBANGUNAN DAERAH DIY UNIT USAHA SYARIAH",
                 "code" =>"1121"
             ],
             [
                 "bankshort" =>"DANAMON",
-                "bankname" =>"Bank Danamon",
+                "name" =>"Bank Danamon",
                 "code" =>"011"
             ],
             [
                 "bankshort" =>"DANAMON_UUS",
-                "bankname" =>"Bank Danamon UUS",
+                "name" =>"Bank Danamon UUS",
                 "code" =>"0110"
             ],
             [
                 "bankshort" =>"DBS",
-                "bankname" =>"Bank DBS Indonesia",
+                "name" =>"Bank DBS Indonesia",
                 "code" =>"046"
             ],
             [
                 "bankshort" =>"DEUTSCHE",
-                "bankname" =>"Deutsche Bank",
+                "name" =>"Deutsche Bank",
                 "code" =>"067"
             ],
             [
                 "bankshort" =>"DINAR_INDONESIA",
-                "bankname" =>"Bank Dinar Indonesia",
+                "name" =>"Bank Dinar Indonesia",
                 "code" =>"526"
             ],
             [
                 "bankshort" =>"DIPO",
-                "bankname" =>"BANK DIPO INTERNATIONAL",
+                "name" =>"BANK DIPO INTERNATIONAL",
                 "code" =>"5230"
             ],
             [
                 "bankshort" =>"DKI",
-                "bankname" =>"Bank DKI",
+                "name" =>"Bank DKI",
                 "code" =>"111"
             ],
             [
                 "bankshort" =>"DKI_UUS",
-                "bankname" =>"Bank DKI UUS",
+                "name" =>"Bank DKI UUS",
                 "code" =>"778"
             ],
             [
                 "bankshort" =>"EKA",
-                "bankname" =>"Bank EKA",
+                "name" =>"Bank EKA",
                 "code" =>"699"
             ],
             [
                 "bankshort" =>"EKONOMI_RAHARJA",
-                "bankname" =>"BANK EKONOMI RAHARJA",
+                "name" =>"BANK EKONOMI RAHARJA",
                 "code" =>"087"
             ],
             [
                 "bankshort" =>"FAMA",
-                "bankname" =>"Bank Fama International",
+                "name" =>"Bank Fama International",
                 "code" =>"562"
             ],
             [
                 "bankshort" =>"GANESHA",
-                "bankname" =>"Bank Ganesha",
+                "name" =>"Bank Ganesha",
                 "code" =>"161"
             ],
             [
                 "bankshort" =>"HANA",
-                "bankname" =>"LINE Bank/KEB Hana",
+                "name" =>"LINE Bank/KEB Hana",
                 "code" =>"484"
             ],
             [
                 "bankshort" =>"HARDA_INTERNASIONAL",
-                "bankname" =>"Allo Bank/Bank Harda Internasional",
+                "name" =>"Allo Bank/Bank Harda Internasional",
                 "code" =>"567"
             ],
             [
                 "bankshort" =>"HIMPUNAN_SAUDARA",
-                "bankname" =>"Bank Himpunan Saudara 1906",
+                "name" =>"Bank Himpunan Saudara 1906",
                 "code" =>"2120"
             ],
             [
                 "bankshort" =>"HSBC",
-                "bankname" =>"HSBC",
+                "name" =>"HSBC",
                 "code" =>"041"
             ],
             [
                 "bankshort" =>"IBK",
-                "bankname" =>"IBK",
+                "name" =>"IBK",
                 "code" =>"9450"
             ],
             [
                 "bankshort" =>"ICBC",
-                "bankname" =>"Bank ICBC Indonesia",
+                "name" =>"Bank ICBC Indonesia",
                 "code" =>"164"
             ],
             [
                 "bankshort" =>"INA_PERDANA",
-                "bankname" =>"Bank Ina Perdana",
+                "name" =>"Bank Ina Perdana",
                 "code" =>"513"
             ],
             [
                 "bankshort" =>"INDEX_SELINDO",
-                "bankname" =>"Bank Index Selindo",
+                "name" =>"Bank Index Selindo",
                 "code" =>"555"
             ],
             [
                 "bankshort" =>"INDIA",
-                "bankname" =>"Bank of India Indonesia",
+                "name" =>"Bank of India Indonesia",
                 "code" =>"146"
             ],
             [
                 "bankshort" =>"JAGO",
-                "bankname" =>"BANK JAGO TBK",
+                "name" =>"BANK JAGO TBK",
                 "code" =>"5421"
             ],
             [
                 "bankshort" =>"JAMBI",
-                "bankname" =>"Bank Jambi",
+                "name" =>"Bank Jambi",
                 "code" =>"115"
             ],
             [
                 "bankshort" =>"JASA_JAKARTA",
-                "bankname" =>"Bank Jasa Jakarta",
+                "name" =>"Bank Jasa Jakarta",
                 "code" =>"472"
             ],
             [
                 "bankshort" =>"JAWA_TENGAH",
-                "bankname" =>"Bank Jateng",
+                "name" =>"Bank Jateng",
                 "code" =>"113"
             ],
             [
                 "bankshort" =>"JAWA_TENGAH_UUS",
-                "bankname" =>"BPD JAWA TENGAH UNIT USAHA SYARIAH",
+                "name" =>"BPD JAWA TENGAH UNIT USAHA SYARIAH",
                 "code" =>"1130"
             ],
             [
                 "bankshort" =>"JATIM",
-                "bankname" =>"Bank Jatim",
+                "name" =>"Bank Jatim",
                 "code" =>"114"
             ],
             [
                 "bankshort" =>"JAWA_TIMUR",
-                "bankname" =>"BPD Jawa Timur",
+                "name" =>"BPD Jawa Timur",
                 "code" =>"1140"
             ],
             [
                 "bankshort" =>"JATIM_UUS",
-                "bankname" =>"Bank Jatim UUS",
+                "name" =>"Bank Jatim UUS",
                 "code" =>"1141"
             ],
             [
                 "bankshort" =>"JPMORGAN",
-                "bankname" =>"JPMORGAN CHASE BANK",
+                "name" =>"JPMORGAN CHASE BANK",
                 "code" =>"032"
             ],
             [
                 "bankshort" =>"JTRUST",
-                "bankname" =>"Bank JTrust Indonesia",
+                "name" =>"Bank JTrust Indonesia",
                 "code" =>"095"
             ],
             [
                 "bankshort" =>"KALIMANTAN_BARAT",
-                "bankname" =>"BPD Kalimantan Barat/Kalbar",
+                "name" =>"BPD Kalimantan Barat/Kalbar",
                 "code" =>"123"
             ],
             [
                 "bankshort" =>"KALIMANTAN_BARAT_UUS",
-                "bankname" =>"BPD Kalimantan Barat UUS",
+                "name" =>"BPD Kalimantan Barat UUS",
                 "code" =>"1230"
             ],
             [
                 "bankshort" =>"KALIMANTAN_SELATAN",
-                "bankname" =>"BPD Kalimantan Selatan/Kalsel",
+                "name" =>"BPD Kalimantan Selatan/Kalsel",
                 "code" =>"122"
             ],
             [
                 "bankshort" =>"KALIMANTAN_SELATAN_UUS",
-                "bankname" =>"BPD Kalimantan Selatan UUS",
+                "name" =>"BPD Kalimantan Selatan UUS",
                 "code" =>"1220"
             ],
             [
                 "bankshort" =>"KALIMANTAN_TENGAH",
-                "bankname" =>"Bank_Kalteng",
+                "name" =>"Bank_Kalteng",
                 "code" =>"125"
             ],
             [
                 "bankshort" =>"KALIMANTAN_TIMUR",
-                "bankname" =>"BPD Kalimantan Timur",
+                "name" =>"BPD Kalimantan Timur",
                 "code" =>"124"
             ],
             [
                 "bankshort" =>"KALIMANTAN_TIMUR_UUS",
-                "bankname" =>"BPD Kalimantan Timur UUS",
+                "name" =>"BPD Kalimantan Timur UUS",
                 "code" =>"1240"
             ],
             [
                 "bankshort" =>"KESEJAHTERAAN_EKONOMI",
-                "bankname" =>"Seabank/Bank Kesejahteraan Ekonomi(BKE)",
+                "name" =>"Seabank/Bank Kesejahteraan Ekonomi(BKE)",
                 "code" =>"535"
             ],
             [
                 "bankshort" =>"LAMPUNG",
-                "bankname" =>"BPD Lampung",
+                "name" =>"BPD Lampung",
                 "code" =>"121"
             ],
             [
                 "bankshort" =>"MALUKU",
-                "bankname" =>"Bank Maluku",
+                "name" =>"Bank Maluku",
                 "code" =>"131"
             ],
             [
                 "bankshort" =>"MANDIRI",
-                "bankname" =>"Bank Mandiri",
+                "name" =>"Bank Mandiri",
                 "code" =>"008"
             ],
             [
                 "bankshort" =>"MANDIRI_SYR",
-                "bankname" =>"Bank Syariah Mandiri",
+                "name" =>"Bank Syariah Mandiri",
                 "code" =>"451"
             ],
             [
                 "bankshort" =>"MANDIRI_TASPEN",
-                "bankname" =>"Bank Mandiri Taspen Pos",
+                "name" =>"Bank Mandiri Taspen Pos",
                 "code" =>"5640"
             ],
             [
                 "bankshort" =>"MANTAP",
-                "bankname" =>"Bank MANTAP",
+                "name" =>"Bank MANTAP",
                 "code" =>"564"
             ],
             [
                 "bankshort" =>"MULTI_ARTA_SENTOSA",
-                "bankname" =>"Bank Multi Arta Sentosa(MAS)",
+                "name" =>"Bank Multi Arta Sentosa(MAS)",
                 "code" =>"548"
             ],
             [
                 "bankshort" =>"MASPION",
-                "bankname" =>"Bank Maspion Indonesia",
+                "name" =>"Bank Maspion Indonesia",
                 "code" =>"157"
             ],
             [
                 "bankshort" =>"MAYAPADA",
-                "bankname" =>"Bank Mayapada",
+                "name" =>"Bank Mayapada",
                 "code" =>"097"
             ],
             [
                 "bankshort" =>"MAYBANK",
-                "bankname" =>"Bank Maybank",
+                "name" =>"Bank Maybank",
                 "code" =>"016"
             ],
             [
                 "bankshort" =>"MAYBANK_SYR",
-                "bankname" =>"Bank Maybank Syariah Indonesia",
+                "name" =>"Bank Maybank Syariah Indonesia",
                 "code" =>"947"
             ],
             [
                 "bankshort" =>"MAYBANK_UUS",
-                "bankname" =>"Bank Maybank Syariah Indonesia UUS",
+                "name" =>"Bank Maybank Syariah Indonesia UUS",
                 "code" =>"0160"
             ],
             [
                 "bankshort" =>"MAYORA",
-                "bankname" =>"Bank Mayora Indonesia",
+                "name" =>"Bank Mayora Indonesia",
                 "code" =>"553"
             ],
             [
                 "bankshort" =>"MEGA",
-                "bankname" =>"Bank Mega",
+                "name" =>"Bank Mega",
                 "code" =>"426"
             ],
             [
                 "bankshort" =>"MEGA_SYR",
-                "bankname" =>"Bank Mega Syariah",
+                "name" =>"Bank Mega Syariah",
                 "code" =>"506"
             ],
             [
                 "bankshort" =>"MESTIKA_DHARMA",
-                "bankname" =>"Bank Mestika Dharma",
+                "name" =>"Bank Mestika Dharma",
                 "code" =>"151"
             ],
             [
                 "bankshort" =>"METRO_EXPRESS",
-                "bankname" =>"BANK METRO EXPRESS",
+                "name" =>"BANK METRO EXPRESS",
                 "code" =>"1520"
             ],
             [
                 "bankshort" =>"MNC_INTERNASIONAL",
-                "bankname" =>"Motion/Bank MNC Internasional",
+                "name" =>"Motion/Bank MNC Internasional",
                 "code" =>"485"
             ],
             [
                 "bankshort" =>"MUAMALAT",
-                "bankname" =>"Bank Muamalat Indonesia",
+                "name" =>"Bank Muamalat Indonesia",
                 "code" =>"147"
             ],
             [
                 "bankshort" =>"MITRA_NIAGA",
-                "bankname" =>"Bank Mitra Niaga",
+                "name" =>"Bank Mitra Niaga",
                 "code" =>"491"
             ],
             [
                 "bankshort" =>"MIZUHO",
-                "bankname" =>"Bank Mizuho Indonesia",
+                "name" =>"Bank Mizuho Indonesia",
                 "code" =>"048"
             ],
             [
                 "bankshort" =>"MUTIARA",
-                "bankname" =>"Bank MUTIARA",
+                "name" =>"Bank MUTIARA",
                 "code" =>"10010"
             ],
             [
                 "bankshort" =>"MULTICOR",
-                "bankname" =>"Bank MULTICOR",
+                "name" =>"Bank MULTICOR",
                 "code" =>"10006"
             ],
             [
                 "bankshort" =>"NATIONALNOBU",
-                "bankname" =>"Bank National Nobu",
+                "name" =>"Bank National Nobu",
                 "code" =>"503"
             ],
             [
                 "bankshort" =>"NIAGA_SYR",
-                "bankname" =>"BANK NIAGA TBK. SYARIAH",
+                "name" =>"BANK NIAGA TBK. SYARIAH",
                 "code" =>"583"
             ],
             [
                 "bankshort" =>"NUSA_TENGGARA_BARAT",
-                "bankname" =>"BPD Nusa Tenggara Barat(NTB)",
+                "name" =>"BPD Nusa Tenggara Barat(NTB)",
                 "code" =>"128"
             ],
             [
                 "bankshort" =>"NUSA_TENGGARA_BARAT_UUS",
-                "bankname" =>"BPD Nusa Tenggara Barat (NTB) UUS",
+                "name" =>"BPD Nusa Tenggara Barat (NTB) UUS",
                 "code" =>"1280"
             ],
             [
                 "bankshort" =>"NUSA_TENGGARA_TIMUR",
-                "bankname" =>"BPD Nusa Tenggara Timur(NTT)",
+                "name" =>"BPD Nusa Tenggara Timur(NTT)",
                 "code" =>"130"
             ],
             [
                 "bankshort" =>"NUSANTARA_PARAHYANGAN",
-                "bankname" =>"Bank Nusantara Parahyangan",
+                "name" =>"Bank Nusantara Parahyangan",
                 "code" =>"145"
             ],
             [
                 "bankshort" =>"OCBC",
-                "bankname" =>"Bank OCBC NISP",
+                "name" =>"Bank OCBC NISP",
                 "code" =>"028"
             ],
             [
                 "bankshort" =>"OCBC_UUS",
-                "bankname" =>"Bank OCBC NISP UUS",
+                "name" =>"Bank OCBC NISP UUS",
                 "code" =>"0280"
             ],
             [
                 "bankshort" =>"PANIN",
-                "bankname" =>"Bank Panin",
+                "name" =>"Bank Panin",
                 "code" =>"019"
             ],
             [
                 "bankshort" =>"PANIN_SYR",
-                "bankname" =>"Panin Dubai Syariah",
+                "name" =>"Panin Dubai Syariah",
                 "code" =>"517"
             ],
             [
                 "bankshort" =>"PAPUA",
-                "bankname" =>"Bank Papua",
+                "name" =>"Bank Papua",
                 "code" =>"132"
             ],
             [
                 "bankshort" =>"PERMATA",
-                "bankname" =>"Bank Permata",
+                "name" =>"Bank Permata",
                 "code" =>"013"
             ],
             [
                 "bankshort" =>"PERMATA_UUS",
-                "bankname" =>"Bank Permata UUS",
+                "name" =>"Bank Permata UUS",
                 "code" =>"0130"
             ],
             [
                 "bankshort" =>"PRIMA_MASTER",
-                "bankname" =>"Bank Prima Master",
+                "name" =>"Bank Prima Master",
                 "code" =>"520"
             ],
             [
                 "bankshort" =>"PUNDI",
-                "bankname" =>"BANK PUNDI INDONESIA",
+                "name" =>"BANK PUNDI INDONESIA",
                 "code" =>"584"
             ],
             [
                 "bankshort" =>"QNB_KESAWAN",
-                "bankname" =>"QNB KESAWAN",
+                "name" =>"QNB KESAWAN",
                 "code" =>"167"
             ],
             [
                 "bankshort" =>"QNB_INDONESIA",
-                "bankname" =>"QNB Indonesia",
+                "name" =>"QNB Indonesia",
                 "code" =>"1670"
             ],
             [
                 "bankshort" =>"OKE",
-                "bankname" =>"Bank Oke Indonesia",
+                "name" =>"Bank Oke Indonesia",
                 "code" =>"5260"
             ],
             [
                 "bankshort" =>"RABOBANK",
-                "bankname" =>"Rabobank International Indonesia",
+                "name" =>"Rabobank International Indonesia",
                 "code" =>"089"
             ],
             [
                 "bankshort" =>"RESONA",
-                "bankname" =>"Bank Resona Perdania",
+                "name" =>"Bank Resona Perdania",
                 "code" =>"047"
             ],
             [
                 "bankshort" =>"RIAU_DAN_KEPRI",
-                "bankname" =>"BPD Riau Dan Kepri",
+                "name" =>"BPD Riau Dan Kepri",
                 "code" =>"119"
             ],
             [
                 "bankshort" =>"RIAU_DAN_KEPRI_UUS",
-                "bankname" =>"BPD Riau Dan Kepri UUS",
+                "name" =>"BPD Riau Dan Kepri UUS",
                 "code" =>"1190"
             ],
             [
                 "bankshort" =>"ROYAL",
-                "bankname" =>"Blu/BCA Digital",
+                "name" =>"Blu/BCA Digital",
                 "code" =>"5010"
             ],
             [
                 "bankshort" =>"SAHABAT_PURBA_DANARTA",
-                "bankname" =>"BANK PURBA DANARTA",
+                "name" =>"BANK PURBA DANARTA",
                 "code" =>"5471"
             ],
             [
                 "bankshort" =>"SAHABAT_SAMPOERNA",
-                "bankname" =>"Bank Sahabat Sampoerna",
+                "name" =>"Bank Sahabat Sampoerna",
                 "code" =>"523"
             ],
             [
                 "bankshort" =>"SBI_INDONESIA",
-                "bankname" =>"Bank SBI Indonesia",
+                "name" =>"Bank SBI Indonesia",
                 "code" =>"498"
             ],
             [
                 "bankshort" =>"SHINHAN",
-                "bankname" =>"Bank Shinhan Indonesia",
+                "name" =>"Bank Shinhan Indonesia",
                 "code" =>"152"
             ],
             [
                 "bankshort" =>"SINARMAS",
-                "bankname" =>"Bank Sinarmas",
+                "name" =>"Bank Sinarmas",
                 "code" =>"153"
             ],
             [
                 "bankshort" =>"SINARMAS_UUS",
-                "bankname" =>"Bank Sinarmas UUS",
+                "name" =>"Bank Sinarmas UUS",
                 "code" =>"1530"
             ],
             [
                 "bankshort" =>"STANDARD_CHARTERED",
-                "bankname" =>"Standard Chartered Bank",
+                "name" =>"Standard Chartered Bank",
                 "code" =>"050"
             ],
             [
                 "bankshort" =>"SULAWESI",
-                "bankname" =>"Bank Sulteng",
+                "name" =>"Bank Sulteng",
                 "code" =>"134"
             ],
             [
                 "bankshort" =>"SULAWESI_TENGGARA",
-                "bankname" =>"Bank Sultra",
+                "name" =>"Bank Sultra",
                 "code" =>"135"
             ],
             [
                 "bankshort" =>"SULSELBAR",
-                "bankname" =>"Bank Sulselbar",
+                "name" =>"Bank Sulselbar",
                 "code" =>"126"
             ],
             [
                 "bankshort" =>"SULSELBAR_UUS",
-                "bankname" =>"Bank Sulselbar UUS",
+                "name" =>"Bank Sulselbar UUS",
                 "code" =>"1260"
             ],
             [
                 "bankshort" =>"SULUT",
-                "bankname" =>"BPD Sulawesi Utara(SulutGo)",
+                "name" =>"BPD Sulawesi Utara(SulutGo)",
                 "code" =>"127"
             ],
             [
                 "bankshort" =>"SUMATERA_BARAT",
-                "bankname" =>"BPD Sumatera Barat",
+                "name" =>"BPD Sumatera Barat",
                 "code" =>"118"
             ],
             [
                 "bankshort" =>"SUMATERA_BARAT_UUS",
-                "bankname" =>"BPD Sumatera Barat UUS",
+                "name" =>"BPD Sumatera Barat UUS",
                 "code" =>"1180"
             ],
             [
                 "bankshort" =>"NAGARI",
-                "bankname" =>"BANK NAGARI",
+                "name" =>"BANK NAGARI",
                 "code" =>"1181"
             ],
             [
                 "bankshort" =>"SUMSEL_BABEL",
-                "bankname" =>"BPD Sumsel Babel",
+                "name" =>"BPD Sumsel Babel",
                 "code" =>"120"
             ],
             [
                 "bankshort" =>"SUMSEL_DAN_BABEL",
-                "bankname" =>"Bank Sumsel Babel",
+                "name" =>"Bank Sumsel Babel",
                 "code" =>"1200"
             ],
             [
                 "bankshort" =>"SUMSEL_DAN_BABEL_UUS",
-                "bankname" =>"Bank Sumsel Babel UUS",
+                "name" =>"Bank Sumsel Babel UUS",
                 "code" =>"1201"
             ],
             [
                 "bankshort" =>"SUMUT",
-                "bankname" =>"Bank Sumut",
+                "name" =>"Bank Sumut",
                 "code" =>"117"
             ],
             [
                 "bankshort" =>"SUMUT_UUS",
-                "bankname" =>"Bank Sumut UUS",
+                "name" =>"Bank Sumut UUS",
                 "code" =>"1170"
             ],
             [
                 "bankshort" =>"MITSUI",
-                "bankname" =>"Bank Sumitomo Mitsui Indonesia",
+                "name" =>"Bank Sumitomo Mitsui Indonesia",
                 "code" =>"045"
             ],
             [
                 "bankshort" =>"TOKYO",
-                "bankname" =>"Bank of Tokyo",
+                "name" =>"Bank of Tokyo",
                 "code" =>"042"
             ],
             [
                 "bankshort" =>"UOB",
-                "bankname" =>"TMRW/Bank UOB Indonesia",
+                "name" =>"TMRW/Bank UOB Indonesia",
                 "code" =>"023"
             ],
             [
                 "bankshort" =>"VICTORIA_INTERNASIONAL",
-                "bankname" =>"Bank Victoria International",
+                "name" =>"Bank Victoria International",
                 "code" =>"566"
             ],
             [
                 "bankshort" =>"VICTORIA_SYR",
-                "bankname" =>"Bank Victoria Syariah",
+                "name" =>"Bank Victoria Syariah",
                 "code" =>"405"
             ],
             [
                 "bankshort" =>"WOORI",
-                "bankname" =>"Bank Woori Saudara",
+                "name" =>"Bank Woori Saudara",
                 "code" =>"212"
             ],
             [
                 "bankshort" =>"YUDHA_BHAKTI",
-                "bankname" =>"Neo Commerce/Bank Yudha Bhakti",
+                "name" =>"Neo Commerce/Bank Yudha Bhakti",
                 "code" =>"490"
             ],
             [
                 "bankshort" =>"DAERAH_ISTIMEWA_UUS",
-                "bankname" =>"BPD_Daerah_Istimewa_Yogyakarta_(DIY)",
+                "name" =>"BPD_Daerah_Istimewa_Yogyakarta_(DIY)",
                 "code" =>"1120"
             ],
             [
                 "bankshort" =>"CCB",
-                "bankname" =>"CCB Indonesia",
+                "name" =>"CCB Indonesia",
                 "code" =>"088"
             ],
             [
                 "bankshort" =>"RBS",
-                "bankname" =>"Royal Bank of Scotland (RBS)",
+                "name" =>"Royal Bank of Scotland (RBS)",
                 "code" =>"501"
             ],
             [
                 "bankshort" =>"OVO",
-                "bankname" =>"OVO",
+                "name" =>"OVO",
                 "code" =>"10001"
             ],
             [
                 "bankshort" =>"DANA",
-                "bankname" =>"DANA",
+                "name" =>"DANA",
                 "code" =>"10002"
             ],
             [
                 "bankshort" =>"GOPAY",
-                "bankname" =>"GOPAY",
+                "name" =>"GOPAY",
                 "code" =>"10003"
             ],
             [
                 "bankshort" =>"SHOPEEPAY",
-                "bankname" =>"SHOPEEPAY",
+                "name" =>"SHOPEEPAY",
                 "code" =>"10008"
             ],
             [
                 "bankshort" =>"LINKAJA",
-                "bankname" =>"LINKAJA",
+                "name" =>"LINKAJA",
                 "code" =>"10009"
             ]
         ],
         "WowPay_MYR"=>[
             [
                 "code" =>"AAAA",
-                "bankname" =>"Bank of america"
+                "name" =>"Bank of america"
             ],
             [
                 "code" =>"AFFIN",
-                "bankname" =>"Affin Bank"
+                "name" =>"Affin Bank"
             ],
             [
                 "code" =>"AGRO",
-                "bankname" =>"AGRO"
+                "name" =>"AGRO"
             ],
             [
                 "code" =>"ALLIANCE",
-                "bankname" =>"Alliance Bank Malaysia Berhad"
+                "name" =>"Alliance Bank Malaysia Berhad"
             ],
             [
                 "code" =>"AM",
-                "bankname" =>"AmBank"
+                "name" =>"AmBank"
             ],
             [
                 "code" =>"BAKO",
-                "bankname" =>"Bangkok Bank Malaysia"
+                "name" =>"Bangkok Bank Malaysia"
             ],
             [
                 "code" =>"BKRM",
-                "bankname" =>"Bank Rakyat"
+                "name" =>"Bank Rakyat"
             ],
             [
                 "code" =>"BMMB",
-                "bankname" =>"Bank Muamalate"
+                "name" =>"Bank Muamalate"
             ],
             [
                 "code" =>"BNPB",
-                "bankname" =>"BNP PARIBAS MALAYSIA"
+                "name" =>"BNP PARIBAS MALAYSIA"
             ],
             [
                 "code" =>"BSN",
-                "bankname" =>"BSN"
+                "name" =>"BSN"
             ],
             [
                 "code" =>"CCCC",
-                "bankname" =>"Bank of china"
+                "name" =>"Bank of china"
             ],
             [
                 "code" =>"CIMB",
-                "bankname" =>"CIMB Bank"
+                "name" =>"CIMB Bank"
             ],
             [
                 "code" =>"CITI",
-                "bankname" =>"Citibank Malaysia"
+                "name" =>"Citibank Malaysia"
             ],
             [
                 "code" =>"DEUT",
-                "bankname" =>"DEUTSCHE BANK"
+                "name" =>"DEUTSCHE BANK"
             ],
             [
                 "code" =>"EON",
-                "bankname" =>"EON Bank"
+                "name" =>"EON Bank"
             ],
             [
                 "code" =>"HONGLEONG",
-                "bankname" =>"Hong Leong Bank"
+                "name" =>"Hong Leong Bank"
             ],
             [
                 "code" =>"HSBC",
-                "bankname" =>"HSBC"
+                "name" =>"HSBC"
             ],
             [
                 "code" =>"ICBC",
-                "bankname" =>"INDUSTRIAL & COMMERCIAL BANK OF CHINA"
+                "name" =>"INDUSTRIAL & COMMERCIAL BANK OF CHINA"
             ],
             [
                 "code" =>"ISLAM",
-                "bankname" =>"Bank Islam Malaysia"
+                "name" =>"Bank Islam Malaysia"
             ],
             [
                 "code" =>"JPMB",
-                "bankname" =>"J.P. MORGAN CHASE BANK"
+                "name" =>"J.P. MORGAN CHASE BANK"
             ],
             [
                 "code" =>"KFHB",
-                "bankname" =>"KUWAIT FINANCE HOUSE"
+                "name" =>"KUWAIT FINANCE HOUSE"
             ],
             [
                 "code" =>"MAY",
-                "bankname" =>"Maybank"
+                "name" =>"Maybank"
             ],
             [
                 "code" =>"MBSB",
-                "bankname" =>"MBSB Bank Berhad"
+                "name" =>"MBSB Bank Berhad"
             ],
             [
                 "code" =>"MCCB",
-                "bankname" =>"CHINA CONST BK (M) BHD"
+                "name" =>"CHINA CONST BK (M) BHD"
             ],
             [
                 "code" =>"MIZU",
-                "bankname" =>"MIZUHO BANK"
+                "name" =>"MIZUHO BANK"
             ],
             [
                 "code" =>"MUFG",
-                "bankname" =>"MUFG BANK"
+                "name" =>"MUFG BANK"
             ],
             [
                 "code" =>"OCBC",
-                "bankname" =>"OCBC"
+                "name" =>"OCBC"
             ],
             [
                 "code" =>"PUBLIC",
-                "bankname" =>"Public Bank Berhad"
+                "name" =>"Public Bank Berhad"
             ],
             [
                 "code" =>"RHB",
-                "bankname" =>"RHB Bank"
+                "name" =>"RHB Bank"
             ],
             [
                 "code" =>"SCBM",
-                "bankname" =>"Standard Chartered Bank Malaysia"
+                "name" =>"Standard Chartered Bank Malaysia"
             ],
             [
                 "code" =>"SINA",
-                "bankname" =>"BANK SIMPANAN NASIONAL"
+                "name" =>"BANK SIMPANAN NASIONAL"
             ],
             [
                 "code" =>"SUMB",
-                "bankname" =>"SUMITOMO MITSUI BANKING"
+                "name" =>"SUMITOMO MITSUI BANKING"
             ],
             [
                 "code" =>"UOB",
-                "bankname" =>"UOB"
+                "name" =>"UOB"
             ]
         ],
         "NicePay_PHP"=>[
-            ["bankname"=>"The Bank of the Philippine Islands","code"=>"BPI"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"UNIONBANK"],
-            ["bankname"=>"BDO Bank","code"=>"BDO"],
-            ["bankname"=>" Asia United Bank","code"=>"AUB"],
-            ["bankname"=>"EastWestBank","code"=>"EAST_WEST"],
-            ["bankname"=>"Land Bank Of The Philippines","code"=>"LAND_BANK"],
-            ["bankname"=>"Malayan Banking Berhad","code"=>"MAYBANK"],
-            ["bankname"=>"Metrobank","code"=>"METRO_BANK"],
-            ["bankname"=>"Philippine National Bank","code"=>"PNB"],
-            ["bankname"=>"Philippine Bank of Communications","code"=>"PBC"],
-            ["bankname"=>"Philippine Savings Bank","code"=>"PSB"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"PB"],
-            ["bankname"=>"Philippine Veterans Bank","code"=>"PVB"],
-            ["bankname"=>"Philtrust Bank","code"=>"PTC"],
-            ["bankname"=>"Philippine Business Bank","code"=>"PBB"],
-            ["bankname"=>"Security Bank","code"=>"SECURITY_BANK"],
-            ["bankname"=>"United Coconut Planters Bank","code"=>"UCPB"],
-            ["bankname"=>"Rizal Commercial Banking Corp","code"=>"RCBC"],
-            ["bankname"=>"Rural Bank of Bayombong","code"=>"RB"],
-            ["bankname"=>"CTBC BANK","code"=>"CTBC"],
-            ["bankname"=>"China Bank Savings","code"=>"CBS"],
-            ["bankname"=>"China Banking Corp","code"=>"CBC"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"DBI"],
-            ["bankname"=>"Bank of Commerce","code"=>"BOC"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"DCPAY"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"CAMALIG_BANK"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"STARPAY"],
-            ["bankname"=>"Malayan Banking Berhad","code"=>"MALAYAN_BANK"],
-            ["bankname"=>"Emigrant Savings Bank","code"=>"ESB"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"SUN_BANK"],
-            ["bankname"=>"Sterling Bank","code"=>"STERLING_BANK"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"EASTWEST_RURAL"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"OMNIPAY"],
-            ["bankname"=>"Chinabank","code"=>"CHINABANK"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"ALL_BANK"],
-            ["bankname"=>"ING Bank","code"=>"ING_BANK"],
-            ["bankname"=>"UnionBank of the Philippines","code"=>"CEBUANA_BANK"],
-            ["bankname"=>"SeaBank","code"=>"SEA_BANK"],
+            ["name"=>"The Bank of the Philippine Islands","code"=>"BPI"],
+            ["name"=>"UnionBank of the Philippines","code"=>"UNIONBANK"],
+            ["name"=>"BDO Bank","code"=>"BDO"],
+            ["name"=>" Asia United Bank","code"=>"AUB"],
+            ["name"=>"EastWestBank","code"=>"EAST_WEST"],
+            ["name"=>"Land Bank Of The Philippines","code"=>"LAND_BANK"],
+            ["name"=>"Malayan Banking Berhad","code"=>"MAYBANK"],
+            ["name"=>"Metrobank","code"=>"METRO_BANK"],
+            ["name"=>"Philippine National Bank","code"=>"PNB"],
+            ["name"=>"Philippine Bank of Communications","code"=>"PBC"],
+            ["name"=>"Philippine Savings Bank","code"=>"PSB"],
+            ["name"=>"UnionBank of the Philippines","code"=>"PB"],
+            ["name"=>"Philippine Veterans Bank","code"=>"PVB"],
+            ["name"=>"Philtrust Bank","code"=>"PTC"],
+            ["name"=>"Philippine Business Bank","code"=>"PBB"],
+            ["name"=>"Security Bank","code"=>"SECURITY_BANK"],
+            ["name"=>"United Coconut Planters Bank","code"=>"UCPB"],
+            ["name"=>"Rizal Commercial Banking Corp","code"=>"RCBC"],
+            ["name"=>"Rural Bank of Bayombong","code"=>"RB"],
+            ["name"=>"CTBC BANK","code"=>"CTBC"],
+            ["name"=>"China Bank Savings","code"=>"CBS"],
+            ["name"=>"China Banking Corp","code"=>"CBC"],
+            ["name"=>"UnionBank of the Philippines","code"=>"DBI"],
+            ["name"=>"Bank of Commerce","code"=>"BOC"],
+            ["name"=>"UnionBank of the Philippines","code"=>"DCPAY"],
+            ["name"=>"UnionBank of the Philippines","code"=>"CAMALIG_BANK"],
+            ["name"=>"UnionBank of the Philippines","code"=>"STARPAY"],
+            ["name"=>"Malayan Banking Berhad","code"=>"MALAYAN_BANK"],
+            ["name"=>"Emigrant Savings Bank","code"=>"ESB"],
+            ["name"=>"UnionBank of the Philippines","code"=>"SUN_BANK"],
+            ["name"=>"Sterling Bank","code"=>"STERLING_BANK"],
+            ["name"=>"UnionBank of the Philippines","code"=>"EASTWEST_RURAL"],
+            ["name"=>"UnionBank of the Philippines","code"=>"OMNIPAY"],
+            ["name"=>"Chinabank","code"=>"CHINABANK"],
+            ["name"=>"UnionBank of the Philippines","code"=>"ALL_BANK"],
+            ["name"=>"ING Bank","code"=>"ING_BANK"],
+            ["name"=>"UnionBank of the Philippines","code"=>"CEBUANA_BANK"],
+            ["name"=>"SeaBank","code"=>"SEA_BANK"],
         ],
         "HtPay_PHP"=>[[
             "code" =>"GCASH",
-            "bankname" =>"GCASH"
+            "name" =>"GCASH"
         ],
             [
                 "code" =>"AUB",
-                "bankname" =>"Asia United Bank"
+                "name" =>"Asia United Bank"
             ],
             [
                 "code" =>"UnionBankEON",
-                "bankname" =>"UnionBank EON"
+                "name" =>"UnionBank EON"
             ],
             [
                 "code" =>"Starpay",
-                "bankname" =>"Starpay"
+                "name" =>"Starpay"
             ],
             [
                 "code" =>"EB",
-                "bankname" =>"Eastwest Bank"
+                "name" =>"Eastwest Bank"
             ],
             [
                 "code" =>"ESB",
-                "bankname" =>"Equicom Savings Bank"
+                "name" =>"Equicom Savings Bank"
             ],
             [
                 "code" =>"MB",
-                "bankname" =>"Malayan Bank"
+                "name" =>"Malayan Bank"
             ],
             [
                 "code" =>"ERB",
-                "bankname" =>"EastWest Rural Bank"
+                "name" =>"EastWest Rural Bank"
             ],
             [
                 "code" =>"PB",
-                "bankname" =>"Producers Bank"
+                "name" =>"Producers Bank"
             ],
             [
                 "code" =>"PBC",
-                "bankname" =>"Philippine Bank of Communications"
+                "name" =>"Philippine Bank of Communications"
             ],
             [
                 "code" =>"PBB",
-                "bankname" =>"Philippine Business Bank"
+                "name" =>"Philippine Business Bank"
             ],
             [
                 "code" =>"PNB",
-                "bankname" =>"Philippine National Bank"
+                "name" =>"Philippine National Bank"
             ],
             [
                 "code" =>"PSB",
-                "bankname" =>"Philippine Savings Bank"
+                "name" =>"Philippine Savings Bank"
             ],
             [
                 "code" =>"PTC",
-                "bankname" =>"Philippine Trust Company"
+                "name" =>"Philippine Trust Company"
             ],
             [
                 "code" =>"PVB",
-                "bankname" =>"Philippine Veterans Bank"
+                "name" =>"Philippine Veterans Bank"
             ],
             [
                 "code" =>"RBG",
-                "bankname" =>"Rural Bank of Guinobatan, Inc."
+                "name" =>"Rural Bank of Guinobatan, Inc."
             ],
             [
                 "code" =>"RCBC",
-                "bankname" =>"Rizal Commercial Banking Corporation"
+                "name" =>"Rizal Commercial Banking Corporation"
             ],
             [
                 "code" =>"RB",
-                "bankname" =>"Robinsons Bank"
+                "name" =>"Robinsons Bank"
             ],
             [
                 "code" =>"SBC",
-                "bankname" =>"Security Bank Corporation"
+                "name" =>"Security Bank Corporation"
             ],
             [
                 "code" =>"SBA",
-                "bankname" =>"Sterling Bank Of Asia"
+                "name" =>"Sterling Bank Of Asia"
             ],
             [
                 "code" =>"SSB",
-                "bankname" =>"Sun Savings Bank"
+                "name" =>"Sun Savings Bank"
             ],
             [
                 "code" =>"UCPBSAVINGSBANK",
-                "bankname" =>"UCPB SAVINGS BANK"
+                "name" =>"UCPB SAVINGS BANK"
             ],
             [
                 "code" =>"QCDBI",
-                "bankname" =>"Queen City Development Bank, Inc."
+                "name" =>"Queen City Development Bank, Inc."
             ],
             [
                 "code" =>"UCPB",
-                "bankname" =>"United Coconut Planters Bank"
+                "name" =>"United Coconut Planters Bank"
             ],
             [
                 "code" =>"WDBI",
-                "bankname" =>"Wealth Development Bank, Inc."
+                "name" =>"Wealth Development Bank, Inc."
             ],
             [
                 "code" =>"YSBI",
-                "bankname" =>"Yuanta Savings Bank, Inc."
+                "name" =>"Yuanta Savings Bank, Inc."
             ],
             [
                 "code" =>"GrabPay",
-                "bankname" =>"GrabPay Philippines"
+                "name" =>"GrabPay Philippines"
             ],
             [
                 "code" =>"BDOUI",
-                "bankname" =>"Banco De Oro Unibank, Inc."
+                "name" =>"Banco De Oro Unibank, Inc."
             ],
             [
                 "code" =>"BMI",
-                "bankname" =>"Bangko Mabuhay (A Rural Bank), Inc."
+                "name" =>"Bangko Mabuhay (A Rural Bank), Inc."
             ],
             [
                 "code" =>"BOC",
-                "bankname" =>"Bank Of Commerce"
+                "name" =>"Bank Of Commerce"
             ],
             [
                 "code" =>"CTBC",
-                "bankname" =>"CTBC Bank (Philippines), Inc."
+                "name" =>"CTBC Bank (Philippines), Inc."
             ],
             [
                 "code" =>"Chinabank",
-                "bankname" =>"Chinabank"
+                "name" =>"Chinabank"
             ],
             [
                 "code" =>"CBS",
-                "bankname" =>"Chinabank Savings"
+                "name" =>"Chinabank Savings"
             ],
             [
                 "code" =>"CBC",
-                "bankname" =>"Chinatrust Banking Corp"
+                "name" =>"Chinatrust Banking Corp"
             ],
             [
                 "code" =>"ALLBANK",
-                "bankname" =>"ALLBANK (A Thrift Bank), Inc."
+                "name" =>"ALLBANK (A Thrift Bank), Inc."
             ],
             [
                 "code" =>"BNBI",
-                "bankname" =>"BDO Network Bank, Inc."
+                "name" =>"BDO Network Bank, Inc."
             ],
             [
                 "code" =>"BRBI",
-                "bankname" =>"Binangonan Rural Bank Inc"
+                "name" =>"Binangonan Rural Bank Inc"
             ],
             [
                 "code" =>"Camalig",
-                "bankname" =>"Camalig Bank"
+                "name" =>"Camalig Bank"
             ],
             [
                 "code" =>"DBI",
-                "bankname" =>"Dungganun Bank, Inc."
+                "name" =>"Dungganun Bank, Inc."
             ],
             [
                 "code" =>"GlobeGcash",
-                "bankname" =>"Globe Gcash"
+                "name" =>"Globe Gcash"
             ],
             [
                 "code" =>"CLRBI",
-                "bankname" =>"Cebuana Lhuillier Rural Bank, Inc."
+                "name" =>"Cebuana Lhuillier Rural Bank, Inc."
             ],
             [
                 "code" =>"ISLABANK",
-                "bankname" =>"ISLA Bank (A Thrift Bank), Inc."
+                "name" =>"ISLA Bank (A Thrift Bank), Inc."
             ],
             [
                 "code" =>"LOTP",
-                "bankname" =>"Landbank of the Philippines"
+                "name" =>"Landbank of the Philippines"
             ],
             [
                 "code" =>"MPI",
-                "bankname" =>"Maybank Philippines, Inc."
+                "name" =>"Maybank Philippines, Inc."
             ],
             [
                 "code" =>"MBATC",
-                "bankname" =>"Metropolitan Bank and Trust Co"
+                "name" =>"Metropolitan Bank and Trust Co"
             ],
             [
                 "code" =>"Omnipay",
-                "bankname" =>"Omnipay"
+                "name" =>"Omnipay"
             ],
             [
                 "code" =>"PRBI",
-                "bankname" =>"Partner Rural Bank (Cotabato), Inc."
+                "name" =>"Partner Rural Bank (Cotabato), Inc."
             ],
             [
                 "code" =>"PPI",
-                "bankname" =>"Paymaya Philippines, Inc."
+                "name" =>"Paymaya Philippines, Inc."
             ],
             [
                 "code" =>"AlliedBankingCorp",
-                "bankname" =>"Allied Banking Corp"
+                "name" =>"Allied Banking Corp"
             ],
             [
                 "code" =>"ING",
-                "bankname" =>"ING Bank N.V."
+                "name" =>"ING Bank N.V."
             ],
             [
                 "code" =>"BDBIASB",
-                "bankname" =>"BPI Direct Banko, Inc., A Savings Bank"
+                "name" =>"BPI Direct Banko, Inc., A Savings Bank"
             ],
             [
                 "code" =>"CSB",
-                "bankname" =>"Citystate Savings Bank Inc."
+                "name" =>"Citystate Savings Bank Inc."
             ],
             [
                 "code" =>"BPI",
-                "bankname" =>"Bank Of The Philippine Islands"
+                "name" =>"Bank Of The Philippine Islands"
             ]]
     ] ;
     return isset($list[$name."_".$currency]) ? $list[$name."_".$currency] : [];
