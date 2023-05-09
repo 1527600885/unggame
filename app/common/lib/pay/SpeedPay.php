@@ -10,6 +10,7 @@ class SpeedPay extends Pay
     protected $merchantId = "PM10178";
     protected $channel="spay";
     protected $callbackUrl = "/api/notify.speedpay/callback";
+    protected $transferback = "/api/notify.speedpay/transferback";
     protected $apiUrl = "https://spayin.com";
     public function run($type,$params)
     {
@@ -37,7 +38,7 @@ class SpeedPay extends Pay
         $domain =  request()->domain();
         $data = [
             "amount" =>$param['transfer_amount'],
-            "callbackUrl" =>$domain.$this->callbackUrl,
+            "callbackUrl" =>$domain.$this->transferback,
             "cardNo" =>$param['cardNo'],
             "ifsc" =>$param['ifsc'],
             "merchantId" =>$this->merchantId,
