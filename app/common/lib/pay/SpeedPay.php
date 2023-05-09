@@ -27,7 +27,7 @@ class SpeedPay extends Pay
         $data['sign'] = strtoupper($sign);
         $result_json = curl_json($this->apiUrl."/api/payment/recharge",$data);
         $result = json_decode($result_json,true);
-        if($result['code'] == 1){
+        if($result['code'] != 1){
             return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['data']];
         }else{
             echo $result_json;die();
