@@ -26,7 +26,7 @@ class NicePay extends Pay
         $param["sign"] = self::sign($param,self::$key);
         $ret_code = self::fetch_page_json($this->api_server."/api/recharge",$param);
         $ret = json_decode($ret_code,true);
-        if($ret['err'] == 0)
+        if($ret['err'] != 0)
         {
             throw new Exception($ret['err_msg']);
         }
