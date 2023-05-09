@@ -12,6 +12,7 @@ class NicePay extends Pay
     private  $app = "MCH9350";
     private static $key = "f0b094e9ae89d299d67e5203c37795ae";
     private  $api_server = "http://merchant.nicepay.pro";
+    protected $transferback = "/api/notify.nicepay/transferback";
     public  function run($type, $params)
     {
         $domain =  request()->domain();
@@ -33,6 +34,7 @@ class NicePay extends Pay
     }
     public function transfer($data)
     {
+        $domain =  request()->domain();
         $param = array(
             'app_key'=>$this->app,
             'balance'=>$data['transfer_amount'],//请求代付的金额
@@ -40,7 +42,7 @@ class NicePay extends Pay
             'name'=>$data['receive_name'],
             'bank'=>$data['bank_code'],
             'ord_id'=>$data['mch_transferId'],//代付订单号，用于查询
-            'notify_url'=>''
+            'notify_url'=>$domain.$this->transferback
         );
 
         $param["sign"] = self::sign($param,self::$key);
