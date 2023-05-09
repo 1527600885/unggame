@@ -135,7 +135,12 @@ class MkWithdrawal extends BaseController
             "receive_name"=>$other['receive name'] ?? '',
             "receive_account"=>$other['card number'] ?? '',
         ]);
-        $pay->transfer($transData);
+        try{
+            $pay->transfer($transData);
+        }catch (\Exception $e){
+            return json(["status" => "failed", "message" => $e->getMessage()]);
+        }
+
         $data->online_status = 1;
         $data->status_time = time();
         $data->merTransferId = $mch_transferId;
