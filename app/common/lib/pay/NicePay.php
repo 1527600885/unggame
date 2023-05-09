@@ -4,6 +4,8 @@
 namespace app\common\lib\pay;
 
 
+use think\Exception;
+
 class NicePay extends Pay
 {
     private  $notifyUrl = "/api/notify.nicepay/callback";
@@ -18,10 +20,15 @@ class NicePay extends Pay
             'balance'=>$params['trade_amount'],//支付金额，元
             'notify_url'=>$domain.$this->notifyUrl."?currency_type=".$this->currency_type,//回调地址
             'ord_id'=>$params['mch_order_no'],//商户自己的订单号
+            'p_method'=>'gcash'
         );
         $param["sign"] = self::sign($param,self::$key);
         $ret_code = self::fetch_page_json($this->api_server."/api/recharge",$param);
         $ret = json_decode($ret_code,true);
+        if($ret['err'] == 0)
+        {
+            throw new Exception($ret['err_msg']);
+        }
         return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$ret['url']];
     }
     public function transfer($data)

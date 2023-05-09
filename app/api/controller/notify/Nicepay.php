@@ -25,4 +25,23 @@ class Nicepay extends Pay
         }
 
     }
+    public function transferback()
+    {
+        $result = input("param.");
+        $file = fopen(__DIR__."/1.txt","w");
+        fwrite($file,json_encode($result));
+        fclose($file);
+        try{
+            if(\app\common\lib\pay\NicePay::check_sign($result)){
+                $online_status = $result['status'] == 1 ? 2:3;
+                $this->updateTransferOrder($result['order'],$online_status);
+                echo 'success';die();
+            }else{
+                echo "fail";
+            }
+        }catch(\Exception $e){
+
+
+        }
+    }
 }

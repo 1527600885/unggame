@@ -6,8 +6,8 @@ namespace app\common\lib\pay;
 
 class SpeedPay extends Pay
 {
-    public $secret = "c44b0631bb6b4ae2a189f29951351e90";
-    protected $merchantId = "PM10178";
+    public $secret = "29efad039f90402f86e31308ab1f9da7";
+    protected $merchantId = "PM100999";
     protected $channel="spay";
     protected $callbackUrl = "/api/notify.speedpay/callback";
     protected $transferback = "/api/notify.speedpay/transferback";
@@ -45,7 +45,7 @@ class SpeedPay extends Pay
             "merchantOrderId" =>$param['mch_transferId'],
             "param" =>$param['param'],
             "personName" =>$param['personName'],
-            "timeMillis" =>time()
+            "timeMillis" =>bcmul(microtime(true),1000)
         ];
         $sign = $this->getSign($data,$this->secret,"secret");
         $data['sign'] = strtoupper($sign);
