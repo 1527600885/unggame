@@ -37,7 +37,7 @@ class Pay
     }
     public function updateTransferOrder($orderno,$online_status)
     {
-        $withdrawl = Withdrawal::where("merTransferId",$orderno)->where("online_status",0)->find();
+        $withdrawl = Withdrawal::where("merTransferId",$orderno)->where("online_status",1)->find();
         if($withdrawl){
             $withdrawl->online_status = $online_status;
             $withdrawl->pay_time = time();
