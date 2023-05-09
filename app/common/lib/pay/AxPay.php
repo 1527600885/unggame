@@ -9,6 +9,7 @@ class AxPay extends Pay
     protected $AccessKey = "MX8ZY9JBeoFn9GVapP46C2lp5a5";
     protected $PayChannelId = "103";
     protected $CallbackUrl = "/api/notify.axpay/callback";
+    protected $payBackUrl = "/api/notify.axpay/transferback";
     public $SecretKey = "JkKEA3eNZ2TlAeBbKpeJHR52znkJ5XhqkJBw2mKP";
     protected $apiUrl = "https://merchant.axpay.vip";
     public  function run($type, $params)
@@ -44,7 +45,7 @@ class AxPay extends Pay
             "OrderNo"=>$param['mch_transferId'],
             "Amount"=>$param['transfer_amount'],
             "Ext"=>$this->currency_type,
-            "CallbackUrl"=>$domain.$this->CallbackUrl,//回调地址,
+            "CallbackUrl"=>$domain.$this->payBackUrl,//回调地址,
             "Payload"=>"IndiaBank_AccountName={$param['receive_name']}&IndiaBank_AccountNo={$param['receive_account']}&IndiaBank_BankName=SBI&IndiaBank_Ifsc={$param['ifsc']}"
         ];
         $sign = $this->getSign($data,$this->SecretKey,"SecretKey");

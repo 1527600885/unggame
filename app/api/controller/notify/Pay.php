@@ -5,7 +5,9 @@ namespace app\api\controller\notify;
 
 
 use app\api\model\Order as Ordermodel;
+use app\api\model\User;
 use app\api\model\User as UserModel;
+use app\api\model\Withdrawal;
 use think\facade\Db;
 
 class Pay
@@ -32,5 +34,18 @@ class Pay
             }
         }
 
+    }
+    public function updateTransferOrder($orderno,$online_status)
+    {
+        $withdrawl = Withdrawal::where("merTransferId",$orderno)->find();
+        $withdrawl->online_status = $online_status;
+        $withdrawl->pay_time = time();
+        $withdrawl->save();
+        if( $withdrawl->online_status == 3){
+            $userInfo =  User::where("id",$withdrawl->uid)->find();
+            $content='{capital.withdrawalfailed}'.$withdrawl->amount.'{capital.money}';
+            $admin_content='用户'.$userInfo->nickname.'提现失败,退款$'.$withdrawl->amount;
+            capital_flow($withdrawl->uid,$withdrawl->id,11,1,$withdrawl->amount,$userInfo->balance,$content,$admin_content);
+        }
     }
 }
