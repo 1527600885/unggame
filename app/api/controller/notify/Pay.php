@@ -44,6 +44,7 @@ class Pay
         if( $withdrawl->online_status == 3){
             $userInfo =  User::where("id",$withdrawl->uid)->find();
             $userInfo->balance = bcadd($userInfo->balance."",$withdrawl->amount."",4);
+            $userInfo->save();
             $content='{capital.withdrawalfailed}'.$withdrawl->amount.'{capital.money}';
             $admin_content='用户'.$userInfo->nickname.'提现失败,退款$'.$withdrawl->amount;
             capital_flow($withdrawl->uid,$withdrawl->id,11,1,$withdrawl->amount,$userInfo->balance,$content,$admin_content);
