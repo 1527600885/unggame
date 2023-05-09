@@ -9,6 +9,7 @@ class RainbowPay extends Pay
     protected $mchId = "2z594272";
     protected $passageId = '101';
     private  $notifyUrl = "/api/notify.rainbowpay/callback";
+    protected $transferback = "/api/notify.rainbowpay/transferback";
     private $key = "cf7b2d5be4074731b51db5ce7624a208";
     private $apiUrl = "http://apis.rainbowpay.xyz/client";
     public  function run($type, $params)
@@ -47,7 +48,7 @@ class RainbowPay extends Pay
             "account"=>$param['receive_account'],
             "userName"=>$param['receive_name'],
             "amount"=>$param['transfer_amount'],
-            "notifyUrl"=>"",
+            "notifyUrl"=>$domain.$this->transferback,//回调地址,
         ];
         $sign = $this->getSign($data,$this->key);
         $data['sign'] = $sign;
