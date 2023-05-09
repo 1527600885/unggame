@@ -37,17 +37,21 @@ class Pay
     }
     public function updateTransferOrder($orderno,$online_status)
     {
-        $withdrawl = Withdrawal::where("merTransferId",$orderno)->find();
-        $withdrawl->online_status = $online_status;
-        $withdrawl->pay_time = time();
-        $withdrawl->save();
-        if( $withdrawl->online_status == 3){
-            $userInfo =  User::where("id",$withdrawl->uid)->find();
-            $userInfo->balance = bcadd($userInfo->balance."",$withdrawl->amount."",4);
-            $userInfo->save();
-            $content='{capital.withdrawalfailed}'.$withdrawl->amount.'{capital.money}';
-            $admin_content='用户'.$userInfo->nickname.'提现失败,退款$'.$withdrawl->amount;
-            capital_flow($withdrawl->uid,$withdrawl->id,11,1,$withdrawl->amount,$userInfo->balance,$content,$admin_content);
+        $withdrawl = Withdrawal::where("merTransferId",$orderno)->where("online_status",0)->find();
+        if($withdrawl){
+            $withdrawl->online_status = $online_status;
+            $withdrawl->pay_time = time();
+            $withdrawl->status = 1;
+            $withdrawl->save();
+            if( $withdrawl->online_status == 3){
+                $userInfo =  User::where("id",$withdrawl->uid)->find();
+                $userInfo->balance = bcadd($userInfo->balance."",$withdrawl->amount."",4);
+                $userInfo->save();
+                $content='{capital.withdrawalfailed}'.$withdrawl->amount.'{capital.money}';
+                $admin_content='用户'.$userInfo->nickname.'提现失败,退款$'.$withdrawl->amount;
+                capital_flow($withdrawl->uid,$withdrawl->id,11,1,$withdrawl->amount,$userInfo->balance,$content,$admin_content);
+            }
         }
+
     }
 }
