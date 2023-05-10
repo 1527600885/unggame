@@ -9,7 +9,7 @@ class Toppay extends Pay
     public function callback()
     {
         $result = json_decode(file_get_contents('php://input'), true);
-        $file = fopen(__DIR__."/1.txt","w");
+        $file = fopen(__DIR__."/3.txt","w");
         fwrite($file,json_encode($result));
         fclose($file);
         $model = new \app\common\lib\pay\TopPay("");

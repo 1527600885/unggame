@@ -82,7 +82,7 @@ class Withdrawal extends BaseController
 		    $rate = getCoinMarketCap("USD",$input['currency']);
 		    $input['amount'] = bcmul($input['amount']."",$rate."",8);
         }
-		$payment_name  = $input['payment_name'] ?: \app\api\model\Payment::where("id",$input['id'])->value("name");
+		$payment_name  = $input['payment_name'] ?? \app\api\model\Payment::where("id",$input['id'])->value("name");
 		$w_info=$this->setwithdrawal_info($input);
 		if($w_info==false){
 			$this->error('unknown error!');

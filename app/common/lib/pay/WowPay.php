@@ -31,7 +31,8 @@ class WowPay extends Pay
             "MYR"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"300777778",
-                "key"=>"07c0ac428b434ff39aa6bc97012271e7"
+                "key"=>"07c0ac428b434ff39aa6bc97012271e7",
+                "dfkey"=>"MNKXYOWGVOMKNELNYBYICAVQDUBC5DM7"
             ],
             "NGN"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",

@@ -9,7 +9,7 @@ class Rainbowpay extends Pay
     public function callback()
     {
         $result = input("param.");
-        $file = fopen(__DIR__."/1.txt","w");
+        $file = fopen(__DIR__."/3.txt","w");
         fwrite($file,json_encode($result));
         fclose($file);
         $currency_type = $result['otherData'];
@@ -28,7 +28,7 @@ class Rainbowpay extends Pay
     public function transferback()
     {
         $result = input("param.");
-        $file = fopen(__DIR__."/1.txt","w");
+        $file = fopen(__DIR__."/3.txt","w");
         fwrite($file,json_encode($result));
         fclose($file);
         try{
