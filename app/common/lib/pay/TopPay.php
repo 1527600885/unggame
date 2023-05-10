@@ -28,8 +28,14 @@ class TopPay extends Pay
         );
         $sign = $this->getSigns($data);
         $data['sign'] = $sign;
-        $result_json = curl_json($this->apiUrl."/gateway/pay",$data);
-        echo json_encode($result_json);die();
+        $result_json = curl_json($this->apiUrl."/gateway/prepaidOrder",$data);
+        $result = json_decode($result_json,true);
+        if(isset($result['platRespCode'] ) && $result['platRespCode'] == 'SUCCESS')
+        {
+            return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result['url']];
+        }else{
+            throw new \Exception($result['message']);
+        }
     }
     public function getSigns($params)
     {
@@ -105,7 +111,7 @@ class TopPay extends Pay
         $sign = $this->getSigns($data);
         $data['sign'] = $sign;
 
-        $result_json = curl_json($this->apiUrl."/gateway/prepaidOrder",$data);
+        $result_json = curl_json($this->apiUrl."/gateway/cash",$data);
         echo json_encode($result_json);die();
     }
 }
