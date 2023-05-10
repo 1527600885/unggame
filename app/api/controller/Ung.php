@@ -459,35 +459,41 @@ class Ung extends BaseController
 	    if($password != $userdata['pay_paasword']){
 	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
 	    }
-	    if($input['pledgenum'] >$userinfo['num'] || bcadd($userdata['pledgenum'],$input['pledgenum'])>$userinfo['num'] || $input['pledgenum']<100){
+	    if($input['pledgenum'] >$userdata['num'] || bcadd($userdata['pledgenum'],$input['pledgenum'],5)>$userdata['num'] || $input['pledgenum']<0){
 	        $this->error(lang('user.pay_ungnum_error'),['code'=>2]);
 	    }
 	    // 生成唯一订单号
         $subzm=['F','B','H'];
-        $orderno = $subzm[rand(0,2)].date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        $orderno = 'Z'.date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
         $data['uid'] = $userinfo['id'];
-        $data['pledgetotalungnum'] = bcadd($userdata['pledgenum'],$input['pledgenum']);
-        $data['update_time'] = date();
+        $data['pledgenum'] = bcadd($userdata['pledgenum'],$input['pledgenum'],5);
+        $data['update_time'] = time();
         $pledgedata['uid'] = $userinfo['id'];
-        $pledgedata['pledgetotalungnum'] = bcadd($userdata['pledgenum'],$input['pledgenum']);
+        $pledgedata['pledgetotalungnum'] = bcadd($userdata['pledgenum'],$input['pledgenum'],5);
+        // var_dump($userdata['pledgenum']);
+        // var_dump($data['pledgenum']);
+        // die;
         $pledgedata['pledgenum'] = $input['pledgenum'];//增加数量
-        $pledgedata['create_time'] = date();
+        $pledgedata['create_time'] = time();
         $pledgedata['orderno'] = $orderno;
         $pledgedata['type'] = 1;
-        $pledgedata['talungnum'] = $userdata['ung'];
+        $pledgedata['talungnum'] = $userdata['num'];
         Db::startTrans();
         try{
         	// 修改ung表
-        	Db::name("ung_user")->update($data);
+        	Db::name("ung_user")->where('uid',$userinfo['id'])->update($data);
         	// 插入质押记录表
-        	Db::name("pledge")->insert($pledgedata);
+        	$a = Db::name("pledge")->insert($pledgedata);
+        	Db::commit();
         	// 修改redis数量
 		    $redis = (new Redis())->getRedis();
-		    $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',$data['pledgetotalungnum']);
+		    $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',$data['pledgenum']);
             $redis->sAdd('ung_user_id',$userinfo['id']);
-        	Db::commit();
+            $this->success(lang('system.success'));
+        	
         }catch(Exception $e){
         	Db::rollback();
+        	$this->error(lang('user.emailerror'));
         }
        
 	}
@@ -512,35 +518,37 @@ class Ung extends BaseController
 	    if($password != $userdata['pay_paasword']){
 	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
 	    }
-	    if($input['releasenum'] >$userinfo['pledgenum']  || $input['releasenum']<=0){
+	    if($input['releasenum'] >$userdata['pledgenum']  || $input['releasenum']<=0){
 	        $this->error(lang('user.pay_ungnum_error'),['code'=>2]);
 	    }
 	      // 生成唯一订单号
         $subzm=['F','B','H'];
         $orderno = $subzm[rand(0,2)].date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
         $data['uid'] = $userinfo['id'];
-        $data['releasenum'] = bcmul($userdata['pledgenum'],$input['pledgenum']);
-        $data['update_time'] = date();
+        $data['pledgenum'] = bcmul($userdata['pledgenum'],$input['pledgenum']);
+        $data['update_time'] = time();
         $pledgedata['uid'] = $userinfo['id'];
         $pledgedata['pledgetotalungnum'] = $data['releasenum'];
         $pledgedata['pledgenum'] = $input['pledgenum'];//增加数量
-        $pledgedata['create_time'] = date();
+        $pledgedata['create_time'] = time();
         $pledgedata['orderno'] = $orderno;
         $pledgedata['type'] = 1;
-        $pledgedata['talungnum'] = $userdata['ung'];
+        $pledgedata['talungnum'] = $userdata['num'];
         Db::startTrans();
         try{
         	// 修改ung表
-        	Db::name("ung_user")->update($data);
+        	Db::name("ung_user")->where('id',$userinfo['data'])->update($data);
         	// 插入质押记录表
         	Db::name("pledge")->insert($pledgedata);
         	// 修改redis数量
 		    $redis = (new Redis())->getRedis();
 		    $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',$data['releasenum']);
             $redis->sAdd('ung_user_id',$userinfo['id']);
+            $this->success(lang('system.success'));
         	Db::commit();
         }catch(Exception $e){
         	Db::rollback();
+        	$this->error(lang('user.emailerror'));
         }
 	}
 	// 分红规则--由系统自动托管运行
