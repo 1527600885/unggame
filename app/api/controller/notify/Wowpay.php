@@ -40,15 +40,15 @@ class Wowpay extends Pay
             $withdrawl = Withdrawal::where("merTransferId",$result['merTransferId'])->find();
             $currency = $withdrawl['currency'];
             $wowPay = new \app\common\lib\pay\WowPay("");
-            $key =  $wowPay->payConfig['debug'] ?  $wowPay->payConfig['testconfig'][$currency]['key'] : $wowPay->payConfig['config'][$currency]["key"];
+            $key =  $wowPay->payConfig['debug'] ?  $wowPay->payConfig['testconfig'][$currency]['dfkey'] : $wowPay->payConfig['config'][$currency]["dfkey"];
             if($sign == $wowPay->getSign($result,$key)){
                 if($result['tradeResult'] == 1 || $result['tradeResult'] == 2){
                     $online_status = $result['tradeResult'] == 1 ? 2 : 3;
                     $this->updateTransferOrder($result['merTransferId'],$online_status);
                 }
             }
-            echo "success";
+            echo "success";die();
         }
-        echo "success";
+        echo "success";die();
     }
 }

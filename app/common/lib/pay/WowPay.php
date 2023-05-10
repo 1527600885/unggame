@@ -17,7 +17,7 @@ class WowPay extends Pay
      * @var array
      */
     public $payConfig = [
-        "debug"=>true,
+        "debug"=>false,
 
         "testconfig"=>[
             "MYR"=>[
