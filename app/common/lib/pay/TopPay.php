@@ -10,6 +10,7 @@ class TopPay extends Pay
     private $public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCjAy2Bm4PgYZvpGrdmsjB6X7dUh6lOvEBrQiEyGfKD3gVeZuTURcE+camhvO1dO2jU7V5BHnBWHCAsPZd0ghb+c9vaGi3wgb33i71stayf7VUclKX2adSgjcGy6xO8r2YN2NiEI9jU/8cZUtUhrr+N2DEo0Uz8+lt0FSTnlrjW2QIDAQAB";
     private $merchantCode = "S820230411102156000005";
     private $CallbackUrl = "/api/notify.toppay/callback";
+    private $transferback = "/api/notify.toppay/transferback";
     private $apiUrl = "https://id-openapi.toppay.asia";
     public function run($type,$params)
     {
@@ -105,7 +106,7 @@ class TopPay extends Pay
             'name' => $params['realname'],
             'mobile' => $params['mobile'],
             'email' => $params['email'],
-            'notifyUrl' => $domain.$this->CallbackUrl,
+            'notifyUrl' => $domain.$this->tr,
             'productDetail'=> "withdrawal",
             'description' => "withdrawal"
         );
