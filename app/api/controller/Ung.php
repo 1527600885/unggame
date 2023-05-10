@@ -460,7 +460,7 @@ class Ung extends BaseController
 	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
 	    }
 	    if($input['pledgenum'] >$userinfo['num'] || bcadd($userdata['pledgenum'],$input['pledgenum'])>$userinfo['num'] || $input['pledgenum']<100){
-	        $this->error(lang('user.pay_ungnm_error'),['code'=>2]);
+	        $this->error(lang('user.pay_ungnum_error'),['code'=>2]);
 	    }
 	    // 生成唯一订单号
         $subzm=['F','B','H'];
@@ -513,7 +513,7 @@ class Ung extends BaseController
 	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
 	    }
 	    if($input['releasenum'] >$userinfo['pledgenum']  || $input['releasenum']<=0){
-	        $this->error(lang('user.pay_ungnm_error'),['code'=>2]);
+	        $this->error(lang('user.pay_ungnum_error'),['code'=>2]);
 	    }
 	      // 生成唯一订单号
         $subzm=['F','B','H'];
