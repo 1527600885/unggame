@@ -295,6 +295,7 @@ class User  extends BaseController
                 }
 				$this->request->userInfo['safetyindex']=$safetyindex;
 				$this->request->userInfo['ung_num'] = UngUser::where("uid",$this->request->userInfo['id'])->value('num') ?? 0;
+				$this->request->userInfo['ledgenum'] = UngUser::where("uid",$this->request->userInfo['id'])->value('ledgenum') ?? 0;
 				$this->request->userInfo['ung_rate'] = UngSet::value("interest");
                 $this->request->userInfo['ung_price'] = bcmul($this->request->userInfo['ung_num'],UngSet::value('price'),3);
 				$this->success(lang('success'),$this->request->userInfo);
