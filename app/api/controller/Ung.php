@@ -54,6 +54,8 @@ class Ung extends BaseController
     		$ungsetdata['balance'] = $userInfo['balance'];//用户余额
     		$ungsetdata['buylimit'] = $ungone->buylimit;//最低购买额度
     		$ungsetdata['price'] = $ungone->price;//最低购买额度
+    		$ungsetdata['currency_num'] = $ungone->currency_num;//ung总数量
+    		$ungsetdata['distributed'] = $ungone->distributed;//已派发分红
     // 		累计股息金额
             $userdvdall = Db::name("ung_user_divd")->where("userid",$userInfo['id'])->value("SUM(CAST(divdmoney as DECIMAL (18,2))) as divdmoney");
             if($userdvdall){
@@ -459,7 +461,7 @@ class Ung extends BaseController
 	    if($password != $userdata['pay_paasword']){
 	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
 	    }
-	    if($input['pledgenum'] >$userdata['num'] || bcadd($userdata['pledgenum'],$input['pledgenum'],5)>$userdata['num'] || $input['pledgenum']<0){
+	    if($input['pledgenum'] >$userdata['num'] || bcadd($userdata['pledgenum'],$input['pledgenum'],5)>$userdata['num'] || $input['pledgenum']<0.00001){
 	        $this->error(lang('user.pay_ungnum_error'),['code'=>2]);
 	    }
 	    // 生成唯一订单号
@@ -521,31 +523,33 @@ class Ung extends BaseController
 	    if($input['releasenum'] >$userdata['pledgenum']  || $input['releasenum']<=0){
 	        $this->error(lang('user.pay_ungnum_error'),['code'=>2]);
 	    }
+	   
 	      // 生成唯一订单号
         $subzm=['F','B','H'];
-        $orderno = $subzm[rand(0,2)].date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        $orderno = 'Z'.date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
         $data['uid'] = $userinfo['id'];
-        $data['pledgenum'] = bcmul($userdata['pledgenum'],$input['pledgenum']);
+        $data['pledgenum'] = bcsub($userdata['pledgenum'],$input['releasenum'],5);
         $data['update_time'] = time();
         $pledgedata['uid'] = $userinfo['id'];
-        $pledgedata['pledgetotalungnum'] = $data['releasenum'];
-        $pledgedata['pledgenum'] = $input['pledgenum'];//增加数量
+        $pledgedata['pledgetotalungnum'] = $data['pledgenum'];
+        $pledgedata['pledgenum'] = $input['releasenum'];//增加数量
         $pledgedata['create_time'] = time();
         $pledgedata['orderno'] = $orderno;
-        $pledgedata['type'] = 1;
+        $pledgedata['type'] = 2;
         $pledgedata['talungnum'] = $userdata['num'];
         Db::startTrans();
         try{
         	// 修改ung表
-        	Db::name("ung_user")->where('id',$userinfo['data'])->update($data);
+        	Db::name("ung_user")->where('uid',$userinfo['id'])->update($data);
         	// 插入质押记录表
         	Db::name("pledge")->insert($pledgedata);
+        	Db::commit();
         	// 修改redis数量
 		    $redis = (new Redis())->getRedis();
-		    $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',$data['releasenum']);
+		    $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',$data['pledgenum']);
             $redis->sAdd('ung_user_id',$userinfo['id']);
             $this->success(lang('system.success'));
-        	Db::commit();
+        	
         }catch(Exception $e){
         	Db::rollback();
         	$this->error(lang('user.emailerror'));
@@ -557,7 +561,17 @@ class Ung extends BaseController
 	}
     public function divdList()
     {
-       $lists = UngUserDivd::where("userid",$this->request->userInfo['id'])->order("id desc")->paginate(10);
+       $lists = UngUserDivd::where("userid",$this->request->userInfo['id'])->order("id desc")->paginate(20)->each(function($item){
+           $item['create_time'] = date('Y-m-d', $item['create_time']);
+           return $item;
+       });
+       $this->success("success",$lists);
+    }
+    public function pledges(){ 
+        $lists = Db::name('pledge')->where("uid",$this->request->userInfo['id'])->order("id desc")->paginate(20)->each(function($item){
+           $item['create_time'] = date('Y-m-d', $item['create_time']);
+           return $item;
+       });
        $this->success("success",$lists);
     }
     public function userLog()
