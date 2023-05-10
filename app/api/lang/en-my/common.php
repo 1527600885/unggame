@@ -83,6 +83,7 @@ return array(
         'pay_paasword_empty'=>'Payment password is empty',
         'UNGinsufficient' => 'Your UNG coin balance is insufficient',
         'pay_paasword_error' => 'Transaction password error',
+        'pay_ungnum_error' => 'Staked amount error',
         'buy_limit_error' => 'Less than the minimum purchase quantity',
         'ung_Insufficient' =>'Insufficient UNG coins',
         'banlance_none' => 'Your balance is insufficient',

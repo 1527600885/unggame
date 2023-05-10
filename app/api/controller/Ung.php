@@ -438,6 +438,111 @@ class Ung extends BaseController
             $this->error(lang('user.emailerror'));
         }
 	}
+	// ung质押
+	public function pledgenum(){
+		try{
+	        $input = input('post.');
+	        validate(UserValidate::class)->scene('ung_sell')->check(input('post.'));
+	    }catch( ValidateException $e ){
+	        $this->error($e->getError());
+	    }
+	    $useridcard =  Db::name("user_idcard")->where("user_id", $this->request->userInfo->id)->find();
+		if(!$useridcard || $useridcard['status']!=1){
+			$this->error(lang('user.realnameverification'),['code'=>2]);
+		}
+		$userinfo=$this->request->userInfo;
+		$userdata = Db::name("user")->alias('a')->where("a.id", $this->request->userInfo->id)->join('mk_ung_user b ','b.uid= a.id')->find();
+        if($userdata['pay_paasword']==0){
+		    $this->error(lang('user.pay_paasword_empty'),['code'=>2]);
+		}
+	    $password = input('paypassword');
+	    if($password != $userdata['pay_paasword']){
+	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
+	    }
+	    if($input['pledgenum'] >$userinfo['num'] || bcadd($userdata['pledgenum'],$input['pledgenum'])>$userinfo['num'] || $input['pledgenum']<100){
+	        $this->error(lang('user.pay_ungnum_error'),['code'=>2]);
+	    }
+	    // 生成唯一订单号
+        $subzm=['F','B','H'];
+        $orderno = $subzm[rand(0,2)].date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        $data['uid'] = $userinfo['id'];
+        $data['pledgetotalungnum'] = bcadd($userdata['pledgenum'],$input['pledgenum']);
+        $data['update_time'] = date();
+        $pledgedata['uid'] = $userinfo['id'];
+        $pledgedata['pledgetotalungnum'] = bcadd($userdata['pledgenum'],$input['pledgenum']);
+        $pledgedata['pledgenum'] = $input['pledgenum'];//增加数量
+        $pledgedata['create_time'] = date();
+        $pledgedata['orderno'] = $orderno;
+        $pledgedata['type'] = 1;
+        $pledgedata['talungnum'] = $userdata['ung'];
+        Db::startTrans();
+        try{
+        	// 修改ung表
+        	Db::name("ung_user")->update($data);
+        	// 插入质押记录表
+        	Db::name("pledge")->insert($pledgedata);
+        	// 修改redis数量
+		    $redis = (new Redis())->getRedis();
+		    $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',$data['pledgetotalungnum']);
+            $redis->sAdd('ung_user_id',$userinfo['id']);
+        	Db::commit();
+        }catch(Exception $e){
+        	Db::rollback();
+        }
+       
+	}
+	// 解除质押
+	public function release(){
+		try{
+	        $input = input('post.');
+	        validate(UserValidate::class)->scene('ung_sell')->check(input('post.'));
+	    }catch( ValidateException $e ){
+	        $this->error($e->getError());
+	    }
+	    $useridcard =  Db::name("user_idcard")->where("user_id", $this->request->userInfo->id)->find();
+		if(!$useridcard || $useridcard['status']!=1){
+			$this->error(lang('user.realnameverification'),['code'=>2]);
+		}
+		$userinfo=$this->request->userInfo;
+		$userdata = Db::name("user")->alias('a')->where("a.id", $this->request->userInfo->id)->join('mk_ung_user b ','b.uid= a.id')->find();
+        if($userdata['pay_paasword']==0){
+		    $this->error(lang('user.pay_paasword_empty'),['code'=>2]);
+		}
+	    $password = input('paypassword');
+	    if($password != $userdata['pay_paasword']){
+	        $this->error(lang('user.pay_paasword_error'),['code'=>2]);
+	    }
+	    if($input['releasenum'] >$userinfo['pledgenum']  || $input['releasenum']<=0){
+	        $this->error(lang('user.pay_ungnum_error'),['code'=>2]);
+	    }
+	      // 生成唯一订单号
+        $subzm=['F','B','H'];
+        $orderno = $subzm[rand(0,2)].date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        $data['uid'] = $userinfo['id'];
+        $data['releasenum'] = bcmul($userdata['pledgenum'],$input['pledgenum']);
+        $data['update_time'] = date();
+        $pledgedata['uid'] = $userinfo['id'];
+        $pledgedata['pledgetotalungnum'] = $data['releasenum'];
+        $pledgedata['pledgenum'] = $input['pledgenum'];//增加数量
+        $pledgedata['create_time'] = date();
+        $pledgedata['orderno'] = $orderno;
+        $pledgedata['type'] = 1;
+        $pledgedata['talungnum'] = $userdata['ung'];
+        Db::startTrans();
+        try{
+        	// 修改ung表
+        	Db::name("ung_user")->update($data);
+        	// 插入质押记录表
+        	Db::name("pledge")->insert($pledgedata);
+        	// 修改redis数量
+		    $redis = (new Redis())->getRedis();
+		    $redis->hSet('ung_user_divd:ung_user_'.$userinfo['id'],'num',$data['releasenum']);
+            $redis->sAdd('ung_user_id',$userinfo['id']);
+        	Db::commit();
+        }catch(Exception $e){
+        	Db::rollback();
+        }
+	}
 	// 分红规则--由系统自动托管运行
 	public function bonus(){
 		
