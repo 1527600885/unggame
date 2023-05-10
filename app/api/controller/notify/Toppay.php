@@ -16,13 +16,13 @@ class Toppay extends Pay
         if($model->checkSign($result)){
             if($result['code'] == '00') {
                 $this->updateOrder($result['payMoney'],$result['orderNum'],"IDR",$result['platSign']);
-                echo 'success';
+                echo 'SUCCESS';
             }
             else {
-                echo 'fail';
+                echo 'FAIL';
             }
         }else{
-            echo 'fail';
+            echo 'FAIL';
         }
 
     }
@@ -39,9 +39,9 @@ class Toppay extends Pay
                     $online_status = $result['status'] == 2 ? 2:3;
                     $this->updateTransferOrder($result['orderNum'],$online_status);
                 }
-                echo "success";die();
+                echo 'SUCCESS';die();
             }else{
-                echo "fail";die();
+                echo "FAIL";die();
             }
         }catch(\Exception $e){
 
