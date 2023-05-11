@@ -49,10 +49,9 @@ class JmPay extends Pay
     {
         $domain =  request()->domain();
         $data = [
-            "accountNumber" =>$params['accountNumber'],
             "channelId" =>$this->channelId,
             "mchId" =>$this->mchId,
-            "notifyUrl" =>$domain.$this->CallbackUrl,
+            "notifyUrl" =>$domain.$this->transferback,
             "paytype" =>"bdt",
             'mode'=>"bdt",
             "realname" =>$params['realname'],

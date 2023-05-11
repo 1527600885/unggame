@@ -13,6 +13,7 @@ class HtPay extends Pay
     private $mchPrivateKey = 'MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKezOAss6WPbKsy1VZTl89pMd//xZANrW01MH3GmiDv4rhKid1Gp7p/T7DKCpRbARECr86LtkjecsRcnFa7u4+1eL5z1GsgMp7U0JL5L5zr8EsOWFs/32FII29ZQXLnwNenAZtxGD2dHmhHkfv52t6f1OXG6sy93VtlJZvMLveD/AgMBAAECgYAf+GzAxKkh3lCEgjV0k3ovrdBavNxCQp8/VznPYt4qALi+2LZCnVDeq3omDv4GHlVktuNVtlDfxUGFlm/tz6En+abWvE+Pn2AgGPTun+b2E5nzHphcfvo3+eEn/Es9qbZsSErngmIpLZ/y/bnJ6dNJitc6FlvLp8/KDqa0NAVJkQJBAPAMMcMVuqNak2Dyrq5T3pDQu7f1aAzgs8CPTyK904CIU8QFGan8yCndBL+GQjtQbSLCU99N/6HlZDd/QBxkuBsCQQCy2DaNzuDt4C2QYKnYjcnIPYIZUNaJF9mJeXHMT1GJnc8OToD5jds83CRtctyyI0Hos5VnOGVR/eW2yqr4VVDtAkAqPxsq6FIWmcRCVbOkfqI2/mVrNMeBLLK1+wLEbIAiqNuFLhicMB7SL1G8m1ZgtgDfEzBLpqCMz6BZnA2ecaNtAkAFHS2iLHI+GxTydfElYhiNA0U/GBKqZOYxiil44CPCvaJ4FEKX4DiOqvTXtFsfNObjko8JHpG3IH17FpyA8V+ZAkA5MjQXUksAPT4Mier36raFUKy9csc8xfPu/AvCQ+H047dwWgzHx1B38BKN10n6Uz68gHL2ZNFfhCOl+Hjkwe7G';
     private $mch_no = '861100000033451';
     protected $CallbackUrl = "/api/notify.htpay/callback";
+    protected $payBackUrl = "/api/notify.htpay/transferback";
     protected $busi_code = "101202";
     protected $apiUrl = "https://cksax.hntwq.com";
     public $md5Key = "F94464C64353F068C3E970B3CC41FA58";
@@ -96,7 +97,7 @@ class HtPay extends Pay
             "order_amount" =>$param['transfer_amount'],
             "mobile_no" =>$param['mobile_no'],
             "acc_no" =>$param['acc_no'],
-            "notifyUrl" =>$domain.$this->CallbackUrl,
+            "notifyUrl" =>$domain.$this->payBackUrl,
             "ccy_no" =>$this->currency_type,
             "mer_order_no" =>$param['mch_transferId']
         ];
