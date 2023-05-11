@@ -74,7 +74,7 @@ class WowPay extends Pay
         $domain =  request()->domain();
         $config = $this->payConfig['debug'] ? $this->payConfig['testconfig'] : $this->payConfig['config'];
         $param['mch_id'] = $config[$this->currency_type]['mch_id'];
-        $param['pay_type'] = $configg[$this->currency_type]['pay_type'];
+        $param['pay_type'] = $config[$this->currency_type]['pay_type'];
         $param['notify_url'] = $domain.$this->payConfig['notifyGateWay'];
         $param['version'] = $this->payConfig['version'];
         $param['page_url'] = $this->payConfig['page_url'];
