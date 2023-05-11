@@ -17,13 +17,37 @@ class Htpay extends Pay
             $sign = $result['sign'];
             unset($result['sign']);
             if($sign == $axPay->getSign($result,$axPay->md5Key)){
-                echo 'SUCCESS'; die();
-                if($result['status'] == 1){
-                    $this->updateOrder($result['orderAmount'],$result['merchantOrderId'],$result['param'],$sign);
+                if($result['status'] == 'SUCCESS'){
+                    $this->updateOrder($result['order_amount'],$result['mer_order_no'],'PHP',$sign);
                 }
-                echo "success";die();
+                echo "SUCCESS";die();
             }else{
-                echo "fail";die();
+                echo "FAIL";die();
+            }
+        }catch(\Exception $e){
+
+
+        }
+    }
+    public function transferback()
+    {
+        $result = input("param.");
+        $file = fopen(__DIR__."/3.txt","w");
+        fwrite($file,json_encode($result));
+        fclose($file);
+        try{
+            $axPay = new \app\common\lib\pay\HtPay("");
+            $sign = $result['sign'];
+            unset($result['sign']);
+            if($sign == $axPay->getSign($result,$axPay->md5Key)){
+                if($result['status'] == 'SUCCESS' || $result['status'] == 'FAIL'){
+                    $online_status = $result['status'] == 'SUCCESS' ? 2:3;
+                    $this->updateTransferOrder($result['OrderNo'],$online_status);
+                }
+
+                echo "SUCCESS";die();
+            }else{
+                echo "FAIL";die();
             }
         }catch(\Exception $e){
 

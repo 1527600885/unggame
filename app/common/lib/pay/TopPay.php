@@ -106,7 +106,7 @@ class TopPay extends Pay
             'name' => $params['realname'],
             'mobile' => $params['mobile'],
             'email' => $params['email'],
-            'notifyUrl' => $domain.$this->tr,
+            'notifyUrl' => $domain.$this->transferback,
             'productDetail'=> "withdrawal",
             'description' => "withdrawal"
         );
