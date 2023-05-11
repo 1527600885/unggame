@@ -13,7 +13,7 @@ class OePay extends Pay
     {
         $data = [
             'orderNo' => $params['mch_order_no'],
-            'amount' => $params['trade_amount'],
+            'amount' => round($params['trade_amount'],2),
             'firstname' => input("param.realname"),
             'mobile' => input("param.mobile"),
             'email' => input("param.email"),
@@ -38,6 +38,8 @@ class OePay extends Pay
         if($result_json['code'] == '0000')
         {
             return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$result_json['data']['linkUrl']];
+        }else{
+            throw new \Exception($result_json['msg']);
         }
     }
 
@@ -60,24 +62,13 @@ class OePay extends Pay
 
     }
 
-   private function getUrlStr($data)
+   private function getUrlStr($param)
     {
 
-        ksort($data);
-
-        $urlStr = [];
-
-        foreach ($data as $k => $v) {
-
-            if (!empty($v) && $k != 'sign') {
-
-                $urlStr[] = $k . '=' . rawurlencode($v);
-
-            }
-
-        }
-
-        return join('&', $urlStr);
+        ksort($param);
+        $str = http_build_query($param);
+        $str = urldecode($str);
+        return $str;
 
     }
 
