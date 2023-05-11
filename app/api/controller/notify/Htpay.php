@@ -16,6 +16,11 @@ class Htpay extends Pay
             $axPay = new \app\common\lib\pay\HtPay("");
             $sign = $result['sign'];
             unset($result['sign']);
+            foreach ($result as $k=>$v){
+                if(empty($v)){
+                    unset($result[$k]);
+                }
+            }
             if($sign == $axPay->getSign($result,$axPay->md5Key)){
                 if($result['status'] == 'SUCCESS'){
                     $this->updateOrder($result['order_amount'],$result['mer_order_no'],'PHP',$sign);
@@ -39,10 +44,15 @@ class Htpay extends Pay
             $axPay = new \app\common\lib\pay\HtPay("");
             $sign = $result['sign'];
             unset($result['sign']);
+            foreach ($result as $k=>$v){
+                if(empty($v)){
+                    unset($result[$k]);
+                }
+            }
             if($sign == $axPay->getSign($result,$axPay->md5Key)){
                 if($result['status'] == 'SUCCESS' || $result['status'] == 'FAIL'){
                     $online_status = $result['status'] == 'SUCCESS' ? 2:3;
-                    $this->updateTransferOrder($result['OrderNo'],$online_status);
+                    $this->updateTransferOrder($result['order_no'],$online_status);
                 }
 
                 echo "SUCCESS";die();

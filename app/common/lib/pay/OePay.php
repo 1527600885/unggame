@@ -9,11 +9,12 @@ class OePay extends Pay
     protected $apiUrl = 'https://openapi.oepay.co.in';
     protected $key = "6434e27ae4b0be2e3485f2dd";
     private $secret = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALrfy3aigYGuwjlktlKkjH3Pl78f7CzyAK1OFnzF/2hrl9b5uawT8MMRILDm/LIyuMpWo6aHaCzwVN4af2rxaoNI+kB6a796q8LZbkMSB3Kq4kJvoMChTK4SHC0F5vwJtC5/kgaCCBOU9ZpaEp/3T2HsjRb2z1vg/nJ04tOg5Fb/AgMBAAECgYBsx3sDiuMCHz1V9WcgQkK5tY6qpaVwIEr+ltcGOKdNHFxdui43mb/rfNvfvgXYoSfqOHa4qFee2SM9yoTjNrZ9yLdeR7QA9XM/HBfA5RQt0gWZyYtspQlbRYim0zNEsd77JOjNnzF+Y35amS5xhpmABQTqP4cqT2Y8/fYorUiBAQJBAONcUMe0ylKj9tGiKT4TH72WTZwNNRM47Iq9vlf9nDY9FQkyHiBFN4KuzB/H+7qWqx/g7GYk8APaaJWox7qEuYECQQDSaeqT1m6q55AEEuddqtncZZJcpOrcjosNrj62peoAah8Gssd67MUMMtWcxmfjnLvUM8HnmsRKmWjpcGyhFFB/AkEAoSapyyOF1JWLOINsICeF8+c5E0b5O6q5Xo2nAM8tjfQ1mNMBL3ZgJiynWk9xSYvJt0rBxJSh2tlQD+QVzUqOAQJARMforWDoFifR1PMU/HJv+vKc8HncaDKUU+mEiJIdtvr5n2fre0xQcVdgqnnU1fuTDp/In9vglH4nZD+i0tjgIwJAO1As6QN90IPl+qzivmLv3sfvEItMveWVFifwmTnNeE0PvOEwbIU0qtIM0QGuXu5A3ajiTI+b9/8x/768pgzoSg==";
+    private static $pay_public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPdvbM7Z2g0elKQwgsiFGZDakP4S3UjGEvn5a9h/8EXq34FwwMKYX+4x5PZoP+bi8piJF6sjUzH56TAFgla+KXY5P64F6te3KeuU21o/YPftHQ5taVPiXYOiIYSQm998uPH3HzS6PM8AeO1We4rIGCjOVReu18i5pDouRh4mtKWQIDAQAB";
     public function run($type, $params)
     {
         $data = [
             'orderNo' => $params['mch_order_no'],
-            'amount' => round($params['trade_amount'],2),
+            'amount' => bcmul($params['trade_amount'],'1',2),
             'firstname' => input("param.realname"),
             'mobile' => input("param.mobile"),
             'email' => input("param.email"),
@@ -62,13 +63,24 @@ class OePay extends Pay
 
     }
 
-   private function getUrlStr($param)
+    private function getUrlStr($data)
     {
 
-        ksort($param);
-        $str = http_build_query($param);
-        $str = urldecode($str);
-        return $str;
+        ksort($data);
+
+        $urlStr = [];
+
+        foreach ($data as $k => $v) {
+
+            if (!empty($v) && $k != 'sign') {
+
+                $urlStr[] = $k . '=' . rawurlencode($v);
+
+            }
+
+        }
+
+        return join('&', $urlStr);
 
     }
 
@@ -164,8 +176,9 @@ class OePay extends Pay
         $domain =  request()->domain();
         $data = [
             'orderNo' => $params['mch_transferId'],
-            'amount' => $params['transfer_amount'],
+            'amount' => bcmul($params['transfer_amount']."","1",2),
             'upi'=>$params['upi'],
+            'paymentType'=>"0",
             'beneficiaryName'=>$params['beneficiaryName'],
             'beneficiaryMobile'=>$params['beneficiaryMobile'],
             'bankAccount'=>$params['bankAccount'],
@@ -187,6 +200,11 @@ class OePay extends Pay
 
         ];
         $result_json = $this->curl_post_content($this->apiUrl."/gold-pay/portal/transfer", $data, $header);
-        echo $result_json;
+        if($result_json['code'] == '0000')
+        {
+            return $result_json;
+        }else{
+            throw new \Exception($result_json['msg']);
+        }
     }
 }
