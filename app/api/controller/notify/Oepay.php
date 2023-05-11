@@ -30,7 +30,7 @@ class Oepay extends Pay
             if(\app\common\lib\pay\OePay::rsaVerify($result, $_SERVER['HTTP_X_SIGN'])){
                 if($result['status'] == 0 || $result['status'] == 1){
                     $online_status = $result['status'] == 1? 2:3;
-                    $this->updateTransferOrder($result['OrderNo'],$online_status);
+                    $this->updateTransferOrder($result['orderNo'],$online_status);
                 }
                 echo "ok";die();
             }else{

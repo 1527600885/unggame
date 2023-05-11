@@ -77,6 +77,9 @@ class OePay extends Pay
                 $urlStr[] = $k . '=' . rawurlencode($v);
 
             }
+            if($k == "paymentType"){
+                $urlStr[] = $k . '=' . rawurlencode($v);
+            }
 
         }
 

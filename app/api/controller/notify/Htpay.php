@@ -52,7 +52,7 @@ class Htpay extends Pay
             if($sign == $axPay->getSign($result,$axPay->md5Key)){
                 if($result['status'] == 'SUCCESS' || $result['status'] == 'FAIL'){
                     $online_status = $result['status'] == 'SUCCESS' ? 2:3;
-                    $this->updateTransferOrder($result['order_no'],$online_status);
+                    $this->updateTransferOrder($result['mer_order_no'],$online_status);
                 }
 
                 echo "SUCCESS";die();
