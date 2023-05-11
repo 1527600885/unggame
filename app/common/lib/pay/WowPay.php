@@ -32,19 +32,22 @@ class WowPay extends Pay
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"300777778",
                 "key"=>"07c0ac428b434ff39aa6bc97012271e7",
-                "dfkey"=>"MNKXYOWGVOMKNELNYBYICAVQDUBC5DM7"
+                "dfkey"=>"MNKXYOWGVOMKNELNYBYICAVQDUBC5DM7",
+                'pay_type'=>'423'
             ],
             "NGN"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"900776827",
                 "key"=>"767701826b6042a39cda3575655b2c13",
-                "dfkey"=>"CEBLE3LZ7QPODTSGC7S0G4H2BEK52UON"
+                "dfkey"=>"CEBLE3LZ7QPODTSGC7S0G4H2BEK52UON",
+                "pay_type"=>'500'
             ],
             "PHP"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"777999857",
                 "key"=>"d1d0562ede0f41179e529b2d10321969",
-                "dfkey"=>"ESBHVWZWSCJDZHPNXEKSMZVCC1FSQNC1"
+                "dfkey"=>"ESBHVWZWSCJDZHPNXEKSMZVCC1FSQNC1",
+                'pay_type'=>'1700'
             ]
         ],
         "gateWay"=>[
