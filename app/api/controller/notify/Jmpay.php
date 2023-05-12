@@ -39,7 +39,7 @@ class Jmpay extends Pay
             $axPay = new \app\common\lib\pay\JmPay("");
             $sign = $result['sign'];
             unset($result['sign']);
-            if($sign ==  strtoupper($axPay->getSign($result,$axPay->topayKey,"secret"))){
+            if($sign ==  strtoupper($axPay->getSign($result,$axPay->topayKey))){
                 if($result['status'] == 'success' || $result['status'] == 'failed'){
                     $online_status = $result['status'] == 'success' ? 2:3;
                     $this->updateTransferOrder($result['traceNo'],$online_status);
