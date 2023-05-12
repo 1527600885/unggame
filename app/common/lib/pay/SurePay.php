@@ -38,7 +38,7 @@ class SurePay extends Pay
             $form.="<input name='{$k}' value='$v'/>";
         }
         $form.="<button type='submit'>提交</form></body><script>window.onload = function(){document.getElementById('subform').submit()}</script>";
-        echo $form;die();
+        return ["orderNo"=>$params['mch_order_no'],"oriAmount"=>$params['trade_amount'],"payInfo"=>$form];
     }
     public function transfer($param)
     {
