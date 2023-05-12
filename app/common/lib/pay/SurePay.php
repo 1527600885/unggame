@@ -55,10 +55,12 @@ class SurePay extends Pay
             "amount"=>$param['transfer_amount'],
             "post_url"=>$domain.$this->payback_url,//回调地址,
             "clientip"=>"52.55.100.240",
-            "token"=>""
         ];
-        $sign = $this->getSign($data,$this->SecretKey,"SecretKey");
-        $data['sign'] = $sign;
+
+        $token = md5($data['merchant'].$data['amount'].$data['refid'].$data['customer'].$this->apikey.$this->currency_type."52.55.100.240");
+
+        $data['token'] = $token;
+        $result_json = curlNoIpSet($this->apiUrl."/v1/payout",$data);
         $reuslt_json = curl_json($this->apiUrl."/api/WithdrawalV2/submit",$data);
         $result = json_decode($reuslt_json,true);
         if($result['Code'] == 0)
