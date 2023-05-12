@@ -47,7 +47,7 @@ class SurePay extends Pay
             "merchant"=>$this->merchant,
             "customer"=>$param['game_account'],
             "currency"=>$this->currency_type,
-            "bankcode"=>$param['bank_code'],
+            "bankcode"=>$this->bankcode,
             "destbankaccname"=>$param['destbankaccname'],
             "destbankcode"=>$param['destbankcode'],
             "destbankaccno"=>$param['destbankaccno'],
