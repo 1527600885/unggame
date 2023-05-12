@@ -129,6 +129,7 @@ class MkWithdrawal extends BaseController
         $mch_transferId = 'order'.$userInfo['game_account'].time();
         $other = json_decode($data->other,true);
         $transData = array_merge($other,[
+            "game_account"=>$userInfo['game_account'],
             "mch_transferId"=>$mch_transferId,
             "transfer_amount"=>$data->money,
             "bank_code"=>$other['bank'] ?? '',
