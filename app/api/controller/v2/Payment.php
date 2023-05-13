@@ -35,7 +35,7 @@ class Payment extends BaseController
             $data['currency'] = CurrencyAll::where("is_show", 1)->cache("currency_all_show",600)->field("id,name,type,country,symbol,thumb_img,url_list,payment_ids,withdrawl_ids")->select();
             $country = getipcountry($this->request->ip());
             $rateList = cacheRate();
-
+            $currency = $userInfo->currency;
             foreach ($data['currency'] as $v) {
                 if ($v['type'] == 2) {
                     $v['rate'] = $rateList[$v['name']];
@@ -44,10 +44,18 @@ class Payment extends BaseController
                 }
                 $v['amount'] = shortenNumber(bcmul($v['rate'], $data['balance'], 8));
                 $v['rate'] = shortenNumber($v['rate']);
-                if (!empty($v['country']) && $v['country'] == $country) {
-                    $data['symbol'] = $v['symbol'];
-                    $data['country_amount'] = $v['amount'];
+                if($currency){
+                    if($v['id'] == $currency){
+                        $data['symbol'] = $v['symbol'];
+                        $data['country_amount'] = $v['amount'];
+                    }
+                }else{
+                    if (!empty($v['country']) && $v['country'] == $country) {
+                        $data['symbol'] = $v['symbol'];
+                        $data['country_amount'] = $v['amount'];
+                    }
                 }
+
             }
             if (!isset($data['country_amount'])) {
                 $data['symbol'] = "$";
@@ -55,6 +63,7 @@ class Payment extends BaseController
             }
 
         }
+
         $this->success(lang('system.operation_succeeded'), $data);
 
     }
