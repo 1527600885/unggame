@@ -146,6 +146,7 @@ function shortenNumber($n, $precision = 2)
             $a = sprintf("%.5f",$n);
            return $a;
         }
+        $n = floatval($n);
         if ($n < 1e+3) {
             $out = number_format($n);
         } else if ($n < 1e+6) {
