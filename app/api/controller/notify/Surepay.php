@@ -34,7 +34,7 @@ class Surepay extends Pay
         fwrite($file,json_encode($result));
         fclose($file);
         $pay = new \app\common\lib\pay\SurePay("");
-        $sign = md5($result['merchant'].$result['amount'].$result['status'].$pay->callbackkey.$result['trxno']);
+        $sign = md5($result['merchant'].$result['amount'].$result['status'].$pay->paybackkey.$result['trxno']);
         if($sign == $result['token']){
             if($result['status'] == 1 || $result['status'] == -1) {
                 $online_status = $result['status'] == 1 ? 2:3;
