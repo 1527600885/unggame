@@ -16,9 +16,9 @@ class Jmpay extends Pay
             $axPay = new \app\common\lib\pay\JmPay("");
             $sign = $result['sign'];
             unset($result['sign']);
-            if($sign == strtoupper($axPay->getSign($result,$axPay->SecretKey,"secret"))){
-                if($result['status'] == 1){
-                    $this->updateOrder($result['orderAmount'],$result['merchantOrderId'],$result['param'],$sign);
+            if($sign == strtoupper(md5($axPay->getSign($result,$axPay->SecretKey)))){
+                if($result['status'] == 'success'){
+                    $this->updateOrder($result['actualMoney'],$result['traceNo'],'BDT',$sign);
                 }
                 echo "success";die();
             }else{
@@ -39,7 +39,7 @@ class Jmpay extends Pay
             $axPay = new \app\common\lib\pay\JmPay("");
             $sign = $result['sign'];
             unset($result['sign']);
-            if($sign ==  strtoupper($axPay->getSign($result,$axPay->topayKey,"secret"))){
+            if($sign ==  strtoupper(md5($axPay->getSign($result,$axPay->topayKey)))){
                 if($result['status'] == 'success' || $result['status'] == 'failed'){
                     $online_status = $result['status'] == 'success' ? 2:3;
                     $this->updateTransferOrder($result['traceNo'],$online_status);

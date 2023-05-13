@@ -9,6 +9,7 @@ use think\Request;
 class Order extends BaseController
 {
 	protected $noNeedLogin = ['notify',"directdata"];
+	protected $payment_method = 1;
 	public function initialize(){
 		parent::initialize();
 		$this->PaymentModel = new \app\api\model\Payment;//支付设置模型
@@ -33,6 +34,7 @@ class Order extends BaseController
 			$this->error(lang('system.id'));
 		}
 		$paymentinfo=$this->PaymentModel->where(['id'=>$data['id'],'is_show'=>1])->find();
+		$this->payment_method = $paymentinfo->method;
 		$lang=$this->lang;
 		if($paymentinfo->type==2 || $paymentinfo->type==3){
 			if(!$data['currencyvalue']){
@@ -173,6 +175,9 @@ class Order extends BaseController
 			];
 			$Id=$this->OrderModel->insertGetId($data);
 			if($Id){
+			    if($this->payment_method == 2){
+			        echo $url;die();
+                }
 				$this->success(lang('order.placesuccess'),$url);
 			}else{
 				$this->error(lang('order.placeerror'));

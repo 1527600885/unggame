@@ -7,7 +7,8 @@ namespace app\common\lib\pay;
 class RainbowPay extends Pay
 {
     protected $mchId = "2z594272";
-    protected $passageId = '101';
+    protected $passageId = '16401';
+    protected $transferId = '16411';
     private  $notifyUrl = "/api/notify.rainbowpay/callback";
     protected $transferback = "/api/notify.rainbowpay/transferback";
     private $key = "cf7b2d5be4074731b51db5ce7624a208";
@@ -43,7 +44,7 @@ class RainbowPay extends Pay
         $domain =  request()->domain();
         $data = [
             "mchId"=>$this->mchId,
-            "passageId"=>$this->passageId,
+            "passageId"=>$this->transferId,
             "orderNo"=>$param['mch_transferId'],
             "account"=>$param['receive_account'],
             "userName"=>$param['receive_name'],

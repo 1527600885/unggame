@@ -7,12 +7,14 @@ namespace app\common\lib\pay;
 class TopPay extends Pay
 {
     private $mchPrivateKey = "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAN1QQO3J00Q4r6GEZFjb7D+/YShP/DRj33JQxO3XJ7zz7oD4qQavJDTRwCFsckdJsRcfwt+nxbPV3jkua6mmL6gBVx/jk2lxh48m1xQ6YPdKIhCnPZCIfTRVOw3WU1Lyi+PZVzBoykgQy2kf7t4I1Yl3SGW+ccb5qxmBhyFMLaUbAgMBAAECgYBdCMWisHstbJ74SQ1eBWV1DuCq76TX6TwfdDC0wwOjfO/AK8fyVWHlCl+4LTyFF0doryNencqQZNF8PDVqJcBWGbSzMRY4Y6jmnpiMPa+F4CV6Vfus+BlMGx2brLAB/qZjs1LzmoFwBiGYvCSq7JgAWID+aL6sh9oP7o4k2oXuUQJBAPUfu+jx93qCJc3OZJ7fKplmzmS41v4i6CkWOcDRg1tlfe26L2t2UeLKYou3dJoBnHiUXgJfrqNsWjEtOMkJFPUCQQDnIhDfIZbkqpZFXF0b8io1yHyG4+x7e5SOB8+Vdqwpl2gULU2UtO4ZeMaFX4HNzdcGA1cEofas+ROR3EiDVwfPAkBsDjMtuwyXSqwTj3o3trT2rqUpLXpIyWaCRjPrVfCL56+djke9HYl3ajQK1zJleXRaizzt2vQHQop3xzGTHZfJAkBZ6/X2aWIEOp3WBFYxHijv3b0c2aXScMTd8QoA0zetwrr6RpnNRgrwG/3YO80LXY7PRxNeuQh4STsk3zfS6VQfAkBALyrR7begKox9T9Gj6hkfbAk4m1AAQmglz7tTvGBJqQYiRGfTOvDwlXM2Q/A08EUcyec4Z167nSAyUgoHTCVx";
-    private $public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdUEDtydNEOK+hhGRY2+w/v2EoT/w0Y99yUMTt1ye88+6A+KkGryQ00cAhbHJHSbEXH8Lfp8Wz1d45Lmuppi+oAVcf45NpcYePJtcUOmD3SiIQpz2QiH00VTsN1lNS8ovj2VcwaMpIEMtpH+7eCNWJd0hlvnHG+asZgYchTC2lGwIDAQAB";
+    private $public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCjAy2Bm4PgYZvpGrdmsjB6X7dUh6lOvEBrQiEyGfKD3gVeZuTURcE+camhvO1dO2jU7V5BHnBWHCAsPZd0ghb+c9vaGi3wgb33i71stayf7VUclKX2adSgjcGy6xO8r2YN2NiEI9jU/8cZUtUhrr+N2DEo0Uz8+lt0FSTnlrjW2QIDAQAB";
     private $merchantCode = "S820230411102156000005";
     private $CallbackUrl = "/api/notify.toppay/callback";
+    private $transferback = "/api/notify.toppay/transferback";
     private $apiUrl = "https://id-openapi.toppay.asia";
     public function run($type,$params)
     {
+        $domain =  request()->domain();
         $data = array(
             'merchantCode' => $this->merchantCode,
             'orderType' => "0",
@@ -21,7 +23,7 @@ class TopPay extends Pay
             'name' => input("param.name"),
             'email' => input("param.email"),
             'phone' => input("param.phone"),
-            'notifyUrl' => $this->CallbackUrl,
+            'notifyUrl' => $domain.$this->CallbackUrl,
             'dateTime' => date("Y-m-d H:i:s"),
             'expiryPeriod' => 1200,
             'productDetail' => "UNGGame Recharge"
@@ -96,7 +98,7 @@ class TopPay extends Pay
             'orderType' =>"0",
             'method' => 'Transfer',
             'orderNum' => $params['mch_transferId'],
-            'payMoney' => $params['transfer_amount'],
+            'money' => intval($params['transfer_amount']),
             'feeType' => '0',
             'dateTime' => date("YmdHis"),
             'number' => $params['number'],
@@ -104,7 +106,7 @@ class TopPay extends Pay
             'name' => $params['realname'],
             'mobile' => $params['mobile'],
             'email' => $params['email'],
-            'notifyUrl' => $domain.$this->CallbackUrl,
+            'notifyUrl' => $domain.$this->transferback,
             'productDetail'=> "withdrawal",
             'description' => "withdrawal"
         );
@@ -112,6 +114,12 @@ class TopPay extends Pay
         $data['sign'] = $sign;
 
         $result_json = curl_json($this->apiUrl."/gateway/cash",$data);
-        echo json_encode($result_json);die();
+        $resutl = json_decode($result_json,true);
+        if(isset($resutl['platRespCode'])&& $resutl['platRespCode'] == "SUCCESS")
+        {
+            return $resutl;
+        }else{
+            throw new \Exception($resutl['platRespMessage']);
+        }
     }
 }

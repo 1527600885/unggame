@@ -32,19 +32,22 @@ class WowPay extends Pay
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"300777778",
                 "key"=>"07c0ac428b434ff39aa6bc97012271e7",
-                "dfkey"=>"MNKXYOWGVOMKNELNYBYICAVQDUBC5DM7"
+                "dfkey"=>"MNKXYOWGVOMKNELNYBYICAVQDUBC5DM7",
+                'pay_type'=>'423'
             ],
             "NGN"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"900776827",
                 "key"=>"767701826b6042a39cda3575655b2c13",
-                "dfkey"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
+                "dfkey"=>"CEBLE3LZ7QPODTSGC7S0G4H2BEK52UON",
+                "pay_type"=>'500'
             ],
             "PHP"=>[
                 "requestUrl"=>"https://gx83ixk6srer.wowhescqct.com",
                 "mch_id"=>"777999857",
                 "key"=>"d1d0562ede0f41179e529b2d10321969",
-                "dfkey"=>"2A0QHL5ZQ0LLNYUCZGPFQ1TPOJELOGG3"
+                "dfkey"=>"ESBHVWZWSCJDZHPNXEKSMZVCC1FSQNC1",
+                'pay_type'=>'1700'
             ]
         ],
         "gateWay"=>[
@@ -71,7 +74,7 @@ class WowPay extends Pay
         $domain =  request()->domain();
         $config = $this->payConfig['debug'] ? $this->payConfig['testconfig'] : $this->payConfig['config'];
         $param['mch_id'] = $config[$this->currency_type]['mch_id'];
-        $param['pay_type'] = $this->payConfig['pay_type'];
+        $param['pay_type'] = $config[$this->currency_type]['pay_type'];
         $param['notify_url'] = $domain.$this->payConfig['notifyGateWay'];
         $param['version'] = $this->payConfig['version'];
         $param['page_url'] = $this->payConfig['page_url'];
