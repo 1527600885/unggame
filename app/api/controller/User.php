@@ -26,6 +26,7 @@ use app\api\model\User as UserModel;
 use app\api\validate\User as UserValidate;
 use app\api\model\MailList as MailListModel;
 use app\api\model\Order as OrderModel;
+use app\api\model\CurrencyAll;
 use app\api\model\ShareSet as ShareSetModel;
 use app\api\model\CapitalFlow as CapitalFlowmodel;
 use Hashids\Hashids;
@@ -107,7 +108,29 @@ class User  extends BaseController
             // return json(['status' => 'success','message' => '设置成功']);
         }
     }
-
+    public function setcurrency(){
+        $datas = input('post.');
+        UserModel::where(['id'=>$this->request->userInfo->id])->update(['currency'=>$datas['cid']]);
+        $result = CurrencyAll::where(['id'=>$datas['cid']])->select()->toArray();
+        $data=array();
+        $rateList = cacheRate();
+        $data['balance'] = $this->request->userInfo->balance;
+        // $country = getipcountry($this->request->ip());
+        foreach ($result as $v) {
+                if ($v['type'] == 2) {
+                    $v['rate'] = $rateList[$v['name']];
+                } else {
+                    $v['rate'] = bcdiv('1', getCoinMarketCap('USD', $v['name']), 8);
+                }
+                $v['amount'] = bcmul($v['rate'], $data['balance'], 8);
+                
+                $data['symbol'] = $v['symbol'];
+                $data['country_amount'] = $v['amount'];
+                
+                
+            }
+        $this->success(lang('success'),$result);
+    }
 	/**
 	 * 修改头像
 	 */
@@ -230,6 +253,7 @@ class User  extends BaseController
 				foreach($data['invite_one'] as $k=>$v){
 					$one_money=OrderModel::where(['uid'=>$v->id,'status'=>1])->sum('money');
 					$v->amount=$one_money;
+					$v->Registreward = $v->is_check==1? 5 : 'Unverified';
 					$v->rewards=$one_money*(10/100);
 					$one_money_all=+$one_money;
 					$v->add_time=date('Y-m-d',strtotime($v->create_time));
@@ -238,6 +262,7 @@ class User  extends BaseController
 					$two_money=OrderModel::where(['uid'=>$v->id,'status'=>1])->sum('money');
 					$v->amount=$two_money;
 					$v->rewards=$two_money*(5/100);
+					$v->Registreward = $v->is_check==1? 5 : 'Unverified';
 					$two_money_all=+$two_money;
 					$v->add_time=date('Y-m-d',strtotime($v->create_time));
 				}
@@ -245,6 +270,7 @@ class User  extends BaseController
 					$three_money=OrderModel::where(['uid'=>$v->id,'status'=>1])->sum('money');
 					$v->amount=$three_money;
 					$v->rewards=$three_money*(3/100);
+					$v->Registreward = $v->is_check==1? 5 : 'Unverified';
 					$three_money_all=+$three_money;
 					$v->add_time=date('Y-m-d',strtotime($v->create_time));
 				}
@@ -258,6 +284,10 @@ class User  extends BaseController
 				$data['share_content_app']=str_replace(['<p>','</p>'],'',$share_content);
 				// $data['share_content']=str_replace(['{{nickname}}','{{href}}','{{QR_code}}'],[$this->request->userInfo['nickname'],$shareurl,request()->domain().$this->request->userInfo['QR_code']],$share_content);
 				// $data['share_content_app']=str_replace(['<p>','</p>','{{nickname}}','{{href}}','{{QR_code}}'],['','',$this->request->userInfo['nickname'],$shareurl,''],$share_content);
+				$data['Registdollars'] = 5;
+                $data['First_level_dollar'] = '10.00%';
+                $data['Second_level_dollar'] = '5.00%';
+                $data['Third_level_dollar'] = '3.00%';
 				$this->success(lang('success'),$data);
 			}else{
 				$this->request->userInfo['safetyall']=100;
@@ -300,6 +330,19 @@ class User  extends BaseController
 				$this->request->userInfo['interest'] = $ungdata['interest'] ?? 0;
 				$this->request->userInfo['ung_rate'] = UngSet::value("interest");
                 $this->request->userInfo['ung_price'] = bcmul($this->request->userInfo['ung_num'],UngSet::value('price'),3);
+                $currency = CurrencyAll::where(['id'=>$this->request->userInfo['currency']])->find()->toArray();
+                // var_dump($currency['type']);
+                if($currency['type'] == 2){
+                    $rateList = cacheRate();
+                    $rate = $rateList[$currency['name']];
+                }else{
+                    $rate = bcdiv('1', convert_scientific_number_to_normal(strval(getCoinMarketCap('USD', $currency['name']))), 8);
+                }
+                $currency['rateamount'] = bcmul($rate, $this->request->userInfo['balance'], 8);
+                $currency['shortenNumber'] =shortenNumber(floatval($currency['rateamount']));
+                // var_dump($rate);
+                
+                $this->request->userInfo['currency'] = $currency;
 				$this->success(lang('success'),$this->request->userInfo);
 			}
 		}
@@ -787,6 +830,11 @@ class User  extends BaseController
     public function logoff()
     {
         UserModel::destroy($this->request->userInfo['id']);
+        $this->success("success");
+    }
+    public function outaccount(){
+        $id=$this->request->userInfo['id'];
+        UserModel::where(['id'=>$id])->update(['status'=>0]);
         $this->success("success");
     }
 }

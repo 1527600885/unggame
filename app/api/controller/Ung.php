@@ -188,7 +188,7 @@ class Ung extends BaseController
 		if($userinfo["ungaddress"]==$ungaddress){
 		    $this->error(lang('user.toyouself'),['code'=>5]);
 		}
-		if($quantity>$userUng['num']){
+		if($quantity>bcmul($userUng['num'],$userUng['pledgenum'],5)){
 		    $this->error(lang('user.UNGinsufficient'),['code'=>6]);
 		}
         //获取数字资产设置

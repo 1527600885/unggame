@@ -9,11 +9,24 @@
 	class DayDividend extends BaseController{
 			public function initialize(){
 			parent::initialize();
-			$this->DayDividendModel = new \app\api\model\DayDividend;//虚拟币设置
+			$this->DayDividendModel = new \app\api\model\DayDividend;
 		}
 		public function getlist()
 		{
-			$datalist = $this->DayDividendModel->where()->limit(5)->order('date','desc');
+			$datalist = $this->DayDividendModel->order('date','desc')->limit(5)->select()->each(function($item){
+			    $item['date']=date("m-d", $item['date']);
+			    return $item;
+			});
+// 			var_dump($this->DayDividendModel->getLastsql());
+			$this->success(lang('system.success'),$datalist);
+		}
+		public function allgetlist()
+		{
+			$datalist = $this->DayDividendModel->order('date','desc')->select()->each(function($item){
+			    $item['date']=date("m-d", $item['date']);
+			    return $item;
+			});
+// 			var_dump($this->DayDividendModel->getLastsql());
 			$this->success(lang('system.success'),$datalist);
 		}
 	}
