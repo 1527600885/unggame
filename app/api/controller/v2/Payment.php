@@ -42,7 +42,8 @@ class Payment extends BaseController
                 } else {
                     $v['rate'] = bcdiv('1', getCoinMarketCap('USD', $v['name']), 8);
                 }
-                $v['amount'] = bcmul($v['rate'], $data['balance'], 8);
+                $v['amount'] = shortenNumber(bcmul($v['rate'], $data['balance'], 8));
+                $v['rate'] = shortenNumber($v['rate']);
                 if (!empty($v['country']) && $v['country'] == $country) {
                     $data['symbol'] = $v['symbol'];
                     $data['country_amount'] = $v['amount'];
