@@ -123,7 +123,7 @@ class Index extends BaseController
     public function testSlots()
     {
         $game = new SlotsGame();
-        $data = $game->getResult();
+        $data = $game->getSpinResult();
         $this->success("success",compact("data"));
     }
     public function error503()
