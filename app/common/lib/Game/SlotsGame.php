@@ -9,6 +9,7 @@ class SlotsGame
     protected $bet = 5;
     protected $total_win = 0;
     protected $total_house = 0;
+    protected $total_apple = 0;
     /*
      * 1=城堡
      * 2=苹果
@@ -193,7 +194,8 @@ class SlotsGame
         $bs = $this->getBs($board);
         $total_win = $this->total_win;
         $total_house = $this->total_house;
-        return compact("board", "bs", "winlines", "total_win", "total_house");
+        $total_apple = $this->total_apple;
+        return compact("board", "bs", "winlines", "total_win", "total_house","total_apple");
     }
 
     public function getBs($result)
@@ -207,6 +209,7 @@ class SlotsGame
                     $vv = 0;
                 } else {
                     $vv = mt_rand(1, 8) * 0.5 * $this->bet;
+                    $this->total_apple += 1;
                 }
             }
         }
