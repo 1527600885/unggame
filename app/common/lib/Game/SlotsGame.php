@@ -202,7 +202,7 @@ class SlotsGame
             foreach ($v as &$vv) {
                 if ($vv != 2 && $vv != 3) {
                     if ($vv == 1) {
-                        $total_house += 1;
+                        $this->total_house += 1;
                     }
                     $vv = 0;
                 } else {
