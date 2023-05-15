@@ -195,7 +195,8 @@ class SlotsGame
         $total_win = $this->total_win;
         $total_house = $this->total_house;
         $total_apple = $this->total_apple;
-        return compact("board", "bs", "winlines", "total_win", "total_house","total_apple");
+        $game_type = "spins";
+        return compact("board", "bs", "winlines", "total_win", "total_house","total_apple","game_type");
     }
 
     public function getBs($result)
