@@ -13,13 +13,15 @@ class SurePay extends Pay
 //    protected $apikey = "4449a5c22d99b4635748df69409eaaebd4099c02";
 //    public $callbackkey = "555b6d33e00c5746859eg70510fbbfce5100d13";
 //    protected $apiUrl = "https://sandbox.paymentgt.com";
+//    protected $bankcode = "10002493";
     protected $apiUrl = "https://pgw3.surepay88.com";
     protected $merchant = "TonyUnggame";
-    protected $apikey = "a633602c63518b55279c1bbb190ecd02 ";
+    protected $apikey = "a633602c63518b55279c1bbb190ecd02";
     public $callbackkey = "8d45d106368b03fdd2d8a3f136fa453e";
     public $payapikey = "15e791ebabd36e1dda260fa2e4121c11";
     public $paybackkey = "8d45d106368b03fdd2d8a3f136fa453e";
-    protected $bankcode = "10002493";
+    public $paybankcode = '10012057';
+    protected $bankcode = "10012053";
     public  function run($type, $params)
     {
         $domain =  request()->domain();
@@ -54,7 +56,7 @@ class SurePay extends Pay
             "merchant"=>$this->merchant,
             "customer"=>$param['game_account'],
             "currency"=>$this->currency_type,
-            "bankcode"=>$this->bankcode,
+            "bankcode"=>$this->paybankcode,
             "destbankaccname"=>$param['bank_name'],
             "destbankcode"=>$param['bank'],
             "destbankaccno"=>$param['receive_account'],
