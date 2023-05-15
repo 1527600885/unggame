@@ -118,7 +118,7 @@ class Index extends BaseController
                 ];
             }
         }
-        var_dump($list);
+        $this->success("success",compact("list"));
     }
     public function testSlots()
     {
