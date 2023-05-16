@@ -10,6 +10,7 @@ class SlotsGame
     protected $total_win = 0;
     protected $total_house = 0;
     protected $total_apple = 0;
+    protected $rounds_lefts ;
     /*
      * 1=城堡
      * 2=苹果
@@ -27,7 +28,7 @@ class SlotsGame
      * 14=篮子
      * 15=+
      * 16=x
-     *
+     * 17gold
      * */
     protected $goodsList = [
         1 => 5,//城堡
@@ -57,84 +58,39 @@ class SlotsGame
         13 => [3 => 0.25, 4 => 0.5, 5 => 2.5],
     ];
     protected $win_lines = [
-        1 => [
-            [0, 0], [1, 0], [2, 0], [3, 0], [4, 0]
-        ],
-        2 => [
-            [0, 3], [1, 3], [2, 3], [3, 3], [4, 3]
-        ],
-        3 => [
-            [0, 1], [1, 1], [2, 1], [3, 1], [4, 1]
-        ],
-        4 => [
-            [0, 0], [1, 1], [2, 2], [3, 1], [4, 0]
-        ],
-        5 => [
-            [0, 3], [1, 2], [2, 1], [3, 2], [4, 3]
-        ],
-        6 => [
-            [0, 2], [1, 1], [2, 0], [3, 1], [4, 2],
-        ],
-        7 => [
-            [0, 1], [1, 2], [2, 3], [3, 2], [4, 3]
-        ],
-        8 => [
-            [0, 0], [1, 1], [2, 0], [3, 1], [4, 0]
-        ],
-        9 => [
-            [0, 3], [1, 2], [2, 3], [3, 2], [4, 3]
-        ],
-        10 => [
-            [0, 1], [1, 0], [2, 1], [3, 0], [4, 1]
-        ],
-        11 => [
-            [0, 2], [1, 3], [2, 2], [3, 3], [4, 2]
-        ],
-        12 => [
-            [0, 1], [1, 2], [2, 1], [3, 2], [4, 1]
-        ],
-        13 => [
-            [0, 2], [1, 1], [2, 2], [3, 1], [4, 2]
-        ],
-        14 => [
-            [0, 0], [1, 2], [2, 1], [3, 1], [4, 0]
-        ],
-        15 => [
-            [0, 3], [1, 2], [2, 2], [3, 2], [4, 3]
-        ],
-        16 => [
-            [0, 1], [1, 0], [2, 0], [3, 0], [4, 1]
-        ],
-        17 => [
-            [0, 2], [1, 3], [2, 3], [3, 3], [4, 2]
-        ],
-        18 => [
-            [0, 1], [1, 2], [2, 2], [3, 2], [4, 1]
-        ],
-        19 => [
-            [0, 3], [1, 2], [2, 2], [3, 2], [4, 3]
-        ],
-        20 => [
-            [0, 0], [1, 0], [2, 1], [3, 0], [4, 0]
-        ],
-        21 => [
-            [0, 3], [1, 3], [2, 2], [3, 3], [4, 3]
-        ],
-        22 => [
-            [0, 1], [1, 1], [2, 0], [3, 1], [4, 1]
-        ],
-        23 => [
-            [0, 2], [1, 2], [2, 3], [3, 2], [4, 2]
-        ],
-        24 => [
-            [0, 1], [1, 1], [2, 2], [3, 1], [4, 1]
-        ]
-
+        [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]],
+        [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1]],
+        [[0, 2], [1, 2], [2, 2], [3, 2], [4, 2]],
+        [[0, 3], [1, 3], [2, 3], [3, 3], [4, 3]],
+        [[0, 0], [1, 1], [2, 2], [3, 1], [4, 0]],
+        [[0, 3], [1, 2], [2, 1], [3, 2], [4, 3]],
+        [[0, 2], [1, 1], [2, 0], [3, 1], [4, 2]],
+        [[0, 1], [1, 2], [2, 3], [3, 2], [4, 3]],
+        [[0, 0], [1, 1], [2, 0], [3, 1], [4, 0]],
+        [[0, 3], [1, 2], [2, 3], [3, 2], [4, 3]],
+        [[0, 1], [1, 0], [2, 1], [3, 0], [4, 1]],
+        [[0, 2], [1, 3], [2, 2], [3, 3], [4, 2]],
+        [[0, 1], [1, 2], [2, 1], [3, 2], [4, 1]],
+        [[0, 2], [1, 1], [2, 2], [3, 1], [4, 2]],
+        [[0, 0], [1, 1], [2, 1], [3, 1], [4, 0]],
+        [[0, 3], [1, 2], [2, 2], [3, 2], [4, 3]],
+        [[0, 1], [1, 0], [2, 0], [3, 0], [4, 1]],
+        [[0, 2], [1, 3], [2, 3], [3, 3], [4, 2]],
+        [[0, 1], [1, 2], [2, 2], [3, 2], [4, 1]],
+        [[0, 2], [1, 1], [2, 1], [3, 1], [4, 2]],
+        [[0, 0], [1, 0], [2, 1], [3, 0], [4, 0]],
+        [[0, 3], [1, 3], [2, 2], [3, 3], [4, 3]],
+        [[0, 1], [1, 1], [2, 0], [3, 1], [4, 1]],
+        [[0, 2], [1, 2], [2, 3], [3, 2], [4, 2]],
+        [[0, 1], [1, 1], [2, 2], [3, 1], [4, 1]]
     ];
 
-    public function getRespinResult($old, $bs)
+    public function getRespinResult($param)
     {
-        $board = $old;
+        //优先结算苹果奖励
+        $board = $param['board'];
+        $bs = $param['bs'];
+        $rounds_lefts = $param['rounds_lefts'];
         $list = [];
         $list = array_pad($list, 30, 2);//放入30个红苹果
         $list = array_pad($list, 32, 3);//放入2个金苹果
@@ -144,47 +100,103 @@ class SlotsGame
         $new_bs = [];
         $bs_pos = [];
         $basket = [];
+        $is_success = false;
         foreach ($board as $k => &$v) {
             foreach ($v as $kk => &$vv) {
                 if (!in_array($vv, [2, 3, 14])) {
                     if (count($new_bs) < 3) {
                         $re = array_pop($list);
                         if ($re != 0) {
+                            $is_success = true;
                             $new_bs[] = [$k, $kk];
                             $vv = $re;
                             if ($re == 14) {
-                                $basket = [$k,$kk];
-                            }else{
-                                $bs[$k][$kk] = mt_rand(1,20)*0.5*$this->bet;
+                                $basket = [$k, $kk];
+                            } else {
+                                $bs[$k][$kk] = mt_rand(1, 20) * 0.5 * $this->bet;
                             }
                         }
                     }
                 } else {
-                    $bs_pos[] = [$k, $kk];//原来苹果火篮子的位置
+                    $bs_pos[] = [$k, $kk];//原来苹果和篮子的位置
                 }
             }
         }
         $bs_count = count($new_bs) + count($bs_pos);
         $total = 0;
-        foreach ($bs as $k=>$v){
-            foreach ($v as $kk=>$vv)
-            {
-                if($board[$k][$kk] == 12)
-                {
+        foreach ($bs as $k => $v) {
+            foreach ($v as $kk => $vv) {
+                if ($board[$k][$kk] != 14) {
                     $total += $vv;
                 }
             }
         }
-        if($basket){
+        if ($basket) {
             $bs[$basket[0]][$basket[1]] = $total;
         }
+        //再结算额外栏目的奖励
         $extra_board = [];
         $boadList = [];
-        for($i=0;$i<5;$i++)
-        {
+        $boadList = array_pad($boadList, 1, 15);
+        $boadList = array_pad($boadList, 2, 16);
+        $boadList = array_pad($boadList, 3, 17);
+        $boadList = array_pad($boadList, 100, 30);//其余放空
+        shuffle($boadList);
+        $extra_board_values = [];
+        for ($i = 0; $i < 5; $i++) {
+            $res = array_pop($boadList);
+            $extra_board[] = $res;
+            switch ($res) {
+                case 15:
+                    //加号
+                    $extra_values = bcmul(bcmul($this->bet, rand(1, 20)),0.5,1);
+                    $extra_board_values[] = $extra_values;
+                    foreach ($bs[$i] as &$value)
+                    {
+                        if(!empty($value))
+                        {
+                            $value = bcadd($extra_values,$value,1);
+                        }
+                    }
+                    $is_success = true;
+                    break;
+                case 16:
+                    $extra_values = bcmul(rand(2, 20),0.5,1);
+                    $extra_board_values[] = $extra_values;
+                    foreach ($bs[$i] as $value)
+                    {
+                        if(!empty($value))
+                        {
+                            $value = bcmul($extra_values,$value,1);
+                        }
+                    }
+                    $is_success = true;
+                    break;
+                case 17:
+                    $keyList = [];
+                    foreach ($board[$i] as $k=>$v){
+                        if($v == 2){
+                            $keyList[] = $k;
+                        }
+                    }
+                    if(!empty($keyList)){
+                        $key = array_rand($keyList);
+                        $board[$i][$key] = 3;
+                    }
+                    $is_success = true;
+                    break;
+                default:
+
+
+            }
 
         }
-        return compact("board","bs_count","bs_pos","bs","");
+        if($is_success){
+            $rounds_lefts = 3;
+        }else{
+            $rounds_lefts-=1;
+        }
+        return compact("board", "bs_count", "bs_pos", "bs", "new_bs","rounds_lefts");
     }
 
     public function getSpinResult()
@@ -196,7 +208,7 @@ class SlotsGame
         $total_house = $this->total_house;
         $total_apple = $this->total_apple;
         $game_type = "spins";
-        return compact("board", "bs", "winlines", "total_win", "total_house","total_apple","game_type");
+        return compact("board", "bs", "winlines", "total_win", "total_house", "total_apple", "game_type");
     }
 
     public function getBs($result)
