@@ -146,7 +146,7 @@ class Index extends BaseController
         }else{
             $redis->set($key,json_encode($data));
         }
-        $this->success("success");
+        $this->success("success",$data);
     }
     public function error503()
     {
