@@ -124,7 +124,29 @@ class Index extends BaseController
     {
         $game = new SlotsGame();
         $data = $game->getSpinResult();
+        if($data['total_apple'] >= 6)
+        {
+            $key = "slotApple";
+            $redis = (new Redis())->getRedis();
+            $data['rounds_lefts'] = 3;
+            $redis->set($key,json_encode($data));
+        }
         $this->success("success",compact("data"));
+    }
+    public function testApple()
+    {
+        $game = new SlotsGame();
+        $redis = (new Redis())->getRedis();
+        $key = "slotApple";
+        $last = json_decode($redis->get($key),true);
+        $data = $game->getRespinResult($last);
+        if($data['rounds_lefts'] <= 0)
+        {
+            $redis->del($key);
+        }else{
+            $redis->set($key,json_encode($data));
+        }
+        $this->success("success");
     }
     public function error503()
     {
