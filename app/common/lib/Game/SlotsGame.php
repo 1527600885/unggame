@@ -101,15 +101,15 @@ class SlotsGame
         $bs_pos = [];
         $basket = [];
         $is_success = false;
-        foreach ($board as $k => &$v) {
-            foreach ($v as $kk => &$vv) {
+        foreach ($board as $k => $v) {
+            foreach ($v as $kk => $vv) {
                 if (!in_array($vv, [2, 3, 14])) {
                     if (count($new_bs) < 3) {
                         $re = array_pop($list);
                         if ($re != 0) {
                             $is_success = true;
                             $new_bs[] = [$k, $kk];
-                            $vv = $re;
+                            $board[$k][$kk] = $re;
                             if ($re == 14) {
                                 $basket = [$k, $kk];
                             } else {
@@ -140,7 +140,7 @@ class SlotsGame
         $boadList = array_pad($boadList, 1, 15);
         $boadList = array_pad($boadList, 2, 16);
         $boadList = array_pad($boadList, 3, 17);
-        $boadList = array_pad($boadList, 100, 30);//其余放空
+        $boadList = array_pad($boadList, 30, 0);//其余放空
         shuffle($boadList);
         $extra_board_values = [];
         for ($i = 0; $i < 5; $i++) {
@@ -182,11 +182,14 @@ class SlotsGame
                     if(!empty($keyList)){
                         $key = array_rand($keyList);
                         $board[$i][$key] = 3;
+                        $extra_board_values[] = $key;
+                    }else{
+                        $extra_board_values[] = 0;
                     }
                     $is_success = true;
                     break;
                 default:
-
+                    $extra_board_values[] = 0;
 
             }
 
@@ -196,7 +199,7 @@ class SlotsGame
         }else{
             $rounds_lefts-=1;
         }
-        return compact("board", "bs_count", "bs_pos", "bs", "new_bs","rounds_lefts");
+        return compact("board", "bs_count", "bs_pos", "bs", "new_bs","rounds_lefts","extra_board_values","extra_board");
     }
 
     public function getSpinResult()
