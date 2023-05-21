@@ -1,0 +1,83 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'nickname',
+						label: '用户名',
+						table: {
+							sort: false,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'type',
+						label: '奖励类型',
+						table: {
+						},
+						form: {
+							is: 'el-radio-group',
+							default: '1',
+							child: {
+								value: [{"title":"平台奖励","value":"2"},{"title":"普通签到","value":"1"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+					{
+						prop: 'rewards',
+						label: '签到奖励',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'last_sign_time',
+						label: '签到时间',
+						table: {
+							sort: true,
+							label: '最后一次签到时间',
+						},
+						form: {
+							is: 'el-date-picker',
+							type: 'datetime',
+						}
+					},
+					{
+						prop: 'total_days',
+						label: '签到次数',
+						table: {
+							sort: false,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}
