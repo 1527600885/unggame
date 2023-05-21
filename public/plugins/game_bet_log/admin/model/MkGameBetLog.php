@@ -32,8 +32,8 @@ class MkGameBetLog extends Model
     
     public function searchDateAttr($query, $value, $array)
     {
-        if (! empty($value)) { 
-            $query->whereBetweenTime("", $value[0], $value[1]);
+        if (! empty($value)) {
+            $query->where("betTime",">",$value[0])->where("betTime","<",$value[1]);
         }
     }
     public function getGameNameAttr($value)
