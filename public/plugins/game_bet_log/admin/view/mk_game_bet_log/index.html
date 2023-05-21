@@ -1,0 +1,110 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'nickname',
+						label: '用户昵称',
+						table: {
+							sort: false,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'gameName',
+						label: '游戏名称',
+						table: {
+							sort: false,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'game_account',
+						label: '游戏账号',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'betTime',
+						label: '下注时间',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-date-picker',
+							type: 'datetime',
+						}
+					},
+					{
+						prop: 'endTime',
+						label: '结算时间',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-date-picker',
+							type: 'datetime',
+						}
+					},
+					{
+						prop: 'betAmount',
+						label: '下注金额',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'netPnl',
+						label: '净利',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'betOrderNo',
+						label: '三方平台订单号',
+						table: {
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}
