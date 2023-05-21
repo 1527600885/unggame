@@ -62,8 +62,8 @@ class User extends BaseController
                 $amount=5;
                 if($invite_one_uid= $this->request->userInfo['invite_one_uid']){
                     //更新一级邀请人数
-                    $one_count = UserModel::where("id",$invite_one_uid)->where("is_check",1)->count() + 1;
-                    UserModel::where('id',$invite_one_uid)->inc('balance',$amount)->update(['invite_one_num'=>$one_count]);
+//                    $one_count = UserModel::where("id",$invite_one_uid)->where("is_check",1)->count() + 1;
+//                    UserModel::where('id',$invite_one_uid)->inc('balance',$amount)->update(['invite_one_num'=>$one_count]);
                     $invite_one_list = \app\api\model\User::where("id",$invite_one_uid)->find();
                     //添加资金列表
                     $userbalance=$invite_one_list->balance;
@@ -72,16 +72,16 @@ class User extends BaseController
                     capital_flow($invite_one_uid,$this->request->userInfo['id'],5,1,$amount,$userbalance,$content,$admin_content);
                 }
 
-                //更新二级邀请人数
-                if($invite_two_uid= $this->request->userInfo['invite_two_uid']){
-                    $two_count = UserModel::where("id",$invite_two_uid)->where("is_check",1)->count()+1;
-                    UserModel::where("id",$invite_two_uid)->update(["invite_two_num"=>$two_count]);
-                }
-                //更新三级邀请人数
-                if($invite_three_uid= $this->request->userInfo['invite_three_uid']){
-                    $three_count = UserModel::where("id",$invite_three_uid)->where("is_check",1)->count()+1;
-                    UserModel::where("id",$invite_three_uid)->update(["invite_three_num"=>$three_count]);
-                }
+//                //更新二级邀请人数
+//                if($invite_two_uid= $this->request->userInfo['invite_two_uid']){
+//                    $two_count = UserModel::where("id",$invite_two_uid)->where("is_check",1)->count()+1;
+//                    UserModel::where("id",$invite_two_uid)->update(["invite_two_num"=>$two_count]);
+//                }
+//                //更新三级邀请人数
+//                if($invite_three_uid= $this->request->userInfo['invite_three_uid']){
+//                    $three_count = UserModel::where("id",$invite_three_uid)->where("is_check",1)->count()+1;
+//                    UserModel::where("id",$invite_three_uid)->update(["invite_three_num"=>$three_count]);
+//                }
 
             }
             $save["is_check_{$type}"] = 1;

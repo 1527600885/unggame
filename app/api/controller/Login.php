@@ -318,27 +318,27 @@ class Login extends BaseController
 				UserModel::where('id',$registerInfo->id)->update(['game_account'=>$game_account,'nickname'=>$input['nickname']?$input['nickname']:$game_account]);
 				// 给直接邀请人添加注册奖励
 			}
-//            if($input['invitation_code']){
-//                $amount=2;
-//                //更新一级邀请人数
-//                $one_count = UserModel::where("id",$invite_one_uid)->count();
-//                UserModel::where('id',$invite_one_uid)->inc('balance',$amount)->update(['invite_one_num'=>$one_count]);
-//                //更新二级邀请人数
-//                if($invite_two_uid){
-//                    $two_count = UserModel::where("id",$invite_two_uid)->count();
-//                    UserModel::where("id",$invite_two_uid)->update(["invite_two_num"=>$two_count]);
-//                }
-//                //更新三级邀请人数
-//                if($invite_three_uid){
-//                    $three_count = UserModel::where("id",$invite_three_uid)->count();
-//                    UserModel::where("id",$invite_three_uid)->update(["invite_three_num"=>$three_count]);
-//                }
+            if($input['invitation_code']){
+                $amount=2;
+                //更新一级邀请人数
+                $one_count = UserModel::where("id",$invite_one_uid)->count();
+                UserModel::where('id',$invite_one_uid)->inc('balance',$amount)->update(['invite_one_num'=>$one_count]);
+                //更新二级邀请人数
+                if($invite_two_uid){
+                    $two_count = UserModel::where("id",$invite_two_uid)->count();
+                    UserModel::where("id",$invite_two_uid)->update(["invite_two_num"=>$two_count]);
+                }
+                //更新三级邀请人数
+                if($invite_three_uid){
+                    $three_count = UserModel::where("id",$invite_three_uid)->count();
+                    UserModel::where("id",$invite_three_uid)->update(["invite_three_num"=>$three_count]);
+                }
 //                //添加资金列表
 //                $userbalance=$invite_one_list->balance;
 //                $content='{user.inviteusers} '.$registerInfo->nickname.' {user.inviteregister} $'.$amount.' reward';
 //                $admin_content='用户'.$invite_one_list->nickname.'邀请用户'.$registerInfo->nickname.'注册获得'.$amount.'美金';
 //                capital_flow($invite_one_uid,$registerInfo->id,5,1,$amount,$userbalance,$content,$admin_content);
-//            }
+            }
 			// $id=$hashids->decode($game_account);
             // 绑定事件
             event('RegisterEnd', $registerInfo);
