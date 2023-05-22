@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 namespace plugins\statistics\admin\listen;
 
+use app\api\model\v2\Order;
+use app\api\model\Withdrawal;
 use plugins\statistics\admin\model\CountDay;
 use app\admin\model\User;
 
@@ -17,15 +19,20 @@ class Console
 {
     public function handle($object)
     {
-        $countPv  = 0;
-        $countIp  = 0;
+//        $countPv  = 0;
+//        $countIp  = 0;
         $countReg = User::count();
-        $dayReg   = User::whereDay('create_time')->count();
-        $count    = CountDay::whereDay('day')->find();
-        if ($count) {
-            $countPv = $count['pv'];
-            $countIp = $count['ip'];
-        }
+        $dayReg   = User::whereDay('login_time')->count();
+        $monthReg = User::whereMonth("login_time")->count();
+        $recharge = round(Order::where("status",1)->sum("realAmount"),2);
+        $widthdraw =  round(Withdrawal::where("online_status",2)->sum("amount"),2);
+        $waitcheck = Withdrawal::where("online_status",0)->count();
+        $chargeReg =  round(Withdrawal::where("online_status",2)->sum("charge_doller"),2);
+//        $count    = CountDay::whereDay('day')->find();
+//        if ($count) {
+//            $countPv = $count['pv'];
+//            $countIp = $count['ip'];
+//        }
         $object->html .= '
             <link rel="stylesheet" type="text/css" href="/plugins/statistics/static/admin/css/statistics.css">
             <script type="text/javascript" charset="utf-8" src="/plugins/statistics/static/admin/js/statistics.js"></script>
@@ -35,19 +42,7 @@ class Console
             <div class="el-warp">
                 <div id="statistics">
                     <el-row class="el-floor" :getter="10">
-                        <el-col :sm="12" :md="6">
-                            <dl>
-                            <dt><i class="info-item-ico ico-count-pv"></i><span class="info-item-txt">今日浏览量(PV)</span></dt>
-                            <dd>'.$countPv.'</dd>
-                            </dl>
-                        </el-col>
-                        <el-col :sm="12" :md="6">
-                            <dl>
-                            <dt style="border-color:#00c29f"><i class="info-item-ico ico-count-uv"></i><span class="info-item-txt">今日浏览量(IP)</span></dt>
-                            <dd style="color:#00c29f">'.$countIp.'</dd>
-                            </dl>
-                        </el-col>
-                        <el-col :sm="12" :md="6">
+                       <el-col :sm="12" :md="6">
                             <dl>
                             <dt style="border-color:#00bcd4"><i class="info-item-ico ico-count-num"></i><span class="info-item-txt">总会员数</span></dt>
                             <dd style="color:#00bcd4">'.$countReg.'</dd>
@@ -55,8 +50,38 @@ class Console
                         </el-col>
                         <el-col :sm="12" :md="6">
                             <dl>
-                            <dt style="border-color:#fb9678"><i class="info-item-ico ico-count-other"></i><span class="info-item-txt">今日注册</span></dt>
-                            <dd style="color:#fb9678">'.$dayReg.'</dd>
+                            <dt><i class="info-item-ico ico-count-pv"></i><span class="info-item-txt">今日活跃数量</span></dt>
+                            <dd>'.$dayReg.'</dd>
+                            </dl>
+                        </el-col>
+                        <el-col :sm="12" :md="6">
+                            <dl>
+                            <dt style="border-color:#00c29f"><i class="info-item-ico ico-count-uv"></i><span class="info-item-txt">本月活跃数量</span></dt>
+                            <dd style="color:#00c29f">'.$monthReg.'</dd>
+                            </dl>
+                        </el-col>
+                        <el-col :sm="12" :md="6">
+                            <dl>
+                            <dt style="border-color:#fb9678"><i class="info-item-ico ico-count-other"></i><span class="info-item-txt">充值总额</span></dt>
+                            <dd style="color:#fb9678">'.$recharge.'</dd>
+                            </dl>
+                        </el-col>
+                         <el-col :sm="12" :md="6">
+                            <dl>
+                            <dt style="border-color:#fb9678"><i class="info-item-ico ico-count-other"></i><span class="info-item-txt">提现总额</span></dt>
+                            <dd style="color:#fb9678">'.$widthdraw.'</dd>
+                            </dl>
+                        </el-col>
+                         <el-col :sm="12" :md="6">
+                            <dl>
+                            <dt style="border-color:#fb9678"><i class="info-item-ico ico-count-other"></i><span class="info-item-txt">手续费总额</span></dt>
+                            <dd style="color:#fb9678">'.$chargeReg.'</dd>
+                            </dl>
+                        </el-col>
+                         <el-col :sm="12" :md="6">
+                            <dl>
+                            <dt style="border-color:#fb9678"><i class="info-item-ico ico-count-other"></i><span class="info-item-txt">待审核数量</span></dt>
+                            <dd style="color:#fb9678">'.$waitcheck.'</dd>
                             </dl>
                         </el-col>
                     </el-row>
