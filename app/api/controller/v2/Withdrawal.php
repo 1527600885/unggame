@@ -102,10 +102,12 @@ class Withdrawal extends BaseController
         if(isset($input['method']) && $input['method'] == 2)
         {
             $rate = getCoinMarketCap("USD",$input['currency']);
+            $rateamount = $input['amount'] ;
             $input['amount'] = bcmul($input['amount']."",$rate."",8);
         }else{
             $rate = cacheRate()[$input['currency']];
             $input['amount'] = bcdiv($input['amount']."",$rate,8);
+            $rateamount = $input['amount'] ;
         }
         $payment_name  = $input['payment_name'] ?? \app\api\model\WithdrawalSettings::where("id",$input['id'])->value("name");
         $w_info=$this->setwithdrawal_info($input);
@@ -117,26 +119,25 @@ class Withdrawal extends BaseController
             $this->error('Your Payment Password is wrong!');
         }
         $withdrawConfig =  ConfigModel::getVal('withdraw');
+
+        if((float)$input['amount'] < $withdrawConfig['minprice']-1 || (float)$input['amount'] > (float)$userInfo->balance){
+            $this->error('Withdrawal amount error！');
+        }
+        if(!$this->isCanwithdrawal($userInfo->balance,$withdrawConfig['rate'])){
+            $this->error("Cash withdrawals are only permitted when your total bets for the day exceed three times your current balance.");
+        }
 //        $rate=$this->CurrencyAllModel->where(['name'=>$input['currency']])->value('rate');
 //		$feel=$this->feel($userInfo->id);
         $feel = $this->getRate($withdrawConfig);
         if($input['type']==1){
-            $rateamount=round($input['amount']/$rate,7);
             $charge=round($rateamount*($feel/100),7);
             $money=bcadd($rateamount."",-$charge."",2);
             $data['name']=$input['name'];
             $data['address']=$input['address'];
         }else{
-            $rateamount=round($input['amount']*$rate,2);
             $charge=round($rateamount*($feel/100),2);
             $money=bcadd($rateamount."",-$charge."",2);
             $data['other'] = json_encode($input['other']);
-        }
-        if($rateamount < $withdrawConfig['minprice'] || $rateamount > (float)$userInfo->balance){
-            $this->error('Withdrawal amount error！');
-        }
-        if(!$this->isCanwithdrawal($userInfo->balance,$withdrawConfig['rate'])){
-            $this->error("Cash withdrawals are only permitted when your total bets for the day exceed three times your current balance.");
         }
         $data['sid']=$input['id'];
         $data['uid']=$userInfo->id;
