@@ -130,11 +130,13 @@ class Withdrawal extends BaseController
 //		$feel=$this->feel($userInfo->id);
         $feel = $this->getRate($withdrawConfig);
         if($input['type']==1){
+            $charge_doller = round($input['amount']*($feel/100),7);
             $charge=round($rateamount*($feel/100),7);
             $money=bcadd($rateamount."",-$charge."",2);
             $data['name']=$input['name'];
             $data['address']=$input['address'];
         }else{
+            $charge_doller=round($input['amount']*($feel/100),2);
             $charge=round($rateamount*($feel/100),2);
             $money=bcadd($rateamount."",-$charge."",2);
             $data['other'] = json_encode($input['other']);
@@ -147,6 +149,7 @@ class Withdrawal extends BaseController
         $data['payment_name'] = $payment_name;
         $data['money']=$money;
         $data['charge']=$charge;
+        $data['charge'] = $charge_doller;
         $data['add_time']=time();
         $Wid=$this->WithdrawalModel->insertGetId($data);
         if($Wid){
