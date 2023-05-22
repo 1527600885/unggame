@@ -330,19 +330,21 @@ class User  extends BaseController
 				$this->request->userInfo['interest'] = $ungdata['interest'] ?? 0;
 				$this->request->userInfo['ung_rate'] = UngSet::value("interest");
                 $this->request->userInfo['ung_price'] = bcmul($this->request->userInfo['ung_num'],UngSet::value('price'),3);
-                $currency = CurrencyAll::where(['id'=>$this->request->userInfo['currency']])->find()->toArray();
-                // var_dump($currency['type']);
-                if($currency['type'] == 2){
-                    $rateList = cacheRate();
-                    $rate = $rateList[$currency['name']];
-                }else{
-                    $rate = bcdiv('1', convert_scientific_number_to_normal(strval(getCoinMarketCap('USD', $currency['name']))), 8);
+                $currency = CurrencyAll::where(['id'=>$this->request->userInfo['currency']])->find();
+                if($currency){
+                    // var_dump($currency['type']);
+                    if($currency['type'] == 2){
+                        $rateList = cacheRate();
+                        $rate = $rateList[$currency['name']];
+                    }else{
+                        $rate = bcdiv('1', convert_scientific_number_to_normal(strval(getCoinMarketCap('USD', $currency['name']))), 8);
+                    }
+                    $currency['rateamount'] = bcmul($rate, $this->request->userInfo['balance'], 8);
+                    $currency['shortenNumber'] =shortenNumber(floatval($currency['rateamount']));
+                    // var_dump($rate);
+
+                    $this->request->userInfo['currency'] = $currency;
                 }
-                $currency['rateamount'] = bcmul($rate, $this->request->userInfo['balance'], 8);
-                $currency['shortenNumber'] =shortenNumber(floatval($currency['rateamount']));
-                // var_dump($rate);
-                
-                $this->request->userInfo['currency'] = $currency;
 				$this->success(lang('success'),$this->request->userInfo);
 			}
 		}
