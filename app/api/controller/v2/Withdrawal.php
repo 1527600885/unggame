@@ -124,7 +124,7 @@ class Withdrawal extends BaseController
         if(!$this->isCanwithdrawal($userInfo->balance,$withdrawConfig['rate'])){
             $this->error("Cash withdrawals are only permitted when your total bets for the day exceed three times your current balance.");
         }
-        $rate=$this->CurrencyAllModel->where(['name'=>$input['currency']])->value('rate');
+//        $rate=$this->CurrencyAllModel->where(['name'=>$input['currency']])->value('rate');
 //		$feel=$this->feel($userInfo->id);
         $feel = $this->getRate($withdrawConfig);
         if($input['type']==1){
