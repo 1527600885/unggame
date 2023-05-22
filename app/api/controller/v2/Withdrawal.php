@@ -117,9 +117,6 @@ class Withdrawal extends BaseController
             $this->error('Your Payment Password is wrong!');
         }
         $withdrawConfig =  ConfigModel::getVal('withdraw');
-        if(!$this->isCanwithdrawal($userInfo->balance,$withdrawConfig['rate'])){
-            $this->error("Cash withdrawals are only permitted when your total bets for the day exceed three times your current balance.");
-        }
 //        $rate=$this->CurrencyAllModel->where(['name'=>$input['currency']])->value('rate');
 //		$feel=$this->feel($userInfo->id);
         $feel = $this->getRate($withdrawConfig);
@@ -137,6 +134,9 @@ class Withdrawal extends BaseController
         }
         if($rateamount < $withdrawConfig['minprice'] || $rateamount > (float)$userInfo->balance){
             $this->error('Withdrawal amount error！');
+        }
+        if(!$this->isCanwithdrawal($userInfo->balance,$withdrawConfig['rate'])){
+            $this->error("Cash withdrawals are only permitted when your total bets for the day exceed three times your current balance.");
         }
         $data['sid']=$input['id'];
         $data['uid']=$userInfo->id;
