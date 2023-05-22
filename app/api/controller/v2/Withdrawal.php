@@ -116,7 +116,7 @@ class Withdrawal extends BaseController
         if(!$userone){
             $this->error('Your Payment Password is wrong!');
         }
-
+        $withdrawConfig =  ConfigModel::getVal('withdraw');
         if(!$this->isCanwithdrawal($userInfo->balance,$withdrawConfig['rate'])){
             $this->error("Cash withdrawals are only permitted when your total bets for the day exceed three times your current balance.");
         }
@@ -135,7 +135,6 @@ class Withdrawal extends BaseController
             $money=bcadd($rateamount."",-$charge."",2);
             $data['other'] = json_encode($input['other']);
         }
-        $withdrawConfig =  ConfigModel::getVal('withdraw');
         if($rateamount < $withdrawConfig['minprice'] || $rateamount > (float)$userInfo->balance){
             $this->error('Withdrawal amount error！');
         }
