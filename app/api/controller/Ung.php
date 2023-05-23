@@ -279,6 +279,12 @@ class Ung extends BaseController
 	        $this->error($e->getError());
 	    }
 	    $userinfo = Db::name("user")->alias('a')->where("a.id", $this->request->userInfo->id)->join('mk_ung_user b ','b.uid= a.id')->find();
+	    if($userinfo){
+	        if($userinfo['balance_status'] == 0)
+	        {
+	            $userinfo['balance'] = 0 ;
+            }
+        }
 	   // var_dump($userinfo);
 	   // die;
 		if($userinfo['pay_paasword']==0){
