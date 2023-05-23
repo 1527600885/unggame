@@ -40,7 +40,8 @@ class User extends BaseController
             $order  = [$input['prop'] => $input['order']];
             $count  = UserModel::withSearch($search, $input)->count();
             $data   = UserModel::withSearch($search, $input)->append($append)->with(['group','inviteName'])->order($order)->page($input['page'], $input['pageSize'])->select()->each(function($item){
-                $item['cover'] = "<a href='{:url(`edit`)}'><img src='{$item['cover']}' /></a>";
+                $url = url("edit",["id"=>$item['id']]);
+                $item['cover'] = "<a href='{$url}'><img src='{$item['cover']}' /></a>";
                 $item['capital_log'] = "<a style='color: #0000FF' href='/game_admin/capitalFlow/index?uid={$item['id']}'>账单记录</a>";
                 $address = getipcountry($item['login_ip']);
                 $item['country'] = $address['country'];
