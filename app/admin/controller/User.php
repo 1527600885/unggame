@@ -52,8 +52,8 @@ class User extends BaseController
                 $item['invite_three_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_three_uid={$item['id']}'>{$item['invite_three_num']}</a>";
                 $item['balance'] = "<a style='color:darkgreen' onclick='app.showEditBalance({$item['id']})'>{$item['balance']}<a/>";
                 $item['UNG'] = UngUser::where("uid",$item['id'])->value("num");
-                $item_data = json_encode($item);
-                $item['cover'] = "<a @click='openData({$item_data})'><img src='{$item['cover']}' /></a>";
+//                $item_data = json_encode($item);
+                $item['cover'] = "<a @click='openData({$item})'><img src='{$item['cover']}' /></a>";
             });
 			return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
