@@ -85,7 +85,13 @@ class User extends Model
             $query->where("status", '=', $value);
         }
     }
-
+    public function getOtherAccountsAttr($value)
+    {
+        if(!empty($value)){
+            $data = json_decode($value,true);
+            return $data['type'].":".$data['account'];
+        }
+    }
     // 获取器
     public function getUrlAttr($value, $array)
     {
