@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\model\Announcement;
 use app\api\model\UngUser;
 use think\facade\View;
 use think\exception\ValidateException;
@@ -163,6 +164,9 @@ class User extends BaseController
     {
         if ($this->request->isPost()) {
             $post = input("post.");
+            if($post['name'] == "balance_status"){
+                Announcement::create(["type"=>2,"content"=>"Account Frozen","desc"=>"There is an abnormality in your account. In order to protect the safety of your funds, you are temporarily unable to withdraw cash, play games and invest. Please contact the official customer service of the platform to deal with it.","user_id"=>$post['id'],"create_time"=>time()]);
+            }
             UserModel::where("id",$post['id'])->update([$post['name']=>$post['value']]);
             return json(['status' => 'success', 'message' => '操作成功']);
         }
