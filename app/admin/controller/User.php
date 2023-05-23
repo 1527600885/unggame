@@ -178,8 +178,8 @@ class User extends BaseController
             return json(['status' => 'success', 'message' => '操作成功']);
         }else{
             $id = input("param.id");
-            $userInfo = UserModel::where("id",$id)->find();
-            View::assign("userInfo",$userInfo);
+            $userInfo = UserModel::with("idcard")->where("id",$id)->find();
+            View::assign("userInfo",$userInfo->toArray());
             return View::fetch("personal");
         }
     }
