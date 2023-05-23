@@ -179,7 +179,7 @@ class User extends BaseController
         }else{
             $id = input("param.id");
             $userInfo = UserModel::where("id",$id)->find();
-            $this->assign("userInfo",$userInfo);
+            View::assign("userInfo",$userInfo);
             return View::fetch("personal");
         }
     }
