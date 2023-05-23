@@ -166,9 +166,9 @@ class User extends BaseController
             $post = input("post.");
             if($post['name'] == "balance_status"){
                 if($post['value'] == 0){
-                    Announcement::create(["type"=>2,"content"=>"Account Frozen","desc"=>"There is an abnormality in your account. In order to protect the safety of your funds, you are temporarily unable to withdraw cash, play games and invest. Please contact the official customer service of the platform to deal with it.","user_id"=>$post['id'],"create_time"=>time()]);
+                    Announcement::create(["type"=>2,"desc"=>"Account Frozen","content"=>"There is an abnormality in your account. In order to protect the safety of your funds, you are temporarily unable to withdraw cash, play games and invest. Please contact the official customer service of the platform to deal with it.","user_id"=>$post['id'],"create_time"=>time()]);
                 }else{
-                    Announcement::create(["type"=>2,"content"=>"Account Unfreeze","desc"=>"Please follow the platform rules and guidelines.","user_id"=>$post['id'],"create_time"=>time()]);
+                    Announcement::create(["type"=>2,"desc"=>"Account Unfreeze","content"=>"Please follow the platform rules and guidelines.","user_id"=>$post['id'],"create_time"=>time()]);
                 }
 
             }
