@@ -41,6 +41,7 @@ class User extends BaseController
             $count  = UserModel::withSearch($search, $input)->count();
             $data   = UserModel::withSearch($search, $input)->append($append)->with(['group','inviteName'])->order($order)->page($input['page'], $input['pageSize'])->select()->each(function($item){
                 $url = url("edit",["id"=>$item['id']]);
+                $item['cover'] = "<a href='{$url}'><img src='{$item['cover']}' /></a>";
                 $item['capital_log'] = "<a style='color: #0000FF' href='/game_admin/capitalFlow/index?uid={$item['id']}'>账单记录</a>";
                 $address = getipcountry($item['login_ip']);
                 $item['country'] = $address['country'];
@@ -52,8 +53,6 @@ class User extends BaseController
                 $item['invite_three_num'] = "<a  style='color: red' href='/game_admin/user/index?invite_three_uid={$item['id']}'>{$item['invite_three_num']}</a>";
                 $item['balance'] = "<a style='color:darkgreen' onclick='app.showEditBalance({$item['id']})'>{$item['balance']}<a/>";
                 $item['UNG'] = UngUser::where("uid",$item['id'])->value("num");
-                $item_data = htmlentities($item);
-                $item['cover'] = "<a @click='openData({$item})'><img src='{$item['cover']}' /></a>";
             });
 			return json(['status' => 'success', 'message' => '获取成功', 'data' => $data, 'count' => $count]);
         } else {
@@ -177,6 +176,11 @@ class User extends BaseController
             }
             UserModel::where("id",$post['id'])->update([$post['name']=>$post['value']]);
             return json(['status' => 'success', 'message' => '操作成功']);
+        }else{
+            $id = input("param.id");
+            $userInfo = UserModel::where("id",$id)->find();
+            $this->assign("userInfo",$userInfo);
+            return View::fetch("personal");
         }
     }
     public function editMoney()

@@ -32,6 +32,10 @@ class User extends Model
             'invite_name' => 'nickname'
         ]);
     }
+    public function idcard()
+    {
+        return $this->belongsTo(UserIdcard::class,"user_id")->bind(["idCard_image"=>"idCard_image","idCard_image_with_hand"=>"idCard_image_with_hand"]);
+    }
     // 搜索器
     public function setPasswordAttr($value, $array)
     {

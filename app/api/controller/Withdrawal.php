@@ -122,7 +122,7 @@ class Withdrawal extends BaseController
 		$data['amount']=$input['amount'];
 		$data['payment_name'] = $payment_name;
 		$data['money']=$money;
-		$data['charge']=$charge;
+		$data['charge']= $charge ;
 		$data['add_time']=time();
 		$Wid=$this->WithdrawalModel->insertGetId($data);
 		if($Wid){
