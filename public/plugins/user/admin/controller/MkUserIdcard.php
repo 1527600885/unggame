@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace plugins\user\admin\controller;
 
+use app\admin\model\Announcement;
 use think\facade\View;
 use app\admin\BaseController;
 use plugins\user\admin\model\MkUserIdcard as MkUserIdcardModel;
@@ -75,6 +76,11 @@ class MkUserIdcard extends BaseController
         if ($this->request->isPost()) {
             $data = input("post.");
             $data['review_time'] = time();
+            if($data['status'] == 2)
+            {
+                $user_id = MkUserIdcardModel::where("id",$data['id'])->value("user_id");
+                Announcement::create(["type"=>2,"desc"=>"Authentication Failed","content"=>"Please submit your identity photo according to the platform requirements.","user_id"=>$user_id,"create_time"=>time()]);
+            }
             MkUserIdcardModel::update($data);
             return json(["status" => "success", "message" => "修改成功"]);
         }
