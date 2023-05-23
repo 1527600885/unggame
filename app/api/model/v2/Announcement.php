@@ -10,11 +10,11 @@ class Announcement extends Model
 {
     public function getTimeAttr($value,$data)
     {
-        return date("H:i",$data['create_time']);
+        return date("H:i:s",$data['create_time']);
     }
     public function getDateTimeAttr($value,$data)
     {
-        return date("Y/m/d",$data['create_time']);
+        return date("Y-m-d",$data['create_time']);
     }
     public function getIconAttr($value,$data)
     {
