@@ -84,7 +84,7 @@ return array(
 		'safetycommonly'=>'Commonly',
 		'safetyhigh'=>'High',
 		'safetyperfect'=>'Perfect',
-        'balanceFreeze'=>'Funds are frozen',
+        'balanceFreeze'=>'There is an abnormality in your account. In order to protect the safety of your funds, you are temporarily unable to withdraw cash, play games and invest. Please contact the official customer service of the platform to deal with it',
         'signrewards'=>'User sign-in rewards',
         "lxsignrewards"=>'Continuous user sign-in rewards',
         "platformrewards"=>'Check in today and receive a',

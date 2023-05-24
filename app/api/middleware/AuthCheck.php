@@ -59,6 +59,10 @@ class AuthCheck extends BaseController
             $this->error(lang('user.accountBlocked'));
             // return json(['status'=>'login', 'message'=> lang('user.accountBlocked')]);
         }
+        if(strtotime($request->userInfo['login_time']) < strtotime(date("Ymd"))){
+            $request->userInfo->login_time= time();
+            $request->userInfo->save();
+        }
         if($request->userInfo['balance_status'] == 0)
         {
             $request_method = $request->controller().'/'.$request->action();
