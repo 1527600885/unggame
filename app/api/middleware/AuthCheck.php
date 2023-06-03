@@ -54,7 +54,7 @@ class AuthCheck extends BaseController
 //            $this->error(lang('user.tokenError'));
 //            // return json(['status'=>'login', 'message'=> lang('user.tokenError')]);
 //        }
-        $request->userInfo = User::with(['group'])->where('id', $id)->where('status', 1)->find();
+        $request->userInfo = User::with(['group'])->where('id', $id)->where('status', 1)->where("is_deleted",0)->find();
         if (! $request->userInfo) {
             $this->error(lang('user.accountBlocked'));
             // return json(['status'=>'login', 'message'=> lang('user.accountBlocked')]);

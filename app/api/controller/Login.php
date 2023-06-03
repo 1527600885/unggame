@@ -46,7 +46,7 @@ class Login extends BaseController
                 $this->error($e->getError());
                 // return json(['status' => 'error', 'message' => $e->getError()]);
             }
-             $userInfo = UserModel::with(['group'])->append(['url'])->where('mobile|email',$input['account'])->find();
+             $userInfo = UserModel::with(['group'])->append(['url'])->where('mobile|email',$input['account'])->where("is_deleted",0)->find();
             // if($input['checklable']==1){
             //     $userInfo = UserModel::with(['group'])->append(['url'])->where('mobile',$input['phone'])->where('uncode',$input['uncode'])->find();
             // }else{

@@ -155,4 +155,10 @@ class User extends BaseController
         $signData['message_num'] = $message_num;
         $this->success("success",$signData);
     }
+    public function selfdelete()
+    {
+        $this->request->userInfo->is_deleted = 1;
+        $this->request->userInfo->save();
+        $this->success("success");
+    }
 }
