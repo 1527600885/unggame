@@ -17,7 +17,7 @@ class Team extends BaseController
         {
             $this->error($validate->getError());
         }
-        $param['user_id'] = $this->request->userInfo->id;
+
         $apply = \app\api\model\v2\TeamApply::where(["user_id"=>$this->request->userInfo->id,"type"=>$param['type']])->find();
         if($apply){
             if($apply->status == 0 || $apply->status == 1){
@@ -25,6 +25,8 @@ class Team extends BaseController
             }
             $apply->save($param);
         }else{
+            $param['user_id'] = $this->request->userInfo->id;
+            $param['create_time'] = time();
             \app\api\model\v2\TeamApply::create($param);
         }
         $this->success("Submitted successfully");
