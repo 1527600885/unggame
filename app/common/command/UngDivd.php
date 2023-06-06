@@ -77,7 +77,7 @@
 		        	// 从数据库中写入redis
 		        	$ung_data = Db::name('ung_user')->select()->toArray();
 		        	foreach ($ung_data as $key => $value) {
-		        		$redis->hSet('ung_user_divd:ung_user_'.$value['uid'],'num',$value['num']);
+		        		$redis->hSet('ung_user_divd:ung_user_'.$value['uid'],'num',$value['pledgenum']);
 			            $redis->hSet('ung_user_divd:ung_user_'.$value['uid'],'update_time',time());
 			            $redis->hSet('ung_user_divd:ung_user_'.$value['uid'],'divd_time',time());
 			            $redis->sAdd('ung_user_id',$value['uid']);
