@@ -18,7 +18,7 @@ class Index extends BaseController
     protected $noNeedLogin = ['*'];
     public function helpList()
     {
-       $list = Helplist::where("status",1)->field("id,title,descript")->select();
+       $list = Helplist::where("status",1)->field("id,title,decript")->select();
        $this->success("success",$list);
     }
     public function helpdetail($id)
