@@ -165,4 +165,13 @@ class Payment extends BaseController
         }
         $this->success(lang('system.success'),compact("list","others","method"));
     }
+    public function getDigitalList()
+    {
+        $data = CurrencyAll::where("is_show", 1)->cache("currency_all_show",600)->field("id,name,type,country,symbol,thumb_img,url_list,payment_ids,withdrawl_ids")->select();
+        foreach ($data as &$v)
+        {
+            if($v['type'] == 2) unset($v);
+        }
+        $this->success("success",$data);
+    }
 }
