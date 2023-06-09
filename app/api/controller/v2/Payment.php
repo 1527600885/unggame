@@ -168,7 +168,7 @@ class Payment extends BaseController
     public function getDigitalList()
     {
         $data = CurrencyAll::where("is_show", 1)->cache("currency_all_show",600)->field("id,name,type,country,symbol,thumb_img,url_list,payment_ids,withdrawl_ids")->select();
-        foreach ($data as $K=>$v)
+        foreach ($data as $k=>$v)
         {
             if($v['type'] == 2) unset($data[$k]);
         }
