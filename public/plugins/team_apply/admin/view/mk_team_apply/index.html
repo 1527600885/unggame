@@ -1,0 +1,166 @@
+{include file="common/header"}
+<div id="app" v-cloak>
+	<el-curd
+		:field="field"
+		:table-export="false"
+		:table-page-size="20"
+		:table-page-sizes="[20, 50, 100, 200, 500]"
+		:search-date="false">
+	</el-curd>
+</div>
+<script>
+	new Vue({
+		el: "#app",
+		data() {
+			return {
+				field: [
+					{
+						prop: 'id',
+						label: '主键',
+						table: {
+							sort: true,
+						},
+						form: false
+					},
+					{
+						prop: 'mobile',
+						label: '手机号',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'code',
+						label: '国家编码',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'name',
+						label: '姓名',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'email',
+						label: '邮箱',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'type_text',
+						label: '类型',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-radio-group',
+							child: {
+								value: [{"title":"代言人","value":"2"},{"title":"代理","value":"1"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+					{
+						prop: 'status',
+						label: '审核状态',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-radio-group',
+							child: {
+								value: [{"title":"拒绝","value":"2"},{"title":"通过","value":"1"},{"title":"待审核","value":"0"}],
+								props: {label: 'title', value: 'value'}},
+						}
+					},
+					{
+						prop: 'create_time',
+						label: '创建时间',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'failed_reason',
+						label: '失败原因',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'surname',
+						label: '姓',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'telegram',
+						label: '电报账号',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'twitter',
+						label: 'twitter',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'whatsapp',
+						label: 'whatspp',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+					{
+						prop: 'message',
+						label: '留言',
+						table: {
+							sort: true,
+						},
+						form: {
+							is: 'el-input',
+						}
+					},
+				],
+			}
+		},
+	})
+</script>
+{include file="common/footer"}
