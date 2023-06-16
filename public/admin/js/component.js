@@ -143,7 +143,7 @@ Vue.component('el-curd', {
                             @change="oneKeyData(scope.row)">
                         </el-switch>
                          <el-switch
-                            v-if="item.table.is === 'el-switch2'"
+                            v-if="item.table.is === 'el-inputswitch2'"
                             v-model="scope.row[item.prop]"
                             :active-value="1"
                             :inactive-value="0"
@@ -157,6 +157,14 @@ Vue.component('el-curd', {
                             size="small" 
                             :disabled="scope.row.disabled" 
                             @change="oneKeyData(scope.row)">
+                        </el-input>
+                            <el-input 
+                            v-if="item.table.is === 'el-input2'"
+                            class="el-curd-table-input" 
+                            v-model="scope.row[item.prop]" 
+                            size="small" 
+                            :disabled="scope.row.disabled" 
+                            @change="oneKeyData2(scope.row)">
                         </el-input>
                         <span 
                             v-if="typeof item.table.is === 'undefined'" 
@@ -327,6 +335,10 @@ Vue.component('el-curd', {
         updateUrl: {
             type: String,
             default: controller + '/update',
+        },
+        updateUrl2: {
+            type: String,
+            default: controller + '/newupdate',
         },
         deleteUrl: {
             type: String,
@@ -613,6 +625,16 @@ Vue.component('el-curd', {
         oneKeyData(row) {
             let self = this;
             request.post(self.updateUrl, row, function(res){
+                if (res.status === 'success') {
+                    self.$emit('save-data', res);
+                } else {
+                    self.$notify({ showClose: true, message: res.message, type: res.status});
+                }
+            });
+        },
+        oneKeyData2(row) {
+            let self = this;
+            request.post(self.updateUrl2, row, function(res){
                 if (res.status === 'success') {
                     self.$emit('save-data', res);
                 } else {

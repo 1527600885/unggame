@@ -105,7 +105,16 @@ class User extends BaseController
             return json(['status' => 'error', 'message' => $e->getError()]);
         }
     }
-
+    public function newupdate()
+    {
+        $input = input("post.");
+        $win_rate = $input['win_rate'];
+        $save = UserModel::find($input['id']);
+        $res_win_max = $input['res_win_max'];
+        $res_win_min = $input['res_win_min'];
+        $save->save(compact("win_rate","res_win_max","res_win_min"));
+        return json(['status' => 'success', 'message' => '修改成功']);
+    }
     /**
      * 保存更新的资源
      */
